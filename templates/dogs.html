@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Nasze psy - Hodowla z Wojciechowic{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Nasze psy</h1>
+    
+    {% if breeding_dogs %}
+    <h2 class="mt-5 mb-4">Psy hodowlane</h2>
+    <div class="row">
+        {% for dog in breeding_dogs %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                {% if dog.photo %}
+                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        <strong>Rasa:</strong> {{ dog.breed }}<br>
+                        <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                    </p>
+                    <p class="card-text">{{ dog.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% if other_dogs %}
+    <h2 class="mt-5 mb-4">Inne psy</h2>
+    <div class="row">
+        {% for dog in other_dogs %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                {% if dog.photo %}
+                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ dog.name }}</h5>
+                    <p class="card-text">
+                        <strong>Rasa:</strong> {{ dog.breed }}<br>
+                        <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                    </p>
+                    <p class="card-text">{{ dog.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
