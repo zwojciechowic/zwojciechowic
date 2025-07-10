@@ -1,0 +1,147 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Hodowla z Wojciechowic" %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+            color: #8B4513 !important;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 0;
+        }
+        .card {
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+        }
+        .puppy-alert {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .language-switcher {
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .language-switcher:hover {
+            color: #8B4513;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">{% trans "Hodowla z Wojciechowic" %}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">{% trans "Strona Główna" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">{% trans "O nas" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dogs' %}">{% trans "Nasze psy" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'puppies' %}">{% trans "Szczeniaki" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reservations' %}">{% trans "Rezerwacje" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">{% trans "Kontakt" %}</a>
+                    </li>
+                    <!-- Language Switcher -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% if LANGUAGE_CODE == 'pl' %}🇵🇱 PL{% else %}🇬🇧 EN{% endif %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="language" value="pl">
+                                    <button type="submit" class="dropdown-item">🇵🇱 {% trans "Polski" %}</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="language" value="en">
+                                    <button type="submit" class="dropdown-item">🇬🇧 {% trans "English" %}</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>{% trans "Hodowla z Wojciechowic" %}</h5>
+                    <p>{% trans "Profesjonalna hodowla psów z pasją i doświadczeniem." %}</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>{% trans "Kontakt" %}</h5>
+                    <p>Email: kontakt@zwojciechowic.pl<br>
+                       {% trans "Telefon" %}: +48 123 456 789</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>{% trans "Szybkie linki" %}</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'about' %}" class="text-light">{% trans "O nas" %}</a></li>
+                        <li><a href="{% url 'dogs' %}" class="text-light">{% trans "Nasze psy" %}</a></li>
+                        <li><a href="{% url 'puppies' %}" class="text-light">{% trans "Szczeniaki" %}</a></li>
+                        <li><a href="{% url 'contact' %}" class="text-light">{% trans "Kontakt" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="text-center">
+                <p>&copy; 2025 {% trans "Hodowla z Wojciechowic" %}. {% trans "Wszystkie prawa zastrzeżone." %}</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

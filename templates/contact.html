@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Kontakt - Hodowla z Wojciechowic{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Kontakt</h1>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Imię i nazwisko</label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.phone.id_for_label }}" class="form-label">Telefon (opcjonalnie)</label>
+                    {{ form.phone }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.subject.id_for_label }}" class="form-label">Temat</label>
+                    {{ form.subject }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.message.id_for_label }}" class="form-label">Wiadomość</label>
+                    {{ form.message }}
+                </div>
+                <button type="submit" class="btn btn-primary">Wyślij wiadomość</button>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Dane kontaktowe</h5>
+                    <p class="card-text">
+                        <strong>Adres:</strong><br>
+                        Wojciechowice<br><br>
+                        <strong>Telefon:</strong><br>
+                        +48 123 456 789<br><br>
+                        <strong>Email:</strong><br>
+                        kontakt@zwojciechowic.pl
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Godziny dostępności</h5>
+                    <p class="card-text">
+                        <strong>Poniedziałek - Piątek:</strong><br>
+                        9:00 - 18:00<br><br>
+                        <strong>Sobota:</strong><br>
+                        10:00 - 16:00<br><br>
+                        <strong>Niedziela:</strong><br>
+                        Po wcześniejszym umówieniu
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

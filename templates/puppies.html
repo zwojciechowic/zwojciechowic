@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Szczeniaki - Hodowla z Wojciechowic{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Dostępne szczenięta</h1>
+    
+    {% if puppies %}
+    <div class="row">
+        {% for puppy in puppies %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                {% if puppy.photo %}
+                <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ puppy.name }}</h5>
+                    <p class="card-text">
+                        <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                        <strong>Matka:</strong> {{ puppy.mother.name }}<br>
+                        <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
+                        <strong>Cena:</strong> {{ puppy.price }} PLN
+                    </p>
+                    <p class="card-text">{{ puppy.description|truncatewords:15 }}</p>
+                    <a href="{% url 'reservations' %}" class="btn btn-primary">Zarezerwuj</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="puppy-alert">
+        <h3>Brak dostępnych szczeniąt</h3>
+        <p>Aktualnie nie mamy dostępnych szczeniąt. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

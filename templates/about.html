@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}O nas - Hodowla z Wojciechowic{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>O nas</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>Historia Naszej Hodowli – Miłość do Psów i Do Siebie</h2>
+            
+            <p>Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność.</p>
+            
+            <h3>On – Belg z miłością do zwierząt</h3>
+            <p>Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt.</p>
+            
+            <h3>Ona – dziewczyna ze wsi z pasją</h3>
+            <p>Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie.</p>
+            
+            <h3>Spotkanie, które dało początek czemuś większemu</h3>
+            <p>On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia.</p>
+            
+            <h3>Hodowla zrodzona z pasji</h3>
+            <p>Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli.</p>
+            
+            <h3>Dziś</h3>
+            <p>Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem.</p>
+            
+            <blockquote>
+                <p><em>"Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią." 🌍❤️🐕</em></p>
+            </blockquote>
+            
+            <p><strong>Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa.</strong></p>
+        </div>
+        <div class="col-lg-4">
+            {% load static %}
+            <img src="{% static 'img/couple-1.jpeg' %}" alt="Hodowla z Wojciechowic" class="img-fluid rounded mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Kontakt</h5>
+                    <p class="card-text">
+                        <strong>Adres:</strong> Wojciechowice<br>
+                        <strong>Telefon:</strong> +48 123 456 789<br>
+                        <strong>Email:</strong> kontakt@zwojciechowic.pl
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
