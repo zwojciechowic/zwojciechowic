@@ -4,11 +4,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'your-secret-key-here-change-in-production'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^e6jiebqftu*p-')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'zwojciechowic.pl','www.zwojciechowic.pl', 'zwojciechowic.onrailway.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'zwojciechowic.pl','www.zwojciechowic.pl', 'zwojciechowic.onrailway.app', '*.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
