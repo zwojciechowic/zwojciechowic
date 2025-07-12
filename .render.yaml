@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: zwojciechowic
-    env: python
-    buildCommand: ""
-    startCommand: gunicorn zwojciechowic.wsgi:application
-    pythonVersion: 3.12.3
