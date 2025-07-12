@@ -12,62 +12,63 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
 "(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
 #: templates/base.html:7 templates/base.html:52 templates/base.html:120
 #: templates/base.html:140
 msgid "Hodowla z Wojciechowic"
-msgstr "Breeding from Wojciechowice"
+msgstr "Hodowla z Wojciechowic"
 
 #: templates/base.html:59
 msgid "Strona Główna"
-msgstr "Main Page"
+msgstr "Strona Główna"
 
 #: templates/base.html:62 templates/base.html:131
 msgid "O nas"
-msgstr "About us"
+msgstr "O nas"
 
 #: templates/base.html:65 templates/base.html:132
 msgid "Nasze psy"
-msgstr "Our dogs"
+msgstr "Nasze psy"
 
 #: templates/base.html:68 templates/base.html:133
 msgid "Szczeniaki"
-msgstr "Puppies"
+msgstr "Szczeniaki"
 
 #: templates/base.html:71
 msgid "Rezerwacje"
-msgstr "Reservations"
+msgstr "Rezerwacje"
 
 #: templates/base.html:74 templates/base.html:124 templates/base.html:134
 msgid "Kontakt"
-msgstr "Contact"
+msgstr "Kontakt"
 
 #: templates/base.html:87
 msgid "Polski"
-msgstr "Polish"
+msgstr "Polski"
 
 #: templates/base.html:94
 msgid "Angielski"
-msgstr "English"
+msgstr "Angielski"
 
 #: templates/base.html:121
 msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
-msgstr "Professional dog's breeding with passion and experience"
+msgstr "Profesjonalna hodowla psów z pasją i doświadczeniem."
 
 #: templates/base.html:126
 msgid "Telefon"
-msgstr "Phone"
+msgstr "Telefon"
 
 #: templates/base.html:129
 msgid "Szybkie linki"
-msgstr "Fast links"
+msgstr "Szybkie linki"
 
 #: templates/base.html:140
 msgid "Wszystkie prawa zastrzeżone."
-msgstr ""
+msgstr "Wszystkie prawa zastrzeżone."
