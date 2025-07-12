@@ -353,6 +353,32 @@
             color: white;
         }
 
+        .mobile-brand {
+            margin-bottom: 30px;
+        }
+        
+        .mobile-navbar-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .mobile-brand-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .mobile-brand-text {
+            color: var(--primary-color);
+        }
+
         /* Main Content */
         .main-content {
             padding-top: 120px;
@@ -630,6 +656,17 @@
         <button class="mobile-close" id="mobileClose">
             <i class="fas fa-times"></i>
         </button>
+
+        <div class="mobile-brand">
+            <a href="{% url 'home' %}" class="mobile-navbar-brand">
+                {% if request.resolver_match.url_name == 'puppies' %}
+                    <img src="{% static 'logo/puppy-logo.png' %}" alt="Logo" class="mobile-brand-logo">
+                {% else %}
+                    <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" class="mobile-brand-logo">
+                {% endif %}
+                <span class="mobile-brand-text">{% trans "z Wojciechowic" %}</span>
+            </a>
+        </div>
         
         <div class="mobile-nav-items">
             <a href="{% url 'home' %}" class="mobile-nav-link active">
