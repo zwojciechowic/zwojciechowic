@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,7 +8,7 @@ SECRET_KEY = 'your-secret-key-here-change-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'zwojciechowic.pl', '.onrender.com' 'www.zwojciechowic.pl' 'zwojciechowic.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'zwojciechowic.pl','www.zwojciechowic.pl', 'zwojciechowic.onrailway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,11 +52,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'zwojciechowic.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'))
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
