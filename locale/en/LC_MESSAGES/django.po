@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-09 22:26+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+#: templates/base.html:7 templates/base.html:52 templates/base.html:120
+#: templates/base.html:140
+msgid "Hodowla z Wojciechowic"
+msgstr "Breeding from Wojciechowice"
+
+#: templates/base.html:59
+msgid "Strona Główna"
+msgstr "Main Page"
+
+#: templates/base.html:62 templates/base.html:131
+msgid "O nas"
+msgstr "About us"
+
+#: templates/base.html:65 templates/base.html:132
+msgid "Nasze psy"
+msgstr "Our dogs"
+
+#: templates/base.html:68 templates/base.html:133
+msgid "Szczeniaki"
+msgstr "Puppies"
+
+#: templates/base.html:71
+msgid "Rezerwacje"
+msgstr "Reservations"
+
+#: templates/base.html:74 templates/base.html:124 templates/base.html:134
+msgid "Kontakt"
+msgstr "Contact"
+
+#: templates/base.html:87
+msgid "Polski"
+msgstr "Polish"
+
+#: templates/base.html:94
+msgid "Angielski"
+msgstr "English"
+
+#: templates/base.html:121
+msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
+msgstr "Professional dog's breeding with passion and experience"
+
+#: templates/base.html:126
+msgid "Telefon"
+msgstr "Phone"
+
+#: templates/base.html:129
+msgid "Szybkie linki"
+msgstr "Fast links"
+
+#: templates/base.html:140
+msgid "Wszystkie prawa zastrzeżone."
+msgstr ""
