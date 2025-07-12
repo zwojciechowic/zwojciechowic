@@ -20,8 +20,8 @@ msgstr ""
 
 #: templates/base.html:7 templates/base.html:52 templates/base.html:120
 #: templates/base.html:140
-msgid "Hodowla z Wojciechowic"
-msgstr "Breeding from Wojciechowice"
+msgid "z Wojciechowic"
+msgstr "z Wojciechowic"
 
 #: templates/base.html:59
 msgid "Strona Główna"
@@ -70,3 +70,56 @@ msgstr "Quick links"
 #: templates/base.html:140
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "All rights reserved."
+
+ 
+# Strona About Us
+msgid "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
+msgstr "Our Breeding History – Love for Dogs and Each Other"
+
+msgid "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
+msgstr "Life can write extraordinary stories. Our story began where two worlds meet today – a Belgian soul and Polish rural hospitality."
+
+msgid "On – Belg z miłością do zwierząt"
+msgstr "He – A Belgian with Love for Animals"
+
+msgid "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
+msgstr "He came from Flanders, where he had been surrounded by dogs since childhood, and his family had been breeding shepherds for generations. After difficult experiences – breakup, longing for meaning – he decided to seek a new beginning. On social media, he found her profile, full of photos of rural landscapes and smiling animals."
+
+msgid "Ona – dziewczyna ze wsi z pasją"
+msgstr "She – A Village Girl with Passion"
+
+msgid "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
+msgstr "She works in logistics, but her true world was animals. Raised among dogs, farm animals and rural chatter, she always dreamed of combining her daily work with love for four-legged friends. When he first wrote to her, she didn't even suspect that this conversation would change their lives."
+
+msgid "Spotkanie, które dało początek czemuś większemu"
+msgstr "A Meeting That Started Something Greater"
+
+msgid "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
+msgstr "He came to Poland – first for a weekend, then for a month, finally… he stayed forever. They discovered that they were connected not only by feelings, but also by a common vision. He – with knowledge of breeding, breed lines and European standards. She – with practical experience, intuition and love for rural life."
+
+msgid "Hodowla zrodzona z pasji"
+msgstr "Breeding Born from Passion"
+
+msgid "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
+msgstr "They decided to create something special – a shepherd breeding where not only beauty and breed matter, but above all health, character and welfare of dogs. Their animals grow up among fields, close to people, surrounded by care. He still works, combining Belgian precision with Polish hospitality, she manages logistics – not only at work, but also in breeding."
+
+msgid "Dziś"
+msgstr "Today"
+
+msgid "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
+msgstr "Their home is a haven for shepherds of certain origin, but above all – happy dogs. This is a place where Belgian stubbornness met Polish warmth, and love for animals became a common life project."
+
+msgid "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
+msgstr "We didn't plan this... but sometimes the best things come unexpectedly. Together we found our way – between Belgian fields and Polish countryside."
+
+msgid "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
+msgstr "Is this a romantic story? Maybe. But above all – true."
+
+msgid "Adres"
+msgstr "Address"
+
+
+
+
+
+

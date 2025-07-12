@@ -22,8 +22,8 @@ msgstr ""
 
 #: templates/base.html:7 templates/base.html:52 templates/base.html:120
 #: templates/base.html:140
-msgid "Hodowla z Wojciechowic"
-msgstr "Hodowla z Wojciechowic"
+msgid "z Wojciechowic"
+msgstr "z Wojciechowic"
 
 #: templates/base.html:59
 msgid "Strona Główna"
@@ -72,3 +72,57 @@ msgstr "Szybkie linki"
 #: templates/base.html:140
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "Wszystkie prawa zastrzeżone."
+
+
+
+
+
+
+
+
+# Strona About Us
+msgid "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
+msgstr "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
+
+msgid "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
+msgstr "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
+
+msgid "On – Belg z miłością do zwierząt"
+msgstr "On – Belg z miłością do zwierząt"
+
+msgid "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
+msgstr "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
+
+msgid "Ona – dziewczyna ze wsi z pasją"
+msgstr "Ona – dziewczyna ze wsi z pasją"
+
+msgid "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
+msgstr "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
+
+msgid "Spotkanie, które dało początek czemuś większemu"
+msgstr "Spotkanie, które dało początek czemuś większemu"
+
+msgid "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
+msgstr "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
+
+msgid "Hodowla zrodzona z pasji"
+msgstr "Hodowla zrodzona z pasji"
+
+msgid "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
+msgstr "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
+
+msgid "Dziś"
+msgstr "Dziś"
+
+msgid "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
+msgstr "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
+
+msgid "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
+msgstr "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
+
+msgid "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
+msgstr "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
+
+msgid "Adres"
+msgstr "Adres"
+

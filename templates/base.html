@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 <head>
@@ -6,132 +7,539 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% trans "Hodowla z Wojciechowic" %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .navbar-brand {
-            font-weight: bold;
-            color: #8B4513 !important;
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #FF6B35;
+            --text-dark: #2C3E50;
+            --bg-light: #F8F9FA;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .hero-section {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 100px 0;
+            min-height: 100vh;
+            color: var(--text-dark);
         }
-        .card {
-            transition: transform 0.3s;
+
+        /* Modern Navbar Styles */
+        .modern-navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 5px 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            width: auto;
+            min-width: auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
         }
-        .card:hover {
-            transform: translateY(-5px);
+
+        .modern-navbar:hover {
+            padding: 15px 40px;
+            min-width: auto;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
         }
-        footer {
-            background-color: #343a40;
+
+        .navbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .navbar-brand-modern {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 20px;
+            transition: var(--transition);
+        }
+
+        .modern-navbar:hover .navbar-brand-modern {
+            margin-right: 20px;
+        }
+        
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .brand-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: var(--transition);
+            white-space: nowrap;
+            width: 0;
+            overflow: hidden;
+        }
+        
+        .modern-navbar:hover .brand-text {
+            opacity: 1;
+            transform: translateX(0);
+            width: auto;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item-modern {
+            position: relative;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .nav-link-modern {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link-modern i {
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .nav-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+            transition: var(--transition);
+            white-space: nowrap;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .modern-navbar:hover .nav-text {
+            opacity: 1;
+            transform: translateX(0);
+            width: auto;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+        }
+
+        .nav-link-modern:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 40px 0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3);
         }
-        .puppy-alert {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
+
+        .nav-link-modern:hover i {
+            transform: scale(1.1);
         }
-        .language-switcher {
+
+        /* Active state */
+        .nav-link-modern.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+        }
+
+        .nav-link-modern.active .nav-text {
+            opacity: 1;
+            transform: translateX(0);
+            width: auto;
+        }
+
+        /* Language Switcher */
+        .language-switcher-modern {
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .language-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            min-width: 120px;
+            margin-top: 10px;
+        }
+
+        .language-switcher-modern:hover .language-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-dropdown button {
+            width: 100%;
+            padding: 10px 15px;
             border: none;
             background: none;
-            color: #666;
+            text-align: left;
             cursor: pointer;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            margin: 5px;
+            transition: var(--transition);
         }
-        .language-switcher:hover {
-            color: #8B4513;
+
+        .language-dropdown button:hover {
+            background: var(--bg-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 80px 0;
+            margin: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.4);
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .puppy-alert {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: none;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2C3E50, #34495E);
+            color: white;
+            padding: 60px 0 20px;
+            border-radius: 30px 30px 0 0;
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modern-navbar {
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                border-radius: 0;
+                margin: 0;
+                padding: 10px 20px;
+            }
+
+            .modern-navbar:hover {
+                min-width: 100%;
+                padding: 10px 20px;
+            }
+
+            .navbar-content {
+                justify-content: space-between;
+            }
+
+            .nav-items {
+                gap: 5px;
+            }
+
+            .nav-link-modern {
+                padding: 8px 12px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .main-content {
+                padding-top: 80px;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(139, 69, 19, 0.2);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.1s ease;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">{% trans "Hodowla z Wojciechowic" %}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">{% trans "Strona Główna" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">{% trans "O nas" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dogs' %}">{% trans "Nasze psy" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'puppies' %}">{% trans "Szczeniaki" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reservations' %}">{% trans "Rezerwacje" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">{% trans "Kontakt" %}</a>
-                    </li>
-                    <!-- Language Switcher -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% if LANGUAGE_CODE == 'pl' %}🇵🇱 PL{% else %}🇬🇧 EN{% endif %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <form action="{% url 'set_language' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="language" value="pl">
-                                    <button type="submit" class="dropdown-item">🇵🇱 {% trans "Polski" %}</button>
-                                </form>
-                            </li>
-                            <li>
-                                <form action="{% url 'set_language' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="language" value="en">
-                                    <button type="submit" class="dropdown-item">🇬🇧 {% trans "English" %}</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Modern Navbar -->
+    <nav class="modern-navbar">
+        <div class="navbar-content">
+            <a href="{% url 'home' %}" class="navbar-brand-modern">
+                {% if request.resolver_match.url_name == 'puppies' %}
+                    <img src="{% static 'logo/puppy-logo.png' %}" alt="Logo" class="brand-logo">
+                {% else %}
+                    <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" class="brand-logo">
+                {% endif %}
+                <span class="brand-text">{% trans "z Wojciechowic" %}</span>
+            </a>
+            
+            <div class="nav-items">
+                <div class="nav-item-modern">
+                    <a href="{% url 'home' %}" class="nav-link-modern active">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text">{% trans "Strona Główna" %}</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item-modern">
+                    <a href="{% url 'about' %}" class="nav-link-modern">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="nav-text">{% trans "O nas" %}</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item-modern">
+                    <a href="{% url 'dogs' %}" class="nav-link-modern">
+                        <i class="fas fa-dog"></i>
+                        <span class="nav-text">{% trans "Nasze psy" %}</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item-modern">
+                    <a href="{% url 'puppies' %}" class="nav-link-modern">
+                        <i class="fas fa-heart"></i>
+                        <span class="nav-text">{% trans "Szczeniaki" %}</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item-modern">
+                    <a href="{% url 'reservations' %}" class="nav-link-modern">
+                        <i class="fas fa-calendar-check"></i>
+                        <span class="nav-text">{% trans "Rezerwacje" %}</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item-modern">
+                    <a href="{% url 'contact' %}" class="nav-link-modern">
+                        <i class="fas fa-envelope"></i>
+                        <span class="nav-text">{% trans "Kontakt" %}</span>
+                    </a>
+                </div>
+                
+                <div class="language-switcher-modern">
+                    <button class="language-btn">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
+                    </button>
+                    <div class="language-dropdown">
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="language" value="pl">
+                            <button type="submit">🇵🇱 {% trans "Polski" %}</button>
+                        </form>
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="language" value="en">
+                            <button type="submit">🇬🇧 {% trans "English" %}</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
+    <!-- Messages -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-top: 100px;">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         {% endfor %}
     {% endif %}
 
-    {% block content %}
-    {% endblock %}
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}
+        <!-- Example Hero Section -->
+        <div class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">{% trans "Hodowla z Wojciechowic" %}</h1>
+                <p class="hero-subtitle">{% trans "Profesjonalna hodowla psów z pasją i doświadczeniem" %}</p>
+                <button class="cta-button">{% trans "Poznaj nasze szczeniaki" %}</button>
+            </div>
+        </div>
 
+        <!-- Example Cards Section -->
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">{% trans "Doświadczenie" %}</h5>
+                            <p class="card-text">{% trans "Ponad 15 lat doświadczenia w hodowli psów rasowych" %}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-heart fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">{% trans "Pasja" %}</h5>
+                            <p class="card-text">{% trans "Hodowla z miłości do psów i troski o ich dobrostan" %}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-certificate fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">{% trans "Jakość" %}</h5>
+                            <p class="card-text">{% trans "Wszystkie nasze psy posiadają rodowody FCI" %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puppy Alert Example -->
+        <div class="container">
+            <div class="puppy-alert">
+                <h4><i class="fas fa-exclamation-triangle"></i> {% trans "Uwaga!" %}</h4>
+                <p>{% trans "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!" %}</p>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>{% trans "Hodowla z Wojciechowic" %}</h5>
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-paw"></i> {% trans "Hodowla z Wojciechowic" %}</h5>
                     <p>{% trans "Profesjonalna hodowla psów z pasją i doświadczeniem." %}</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>{% trans "Kontakt" %}</h5>
-                    <p>Email: kontakt@zwojciechowic.pl<br>
-                       {% trans "Telefon" %}: +48 123 456 789</p>
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-address-book"></i> {% trans "Kontakt" %}</h5>
+                    <p><i class="fas fa-envelope"></i> zwojciechowic@gmail.com<br>
+                       <i class="fas fa-phone"></i> {% trans "Telefon" %}: +48 533 498 384</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>{% trans "Szybkie linki" %}</h5>
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-link"></i> {% trans "Szybkie linki" %}</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'about' %}" class="text-light">{% trans "O nas" %}</a></li>
-                        <li><a href="{% url 'dogs' %}" class="text-light">{% trans "Nasze psy" %}</a></li>
-                        <li><a href="{% url 'puppies' %}" class="text-light">{% trans "Szczeniaki" %}</a></li>
-                        <li><a href="{% url 'contact' %}" class="text-light">{% trans "Kontakt" %}</a></li>
+                        <li><a href="{% url 'about' %}" class="text-light"><i class="fas fa-chevron-right"></i> {% trans "O nas" %}</a></li>
+                        <li><a href="{% url 'dogs' %}" class="text-light"><i class="fas fa-chevron-right"></i> {% trans "Nasze psy" %}</a></li>
+                        <li><a href="{% url 'puppies' %}" class="text-light"><i class="fas fa-chevron-right"></i> {% trans "Szczeniaki" %}</a></li>
+                        <li><a href="{% url 'contact' %}" class="text-light"><i class="fas fa-chevron-right"></i> {% trans "Kontakt" %}</a></li>
                     </ul>
                 </div>
             </div>
@@ -143,5 +551,36 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Active navigation state management
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link-modern');
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
