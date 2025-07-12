@@ -477,18 +477,61 @@
             transition: width 0.1s ease;
         }
 
+        /* Mobile Header */
+        .mobile-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 998;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 10px 20px;
+            box-shadow: var(--shadow);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .mobile-header-text {
+            color: var(--primary-color);
+        }
+
         /* Mobile Responsive Design */
         @media (max-width: 768px) {
             /* Hide desktop navbar */
             .modern-navbar {
                 display: none;
             }
-
+        
+            /* Show mobile header */
+            .mobile-header {
+                display: flex;
+            }
+        
             /* Show mobile elements */
             .mobile-menu-toggle {
                 display: block;
                 position: fixed;
-                top: 20px;
+                top: 70px;
                 left: 20px;
                 z-index: 1001;
                 background: rgba(255, 255, 255, 0.95);
@@ -496,9 +539,9 @@
                 border-radius: 15px;
                 box-shadow: var(--shadow);
             }
-
+        
             .main-content {
-                padding-top: 20px;
+                padding-top: 70px;
             }
 
             .hero-section {
@@ -641,6 +684,17 @@
     </style>
 </head>
 <body>
+    <div class="mobile-header">
+        <a href="{% url 'home' %}" class="mobile-header-brand">
+            {% if request.resolver_match.url_name == 'puppies' %}
+                <img src="{% static 'logo/puppy-logo.png' %}" alt="Logo" class="mobile-header-logo">
+            {% else %}
+                <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" class="mobile-header-logo">
+            {% endif %}
+            <span class="mobile-header-text">{% trans "z Wojciechowic" %}</span>
+        </a>
+    </div>
+
     <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator">
         <div class="scroll-progress" id="scrollProgress"></div>
@@ -794,8 +848,7 @@
     <!-- Messages -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-top: 80px; margin-left: 10px; margin-right: 10px;">
-                {{ message }}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-top: 120px; margin-left: 10px; margin-right: 10px;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         {% endfor %}
