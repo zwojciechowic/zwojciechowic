@@ -6,9 +6,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^e6jiebqftu*p-')
 
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'zwojciechowic.pl','www.zwojciechowic.pl', 'zwojciechowic.onrailway.app', '*.up.railway.app']
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    'zwojciechowic.pl',
+    'www.zwojciechowic.pl', 
+    'zwojciechowic.onrailway.app',
+    'zwojciechowic-production.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
