@@ -3,10 +3,10 @@
 {% block title %}{{ post.title }} - Hodowla z Wojciechowic{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<div class="hero-section">
     <div class="row">
         <div class="col-lg-8">
-            <h1>{{ post.title }}</h1>
+            <h1 class="display-4">{{ post.title }}</h1>
             <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | Autor: {{ post.author.get_full_name|default:post.author.username }}</p>
             
             {% if post.featured_image %}
