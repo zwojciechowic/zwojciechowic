@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^
 
 DEBUG = True
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 PORT = int(os.environ.get('PORT', 8000))
@@ -20,7 +20,7 @@ ALLOWED_HOSTS = [
     'www.zwojciechowic.pl', 
     'zwojciechowic.onrailway.app',
     'zwojciechowic-production.up.railway.app',
-    'fgi7386p.up.railway.app']
+    '.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +40,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
