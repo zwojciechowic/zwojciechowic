@@ -8,6 +8,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^
 
 DEBUG = True
 
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
