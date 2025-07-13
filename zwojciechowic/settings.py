@@ -32,6 +32,12 @@ INSTALLED_APPS = [
     'main',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://zwojciechowic.pl',
+    'https://www.zwojciechowic.pl',
+]
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,6 +98,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LANGUAGES = [
