@@ -40,7 +40,10 @@ def dogs(request):
 def puppies(request):
     """Strona szczeniaki"""
     available_puppies = Puppy.objects.filter(is_available=True)
-    return render(request, 'puppies.html', {'puppies': available_puppies})
+    return render(request, 'puppies.html', {
+        'puppies': available_puppies,
+        'favicon': 'logo/puppy-logo.ico'
+    })
 
 def reservations(request):
     """Strona rezerwacji"""
