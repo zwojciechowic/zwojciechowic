@@ -11,13 +11,16 @@ DEBUG = True
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+PORT = int(os.environ.get('PORT', 8000))
+
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
     'zwojciechowic.pl',
     'www.zwojciechowic.pl', 
     'zwojciechowic.onrailway.app',
-    'zwojciechowic-production.up.railway.app']
+    'zwojciechowic-production.up.railway.app',
+    'fgi7386p.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
