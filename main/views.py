@@ -39,6 +39,13 @@ def dogs(request):
         'other_dogs': other_dogs
     })
 
+def dog_detail(request, pk):
+    """Szczegółowa strona psa"""
+    dog = get_object_or_404(Dog, pk=pk)
+    return render(request, 'dog_detail.html', {
+        'dog': dog
+    })
+
 def puppies(request):
     """Strona szczeniaki"""
     available_puppies = Puppy.objects.filter(is_available=True)

@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+.main-content {
+    padding-top: 120px;
+    min-height: 100vh;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Text sizing */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+}
+
+p {
+    line-height: 1.5;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(139, 69, 19, 0.2);
+    z-index: 1001;
+}
+
+.scroll-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    width: 0%;
+    transition: width 0.1s ease;
+}
