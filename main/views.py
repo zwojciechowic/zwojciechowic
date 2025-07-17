@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.conf import settings
 from django.core.paginator import Paginator
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage
 from .forms import ReservationForm, ContactForm
@@ -62,14 +64,48 @@ def reservations(request):
         'available_puppies': available_puppies
     })
 
-def contact(request):
-    """Strona kontakt"""
+def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Wiadomość została wysłana pomyślnie!')
-            return redirect('contact')
+            # Pobierz dane z formularza
+            name = form.cleaned_data['name'].strip()
+            email = form.cleaned_data['email'].strip()
+            phone = form.cleaned_data['phone'].strip() if form.cleaned_data['phone'] else ''
+            subject = form.cleaned_data['subject'].strip()
+            message = form.cleaned_data['message'].strip()
+            
+            # Przygotuj treść e-maila
+            email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject}"
+            email_message = f"""Nowa wiadomość z formularza kontaktowego na stronie hodowli:
+
+Imię i nazwisko: {name}
+Email: {email}
+Telefon: {phone if phone else 'Nie podano'}
+Temat: {subject}
+
+Wiadomość:
+{message}
+
+---
+Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
+"""
+            
+            try:
+                email = EmailMessage(
+                    subject=email_subject,
+                    body=email_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=['zwojciechowic@gmail.com'],
+                )
+                email.send()
+                
+                messages.success(request, 'Wiadomość została wysłana pomyślnie!')
+                return redirect('contact')
+                
+            except Exception as e:
+                messages.error(request, 'Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.')
+                print(f"Błąd wysyłania e-maila: {e}")
     else:
         form = ContactForm()
     
