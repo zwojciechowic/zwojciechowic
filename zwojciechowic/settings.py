@@ -118,3 +118,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'zwojciechowic@gmail.com'
+EMAIL_HOST_PASSWORD = 'kerw afom rdrs yqmo'
+DEFAULT_FROM_EMAIL = 'zwojciechowic@gmail.com'
+
+DEFAULT_CHARSET = 'utf-8'
+EMAIL_CHARSET = 'utf-8'
