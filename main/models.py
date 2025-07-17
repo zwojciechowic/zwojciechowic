@@ -29,6 +29,7 @@ class Dog(models.Model):
     description = models.TextField(verbose_name='Opis')
     photo = models.ImageField(upload_to='dogs/', verbose_name='Zdjęcie')
     is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
+    certificate = models.ImageField(upload_to='certificates/', blank=True, null=True, verbose_name='Certyfikat')
     
     class Meta:
         ordering = ['name']
@@ -37,6 +38,10 @@ class Dog(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('dog_detail', kwargs={'pk': self.pk})
 
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
