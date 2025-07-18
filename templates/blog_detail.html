@@ -1,37 +1,83 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ post.title }} - Hodowla z Wojciechowic{% endblock %}
+{% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
 
 {% block content %}
-<div class="hero-section">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-lg-8">
-            <h1 class="display-4">{{ post.title }}</h1>
-            <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | Autor: {{ post.author.get_full_name|default:post.author.username }}</p>
-            
-            {% if post.featured_image %}
-            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid mb-4 rounded">
-            {% endif %}
-            
-            <div class="content">
-                {{ post.content|linebreaks }}
-            </div>
-            
-            <div class="mt-4">
-                <a href="{% url 'home' %}" class="btn btn-outline-primary">← Powrót do strony głównej</a>
-            </div>
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Strona główna</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'dogs' %}">Nasze psy</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ dog.name }}</li>
+                </ol>
+            </nav>
         </div>
-        <div class="col-lg-4">
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            {% if dog.photo %}
+            <div class="card">
+                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 400px; object-fit: cover;">
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Informacje o wpisie</h5>
-                    <p class="card-text">
-                        <strong>Data publikacji:</strong> {{ post.created_at|date:"d.m.Y" }}<br>
-                        <strong>Autor:</strong> {{ post.author.get_full_name|default:post.author.username }}<br>
-                        <strong>Ostatnia aktualizacja:</strong> {{ post.updated_at|date:"d.m.Y" }}
-                    </p>
+                    <h1 class="card-title">{{ dog.name }}</h1>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Rasa:</strong> {{ dog.breed }}
+                        </div>
+                        <div class="col-6">
+                            <strong>Płeć:</strong> {{ dog.get_gender_display }}
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                        </div>
+                        <div class="col-6">
+                            <strong>Wiek:</strong> 
+                            {% now "Y" as current_year %}
+                            {{ dog.birth_date|timesince|truncatewords:1 }}
+                        </div>
+                    </div>
+                    
+                    {% if dog.is_breeding %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Ten pies bierze udział w hodowli
+                    </div>
+                    {% endif %}
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Opis</h3>
+                    <div class="card-text">
+                        {{ dog.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'dogs' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Powrót do listy psów
+            </a>
         </div>
     </div>
 </div>
