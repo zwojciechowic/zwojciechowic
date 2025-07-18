@@ -8,7 +8,7 @@
         <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Strona główna</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Strona główna</a></li>
                     <li class="breadcrumb-item"><a href="{% url 'dogs' %}">Nasze psy</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ dog.name }}</li>
                 </ol>
@@ -72,21 +72,6 @@
             </div>
         </div>
     </div>
-
-    {% if dog.certificate %}
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Certyfikat</h3>
-                    <div class="text-center">
-                        <img src="{{ dog.certificate.url }}" class="img-fluid rounded" alt="Certyfikat {{ dog.name }}" style="max-height: 600px;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
     <div class="row mt-4">
         <div class="col-12">
