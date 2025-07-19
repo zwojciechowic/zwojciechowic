@@ -1,4 +1,5 @@
 # main/admin.py
+from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage
@@ -7,6 +8,30 @@ from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
 admin.site.site_title = "Hodowla z Wojciechowic"
 admin.site.index_title = "Zarządzanie treścią"
+
+class DogAdminForm(forms.ModelForm):
+    class Meta:
+        model = Dog
+        fields = '__all__'
+    
+    class Media:
+        js = ('js/admin_image_preview.js',)
+
+class PuppyAdminForm(forms.ModelForm):
+    class Meta:
+        model = Puppy
+        fields = '__all__'
+    
+    class Media:
+        js = ('js/admin_image_preview.js',)
+
+class BlogPostAdminForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = '__all__'
+    
+    class Media:
+        js = ('js/admin_image_preview.js',)
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -17,6 +42,8 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'updated_at', 'preview_image']
+    form = BlogPostAdminForm
+    
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -53,6 +80,7 @@ class DogAdmin(admin.ModelAdmin):
     list_editable = ['is_breeding']
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
+    form = DogAdminForm
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -80,6 +108,7 @@ class PuppyAdmin(admin.ModelAdmin):
     list_editable = ['is_available', 'price']
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
+    form = PuppyAdminForm
     
     fieldsets = (
         ('Podstawowe informacje', {
