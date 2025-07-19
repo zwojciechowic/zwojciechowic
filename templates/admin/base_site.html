@@ -12,50 +12,302 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <style>
-        /* Dodatkowe style inline dla lepszej integracji */
-        body {
-            background-attachment: fixed !important;
-        }
+<!-- W base_site.html - dodaj po {% block extrahead %} -->
+
+<style>
+/* Admin Modern Navbar */
+.admin-modern-navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    padding: 5px 40px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    width: auto;
+    min-width: auto;
+}
+
+.admin-modern-navbar:hover {
+    padding: 15px 40px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.admin-navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.admin-navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #667eea;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.admin-brand-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-brand-text {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    width: 0;
+    overflow: hidden;
+}
+
+.admin-modern-navbar:hover .admin-brand-text {
+    opacity: 1;
+    transform: translateX(0);
+    width: auto;
+}
+
+.admin-nav-items {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.admin-nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    min-width: 200px;
+    margin-top: 10px;
+    z-index: 3000;
+}
+
+.admin-nav-item:hover .admin-nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #2c3e50;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-nav-link i {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.admin-nav-text {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    white-space: nowrap;
+    width: 0;
+    overflow: hidden;
+}
+
+.admin-modern-navbar:hover .admin-nav-text {
+    opacity: 1;
+    transform: translateX(0);
+    width: auto;
+}
+
+.admin-nav-link:hover {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.admin-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.admin-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.admin-dropdown-item:hover {
+    background: #f8f9fa;
+    color: #667eea;
+}
+
+.admin-dropdown-item i {
+    margin-right: 10px;
+}
+
+.admin-add-btn {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.admin-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+}
+
+/* Adjust main content for navbar */
+#content {
+    margin-top: 100px !important;
+}
+
+#header {
+    display: none !important;
+}
+</style>
+
+<!-- Dodaj navbar po zamknięciu </style> -->
+<div class="admin-modern-navbar" id="adminNavbar">
+    <div class="admin-navbar-content">
+        <a href="{% url 'admin:index' %}" class="admin-navbar-brand">
+            <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" class="admin-brand-logo">
+            <span class="admin-brand-text">Admin Panel</span>
+        </a>
         
-        /* Animacje loading */
-        .module {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-        }
+        <div class="admin-nav-items">
+            <!-- Dogs -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:dogs_dog_changelist' %}" class="admin-nav-link">
+                    <i class="fas fa-dog"></i>
+                    <span class="admin-nav-text">Psy</span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <a href="{% url 'admin:dogs_dog_changelist' %}" class="admin-dropdown-item">
+                        <span><i class="fas fa-list"></i>Zobacz wszystkie</span>
+                        <a href="{% url 'admin:dogs_dog_add' %}" class="admin-add-btn">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Puppies -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:dogs_puppy_changelist' %}" class="admin-nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span class="admin-nav-text">Szczeniaki</span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <a href="{% url 'admin:dogs_puppy_changelist' %}" class="admin-dropdown-item">
+                        <span><i class="fas fa-list"></i>Zobacz wszystkie</span>
+                        <a href="{% url 'admin:dogs_puppy_add' %}" class="admin-add-btn">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Reservations -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:reservations_reservation_changelist' %}" class="admin-nav-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span class="admin-nav-text">Rezerwacje</span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <a href="{% url 'admin:reservations_reservation_changelist' %}" class="admin-dropdown-item">
+                        <span><i class="fas fa-list"></i>Zobacz wszystkie</span>
+                        <a href="{% url 'admin:reservations_reservation_add' %}" class="admin-add-btn">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:auth_user_changelist' %}" class="admin-nav-link">
+                    <i class="fas fa-users"></i>
+                    <span class="admin-nav-text">Użytkownicy</span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <a href="{% url 'admin:auth_user_changelist' %}" class="admin-dropdown-item">
+                        <span><i class="fas fa-list"></i>Zobacz wszystkich</span>
+                        <a href="{% url 'admin:auth_user_add' %}" class="admin-add-btn">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Groups -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:auth_group_changelist' %}" class="admin-nav-link">
+                    <i class="fas fa-user-friends"></i>
+                    <span class="admin-nav-text">Grupy</span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <a href="{% url 'admin:auth_group_changelist' %}" class="admin-dropdown-item">
+                        <span><i class="fas fa-list"></i>Zobacz wszystkie</span>
+                        <a href="{% url 'admin:auth_group_add' %}" class="admin-add-btn">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Logout -->
+            <div class="admin-nav-item" style="margin-left: 20px;">
+                <a href="{% url 'admin:logout' %}" class="admin-nav-link" style="color: #ff6b6b;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="admin-nav-text">Wyloguj</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
     </style>
 {% endblock %}
 
