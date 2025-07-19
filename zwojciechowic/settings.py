@@ -101,7 +101,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
