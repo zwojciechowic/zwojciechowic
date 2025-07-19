@@ -4,17 +4,6 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Strona główna</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'dogs' %}">Nasze psy</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ dog.name }}</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-lg-6 mb-4">
