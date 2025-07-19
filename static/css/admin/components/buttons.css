@@ -1,0 +1,50 @@
+/* components/buttons.css - Przyciski i linki akcji */
+
+/* Przyciski - zaokrąglone i kolorowe */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: var(--radius-round) !important;
+    padding: 12px 24px !important;
+    color: var(--text-white) !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: var(--transition-medium) !important;
+    box-shadow: var(--shadow-primary) !important;
+    cursor: pointer !important;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, a.button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-primary-hover) !important;
+}
+
+/* Drugie przyciski (delete, etc.) */
+.button.default, .deletelink-box a {
+    background: var(--danger-gradient) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+.button.default:hover, .deletelink-box a:hover {
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4) !important;
+}
+
+/* Add buttons */
+.addlink, .changelink {
+    background: var(--secondary-gradient) !important;
+    color: var(--text-white) !important;
+    padding: 8px 16px !important;
+    border-radius: var(--radius-large) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: var(--transition-medium) !important;
+    display: inline-block !important;
+    margin: var(--spacing-xs) !important;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3) !important;
+}
+
+.addlink:hover, .changelink:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4) !important;
+}

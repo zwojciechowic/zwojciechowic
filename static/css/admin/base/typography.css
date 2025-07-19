@@ -1,0 +1,27 @@
+/* base/typography.css - Typografia */
+
+/* Placeholder text */
+input::placeholder, textarea::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* Help text */
+.help, .help-block {
+    color: var(--text-secondary) !important;
+}
+
+/* Nagłówki */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary) !important;
+}
+
+/* Linki */
+a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    transition: var(--transition-medium) !important;
+}
+
+a:hover {
+    color: var(--link-hover) !important;
+}

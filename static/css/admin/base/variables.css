@@ -1,0 +1,51 @@
+/* base/variables.css - Zmienne CSS */
+
+:root {
+    /* Kolory główne */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    --success-gradient: linear-gradient(135deg, #96c93d 0%, #00b09b 100%);
+    
+    /* Kolory tekstu */
+    --text-primary: #2c3e50;
+    --text-secondary: #6c757d;
+    --text-white: white;
+    --text-white-opacity: rgba(255,255,255,0.9);
+    
+    /* Kolory tła */
+    --bg-white: white;
+    --bg-light: #fafbfc;
+    --bg-light-gray: #f8f9fa;
+    --bg-border: #e9ecef;
+    --bg-hover: #f0f7ff;
+    
+    /* Kolory linków */
+    --link-primary: #667eea;
+    --link-hover: #764ba2;
+    
+    /* Cienie */
+    --shadow-light: 0 4px 20px rgba(0,0,0,0.05);
+    --shadow-medium: 0 8px 32px rgba(0,0,0,0.1);
+    --shadow-hover: 0 15px 40px rgba(0,0,0,0.15);
+    --shadow-primary: 0 4px 15px rgba(102, 126, 234, 0.3);
+    --shadow-primary-hover: 0 8px 25px rgba(102, 126, 234, 0.4);
+    
+    /* Promienie */
+    --radius-small: 10px;
+    --radius-medium: 15px;
+    --radius-large: 20px;
+    --radius-round: 25px;
+    
+    /* Spacings */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 25px;
+    --spacing-xxl: 30px;
+    
+    /* Transitions */
+    --transition-fast: all 0.2s ease;
+    --transition-medium: all 0.3s ease;
+}

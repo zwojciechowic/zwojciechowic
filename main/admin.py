@@ -92,12 +92,13 @@ class DogAdmin(admin.ModelAdmin):
     )
     class Media:
         css = {
-            'all': ('css/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
 
     
     def preview_image(self, obj):
+        
         if obj.photo:
             return format_html(
                 '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />',
@@ -129,7 +130,7 @@ class PuppyAdmin(admin.ModelAdmin):
     )
     class Media:
         css = {
-            'all': ('css/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
     def preview_image(self, obj):
@@ -163,7 +164,7 @@ class ReservationAdmin(admin.ModelAdmin):
     )
     class Media:
         css = {
-            'all': ('css/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
     actions = ['mark_as_confirmed', 'mark_as_cancelled']
@@ -197,7 +198,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
     )
     class Media:
         css = {
-            'all': ('css/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
     actions = ['mark_as_read', 'mark_as_unread']

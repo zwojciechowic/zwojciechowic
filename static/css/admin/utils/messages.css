@@ -1,0 +1,29 @@
+/* utils/messages.css - Komunikaty błędów i powiadomienia */
+
+/* Error messages */
+.errorlist {
+    background: var(--danger-gradient) !important;
+    color: var(--text-white) !important;
+    border: none !important;
+    border-radius: var(--radius-small) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    margin: var(--spacing-sm) 0 !important;
+    list-style: none !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+.errorlist li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Success messages */
+.success {
+    background: var(--secondary-gradient) !important;
+    color: var(--text-white) !important;
+    border: none !important;
+    border-radius: var(--radius-small) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    margin: var(--spacing-md) 0 !important;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3) !important;
+}

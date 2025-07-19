@@ -1,0 +1,89 @@
+/* components/modules.css - Moduły i sekcje */
+
+/* Dashboard i główne sekcje */
+.dashboard .module, .module {
+    background: var(--bg-white) !important;
+    border: none !important;
+    border-radius: var(--radius-large) !important;
+    box-shadow: var(--shadow-medium) !important;
+    margin-bottom: var(--spacing-xxl) !important;
+    overflow: hidden !important;
+    transition: var(--transition-medium) !important;
+    color: var(--text-primary) !important;
+    position: relative;
+}
+
+.dashboard .module:hover, .module:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--shadow-hover) !important;
+}
+
+/* Nagłówki modułów */
+.module h2, .module caption, .inline-group h2 {
+    background: var(--primary-gradient) !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    margin: 0 !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    border-radius: 0 !important;
+    text-shadow: none !important;
+}
+
+/* Linki w module */
+.module h2 a, .module caption a {
+    color: var(--text-white) !important;
+    text-decoration: none !important;
+}
+
+.module table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    color: var(--text-primary) !important;
+}
+
+.module th, .module td {
+    padding: var(--spacing-md) var(--spacing-xl) !important;
+    border: none !important;
+    border-bottom: 1px solid #f0f2f5 !important;
+    color: var(--text-primary) !important;
+}
+
+.module tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Linki w tabelach */
+.module td a, .module table a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+.module td a:hover, .module table a:hover {
+    color: var(--link-hover) !important;
+}
+
+/* Fieldset module */
+fieldset.module {
+    background: var(--bg-white) !important;
+    border: none !important;
+    border-radius: var(--radius-medium) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+    margin-bottom: var(--spacing-xl) !important;
+    padding: var(--spacing-xl) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Dodatkowe opływowe elementy */
+.module::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+}
