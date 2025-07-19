@@ -1,0 +1,35 @@
+/* layout/content.css - Obszar treści */
+
+/* Content area */
+#content {
+    margin: 0 40px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* Dashboard content */
+.dashboard #content-main {
+    width: 70% !important;
+    float: left !important;
+}
+
+.dashboard #content-related {
+    width: 28% !important;
+    float: right !important;
+    background: var(--bg-white) !important;
+    border-radius: var(--radius-large) !important;
+    box-shadow: var(--shadow-medium) !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    color: var(--text-primary) !important;
+}
+
+/* Sidebar w recent actions */
+#content-related .module {
+    margin-bottom: var(--spacing-lg) !important;
+}
+
+#recent-actions-module h2 {
+    background: var(--success-gradient) !important;
+}

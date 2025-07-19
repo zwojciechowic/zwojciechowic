@@ -1,0 +1,9 @@
+/* layout/container.css - Główny kontener */
+
+/* Główny kontener */
+#container {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--text-primary) !important;
+}

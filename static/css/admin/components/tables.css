@@ -1,0 +1,65 @@
+/* components/tables.css - Tabele i wyniki */
+
+/* Tabele */
+.results {
+    background: var(--bg-white) !important;
+    border-radius: var(--radius-medium) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-medium) !important;
+    margin-top: var(--spacing-lg) !important;
+    color: var(--text-primary) !important;
+}
+
+.results th {
+    background: linear-gradient(135deg, var(--bg-light-gray) 0%, var(--bg-border) 100%) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    padding: var(--spacing-lg) var(--spacing-md) !important;
+    border: none !important;
+    border-bottom: 2px solid #dee2e6 !important;
+}
+
+.results td {
+    padding: var(--spacing-md) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--bg-light-gray) !important;
+    color: var(--text-primary) !important;
+}
+
+.results td a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+.results td a:hover {
+    color: var(--link-hover) !important;
+}
+
+.row1 {
+    background: var(--bg-white) !important;
+}
+
+.row2 {
+    background: var(--bg-light) !important;
+}
+
+.results tbody tr:hover {
+    background: var(--bg-hover) !important;
+    transition: var(--transition-fast) !important;
+}
+
+/* Pagination */
+.paginator {
+    color: var(--text-primary) !important;
+}
+
+.paginator a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+.paginator a:hover {
+    color: var(--link-hover) !important;
+}

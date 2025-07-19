@@ -1,0 +1,43 @@
+/* layout/header.css - Header i branding */
+
+/* Header - jasny z gradientem */
+#header {
+    background: var(--primary-gradient) !important;
+    box-shadow: var(--shadow-primary) !important;
+    border: none !important;
+    border-radius: 0 0 var(--radius-round) var(--radius-round) !important;
+    margin-bottom: var(--spacing-xxl) !important;
+    padding: var(--spacing-lg) 40px !important;
+}
+
+#branding {
+    float: left !important;
+    padding: 0 !important;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: var(--text-white) !important;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    text-decoration: none !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* User info w headerze */
+#user-tools {
+    float: right !important;
+    color: var(--text-white-opacity) !important;
+    padding-top: var(--spacing-xs) !important;
+}
+
+#user-tools a {
+    color: var(--text-white-opacity) !important;
+    text-decoration: none !important;
+    margin-left: var(--spacing-md) !important;
+    transition: var(--transition-medium) !important;
+}
+
+#user-tools a:hover {
+    color: var(--text-white) !important;
+    text-shadow: 0 0 8px rgba(255,255,255,0.5) !important;
+}

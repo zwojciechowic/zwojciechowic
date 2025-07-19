@@ -1,0 +1,55 @@
+/* utils/responsive.css - Style responsywne */
+
+/* Responsive */
+@media (max-width: 768px) {
+    #content {
+        margin: 0 var(--spacing-lg) !important;
+    }
+    
+    .dashboard #content-main,
+    .dashboard #content-related {
+        width: 100% !important;
+        float: none !important;
+        margin: 0 0 var(--spacing-lg) 0 !important;
+    }
+    
+    #header {
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+    }
+    
+    .module th, .module td {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+    }
+    
+    .results th {
+        padding: var(--spacing-md) var(--spacing-sm) !important;
+    }
+    
+    .results td {
+        padding: var(--spacing-sm) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #content {
+        margin: 0 var(--spacing-sm) !important;
+    }
+    
+    #header {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+    }
+    
+    #branding h1 {
+        font-size: 20px !important;
+    }
+    
+    .button, input[type=submit], input[type=button], a.button {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+        font-size: 14px !important;
+    }
+    
+    .module h2, .module caption {
+        padding: var(--spacing-md) !important;
+        font-size: 16px !important;
+    }
+}
