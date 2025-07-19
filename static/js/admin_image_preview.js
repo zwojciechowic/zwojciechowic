@@ -27,19 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 const reader = new FileReader();
                 
                 reader.onload = function(e) {
-                    previewContainer.innerHTML = 
-                        '<div style="border: 2px solid #ddd; border-radius: 8px; padding: 10px; background: white; display: inline-block;">' +
-                            '<img src="' + e.target.result + '" ' +
-                                 'style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 4px; display: block;" />' +
-                            '<p style="margin: 8px 0 0 0; font-size: 12px; color: #666; text-align: center;">Podgląd zdjęcia</p>' +
-                        '</div>';
+                    previewContainer.innerHTML =
+                        '<img src="' + e.target.result + '" ' +
+                             'style="max-width: 400px; max-height: 400px; object-fit: cover; border-radius: 4px; display: block;" />';
                 };
                 
                 reader.readAsDataURL(file);
             }
         });
     }
-    
+
     // Zastosuj podgląd do wszystkich pól zdjęć
     const imageInputs = document.querySelectorAll('input[type="file"][name$="photo"], input[type="file"][name$="featured_image"], input[type="file"][name$="certificate"]');
     imageInputs.forEach(function(input) {
