@@ -8,15 +8,96 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/admin_custom.css' %}">
     <script src="{% static 'js/admin_image_preview.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'logo/dog-logo.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        /* Dodatkowe style inline dla lepszej integracji */
+        body {
+            background-attachment: fixed !important;
+        }
+        
+        /* Animacje loading */
+        .module {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name">
-    <a href="{% url 'admin:index' %}">
-        <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" style="height: 30px; margin-right: 10px; vertical-align: middle;">
-        Hodowla z Wojciechowic
-    </a>
-</h1>
+<div style="display: flex; align-items: center;">
+    <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" 
+         style="height: 40px; margin-right: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+    <h1 id="site-name" style="margin: 0; font-size: 24px; font-weight: 600;">
+        <a href="{% url 'admin:index' %}" 
+           style="color: white; text-decoration: none; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            🐕 Hodowla z Wojciechowic
+        </a>
+    </h1>
+</div>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+<!-- Usuń globalną nawigację dla czystszego wyglądu -->
+{% endblock %}
+
+{% block welcome-msg %}
+    <div style="background: rgba(255,255,255,0.2); 
+                padding: 10px 20px; 
+                border-radius: 20px; 
+                backdrop-filter: blur(10px);
+                margin-left: 20px;">
+        {% trans 'Welcome,' %}
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>
+    </div>
+{% endblock %}
+
+{% block footer %}
+<div id="footer" style="background: transparent; 
+                        text-align: center; 
+                        padding: 40px 20px 20px; 
+                        color: #666; 
+                        margin-top: 50px;">
+    <p style="margin: 0; 
+              font-size: 14px; 
+              color: #888;
+              text-shadow: 0 1px 2px rgba(255,255,255,0.8);">
+        💙 Panel Administracyjny - Hodowla z Wojciechowic 
+        <span style="opacity: 0.7;">| Zarządzaj z pasją</span>
+    </p>
+</div>
+{% endblock %}
