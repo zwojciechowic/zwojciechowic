@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^e6jiebqftu*p-')
 
-DEBUG = False
+DEBUG = True
 
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -149,3 +149,11 @@ DEFAULT_FROM_EMAIL = 'zwojciechowic@gmail.com'
 
 DEFAULT_CHARSET = 'utf-8'
 EMAIL_CHARSET = 'utf-8'
+
+
+
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+if not DEBUG:
+    if not isinstance(STATICFILES_DIRS, list):
+        STATICFILES_DIRS = list(STATICFILES_DIRS)
