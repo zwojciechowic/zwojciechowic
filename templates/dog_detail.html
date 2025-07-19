@@ -3,41 +3,36 @@
 {% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-
+<div class="hero-section">
     <div class="row">
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-8">
+            <h1 class="display-4">{{ dog.name }}</h1>
+            <p class="text-muted">{{ dog.breed }} | {{ dog.get_gender_display }}</p>
+            
             {% if dog.photo %}
-            <div class="card">
-                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 400px; object-fit: cover;">
-            </div>
+            <img src="{{ dog.photo.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
             {% endif %}
+            
+            <div class="content">
+                {{ dog.description|linebreaks }}
+            </div>
+            
+            <div class="mt-4">
+                <a href="{% url 'dogs' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Powrót do listy psów
+                </a>
+            </div>
         </div>
-        
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title">{{ dog.name }}</h1>
-                    
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <strong>Rasa:</strong> {{ dog.breed }}
-                        </div>
-                        <div class="col-6">
-                            <strong>Płeć:</strong> {{ dog.get_gender_display }}
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
-                        </div>
-                        <div class="col-6">
-                            <strong>Wiek:</strong> 
-                            {% now "Y" as current_year %}
-                            {{ dog.birth_date|timesince }}
-                        </div>
-                    </div>
+                    <h5 class="card-title">Informacje o psie</h5>
+                    <p class="card-text">
+                        <strong>Rasa:</strong> {{ dog.breed }}<br>
+                        <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}<br>
+                        <strong>Wiek:</strong> {{ dog.birth_date|timesince }}
+                    </p>
                     
                     {% if dog.is_breeding %}
                     <div class="alert alert-info">
@@ -46,27 +41,6 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Opis</h3>
-                    <div class="card-text">
-                        {{ dog.description|linebreaks }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12">
-            <a href="{% url 'dogs' %}" class="btn btn-primary">
-                <i class="fas fa-arrow-left"></i> Powrót do listy psów
-            </a>
         </div>
     </div>
 </div>
