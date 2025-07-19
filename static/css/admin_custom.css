@@ -1,0 +1,90 @@
+/* static/css/admin_custom.css */
+
+/* Zmiana kolorów nagłówka */
+#header {
+    background: #2c3e50 !important;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #ecf0f1 !important;
+}
+
+/* Sidebar */
+.module h2, .module caption, .inline-group h2 {
+    background: #34495e !important;
+    color: #ecf0f1 !important;
+}
+
+/* Przyciski */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #e74c3c !important;
+    border: none !important;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #c0392b !important;
+}
+
+/* Linki */
+a:link, a:visited {
+    color: #3498db !important;
+}
+
+a:hover {
+    color: #2980b9 !important;
+}
+
+/* Tabele */
+.results th {
+    background: #34495e !important;
+    color: #ecf0f1 !important;
+}
+
+.row1 {
+    background: #f8f9fa !important;
+}
+
+.row2 {
+    background: #e9ecef !important;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: #95a5a6 !important;
+    color: #2c3e50 !important;
+}
+
+div.breadcrumbs a {
+    color: #2c3e50 !important;
+}
+
+/* Formularze */
+.form-row {
+    border-bottom: 1px solid #bdc3c7;
+    padding: 10px 0;
+}
+
+.errorlist {
+    background: #e74c3c !important;
+    color: white !important;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+/* Dashboard */
+.module h2 a {
+    color: #ecf0f1 !important;
+}
+
+.dashboard #content {
+    width: auto !important;
+}
+
+/* Custom logo */
+#branding {
+    background-image: url('../logo/dog-logo.png');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 30px 30px;
+    padding-left: 50px !important;
+}
