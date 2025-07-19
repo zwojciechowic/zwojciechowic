@@ -157,3 +157,8 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 if not DEBUG:
     if not isinstance(STATICFILES_DIRS, list):
         STATICFILES_DIRS = list(STATICFILES_DIRS)
+
+
+ADMIN_SITE_HEADER = "🏡 Hodowla z Wojciechowic"
+ADMIN_SITE_TITLE = "Hodowla Admin"
+ADMIN_INDEX_TITLE = "Panel Zarządzania"

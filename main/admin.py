@@ -90,6 +90,12 @@ class DogAdmin(admin.ModelAdmin):
             'fields': ('description', 'photo', 'preview_image')
         }),
     )
+    class Media:
+        css = {
+            'all': ('css/admin_custom.css',)
+        }
+        js = ('js/admin_image_preview.js',)
+
     
     def preview_image(self, obj):
         if obj.photo:
@@ -121,7 +127,11 @@ class PuppyAdmin(admin.ModelAdmin):
             'fields': ('description', 'photo', 'preview_image')
         }),
     )
-    
+    class Media:
+        css = {
+            'all': ('css/admin_custom.css',)
+        }
+        js = ('js/admin_image_preview.js',)
     def preview_image(self, obj):
         if obj.photo:
             return format_html(
@@ -151,7 +161,11 @@ class ReservationAdmin(admin.ModelAdmin):
             'fields': ('message',)
         }),
     )
-    
+    class Media:
+        css = {
+            'all': ('css/admin_custom.css',)
+        }
+        js = ('js/admin_image_preview.js',)
     actions = ['mark_as_confirmed', 'mark_as_cancelled']
     
     def mark_as_confirmed(self, request, queryset):
@@ -181,7 +195,11 @@ class ContactMessageAdmin(admin.ModelAdmin):
             'fields': ('subject', 'message', 'is_read')
         }),
     )
-    
+    class Media:
+        css = {
+            'all': ('css/admin_custom.css',)
+        }
+        js = ('js/admin_image_preview.js',)
     actions = ['mark_as_read', 'mark_as_unread']
     
     def mark_as_read(self, request, queryset):
