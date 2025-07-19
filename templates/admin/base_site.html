@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Hodowla z Wojciechowic{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_custom.css' %}">
+    <script src="{% static 'js/admin_image_preview.js' %}"></script>
+    <link rel="shortcut icon" href="{% static 'logo/dog-logo.ico' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" style="height: 30px; margin-right: 10px; vertical-align: middle;">
+        Hodowla z Wojciechowic
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
