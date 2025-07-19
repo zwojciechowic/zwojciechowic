@@ -1,13 +1,15 @@
 /* components/tables.css - Tabele i wyniki */
 
-/* Tabele */
-.results {
+/* Tabele - główne selektory dla Django admin */
+.results, #result_list, #changelist, .changelist-results, table {
     background: var(--bg-white) !important;
     border-radius: var(--radius-medium) !important;
     overflow: hidden !important;
     box-shadow: var(--shadow-medium) !important;
     margin-top: var(--spacing-lg) !important;
     color: var(--text-primary) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
 }
 
 .results th {
