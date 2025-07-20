@@ -22,9 +22,48 @@
                 <a href="{% url 'puppies' %}" class="btn btn-primary btn-lg">Zobacz dostępne szczenięta</a>
             </div>
             <div class="col-lg-6">
-                {% load static %}
-                <img src="{% static 'img/celta-3.jpeg' %}" alt="Celta - Owczarek niemiecki" class="img-fluid rounded mb-3">
-                <img src="{% static 'img/mona-2.jpeg' %}" alt="Mona - Owczarek staroniemiecki" class="img-fluid rounded">
+                <!-- Wyświetlanie psów jako karty -->
+                {% if featured_dogs %}
+                    {% for dog in featured_dogs %}
+                    <div class="mb-3">
+                        <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
+                            <div class="card card-hover">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        {% if dog.photo %}
+                                        <img src="{{ dog.photo.url }}" class="img-fluid rounded-start h-100" alt="{{ dog.name }}" style="object-fit: cover;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark">{{ dog.name }}</h5>
+                                            <div class="card-details mb-2">
+                                                <small class="text-muted">
+                                                    <strong>Rasa:</strong> {{ dog.breed }}<br>
+                                                    <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                                                    <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                                                </small>
+                                            </div>
+                                            <p class="card-text text-muted">{{ dog.description|truncatewords:15 }}</p>
+                                            <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Link do wszystkich psów -->
+                    <div class="text-center mt-3">
+                        <a href="{% url 'dogs' %}" class="btn btn-outline-primary">Zobacz wszystkie nasze psy</a>
+                    </div>
+                {% else %}
+                    <!-- Fallback gdy nie ma psów -->
+                    {% load static %}
+                    <img src="{% static 'img/celta-3.jpeg' %}" alt="Celta - Owczarek niemiecki" class="img-fluid rounded mb-3">
+                    <img src="{% static 'img/mona-2.jpeg' %}" alt="Mona - Owczarek staroniemiecki" class="img-fluid rounded">
+                {% endif %}
             </div>
         </div>
     </div>
