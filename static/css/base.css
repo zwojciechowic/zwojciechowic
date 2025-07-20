@@ -6,3 +6,13 @@
 @import 'footer.css';
 @import 'components.css';
 @import 'mobile.css';
+
+.btn-primary {
+    background-color: #221d1a !important;
+    border-color: #221d1a !important;
+}
+
+.btn-primary:hover {
+    background-color: #1a1612 !important;
+    border-color: #1a1612 !important;
+}
