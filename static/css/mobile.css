@@ -231,6 +231,26 @@
         width: auto;
         object-fit: contain; /* lub cover - zależy od efektu jakiego chcesz */
     }
+    .card .row {
+        flex-direction: column; /* zmień układ na pionowy */
+    }
+    
+    .card .col-md-8, 
+    .card .col-md-4 {
+        width: 100% !important; /* każda kolumna zajmuje pełną szerokość */
+        max-width: 100% !important;
+    }
+    
+    .card img {
+        width: 100%; /* zdjęcie wypełnia całą szerokość */
+        height: 200px; /* ustal wysokość */
+        object-fit: cover;
+        border-radius: 15px 15px 0 0; /* zaokrąglenia tylko na górze */
+    }
+    
+    .card-body {
+        border-radius: 0 0 15px 15px; /* zaokrąglenia tylko na dole */
+    }
 }
 
 @media (max-width: 480px) {
