@@ -1,35 +1,35 @@
-/* base/variables.css - Zmienne CSS */
+/* base/variables.css - Zmienne CSS - Paleta brązowo-pomarańczowa */
 
 :root {
-    /* Kolory główne */
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --secondary-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-    --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-    --success-gradient: linear-gradient(135deg, #96c93d 0%, #00b09b 100%);
+    /* Kolory główne - zgodne z główną stroną */
+    --primary-gradient: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #FF6B35 100%);
+    --secondary-gradient: linear-gradient(135deg, #D2691E 0%, #FF6B35 100%);
+    --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    --success-gradient: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     
     /* Kolory tekstu */
-    --text-primary: #2c3e50;
+    --text-primary: #2C3E50;
     --text-secondary: #6c757d;
     --text-white: white;
     --text-white-opacity: rgba(255,255,255,0.9);
     
     /* Kolory tła */
     --bg-white: white;
-    --bg-light: #fafbfc;
+    --bg-light: #F8F9FA;
     --bg-light-gray: #f8f9fa;
     --bg-border: #e9ecef;
-    --bg-hover: #f0f7ff;
+    --bg-hover: rgba(139, 69, 19, 0.05);
     
     /* Kolory linków */
-    --link-primary: #667eea;
-    --link-hover: #764ba2;
+    --link-primary: #8B4513;
+    --link-hover: #D2691E;
     
     /* Cienie */
     --shadow-light: 0 4px 20px rgba(0,0,0,0.05);
     --shadow-medium: 0 8px 32px rgba(0,0,0,0.1);
     --shadow-hover: 0 15px 40px rgba(0,0,0,0.15);
-    --shadow-primary: 0 4px 15px rgba(102, 126, 234, 0.3);
-    --shadow-primary-hover: 0 8px 25px rgba(102, 126, 234, 0.4);
+    --shadow-primary: 0 4px 15px rgba(139, 69, 19, 0.3);
+    --shadow-primary-hover: 0 8px 25px rgba(139, 69, 19, 0.4);
     
     /* Promienie */
     --radius-small: 10px;
@@ -48,4 +48,12 @@
     /* Transitions */
     --transition-fast: all 0.2s ease;
     --transition-medium: all 0.3s ease;
+    
+    /* Dodatkowe kolory dla admin */
+    --accent-light: rgba(255, 107, 53, 0.1);
+    --primary-light: rgba(139, 69, 19, 0.1);
+    --warning-color: #ffc107;
+    --warning-light: rgba(255, 193, 7, 0.1);
+    --info-color: #17a2b8;
+    --info-light: rgba(23, 162, 184, 0.1);
 }

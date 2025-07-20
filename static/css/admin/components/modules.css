@@ -1,89 +1,298 @@
-/* components/modules.css - Moduły i sekcje */
+/* components/modules.css - Moduły i panele */
 
-/* Dashboard i główne sekcje */
-.dashboard .module, .module {
+/* Główne moduły */
+.module {
     background: var(--bg-white) !important;
-    border: none !important;
-    border-radius: var(--radius-large) !important;
+    border-radius: var(--radius-medium) !important;
     box-shadow: var(--shadow-medium) !important;
-    margin-bottom: var(--spacing-xxl) !important;
+    margin-bottom: var(--spacing-xl) !important;
     overflow: hidden !important;
+    border: 1px solid var(--bg-border) !important;
     transition: var(--transition-medium) !important;
-    color: var(--text-primary) !important;
-    position: relative;
 }
 
-.dashboard .module:hover, .module:hover {
-    transform: translateY(-5px) !important;
+.module:hover {
     box-shadow: var(--shadow-hover) !important;
+    transform: translateY(-2px) !important;
 }
 
 /* Nagłówki modułów */
-.module h2, .module caption, .inline-group h2 {
+.module h2, .module h3, .module caption {
     background: var(--primary-gradient) !important;
     color: var(--text-white) !important;
     padding: var(--spacing-lg) var(--spacing-xl) !important;
     margin: 0 !important;
     font-weight: 600 !important;
-    font-size: 18px !important;
-    border-radius: 0 !important;
-    text-shadow: none !important;
+    font-size: 16px !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    border: none !important;
 }
 
-/* Linki w module */
-.module h2 a, .module caption a {
+.module h2 a, .module h3 a, .module caption a {
     color: var(--text-white) !important;
     text-decoration: none !important;
 }
 
-.module table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    color: var(--text-primary) !important;
+.module h2 a:hover, .module h3 a:hover, .module caption a:hover {
+    color: var(--text-white-opacity) !important;
 }
 
-.module th, .module td {
-    padding: var(--spacing-md) var(--spacing-xl) !important;
-    border: none !important;
-    border-bottom: 1px solid #f0f2f5 !important;
-    color: var(--text-primary) !important;
+/* Zawartość modułów */
+.module .form-row, .module tr, .module li {
+    border-bottom: 1px solid var(--bg-border) !important;
+    transition: var(--transition-fast) !important;
 }
 
-.module tr:last-child td {
+.module .form-row:hover, .module tr:hover, .module li:hover {
+    background: var(--bg-hover) !important;
+}
+
+.module .form-row:last-child, .module tr:last-child, .module li:last-child {
     border-bottom: none !important;
 }
 
-/* Linki w tabelach */
-.module td a, .module table a {
+/* Dashboard modules */
+#content-main .module {
+    background: var(--bg-white) !important;
+    border: 1px solid var(--bg-border) !important;
+}
+
+.dashboard .module table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.dashboard .module table th {
+    background: var(--primary-gradient) !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    border: none !important;
+}
+
+.dashboard .module table td {
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--bg-border) !important;
+    color: var(--text-primary) !important;
+}
+
+.dashboard .module table td a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: var(--transition-fast) !important;
+}
+
+.dashboard .module table td a:hover {
+    color: var(--link-hover) !important;
+}
+
+/* Recent actions module */
+#recent-actions-module h2 {
+    background: var(--secondary-gradient) !important;
+}
+
+#recent-actions-module .module ul {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#recent-actions-module .module li {
+    list-style: none !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    border-bottom: 1px solid var(--bg-border) !important;
+}
+
+#recent-actions-module .module li:last-child {
+    border-bottom: none !important;
+}
+
+#recent-actions-module .module li a {
     color: var(--link-primary) !important;
     text-decoration: none !important;
     font-weight: 500 !important;
 }
 
-.module td a:hover, .module table a:hover {
+#recent-actions-module .module li a:hover {
     color: var(--link-hover) !important;
 }
 
-/* Fieldset module */
-fieldset.module {
-    background: var(--bg-white) !important;
-    border: none !important;
-    border-radius: var(--radius-medium) !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
-    margin-bottom: var(--spacing-xl) !important;
-    padding: var(--spacing-xl) !important;
-    color: var(--text-primary) !important;
+#recent-actions-module .module li .mini {
+    color: var(--text-secondary) !important;
+    font-size: 12px !important;
+    margin-top: 4px !important;
 }
 
-/* Dodatkowe opływowe elementy */
-.module::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -1;
+/* Filtered module */
+.filtered .module {
+    border-radius: var(--radius-medium) !important;
+    overflow: visible !important;
+}
+
+.filtered .module h2 {
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0 !important;
+}
+
+/* Inline modules */
+.inline-group {
+    background: var(--bg-white) !important;
+    border: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-medium) !important;
+    margin-bottom: var(--spacing-xl) !important;
+    overflow: hidden !important;
+}
+
+.inline-group .module h2 {
+    background: var(--secondary-gradient) !important;
+}
+
+.inline-related {
+    background: var(--bg-light) !important;
+    border: none !important;
+    border-top: 1px solid var(--bg-border) !important;
+    padding: var(--spacing-lg) !important;
+}
+
+.inline-related:first-child {
+    border-top: none !important;
+}
+
+/* Fieldsets */
+fieldset.module {
+    border: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-medium) !important;
+    padding: 0 !important;
+    margin-bottom: var(--spacing-xl) !important;
+}
+
+fieldset.module h2 {
+    background: var(--primary-gradient) !important;
+    margin: 0 !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0 !important;
+}
+
+fieldset.module .form-row {
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    margin: 0 !important;
+}
+
+/* Collapse functionality */
+.collapse {
+    background: var(--bg-white) !important;
+}
+
+.collapsed .module .form-row {
+    display: none !important;
+}
+
+.collapsed .module h2 {
+    border-radius: var(--radius-medium) !important;
+}
+
+/* Error states */
+.module .errorlist {
+    background: rgba(220, 53, 69, 0.1) !important;
+    border: 1px solid #dc3545 !important;
+    color: #dc3545 !important;
+    padding: var(--spacing-md) !important;
+    border-radius: var(--radius-small) !important;
+    margin: var(--spacing-md) 0 !important;
+}
+
+.module .errorlist li {
+    border: none !important;
+    padding: 2px 0 !important;
+    font-weight: 500 !important;
+}
+
+/* Success states */
+.module .success {
+    background: var(--success-gradient) !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-md) !important;
+    border-radius: var(--radius-small) !important;
+    margin: var(--spacing-md) 0 !important;
+}
+
+/* Info states */
+.module .info {
+    background: var(--info-light) !important;
+    border: 1px solid #17a2b8 !important;
+    color: #17a2b8 !important;
+    padding: var(--spacing-md) !important;
+    border-radius: var(--radius-small) !important;
+    margin: var(--spacing-md) 0 !important;
+}
+
+/* Warning states */
+.module .warning {
+    background: var(--warning-light) !important;
+    border: 1px solid #ffc107 !important;
+    color: #856404 !important;
+    padding: var(--spacing-md) !important;
+    border-radius: var(--radius-small) !important;
+    margin: var(--spacing-md) 0 !important;
+}
+
+/* Special styling for object-tools */
+.object-tools {
+    padding: var(--spacing-lg) 0 !important;
+}
+
+.object-tools li {
+    background: none !important;
+    border: none !important;
+    border-radius: var(--radius-medium) !important;
+    overflow: hidden !important;
+    margin-left: var(--spacing-md) !important;
+}
+
+.object-tools li:first-child {
+    margin-left: 0 !important;
+}
+
+.object-tools a {
+    background: var(--primary-gradient) !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    display: block !important;
+    transition: var(--transition-medium) !important;
+    box-shadow: var(--shadow-primary) !important;
+}
+
+.object-tools a:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-primary-hover) !important;
+    color: var(--text-white) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .module {
+        margin-bottom: var(--spacing-lg) !important;
+        border-radius: var(--radius-small) !important;
+    }
+    
+    .module h2, .module h3, .module caption {
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+        font-size: 14px !important;
+    }
+    
+    .module .form-row {
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+    }
+    
+    .object-tools {
+        padding: var(--spacing-md) 0 !important;
+    }
+    
+    .object-tools li {
+        margin-left: var(--spacing-sm) !important;
+        margin-bottom: var(--spacing-sm) !important;
+    }
 }
