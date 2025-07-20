@@ -15,10 +15,13 @@ def home(request):
     
     # Najnowsze szczeniaki dla sekcji "Dostępne szczenięta"
     available_puppies = Puppy.objects.filter(is_available=True)[:3]
+
+    featured_dogs = Dog.objects.filter(is_breeding_dog=True)[:3]
     
     return render(request, 'index.html', {
         'page_obj': page_obj,
-        'available_puppies': available_puppies
+        'available_puppies': available_puppies,
+        'featured_dogs': featured_dogs
     })
 
 def blog_detail(request, slug):
