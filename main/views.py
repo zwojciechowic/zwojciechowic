@@ -16,7 +16,7 @@ def home(request):
     # Najnowsze szczeniaki dla sekcji "Dostępne szczenięta"
     available_puppies = Puppy.objects.filter(is_available=True)[:3]
 
-    featured_dogs = Dog.objects.filter(is_breeding=True)[:3]
+    featured_dogs = Dog.objects.filter(is_breeding=True)[:5]
     
     return render(request, 'index.html', {
         'page_obj': page_obj,
