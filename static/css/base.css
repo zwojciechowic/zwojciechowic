@@ -9,25 +9,26 @@
 
 .btn-primary {
     background-color: #30251a !important;
-    border-color: #3d2313 !important;
+    border-color: #30251a !important;
 }
 
 .btn-primary:hover {
-    background-color: #30251a !important;
+    background-color: #3d2313 !important;
     border-color: #3d2313 !important;
 }
+
 
 
 .btn-outline-primary {
     color: #221d1a !important;
     border-color: #30251a !important;
-    background-color: #8a6e5d !important;
+    background-color: #e0cdc2 !important;
 }
 
 .btn-outline-primary:hover {
-    color: #8a6e5d !important;
+    color: #e0cdc2 !important;
     background-color: #3d2313 !important;
-    border-color: #8a6e5d !important;
+    border-color: #e0cdc2 !important;
 }
 
 .btn-outline-primary:focus,
