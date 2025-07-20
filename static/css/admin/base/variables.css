@@ -1,11 +1,11 @@
 /* base/variables.css - Zmienne CSS - Paleta brązowo-pomarańczowa */
 
 :root {
-    /* Kolory główne - zgodne z główną stroną */
+    /* Kolory główne - zmienione z niebiesko-fioletowej na brązowo-pomarańczową */
     --primary-gradient: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #FF6B35 100%);
-    --secondary-gradient: linear-gradient(135deg, #D2691E 0%, #FF6B35 100%);
-    --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-    --success-gradient: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    --secondary-gradient: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+    --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    --success-gradient: linear-gradient(135deg, #96c93d 0%, #00b09b 100%);
     
     /* Kolory tekstu */
     --text-primary: #2C3E50;
@@ -20,14 +20,21 @@
     --bg-border: #e9ecef;
     --bg-hover: rgba(139, 69, 19, 0.05);
     
-    /* Kolory linków */
+    /* Kolory linków - zmienione na brązowe */
     --link-primary: #8B4513;
     --link-hover: #D2691E;
     
-    /* Cienie */
-    --shadow-light: 0 4px 20px rgba(0,0,0,0.05);
-    --shadow-medium: 0 8px 32px rgba(0,0,0,0.1);
-    --shadow-hover: 0 15px 40px rgba(0,0,0,0.15);
+    /* Dodatkowe kolory dla admin */
+    --primary-color: #8B4513;
+    --secondary-color: #D2691E;
+    --accent-color: #FF6B35;
+    --text-dark: #2C3E50;
+    --primary-light: rgba(139, 69, 19, 0.1);
+    
+    /* Cienie - dostosowane do brązowej palety */
+    --shadow-light: 0 4px 20px rgba(139, 69, 19, 0.05);
+    --shadow-medium: 0 8px 32px rgba(139, 69, 19, 0.1);
+    --shadow-hover: 0 15px 40px rgba(139, 69, 19, 0.15);
     --shadow-primary: 0 4px 15px rgba(139, 69, 19, 0.3);
     --shadow-primary-hover: 0 8px 25px rgba(139, 69, 19, 0.4);
     
@@ -48,12 +55,94 @@
     /* Transitions */
     --transition-fast: all 0.2s ease;
     --transition-medium: all 0.3s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Dodatkowe kolory dla admin */
-    --accent-light: rgba(255, 107, 53, 0.1);
-    --primary-light: rgba(139, 69, 19, 0.1);
-    --warning-color: #ffc107;
-    --warning-light: rgba(255, 193, 7, 0.1);
-    --info-color: #17a2b8;
-    --info-light: rgba(23, 162, 184, 0.1);
+    /* Dodatkowe zmienne dla Django admin */
+    --primary: #8B4513;
+    --secondary: #D2691E;
+    --accent: #FF6B35;
+    
+    /* Kolory tła Django */
+    --body-fg: #2C3E50;
+    --body-bg: #F8F9FA;
+    --body-quiet-color: #6C757D;
+    --body-loud-color: #2C3E50;
+    
+    /* Kolory linków Django */
+    --link-fg: #8B4513;
+    --link-hover-color: #D2691E;
+    --link-selected-fg: #D2691E;
+    
+    /* Kolory header Django */
+    --header-color: #FFFFFF;
+    --header-branding-color: #FFFFFF;
+    --header-bg: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #FF6B35 100%);
+    --header-link-color: rgba(255, 255, 255, 0.8);
+    
+    /* Kolory breadcrumbs */
+    --breadcrumbs-fg: #6C757D;
+    --breadcrumbs-link-fg: #8B4513;
+    --breadcrumbs-bg: rgba(248, 249, 250, 0.8);
+    
+    /* Kolory przycisków Django */
+    --button-fg: #FFFFFF;
+    --button-bg: #8B4513;
+    --button-hover-bg: #6F4E37;
+    --default-button-bg: #D2691E;
+    --default-button-hover-bg: #B8621A;
+    
+    /* Kolory formularzy Django */
+    --input-fg: #2C3E50;
+    --input-bg: #FFFFFF;
+    --input-focus-border-color: #8B4513;
+    
+    /* Kolory komunikatów */
+    --message-success-bg: rgba(40, 167, 69, 0.1);
+    --message-warning-bg: rgba(255, 193, 7, 0.1);
+    --message-error-bg: rgba(220, 53, 69, 0.1);
+    --message-info-bg: rgba(139, 69, 19, 0.1);
+    
+    /* Kolory statusów */
+    --success-color: #28A745;
+    --success-bg: rgba(40, 167, 69, 0.1);
+    --warning-color: #FFC107;
+    --warning-bg: rgba(255, 193, 7, 0.1);
+    --error-color: #DC3545;
+    --error-bg: rgba(220, 53, 69, 0.1);
+    --info-color: #17A2B8;
+    --info-bg: rgba(23, 162, 184, 0.1);
+    
+    /* Kolory tabel */
+    --table-border: #DEE2E6;
+    --table-header-bg: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+    --table-row-hover: rgba(139, 69, 19, 0.08);
+    --table-row-selected: rgba(139, 69, 19, 0.12);
+    
+    /* Kolory nawigacji */
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-border: rgba(139, 69, 19, 0.2);
+    --nav-link: #8B4513;
+    --nav-link-hover: #D2691E;
+    --nav-link-active: #FF6B35;
+}
+
+/* Dark mode support (opcjonalnie) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #E9ECEF;
+        --text-secondary: #ADB5BD;
+        --bg-white: #212529;
+        --bg-light-gray: #343A40;
+        --bg-border: #495057;
+        --bg-hover: rgba(139, 69, 19, 0.15);
+        
+        --body-fg: #E9ECEF;
+        --body-bg: #212529;
+        --input-bg: #343A40;
+        --breadcrumbs-bg: rgba(33, 37, 41, 0.8);
+        
+        --shadow-light: 0 4px 20px rgba(0,0,0,0.3);
+        --shadow-medium: 0 8px 32px rgba(0,0,0,0.4);
+        --shadow-primary: 0 4px 15px rgba(139, 69, 19, 0.4);
+    }
 }
