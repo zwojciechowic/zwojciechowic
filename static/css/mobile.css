@@ -223,11 +223,11 @@
 
 @media (max-width: 768px) and (orientation: landscape) {
     .mobile-menu {
-        padding: 20px;
+        padding: 10px;
     }
 
     .mobile-nav-items {
-        gap: 15px;
+        gap: 8px;
     }
 
     .mobile-nav-link {
