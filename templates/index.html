@@ -29,13 +29,13 @@
                         <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
                             <div class="card card-hover">
                                 <div class="row g-0">
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         {% if dog.photo %}
                                         <img src="{{ dog.photo.url }}" class="img-fluid rounded-start h-100" alt="{{ dog.name }}" style="object-fit: cover;">
                                         {% endif %}
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
+                                    <div class="col-md-4">
+                                        <div class="card-body text-start">
                                             <h5 class="card-title text-dark">{{ dog.name }}</h5>
                                             <div class="card-details mb-2">
                                                 <small class="text-muted">
