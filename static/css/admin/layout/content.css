@@ -1,35 +1,175 @@
-/* layout/content.css - Obszar treści */
+/* layout/content.css - Layout głównej zawartości */
 
-/* Content area */
+/* Główny kontener */
 #content {
-    margin: 0 40px !important;
-    padding: 0 !important;
     background: transparent !important;
+    padding: var(--spacing-xxl) var(--spacing-xl) !important;
+    margin: 0 !important;
+    min-height: calc(100vh - 120px) !important;
     color: var(--text-primary) !important;
 }
 
-/* Dashboard content */
-.dashboard #content-main {
-    width: 70% !important;
-    float: left !important;
-}
-
-.dashboard #content-related {
-    width: 28% !important;
-    float: right !important;
-    background: var(--bg-white) !important;
-    border-radius: var(--radius-large) !important;
-    box-shadow: var(--shadow-medium) !important;
+/* Główna zawartość */
+#content-main {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
     padding: 0 !important;
-    margin-top: 0 !important;
-    color: var(--text-primary) !important;
+    margin: 0 !important;
+    box-shadow: none !important;
 }
 
-/* Sidebar w recent actions */
-#content-related .module {
+/* Sidebar - prawy panel */
+#content-related {
+    background: transparent !important;
+    border: none !important;
+    margin-left: var(--spacing-xl) !important;
+    padding: 0 !important;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: var(--text-secondary) !important;
+    padding: var(--spacing-md) var(--spacing-xl) !important;
+    border-radius: var(--radius-round) !important;
+    margin-bottom: var(--spacing-xl) !important;
+    box-shadow: var(--shadow-light) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.breadcrumbs a {
+    color: var(--link-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: var(--transition-fast) !important;
+}
+
+.breadcrumbs a:hover {
+    color: var(--link-hover) !important;
+}
+
+/* Nagłówki stron */
+#content h1 {
+    color: var(--text-primary) !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    margin-bottom: var(--spacing-xl) !important;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8) !important;
+}
+
+#content h2 {
+    color: var(--text-primary) !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
     margin-bottom: var(--spacing-lg) !important;
 }
 
-#recent-actions-module h2 {
-    background: var(--success-gradient) !important;
+#content h3 {
+    color: var(--text-primary) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: var(--spacing-md) !important;
+}
+
+/* Change form - formularz edycji */
+.change-form {
+    background: transparent !important;
+}
+
+.change-form .module {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Submit row - pasek przycisków */
+.submit-row {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-medium) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    margin: var(--spacing-xl) 0 !important;
+    text-align: right !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: var(--shadow-medium) !important;
+    position: sticky !important;
+    bottom: 20px !important;
+    z-index: 100 !important;
+}
+
+.submit-row input {
+    margin-left: var(--spacing-md) !important;
+}
+
+/* Change list - lista objektów */
+#changelist {
+    background: transparent !important;
+}
+
+#changelist .results {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Search bar */
+#changelist-search {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-medium) !important;
+    padding: var(--spacing-lg) !important;
+    margin-bottom: var(--spacing-xl) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: var(--shadow-light) !important;
+}
+
+#changelist-search input[type="text"] {
+    background: var(--bg-white) !important;
+    border: 2px solid var(--bg-border) !important;
+    border-radius: var(--radius-small) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    width: 300px !important;
+    transition: var(--transition-medium) !important;
+    color: var(--text-primary) !important;
+}
+
+#changelist-search input[type="text"]:focus {
+    border-color: var(--link-primary) !important;
+    box-shadow: 0 0 0 3px var(--primary-light) !important;
+    outline: none !important;
+}
+
+#changelist-search input[type="submit"] {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    border-radius: var(--radius-small) !important;
+    margin-left: var(--spacing-md) !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: var(--transition-medium) !important;
+}
+
+#changelist-search input[type="submit"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-primary) !important;
+}
+
+/* Filters - filtry boczne */
+#changelist-filter {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-medium) !important;
+    padding: 0 !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: var(--shadow-medium) !important;
+    overflow: hidden !important;
+}
+
+#changelist-filter h2 {
+    background: var(--primary-gradient) !important;
+    color: var(--text-white) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
 }
