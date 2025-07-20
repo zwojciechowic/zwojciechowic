@@ -185,6 +185,13 @@
     color: var(--primary-color);
 }
 
+.card-img-top,
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
     /* Hide desktop navbar */
@@ -213,12 +220,31 @@
     .main-content {
         padding-top: 70px;
     }
+
+    .card-img-top {
+        height: 200px; /* ustal stałą wysokość */
+        object-fit: cover; /* zachowaj proporcje bez rozciągania */
+    }
+    
+    .img-fluid {
+        max-height: 300px; /* maksymalna wysokość na mobile */
+        width: auto;
+        object-fit: contain; /* lub cover - zależy od efektu jakiego chcesz */
+    }
 }
 
 @media (max-width: 480px) {
     .mobile-nav-link {
         padding: 15px 30px;
         font-size: 1.1rem;
+    }
+
+    .card-img-top {
+        height: 150px; /* jeszcze mniejsze na małych telefonach */
+    }
+    
+    .img-fluid {
+        max-height: 200px;
     }
 }
 
