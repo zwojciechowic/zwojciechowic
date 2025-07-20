@@ -40,7 +40,7 @@
                                             <div class="card-details mb-2">
                                                 <small class="text-muted">
                                                     <strong>Rasa:</strong> {{ dog.breed }}<br>
-                                                    <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                                                    <strong>Płeć:</strong> {% if dog.gender == 'male' %}Pies{% elif dog.gender == 'female' %}Suka{% endif %}<br>
                                                     <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
                                                 </small>
                                             </div>
