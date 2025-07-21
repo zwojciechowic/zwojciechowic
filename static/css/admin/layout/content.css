@@ -26,17 +26,17 @@
     padding: 0 !important;
 }
 
+/* Poprawione pozycjonowanie object-tools */
 .object-tools {
     float: right !important;
     clear: none !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
-    position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
+    position: relative !important; /* Zmienione z absolute na relative */
     z-index: 10 !important;
     overflow: visible !important;
+    margin-bottom: var(--spacing-md) !important; /* Dodany margines dolny */
 }
 
 .object-tools li {
@@ -103,6 +103,7 @@
     color: var(--secondary-color) !important;
 }
 
+/* Poprawiony nagłówek h1 - tworzy kontener flex dla h1 i object-tools */
 #content h1 {
     color: var(--text-dark) !important;
     font-size: 28px !important;
@@ -111,10 +112,24 @@
     text-shadow: 0 2px 4px rgba(255,255,255,0.8) !important;
     clear: none !important;
     padding-top: 0 !important;
-    margin-right: 200px !important;
+    margin-right: 0 !important; /* Usunięty margin-right */
     position: relative !important;
     display: inline-block !important;
-    width: calc(100% - 200px) !important;
+    width: auto !important; /* Zmienione z calc */
+    float: left !important; /* Dodane float left */
+}
+
+/* Kontener dla nagłówka i przycisków */
+#content-main > .object-tools {
+    margin-top: 0 !important;
+    margin-bottom: var(--spacing-xl) !important;
+}
+
+/* Clearfix dla kontenera nagłówka */
+#content-main::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
 }
 
 #content h2 {
@@ -161,6 +176,7 @@
     background: transparent !important;
     overflow: visible !important;
     position: relative !important;
+    clear: both !important; /* Dodane clear both */
 }
 
 .change-list .object-tools {
@@ -406,7 +422,15 @@
 
 @media (max-width: 1024px) {
     #content h1 {
-        margin-right: 150px !important;
+        float: none !important;
+        display: block !important;
+        margin-bottom: var(--spacing-md) !important;
+    }
+    
+    .object-tools {
+        float: none !important;
+        text-align: center !important;
+        margin-bottom: var(--spacing-lg) !important;
     }
 }
 
@@ -449,7 +473,7 @@
     }
 
     #content h1 {
-        margin-right: 0 !important;
+        float: none !important;
         text-align: center !important;
         margin-bottom: var(--spacing-md) !important;
     }
