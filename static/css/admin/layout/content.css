@@ -7,6 +7,8 @@
     margin: 0 !important;
     min-height: calc(100vh - 120px) !important;
     color: var(--text-primary) !important;
+    overflow: visible !important;
+    position: relative !important;
 }
 
 /* Główna zawartość */
@@ -17,6 +19,8 @@
     padding: 0 !important;
     margin: 0 !important;
     box-shadow: none !important;
+    overflow: visible !important;
+    position: relative !important;
 }
 
 /* Sidebar - prawy panel */
@@ -25,6 +29,58 @@
     border: none !important;
     margin-left: var(--spacing-xl) !important;
     padding: 0 !important;
+}
+
+.object-tools {
+    float: right !important;
+    clear: both !important;
+    margin: 0 0 var(--spacing-lg) var(--spacing-lg) !important;
+    padding: 0 !important;
+    list-style: none !important;
+    position: relative !important;
+    z-index: 10 !important; /* Zapewnia, że przycisk jest na wierzchu */
+    overflow: visible !important; /* KLUCZOWE - zapobiega ucinaniu */
+}
+
+.object-tools li {
+    display: block !important;
+    float: left !important;
+    margin-left: var(--spacing-md) !important;
+    height: auto !important; /* DODANE */
+    overflow: visible !important; /* DODANE */
+}
+
+/* Stylowanie przycisku "Dodaj" */
+.object-tools .addlink {
+    background: var(--primary-gradient) !important;
+    color: var(--text-white) !important;
+    border: none !important;
+    border-radius: var(--radius-medium) !important;
+    padding: 12px 24px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    transition: var(--transition-medium) !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    box-shadow: var(--shadow-primary) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    white-space: nowrap !important; /* Zapobiega łamaniu tekstu */
+    min-width: auto !important; /* Pozwala na naturalne dopasowanie szerokości */
+    height: auto !important; /* Pozwala na naturalne dopasowanie wysokości */
+    line-height: normal !important; /* Resetuje line-height */
+    vertical-align: top !important; /* Wyrównuje do góry */
+}
+
+.object-tools .addlink:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-primary-hover) !important;
+    color: var(--text-white) !important;
+}
+
+.object-tools .addlink:active {
+    transform: translateY(0) !important;
+    box-shadow: var(--shadow-primary) !important;
 }
 
 /* Breadcrumbs */
@@ -37,6 +93,8 @@
     box-shadow: var(--shadow-light) !important;
     backdrop-filter: blur(10px) !important;
     border: 1px solid rgba(139, 69, 19, 0.1) !important;
+    clear: both !important; /* Zapewnia właściwe ułożenie */
+    overflow: visible !important;
 }
 
 .breadcrumbs a {
@@ -57,6 +115,9 @@
     font-weight: 600 !important;
     margin-bottom: var(--spacing-xl) !important;
     text-shadow: 0 2px 4px rgba(255,255,255,0.8) !important;
+    clear: both !important;
+    padding-top: 0 !important;
+    margin-right: 200px !important;
 }
 
 #content h2 {
@@ -104,6 +165,15 @@
 /* Change list - lista objektów */
 #changelist {
     background: transparent !important;
+    overflow: visible !important; /* DODANE */
+    position: relative !important;
+}
+
+/* Change list tools - górny pasek z przyciskami */
+.change-list .object-tools {
+    margin-bottom: var(--spacing-lg) !important;
+    padding-bottom: var(--spacing-md) !important;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.1) !important;
 }
 
 #changelist .results {
@@ -374,4 +444,96 @@
         bottom: auto !important;
         text-align: center !important;
     }
+}
+
+
+
+
+
+
+/* Kontener change-list */
+
+
+/* Breadcrumbs - upewnij się, że nie kolidują z przyciskami */
+
+
+/* Responsive - dostosowania dla mniejszych ekranów */
+@media (max-width: 1024px) {
+    #content h1 {
+        margin-right: 150px !important; /* Mniej miejsca na większych przyciskach */
+    }
+}
+
+@media (max-width: 768px) {
+    .object-tools {
+        float: none !important;
+        clear: both !important;
+        margin: var(--spacing-lg) 0 !important;
+        text-align: center !important;
+    }
+    
+    .object-tools li {
+        float: none !important;
+        display: inline-block !important;
+        margin: var(--spacing-sm) !important;
+    }
+    
+    #content h1 {
+        margin-right: 0 !important;
+        text-align: center !important;
+        margin-bottom: var(--spacing-md) !important;
+    }
+    
+    .object-tools .addlink {
+        padding: 10px 20px !important;
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .object-tools .addlink {
+        padding: 8px 16px !important;
+        font-size: 12px !important;
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+        margin-bottom: var(--spacing-sm) !important;
+    }
+}
+
+/* Dodatkowe poprawki dla zapewnienia widoczności */
+body.change-list #content {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+/* Zapewnienie, że toolbar nie ucina przycisków */
+.change-list-object-tools {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 50px !important;
+}
+
+/* Jeśli używasz custom CSS dla admin panelu */
+.module h2, .module caption, .inline-group h2 {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Poprawka dla przypadku gdy nagłówek ma position relative */
+.change-list h1 {
+    position: relative !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+}
+
+/* Upewnij się, że container nie ma maksymalnej szerokości która by ucinała */
+.colM #content {
+    max-width: none !important;
+    overflow: visible !important;
+}
+
+.colMS #content {
+    max-width: none !important;
+    overflow: visible !important;
 }
