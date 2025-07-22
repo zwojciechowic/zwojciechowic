@@ -132,9 +132,9 @@ WHITENOISE_IGNORE_MISSING_FILES = True
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dqdxzrnsn',
-    'API_KEY': '141369572283313',
-    'API_SECRET': 's7LL6MjBwbAkKENSUzDz1tT4vNw',
+    'CLOUD_NAME': 'CLOUD_NAME',
+    'API_KEY': 'API_KEY',
+    'API_SECRET': 'API_SECRET',
 }
 
 
