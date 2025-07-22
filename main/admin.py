@@ -242,10 +242,17 @@ class CustomAdminSite(admin.AdminSite):
 # admin_site.register(Reservation, ReservationAdmin)
 # admin_site.register(ContactMessage, ContactMessageAdmin)
 
+@admin.register(AboutSection)
+class AboutSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'about_page')
+    list_editable = ('order',)
+    ordering = ('about_page', 'order')
+
 class AboutSectionInline(admin.TabularInline):
     model = AboutSection
     extra = 1
     fields = ('order', 'title', 'content')
+    ordering = ('order',)
 
 @admin.register(AboutPage)
 class AboutPageAdmin(admin.ModelAdmin):
