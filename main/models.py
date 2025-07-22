@@ -117,7 +117,7 @@ class AboutPage(models.Model):
     def __str__(self):
         return "Strona 'O nas'"
 
-class AboutSection(models.Model):
+class AboutSections(models.Model):
     about_page = models.ForeignKey(
         AboutPage,
         on_delete=models.CASCADE,
