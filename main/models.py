@@ -99,3 +99,28 @@ class ContactMessage(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.subject}"
+
+
+
+class AboutPage(models.Model):
+    main_title = models.CharField("Główny tytuł (H2)", max_length=200)
+    quote_text = models.TextField("Tekst cytatu", blank=True)
+    quote_author = models.CharField("Podpis cytatu", max_length=100, blank=True)
+
+    class Meta:
+        verbose_name = "Strona O nas"
+        verbose_name_plural = "Strona O nas"
+
+    def __str__(self):
+        return "Konfiguracja strony 'O nas'"
+
+class AboutSection(models.Model):
+    about_page = models.ForeignKey(AboutPage, on_delete=models.CASCADE, related_name='sections')
+    title = models.CharField("Tytuł sekcji", max_length=200)
+    content = models.TextField("Treść")
+    order = models.PositiveIntegerField("Kolejność", default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Sekcja"
+        verbose_name_plural = "Sekcje"

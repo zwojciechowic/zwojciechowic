@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSection
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -241,3 +241,23 @@ class CustomAdminSite(admin.AdminSite):
 # admin_site.register(Puppy, PuppyAdmin)
 # admin_site.register(Reservation, ReservationAdmin)
 # admin_site.register(ContactMessage, ContactMessageAdmin)
+
+class AboutSectionInline(admin.TabularInline):
+    model = AboutSection
+    extra = 1
+
+@admin.register(AboutPage)
+class AboutPageAdmin(admin.ModelAdmin):
+    inlines = [AboutSectionInline]
+    fieldsets = (
+        (None, {
+            'fields': ('main_title',)
+        }),
+        ('Cytat', {
+            'fields': ('quote_text', 'quote_author'),
+            'classes': ('collapse',)  # Opcjonalne zwijanie sekcji
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not AboutPage.objects.exists()

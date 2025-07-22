@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.paginator import Paginator
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage
 from .forms import ReservationForm, ContactForm
 
 def home(request):
@@ -121,3 +121,7 @@ Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
         form = ContactForm()
     
     return render(request, 'contact.html', {'form': form})
+
+def about(request):
+    about_page = AboutPage.objects.first()
+    return render(request, 'about.html', {'about': about_page})
