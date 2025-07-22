@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSection
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -242,16 +242,12 @@ class CustomAdminSite(admin.AdminSite):
 # admin_site.register(Reservation, ReservationAdmin)
 # admin_site.register(ContactMessage, ContactMessageAdmin)
 
-class AboutPageForm(forms.ModelForm):
-    content = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 30}),
-        help_text="Możesz używać HTML: <h3>Nagłówek</h3> <p>Paragraf</p>"
-    )
-    
-    class Meta:
-        model = AboutPage
-        fields = '__all__'
+class AboutSectionInline(admin.TabularInline):
+    model = AboutSection
+    extra = 1
+    fields = ('order', 'title', 'content')
 
 @admin.register(AboutPage)
 class AboutPageAdmin(admin.ModelAdmin):
-    form = AboutPageForm
+    inlines = [AboutSectionInline]
+    fields = ('main_title', 'top_image', 'quote_text')

@@ -101,14 +101,11 @@ class ContactMessage(models.Model):
     def __str__(self):
         return f"{self.name} - {self.subject}"
 
-
-
 class AboutPage(models.Model):
     main_title = models.CharField("Główny tytuł", max_length=200)
-    content = models.TextField("Treść strony")
     quote_text = models.TextField("Tekst cytatu", blank=True)
     top_image = models.ImageField(
-        "Zdjęcie główne",
+        "Zdjęcie główne", 
         upload_to='about/',
         blank=True
     )
@@ -119,3 +116,21 @@ class AboutPage(models.Model):
 
     def __str__(self):
         return "Strona 'O nas'"
+
+class AboutSection(models.Model):
+    about_page = models.ForeignKey(
+        AboutPage,
+        on_delete=models.CASCADE,
+        related_name='sections'
+    )
+    title = models.CharField("Nagłówek H3", max_length=200, blank=True)
+    content = models.TextField("Treść paragrafu")
+    order = models.PositiveIntegerField("Kolejność", default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Sekcja"
+        verbose_name_plural = "Sekcje"
+
+    def __str__(self):
+        return f"Sekcja {self.order}"
