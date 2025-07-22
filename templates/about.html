@@ -10,47 +10,30 @@
         <div class="col-lg-8">
             {% if about %}
                 <h2>{{ about.main_title }}</h2>
-                
-                {% for section in about.sections.all %}
-                    <div class="about-section {% if forloop.first %}first-section{% endif %}">
-                        {% if section.title %}
-                            <h3 class="section-title">{{ section.title }}</h3>
-                        {% endif %}
-                        {% if section.content %}
-                            <p class="section-content">{{ section.content|linebreaks }}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                {{ about.content|linebreaks }}
                 
                 {% if about.quote_text %}
-                    <blockquote class="about-quote">
-                        <p class="quote-text"><em>"{{ about.quote_text }}"</em></p>
-                        {% if about.quote_author %}
-                            <footer class="quote-author">{{ about.quote_author }}</footer>
-                        {% endif %}
+                    <blockquote>
+                        <p><em>"{{ about.quote_text }}"</em></p>
                     </blockquote>
-                {% endif %}
-                
-                {% if about.final_text %}
-                    <p class="final-text"><strong>{{ about.final_text }}</strong></p>
                 {% endif %}
             {% endif %}
         </div>
         <div class="col-lg-4">
-            {% if about.featured_image %}
-                <img src="{{ about.featured_image.url }}" alt="{% trans "Hodowla z Wojciechowic" %}" class="img-fluid rounded mb-3 about-image">
-            {% else %}
-                <img src="{% static 'img/couple-1.jpeg' %}" alt="{% trans "Hodowla z Wojciechowic" %}" class="img-fluid rounded mb-3 about-image">
+            {% if about.top_image %}
+                <img src="{{ about.top_image.url }}" 
+                     alt="{% trans "Hodowla z Wojciechowic" %}" 
+                     class="img-fluid rounded mb-3">
             {% endif %}
             
-            <div class="card contact-card">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title contact-title">{% trans "Kontakt" %}</h5>
-                    <div class="contact-info">
-                        <p><strong>{% trans "Adres" %}:</strong> {{ about.address|default:"Wojciechowice Duże 11" }}</p>
-                        <p><strong>{% trans "Telefon" %}:</strong> {{ about.phone|default:"+48 533 498 384" }}</p>
-                        <p><strong>Email:</strong> {{ about.email|default:"zwojciechowic@gmail.com" }}</p>
-                    </div>
+                    <h5 class="card-title">{% trans "Kontakt" %}</h5>
+                    <p class="card-text">
+                        <strong>{% trans "Adres" %}:</strong> Wojciechowice Duże 11<br>
+                        <strong>{% trans "Telefon" %}:</strong> +48 533 498 384<br>
+                        <strong>Email:</strong> zwojciechowic@gmail.com
+                    </p>
                 </div>
             </div>
         </div>
