@@ -40,7 +40,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://zwojciechowic.pl',
     'https://www.zwojciechowic.pl',
 ]
-
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
