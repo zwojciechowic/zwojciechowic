@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200, verbose_name='Tytuł')
@@ -103,24 +104,18 @@ class ContactMessage(models.Model):
 
 
 class AboutPage(models.Model):
-    main_title = models.CharField("Główny tytuł (H2)", max_length=200)
-    quote_text = models.TextField("Tekst cytatu", blank=True)
-    quote_author = models.CharField("Podpis cytatu", max_length=100, blank=True)
+    main_title = models.CharField(_("Główny tytuł"), max_length=200)
+    content = models.TextField(_("Treść strony"))
+    quote_text = models.TextField(_("Tekst cytatu"), blank=True)
+    top_image = models.ImageField(
+        _("Zdjęcie główne"), 
+        upload_to='about/',
+        blank=True
+    )
 
     class Meta:
-        verbose_name = "Strona O nas"
-        verbose_name_plural = "Strona O nas"
+        verbose_name = _("Strona O nas")
+        verbose_name_plural = _("Strona O nas")
 
     def __str__(self):
-        return "Konfiguracja strony 'O nas'"
-
-class AboutSection(models.Model):
-    about_page = models.ForeignKey(AboutPage, on_delete=models.CASCADE, related_name='sections')
-    title = models.CharField("Tytuł sekcji", max_length=200)
-    content = models.TextField("Treść")
-    order = models.PositiveIntegerField("Kolejność", default=0)
-
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Sekcja"
-        verbose_name_plural = "Sekcje"
+        return "Strona 'O nas'"
