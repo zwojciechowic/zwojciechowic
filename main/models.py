@@ -104,18 +104,18 @@ class ContactMessage(models.Model):
 
 
 class AboutPage(models.Model):
-    main_title = models.CharField(_("Główny tytuł"), max_length=200)
-    content = models.TextField(_("Treść strony"))
-    quote_text = models.TextField(_("Tekst cytatu"), blank=True)
+    main_title = models.CharField("Główny tytuł", max_length=200)
+    content = models.TextField("Treść strony")
+    quote_text = models.TextField("Tekst cytatu", blank=True)
     top_image = models.ImageField(
-        _("Zdjęcie główne"), 
+        "Zdjęcie główne",
         upload_to='about/',
         blank=True
     )
 
     class Meta:
-        verbose_name = _("Strona O nas")
-        verbose_name_plural = _("Strona O nas")
+        verbose_name = "Strona O nas"
+        verbose_name_plural = "Strona O nas"
 
     def __str__(self):
         return "Strona 'O nas'"

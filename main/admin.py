@@ -242,9 +242,16 @@ class CustomAdminSite(admin.AdminSite):
 # admin_site.register(Reservation, ReservationAdmin)
 # admin_site.register(ContactMessage, ContactMessageAdmin)
 
+class AboutPageForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 30}),
+        help_text="Możesz używać HTML: <h3>Nagłówek</h3> <p>Paragraf</p>"
+    )
+    
+    class Meta:
+        model = AboutPage
+        fields = '__all__'
+
 @admin.register(AboutPage)
 class AboutPageAdmin(admin.ModelAdmin):
-    fields = ['main_title', 'top_image', 'content', 'quote_text']
-    
-    def has_add_permission(self, request):
-        return not AboutPage.objects.exists()
+    form = AboutPageForm
