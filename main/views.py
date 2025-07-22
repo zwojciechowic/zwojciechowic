@@ -54,7 +54,8 @@ def puppies(request):
     available_puppies = Puppy.objects.filter(is_available=True)
     return render(request, 'puppies.html', {
         'puppies': available_puppies,
-        'favicon': 'logo/puppy-logo.ico'
+        'favicon': 'logo/puppy-logo.ico',
+        'favicon_png': 'logo/puppy-logo.png'
     })
 
 def reservations(request):
