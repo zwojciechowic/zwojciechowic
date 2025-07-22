@@ -1,12 +1,14 @@
+from dotenv import load_dotenv
 import os
 import dj_database_url
 from pathlib import Path
 
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'b-_keiudl$u@j!j)wul(xexmw+0w*hq%2fb6^e6jiebqftu*p-')
-
-DEBUG = True
+DEBUG = False
 
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -143,9 +145,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'zwojciechowic@gmail.com'
-EMAIL_HOST_PASSWORD = 'kerw afom rdrs yqmo'
-DEFAULT_FROM_EMAIL = 'zwojciechowic@gmail.com'
+EMAIL_HOST_USER = 'EMAIL_HOST_USER'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'DEFAULT_FROM_EMAIL'
 
 DEFAULT_CHARSET = 'utf-8'
 EMAIL_CHARSET = 'utf-8'
