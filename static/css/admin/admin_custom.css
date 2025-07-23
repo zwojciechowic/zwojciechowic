@@ -21,3 +21,15 @@
 @import 'utils/messages.css';
 @import 'utils/animations.css';
 @import 'utils/responsive.css';
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: transparent;
+    z-index: 999;
+    pointer-events: none;
+}
