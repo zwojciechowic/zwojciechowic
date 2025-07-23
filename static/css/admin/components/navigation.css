@@ -1,5 +1,15 @@
 /* components/navigation.css - Nawigacja i breadcrumbs */
 
+/* Ukrycie domyślnego Django nav sidebar */
+#nav-sidebar {
+    display: none !important;
+}
+
+/* Przywrócenie normalnej szerokości content bez sidebara */
+.colMS #content, .colM #content {
+    margin-left: 0 !important;
+}
+
 /* Breadcrumbs */
 .breadcrumbs, div.breadcrumbs {
     background: var(--bg-white) !important;
