@@ -258,3 +258,6 @@ class AboutSectionInline(admin.TabularInline):
 class AboutPageAdmin(admin.ModelAdmin):
     inlines = [AboutSectionInline]
     fields = ('main_title', 'top_image', 'quote_text')
+
+    def has_add_permission(self, request):
+        return not AboutPage.objects.exists()
