@@ -90,17 +90,17 @@ def contact_view(request):
             email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject}"
             email_message = f"""Nowa wiadomość z formularza kontaktowego na stronie hodowli:
 
-Imię i nazwisko: {name}
-Email: {email}
-Telefon: {phone if phone else 'Nie podano'}
-Temat: {subject}
+                Imię i nazwisko: {name}
+                Email: {email}
+                Telefon: {phone if phone else 'Nie podano'}
+                Temat: {subject}
 
-Wiadomość:
-{message}
+                Wiadomość:
+                {message}
 
----
-Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
-"""
+                ---
+                Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
+                """
             
             try:
                 email = EmailMessage(
