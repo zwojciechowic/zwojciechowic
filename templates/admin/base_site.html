@@ -17,13 +17,25 @@
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-    {% for breadcrumb in breadcrumbs %}
-        {% if forloop.last %}
-            {{ breadcrumb.title }}
+    {% if not is_popup %}
+        {% if cl and cl.opts.app_label == 'main' %}
+            {# Dla aplikacji main pokazuj tylko "Panel główny" #}
+            <a href="{% url 'admin:index' %}">Panel główny</a>
+            {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
+        {% elif opts and opts.app_label == 'main' %}
+            {# Dla widoków szczegółowych aplikacji main #}
+            <a href="{% url 'admin:index' %}">Panel główny</a>
+            {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
+        {% elif '/admin/main/' in request.path %}
+            {# Fallback dla wszystkich stron main #}
+            <a href="{% url 'admin:index' %}">Panel główny</a>
+            {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
         {% else %}
-            <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a> › 
+            {# Standardowe breadcrumbs dla innych aplikacji #}
+            <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+            {% if title %} › {{ title }}{% endif %}
         {% endif %}
-    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
 
