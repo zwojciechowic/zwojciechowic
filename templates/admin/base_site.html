@@ -139,6 +139,54 @@
         </div>
     </div>
 </div>
+<!-- Przycisk hamburgera (dodaj w headerze) -->
+<button id="adminMobileToggle" class="admin-mobile-toggle">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Mobile Menu Overlay (dodaj przed zamknięciem body) -->
+<div id="adminMobileMenu" class="admin-mobile-menu">
+    <button id="adminMobileClose" class="admin-mobile-close">
+        <i class="fas fa-times"></i>
+    </button>
+    
+    <div class="admin-mobile-brand">
+        <img src="{% load static %}{% static 'logo/dog-logo.png' %}" alt="Logo">
+        <span>Admin Panel</span>
+    </div>
+    
+    <div class="admin-mobile-nav-items">
+        <div class="admin-mobile-nav-group">
+            <div class="admin-mobile-nav-title">
+                ⚙️ Panel Główny
+            </div>
+            
+            <!-- Przykładowe linki - dostosuj do swoich potrzeb -->
+            <a href="/admin/" class="admin-mobile-nav-link">
+                🏠 Dashboard
+            </a>
+            <a href="/admin/main/dog/" class="admin-mobile-nav-link">
+                🐕 Psy
+            </a>
+            <a href="/admin/main/puppy/" class="admin-mobile-nav-link">
+                🐶 Szczenięta
+            </a>
+            <!-- Dodaj więcej linków według potrzeb -->
+        </div>
+        
+        <div class="admin-mobile-nav-group">
+            <div class="admin-mobile-nav-title">
+                👤 Użytkownik
+            </div>
+            <a href="/admin/password_change/" class="admin-mobile-nav-link">
+                🔒 Zmień hasło
+            </a>
+            <a href="/admin/logout/" class="admin-mobile-nav-link">
+                🚪 Wyloguj
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block nav-global %}
