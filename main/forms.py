@@ -13,6 +13,18 @@ class ReservationForm(forms.ModelForm):
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
 
+class PuppyReservationForm(forms.ModelForm):
+    """Formularz rezerwacji dla konkretnego szczenięcia (bez wyboru szczenięcia)"""
+    class Meta:
+        model = Reservation
+        fields = ['customer_name', 'customer_email', 'customer_phone', 'message']
+        widgets = {
+            'customer_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
 class ContactForm(forms.Form):
     name = forms.CharField(
         max_length=100,

@@ -44,7 +44,7 @@
                     {% endif %}
                     
                     <p class="card-text">{{ puppy.description|truncatewords:15 }}</p>
-                    <a href="{% url 'reservations' %}" class="btn btn-primary">Zarezerwuj</a>
+                    <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary">Zobacz szczegóły</a>
                 </div>
             </div>
         </div>
