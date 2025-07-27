@@ -1,5 +1,5 @@
 /* ===========================================
-   MINIMALISTYCZNY DASHBOARD - GŁÓWNE STYLE
+   MINIMALISTYCZNY DASHBOARD - UPROSZCZONE STYLE
    =========================================== */
 
 /* CSS Variables dla spójności kolorów */
@@ -7,19 +7,18 @@
     --primary-color: #6366f1;
     --primary-light: #a5b4fc;
     --primary-dark: #4f46e5;
-    --secondary-color: #f1f5f9;
+    --secondary-color: #f8fafc;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --text-muted: #94a3b8;
     --white: #ffffff;
     --border-light: #e2e8f0;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    --spacing-xs: 8px;
     --spacing-sm: 12px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
@@ -34,73 +33,55 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--secondary-color);
     color: var(--text-primary);
     line-height: 1.6;
 }
 
 /* ===========================================
-   DASHBOARD HERO SECTION
+   DASHBOARD HERO SECTION - UPROSZCZONY
    =========================================== */
 
 .dashboard-hero {
     background: var(--white);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-xl) var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    margin: var(--spacing-lg) auto var(--spacing-xl);
+    max-width: 1200px;
     text-align: center;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-light);
-    position: relative;
-    overflow: hidden;
-}
-
-.dashboard-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.dashboard-hero-content {
-    position: relative;
-    z-index: 1;
 }
 
 .dashboard-hero h1 {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
     color: var(--text-primary);
     margin-bottom: var(--spacing-sm);
-    letter-spacing: -0.025em;
 }
 
 .dashboard-hero p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--text-secondary);
     font-weight: 400;
 }
 
 /* ===========================================
-   MANAGEMENT GRID LAYOUT
+   UPROSZCZONY GRID LAYOUT
    =========================================== */
 
 .management-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-lg);
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-lg);
 }
 
 /* ===========================================
-   MANAGEMENT CARDS
+   UPROSZCZONE KARTY
    =========================================== */
 
 .management-card {
@@ -111,99 +92,85 @@ body {
     color: inherit;
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
     display: block;
+    min-height: 180px;
 }
 
 .management-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
     text-decoration: none;
     color: inherit;
-    border-color: var(--primary-light);
 }
 
-.management-card:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: -2px;
-}
-
-/* Card Header */
+/* Card Header - uproszczony */
 .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
 }
 
 .card-icon {
-    font-size: 24px;
-    color: var(--primary-color);
+    font-size: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     background: rgba(99, 102, 241, 0.1);
     border-radius: var(--radius-md);
+    transition: transform 0.3s ease;
 }
 
-.card-actions {
-    opacity: 0;
-    transition: opacity 0.2s ease;
+.management-card:hover .card-icon {
+    transform: scale(1.1);
 }
 
-.management-card:hover .card-actions {
-    opacity: 1;
-}
-
+/* Przycisk dodawania - wyraźniejszy */
 .add-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     background: var(--primary-color);
     color: var(--white);
     border-radius: 50%;
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
 }
 
 .add-button:hover {
     background: var(--primary-dark);
-    transform: scale(1.05);
+    transform: scale(1.1);
     box-shadow: var(--shadow-md);
     color: var(--white);
     text-decoration: none;
 }
 
-.plus-icon {
-    line-height: 1;
-}
-
-/* Card Content */
+/* Card Content - większe i bardziej czytelne */
 .card-content h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: var(--spacing-xs);
-    letter-spacing: -0.025em;
+    margin-bottom: var(--spacing-sm);
 }
 
 .card-content p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
     line-height: 1.5;
 }
 
-/* Card Stats */
+/* Card Stats - większe liczby */
 .card-stats {
     display: flex;
     flex-direction: column;
@@ -211,100 +178,77 @@ body {
 }
 
 .stat-number {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 800;
     color: var(--primary-color);
     line-height: 1;
-    margin-bottom: var(--spacing-xs);
-    letter-spacing: -0.025em;
+    margin-bottom: 4px;
+}
+
+.stat-number.success {
+    color: var(--success-color);
+}
+
+.stat-number.warning {
+    color: var(--warning-color);
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-/* Specjalne style dla karty bez przycisku dodawania */
-.no-add-button .card-actions {
-    display: none;
-}
-
 /* ===========================================
-   ANIMACJE I EFEKTY
+   RESPONSIVE DESIGN - UPROSZCZONY
    =========================================== */
 
-.management-card {
-    animation: fadeInUp 0.4s ease-out;
-    animation-fill-mode: both;
-}
-
-.management-card:nth-child(1) { animation-delay: 0.05s; }
-.management-card:nth-child(2) { animation-delay: 0.1s; }
-.management-card:nth-child(3) { animation-delay: 0.15s; }
-.management-card:nth-child(4) { animation-delay: 0.2s; }
-.management-card:nth-child(5) { animation-delay: 0.25s; }
-.management-card:nth-child(6) { animation-delay: 0.3s; }
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===========================================
-   RESPONSIVE DESIGN
-   =========================================== */
-
-/* Mobile First - domyślne style dla urządzeń mobilnych */
-@media (max-width: 640px) {
+/* Mobile */
+@media (max-width: 768px) {
     .management-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
-        padding: 0 var(--spacing-sm);
-    }
-    
-    .management-card {
-        padding: var(--spacing-md);
+        padding: 0 var(--spacing-md);
     }
     
     .dashboard-hero {
-        margin: 0 var(--spacing-sm) var(--spacing-lg);
-        padding: var(--spacing-lg) var(--spacing-md);
+        margin: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+        padding: var(--spacing-lg);
     }
     
     .dashboard-hero h1 {
-        font-size: 24px;
+        font-size: 26px;
     }
     
     .dashboard-hero p {
-        font-size: 14px;
-    }
-    
-    .card-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    
-    .card-content h3 {
         font-size: 16px;
     }
     
+    .management-card {
+        min-height: 160px;
+    }
+    
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+    
+    .add-button {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+    
     .stat-number {
-        font-size: 28px;
+        font-size: 32px;
     }
 }
 
 /* Tablet */
-@media (min-width: 641px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
     .management-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -317,60 +261,46 @@ body {
     }
 }
 
-/* Large Desktop */
-@media (min-width: 1400px) {
-    .management-grid {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1400px;
-    }
-}
-
 /* ===========================================
-   UTILITY CLASSES
+   ACCESSIBILITY
    =========================================== */
 
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Focus visible dla lepszej dostępności */
-.management-card:focus-visible {
+.management-card:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
 
-.add-button:focus-visible {
+.add-button:focus {
     outline: 2px solid var(--white);
     outline-offset: 2px;
 }
 
-/* Wysokie kontrasty dla osób z problemami wzroku */
+/* Dla osób z problemami wzroku */
 @media (prefers-contrast: high) {
     :root {
-        --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.2);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.2);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2);
+        --shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 0.3);
+        --shadow-md: 0 8px 16px -4px rgb(0 0 0 / 0.3);
         --border-light: #cbd5e1;
     }
 }
 
-/* Zmniejszone animacje dla osób wrażliwych na ruch */
+/* Zmniejszone animacje */
 @media (prefers-reduced-motion: reduce) {
-    .management-card {
-        animation: none;
-    }
-    
     .management-card,
     .add-button,
-    .card-actions {
+    .card-icon {
         transition: none;
+    }
+    
+    .management-card:hover {
+        transform: none;
+    }
+    
+    .management-card:hover .card-icon {
+        transform: none;
+    }
+    
+    .add-button:hover {
+        transform: none;
     }
 }

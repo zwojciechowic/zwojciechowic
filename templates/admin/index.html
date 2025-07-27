@@ -1,4 +1,4 @@
-{# templates/admin/index.html #}
+{# templates/admin/index.html - UPROSZCZONA WERSJA #}
 
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
@@ -10,22 +10,18 @@
 
 {% block content %}
 <div class="dashboard-hero">
-    <div class="dashboard-hero-content">
-        <h1>🏡 Witaj w panelu hodowli!</h1>
-        <p>Zarządzaj swoją hodowlą psów z łatwością i przyjemnością</p>
-    </div>
+    <h1>🏡 Panel Hodowli</h1>
+    <p>Zarządzaj swoją hodowlą psów z łatwością</p>
 </div>
 
 <div class="management-grid">
-    <!-- Nasze Psy Card -->
-    <a href="{% url 'admin:main_dog_changelist' %}" class="management-card" aria-label="Zarządzaj psami">
+    <!-- Nasze Psy -->
+    <a href="{% url 'admin:main_dog_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">🐕</div>
-            <div class="card-actions">
-                <a href="{% url 'admin:main_dog_add' %}" class="add-button" onclick="event.stopPropagation();" aria-label="Dodaj nowego psa">
-                    <span class="plus-icon">+</span>
-                </a>
-            </div>
+            <div class="card-icon">🐕</div>
+            <a href="{% url 'admin:main_dog_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj psa">
+                +
+            </a>
         </div>
         <div class="card-content">
             <h3>Nasze Psy</h3>
@@ -37,15 +33,13 @@
         </div>
     </a>
 
-    <!-- Szczenięta Card -->
-    <a href="{% url 'admin:main_puppy_changelist' %}" class="management-card" aria-label="Zarządzaj szczeniętami">
+    <!-- Szczenięta -->
+    <a href="{% url 'admin:main_puppy_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">🐶</div>
-            <div class="card-actions">
-                <a href="{% url 'admin:main_puppy_add' %}" class="add-button" onclick="event.stopPropagation();" aria-label="Dodaj nowe szczenię">
-                    <span class="plus-icon">+</span>
-                </a>
-            </div>
+            <div class="card-icon">🐶</div>
+            <a href="{% url 'admin:main_puppy_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj szczenię">
+                +
+            </a>
         </div>
         <div class="card-content">
             <h3>Szczenięta</h3>
@@ -57,13 +51,10 @@
         </div>
     </a>
 
-    <!-- Rezerwacje Card -->
-    <a href="{% url 'admin:main_reservation_changelist' %}" class="management-card" aria-label="Zarządzaj rezerwacjami">
+    <!-- Rezerwacje -->
+    <a href="{% url 'admin:main_reservation_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">📝</div>
-            <div class="card-actions">
-                <!-- Rezerwacje zazwyczaj nie są dodawane przez admin, więc brak przycisku + -->
-            </div>
+            <div class="card-icon">📝</div>
         </div>
         <div class="card-content">
             <h3>Rezerwacje</h3>
@@ -75,15 +66,13 @@
         </div>
     </a>
 
-    <!-- Blog Card -->
-    <a href="{% url 'admin:main_blogpost_changelist' %}" class="management-card" aria-label="Zarządzaj blogiem">
+    <!-- Blog -->
+    <a href="{% url 'admin:main_blogpost_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">✍️</div>
-            <div class="card-actions">
-                <a href="{% url 'admin:main_blogpost_add' %}" class="add-button" onclick="event.stopPropagation();" aria-label="Dodaj nowy post">
-                    <span class="plus-icon">+</span>
-                </a>
-            </div>
+            <div class="card-icon">✍️</div>
+            <a href="{% url 'admin:main_blogpost_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj post">
+                +
+            </a>
         </div>
         <div class="card-content">
             <h3>Blog</h3>
@@ -95,45 +84,56 @@
         </div>
     </a>
 
-    <!-- Wiadomości Kontaktowe Card -->
-    <a href="{% url 'admin:main_contactmessage_changelist' %}" class="management-card" aria-label="Zarządzaj wiadomościami">
+    <!-- Wiadomości -->
+    <a href="{% url 'admin:main_contactmessage_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">✉️</div>
-            <div class="card-actions">
-                <!-- Wiadomości kontaktowe nie są dodawane ręcznie -->
-            </div>
+            <div class="card-icon">✉️</div>
         </div>
         <div class="card-content">
             <h3>Wiadomości</h3>
-            <p>Zarządzaj wiadomościami kontaktowymi</p>
+            <p>Wiadomości kontaktowe</p>
             <div class="card-stats">
                 <span class="stat-number {% if unread_messages > 0 %}warning{% endif %}">{{ messages_count|default:"0" }}</span>
-                <span class="stat-label">{% if unread_messages > 0 %}({{ unread_messages }} nieprzeczytanych){% else %}wiadomości{% endif %}</span>
+                <span class="stat-label">
+                    {% if unread_messages > 0 %}
+                        ({{ unread_messages }} nowych)
+                    {% else %}
+                        wiadomości
+                    {% endif %}
+                </span>
             </div>
         </div>
     </a>
 
-    <!-- Strona O Nas Card -->
-    <a href="{% url 'admin:main_aboutpage_changelist' %}" class="management-card {% if about_exists %}no-add-button{% endif %}" aria-label="Zarządzaj stroną O Nas">
+    <!-- Strona O Nas -->
+    <a href="{% url 'admin:main_aboutpage_changelist' %}" class="management-card">
         <div class="card-header">
-            <div class="card-icon" aria-hidden="true">📄</div>
-            <div class="card-actions">
-                {% if not about_exists %}
-                <a href="{% url 'admin:main_aboutpage_add' %}" class="add-button" onclick="event.stopPropagation();" aria-label="Utwórz stronę O Nas">
-                    <span class="plus-icon">+</span>
-                </a>
-                {% endif %}
-            </div>
+            <div class="card-icon">📄</div>
+            {% if not about_exists %}
+            <a href="{% url 'admin:main_aboutpage_add' %}" class="add-button" onclick="event.stopPropagation();" title="Utwórz stronę">
+                +
+            </a>
+            {% endif %}
         </div>
         <div class="card-content">
             <h3>Strona O Nas</h3>
-            <p>{% if about_exists %}Edytuj stronę o hodowli{% else %}Utwórz stronę o hodowli{% endif %}</p>
+            <p>
+                {% if about_exists %}
+                    Edytuj informacje o hodowli
+                {% else %}
+                    Utwórz stronę o hodowli
+                {% endif %}
+            </p>
             <div class="card-stats">
                 <span class="stat-number {% if about_exists %}success{% else %}warning{% endif %}">
-                    {% if about_exists %}✓{% else %}✗{% endif %}
+                    {% if about_exists %}✓{% else %}!{% endif %}
                 </span>
                 <span class="stat-label">
-                    {% if about_exists %}skonfigurowana{% else %}wymaga utworzenia{% endif %}
+                    {% if about_exists %}
+                        skonfigurowana
+                    {% else %}
+                        do utworzenia
+                    {% endif %}
                 </span>
             </div>
         </div>
@@ -141,7 +141,7 @@
 </div>
 
 <script>
-// Dodanie obsługi klawiatury dla lepszej dostępności
+// Prosta obsługa klawiatury
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.management-card');
     
@@ -153,20 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Animacja hover dla ikon
-    const cardIcons = document.querySelectorAll('.card-icon');
-    cardIcons.forEach(icon => {
-        const card = icon.closest('.management-card');
-        card.addEventListener('mouseenter', () => {
-            icon.style.transform = 'scale(1.1) rotate(5deg)';
-        });
-        card.addEventListener('mouseleave', () => {
-            icon.style.transform = 'scale(1) rotate(0deg)';
-        });
-    });
 });
 </script>
 
-{{ block.super }}
 {% endblock %}
