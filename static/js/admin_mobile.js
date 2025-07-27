@@ -44,16 +44,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!navbar || !toggleBtn || !overlay) return;
         
         // Event listeners
-        toggleBtn.addEventListener('click', function() {
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             navbar.classList.add('mobile-active');
             overlay.classList.add('active');
             overlay.style.display = 'block';
             document.body.style.overflow = 'hidden';
         });
         
-        // Zamknij po kliknięciu w overlay
-        overlay.addEventListener('click', function() {
-            closeMobileMenu();
+        // Zamknij po kliknięciu w overlay (ale nie w navbar)
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                closeMobileMenu();
+            }
         });
         
         // Zamknij po kliknięciu w link
@@ -79,6 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
             document.body.style.overflow = 'auto';
         }
+        
+        // Zapobiegnij zamykaniu przy kliknięciu w navbar
+        navbar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
     }
     
     function removeMobileMenu() {
