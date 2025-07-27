@@ -278,17 +278,74 @@ class AboutPageAdmin(admin.ModelAdmin):
         return not AboutPage.objects.exists()
     
 
+# Zastąp Twoją obecną klasę HodowlaAdminSite na końcu pliku main/admin.py
+
 class HodowlaAdminSite(AdminSite):
     def index(self, request, extra_context=None):
-        """Custom dashboard z licznikami"""
+        """Custom dashboard z licznikami - ulepszona wersja"""
         extra_context = extra_context or {}
-        extra_context.update({
-            'dogs_count': Dog.objects.count(),
-            'puppies_count': Puppy.objects.filter(is_available=True).count(),
-            'reservations_count': Reservation.objects.filter(status='pending').count(),
-            'posts_count': BlogPost.objects.filter(is_published=True).count(),
-            'about_exists': AboutPage.objects.exists(),
-        })
+        
+        try:
+            # Podstawowe liczniki
+            dogs_count = Dog.objects.count()
+            puppies_count = Puppy.objects.filter(is_available=True).count()
+            posts_count = BlogPost.objects.filter(is_published=True).count()
+            about_exists = AboutPage.objects.exists()
+            
+            # Liczniki rezerwacji
+            pending_reservations = Reservation.objects.filter(status='pending').count()
+            confirmed_reservations = Reservation.objects.filter(status='confirmed').count()
+            total_reservations = pending_reservations + confirmed_reservations
+            
+            # Liczniki wiadomości kontaktowych
+            total_messages = ContactMessage.objects.count()
+            unread_messages = ContactMessage.objects.filter(is_read=False).count()
+            
+            # Dodatkowe statystyki (opcjonalnie)
+            total_puppies = Puppy.objects.count()
+            sold_puppies = total_puppies - puppies_count
+            draft_posts = BlogPost.objects.filter(is_published=False).count()
+            breeding_dogs = Dog.objects.filter(is_breeding=True).count()
+            
+            extra_context.update({
+                # Podstawowe dane dla kart
+                'dogs_count': dogs_count,
+                'puppies_count': puppies_count,
+                'posts_count': posts_count,
+                'reservations_count': total_reservations,
+                'about_exists': about_exists,
+                
+                # Dane dla wiadomości
+                'messages_count': total_messages,
+                'unread_messages': unread_messages,
+                
+                # Dodatkowe szczegóły
+                'pending_reservations': pending_reservations,
+                'confirmed_reservations': confirmed_reservations,
+                'sold_puppies': sold_puppies,
+                'draft_posts': draft_posts,
+                'breeding_dogs': breeding_dogs,
+            })
+            
+        except Exception as e:
+            # W przypadku błędu (np. przy pierwszym uruchomieniu bez migracji)
+            print(f"Błąd w dashboard: {e}")
+            extra_context.update({
+                'dogs_count': 0,
+                'puppies_count': 0,
+                'posts_count': 0,
+                'reservations_count': 0,
+                'about_exists': False,
+                'messages_count': 0,
+                'unread_messages': 0,
+                'pending_reservations': 0,
+                'confirmed_reservations': 0,
+                'sold_puppies': 0,
+                'draft_posts': 0,
+                'breeding_dogs': 0,
+            })
+        
         return super().index(request, extra_context)
 
+# Zastąp ostatnią linię Twojego pliku admin.py:
 admin.site.__class__ = HodowlaAdminSite
