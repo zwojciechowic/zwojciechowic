@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.getElementById('adminMobileToggle');
     const mobileMenu = document.getElementById('adminMobileMenu');
     const mobileClose = document.getElementById('adminMobileClose');
-    const mobileNavLinks = document.querySelectorAll('.admin-mobile-nav-link');
+    const mobileNavLinks = document.querySelectorAll('.admin-mobile-nav-link, .admin-mobile-add-btn');
 
     // Sprawdź czy elementy istnieją
     if (!mobileMenuToggle || !mobileMenu) {

@@ -35,7 +35,6 @@ body::after {
     z-index: 999;
     pointer-events: none;
 }
-
 /* Admin Mobile Menu Styles */
 
 /* Przycisk hamburgera */
@@ -142,24 +141,54 @@ body::after {
     border-bottom: 2px solid #0078d4;
 }
 
+.admin-mobile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
 .admin-mobile-nav-link {
+    flex: 1;
     display: block;
     color: white;
     text-decoration: none;
     padding: 15px 20px;
-    margin-bottom: 8px;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 500;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 0;
 }
 
 .admin-mobile-nav-link:hover,
 .admin-mobile-nav-link.active {
     background: #0078d4;
     color: white;
-    transform: translateX(10px);
+    transform: translateX(5px);
+}
+
+.admin-mobile-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.admin-mobile-add-btn:hover {
+    background: #218838;
+    transform: scale(1.1);
+    color: white;
 }
 
 /* Responsive */
