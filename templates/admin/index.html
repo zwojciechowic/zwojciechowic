@@ -9,58 +9,100 @@
     </div>
 </div>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-number">🐕</div>
-        <div class="stat-label">Nasze Psy</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number">🐶</div>
-        <div class="stat-label">Szczenięta</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number">📝</div>
-        <div class="stat-label">Rezerwacje</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number">✍️</div>
-        <div class="stat-label">Wpisy Blog</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number">📄</div>
-        <div class="stat-label">Strona O Nas</div>
-    </div>
-</div>
-
-<div class="quick-actions">
-    <a href="{% url 'admin:main_dog_add' %}" class="quick-action">
-        <div class="quick-action-icon">🐕</div>
-        <h3>Dodaj Psa</h3>
-        <p>Dodaj nowego psa do hodowli</p>
-    </a>
-    
-    <a href="{% url 'admin:main_puppy_add' %}" class="quick-action">
-        <div class="quick-action-icon">🐶</div>
-        <h3>Dodaj Szczenię</h3>
-        <p>Zarejestruj nowe szczenię</p>
-    </a>
-    
-    <a href="{% url 'admin:main_reservation_changelist' %}" class="quick-action">
-        <div class="quick-action-icon">📋</div>
-        <h3>Zarządzaj Rezerwacjami</h3>
-        <p>Zobacz i edytuj rezerwacje</p>
-    </a>
-    
-    <a href="{% url 'admin:main_blogpost_add' %}" class="quick-action">
-        <div class="quick-action-icon">✍️</div>
-        <h3>Nowy Post</h3>
-        <p>Napisz wpis na blog</p>
+<div class="management-grid">
+    <a href="{% url 'admin:main_dog_changelist' %}" class="management-card">
+        <div class="card-header">
+            <div class="card-icon">🐕</div>
+            <div class="card-actions">
+                <a href="{% url 'admin:main_dog_add' %}" class="add-button" onclick="event.stopPropagation();">
+                    <span class="plus-icon">+</span>
+                </a>
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Nasze Psy</h3>
+            <p>Zarządzaj psami w hodowli</p>
+            <div class="card-stats">
+                <span class="stat-number">{{ dogs_count|default:"0" }}</span>
+                <span class="stat-label">psów w hodowli</span>
+            </div>
+        </div>
     </a>
 
-    <a href="{% url 'admin:main_aboutpage_changelist' %}" class="quick-action">
-        <div class="quick-action-icon">📄</div>
-        <h3>Zarządzaj Stroną O Nas</h3>
-        <p>Edytuj treść strony o hodowli</p>
+    <a href="{% url 'admin:main_puppy_changelist' %}" class="management-card">
+        <div class="card-header">
+            <div class="card-icon">🐶</div>
+            <div class="card-actions">
+                <a href="{% url 'admin:main_puppy_add' %}" class="add-button" onclick="event.stopPropagation();">
+                    <span class="plus-icon">+</span>
+                </a>
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Szczenięta</h3>
+            <p>Zarządzaj szczeniętami</p>
+            <div class="card-stats">
+                <span class="stat-number">{{ puppies_count|default:"0" }}</span>
+                <span class="stat-label">dostępnych szczeniąt</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="{% url 'admin:main_reservation_changelist' %}" class="management-card">
+        <div class="card-header">
+            <div class="card-icon">📝</div>
+            <div class="card-actions">
+                <!-- Rezerwacje zazwyczaj nie są dodawane przez admin, więc brak przycisku + -->
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Rezerwacje</h3>
+            <p>Zarządzaj rezerwacjami</p>
+            <div class="card-stats">
+                <span class="stat-number">{{ reservations_count|default:"0" }}</span>
+                <span class="stat-label">aktywnych rezerwacji</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="{% url 'admin:main_blogpost_changelist' %}" class="management-card">
+        <div class="card-header">
+            <div class="card-icon">✍️</div>
+            <div class="card-actions">
+                <a href="{% url 'admin:main_blogpost_add' %}" class="add-button" onclick="event.stopPropagation();">
+                    <span class="plus-icon">+</span>
+                </a>
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Blog</h3>
+            <p>Zarządzaj wpisami na blogu</p>
+            <div class="card-stats">
+                <span class="stat-number">{{ posts_count|default:"0" }}</span>
+                <span class="stat-label">opublikowanych postów</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="{% url 'admin:main_aboutpage_changelist' %}" class="management-card {% if about_exists %}no-add-button{% endif %}">
+        <div class="card-header">
+            <div class="card-icon">📄</div>
+            <div class="card-actions">
+                {% if not about_exists %}
+                <a href="{% url 'admin:main_aboutpage_add' %}" class="add-button" onclick="event.stopPropagation();">
+                    <span class="plus-icon">+</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Strona O Nas</h3>
+            <p>{% if about_exists %}Edytuj stronę o hodowli{% else %}Utwórz stronę o hodowli{% endif %}</p>
+            <div class="card-stats">
+                <span class="stat-number">{% if about_exists %}✓{% else %}✗{% endif %}</span>
+                <span class="stat-label">{% if about_exists %}skonfigurowana{% else %}wymaga utworzenia{% endif %}</span>
+            </div>
+        </div>
     </a>
 </div>
 

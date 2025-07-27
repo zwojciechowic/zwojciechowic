@@ -41,33 +41,30 @@
     opacity: 0.8;
 }
 
-/* Stats Grid - dostosowane dla 5 elementów */
-.stats-grid {
+/* Management Grid - Wysokie karty */
+.management-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
     margin-bottom: 40px;
 }
 
-/* Quick Actions - dostosowane dla 5 elementów */
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.stat-card, .quick-action {
+.management-card {
     background: white;
     border-radius: 20px;
-    padding: 25px;
-    text-align: center;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
     position: relative;
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
 }
 
-.stat-card::before {
+.management-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
@@ -75,80 +72,173 @@
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 }
 
-.stat-card:hover, .quick-action:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.quick-action {
+.management-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
     text-decoration: none;
     color: inherit;
 }
 
-.quick-action:hover { text-decoration: none; color: inherit; }
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px 25px 15px 25px;
+    position: relative;
+}
 
-/* Text Styles */
-.stat-number {
-    font-size: 32px; /* Zmniejszone dla lepszego dopasowania */
-    font-weight: 700;
+.card-icon {
+    font-size: 48px;
+    opacity: 0.8;
+}
+
+.card-actions {
+    position: relative;
+    z-index: 10;
+}
+
+.add-button {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.add-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.plus-icon {
+    line-height: 1;
+}
+
+/* Card Content */
+.card-content {
+    padding: 0 25px 25px 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-content h3 {
     color: #667eea;
     margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.card-content p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Card Stats */
+.card-stats {
+    text-align: center;
+    padding: 20px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 15px;
+    margin-top: auto;
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 5px;
 }
 
 .stat-label {
     color: #666;
-    font-size: 13px; /* Zmniejszone */
+    font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.quick-action-icon {
-    font-size: 44px; /* Zmniejszone */
-    margin-bottom: 15px;
-    opacity: 0.8;
+/* Special styling dla AboutPage */
+.management-card.no-add-button .card-stats {
+    background: rgba(76, 175, 80, 0.05);
 }
 
-.quick-action h3 {
-    color: #667eea;
-    margin-bottom: 10px;
-    font-size: 16px; /* Zmniejszone */
-    font-weight: 600;
+.management-card.no-add-button .stat-number {
+    color: #4caf50;
 }
 
-.quick-action p {
-    color: #666;
-    font-size: 13px; /* Zmniejszone */
-    margin: 0;
+/* Hover efekty */
+.management-card:hover .card-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.management-card:hover .add-button {
+    transform: scale(1.1) rotate(90deg);
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .stats-grid, .quick-actions {
-        grid-template-columns: repeat(3, 1fr);
+    .management-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
     }
 }
 
 @media (max-width: 768px) {
-    .stats-grid, .quick-actions {
-        grid-template-columns: repeat(2, 1fr);
+    .management-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
-    .stat-card, .quick-action {
-        padding: 20px;
+    .management-card {
+        min-height: 250px;
     }
     
-    .quick-action-icon {
+    .card-header {
+        padding: 20px 20px 10px 20px;
+    }
+    
+    .card-content {
+        padding: 0 20px 20px 20px;
+    }
+    
+    .card-icon {
         font-size: 40px;
     }
     
-    .quick-action h3 {
-        font-size: 15px;
+    .add-button {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
     }
 }
 
 @media (max-width: 480px) {
-    .stats-grid, .quick-actions {
-        grid-template-columns: 1fr;
+    .management-card {
+        min-height: 220px;
+    }
+    
+    .card-content h3 {
+        font-size: 20px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
     }
 }
