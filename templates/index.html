@@ -33,6 +33,13 @@
                                         {% if dog.photo %}
                                         <img src="{{ dog.photo.url }}" class="img-fluid rounded-start h-100" alt="{{ dog.name }}" style="object-fit: cover;">
                                         {% endif %}
+                                        {% if dog.certificate %}
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-certificate"></i> Certyfikowany
+                                            </span>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                     <div class="col-md-4">
                                         <div class="card-body text-start">
