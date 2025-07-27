@@ -82,29 +82,31 @@
     <div class="row">
         {% for puppy in available_puppies %}
         <div class="col-md-4 mb-4">
-            <div class="card card-hover">
-                <!-- Zdjęcie z certyfikatem na tle -->
-                <div class="position-relative">
-                    {% if puppy.photo %}
-                    <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}"
-                    style="height: 300px; object-fit: cover;">
-                    {% endif %}
-                    {% if puppy.certificate %}
-                    <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success">
-                            <i class="fas fa-certificate"></i> Certyfikowany
-                        </span>
+            <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
+                <div class="card card-hover">
+                    <!-- Zdjęcie z certyfikatem na tle -->
+                    <div class="position-relative">
+                        {% if puppy.photo %}
+                        <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}"
+                        style="height: 300px; object-fit: cover;">
+                        {% endif %}
+                        {% if puppy.certificate %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">
+                                <i class="fas fa-certificate"></i> Certyfikowany
+                            </span>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ puppy.name }}</h5>
+                        <p class="card-text">{{ puppy.description|truncatewords:10 }}</p>
+                        <p class="card-text"><strong>Cena: {{ puppy.price }} PLN</strong></p>
+                        <a href="{% url 'reservations' %}" class="btn btn-primary">Zarezerwuj</a>
+                    </div>
                 </div>
-                
-                <div class="card-body">
-                    <h5 class="card-title">{{ puppy.name }}</h5>
-                    <p class="card-text">{{ puppy.description|truncatewords:10 }}</p>
-                    <p class="card-text"><strong>Cena: {{ puppy.price }} PLN</strong></p>
-                    <a href="{% url 'reservations' %}" class="btn btn-primary">Zarezerwuj</a>
-                </div>
-            </div>
+            </a>
         </div>
         {% endfor %}
     </div>
