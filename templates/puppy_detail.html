@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ puppy.name }} - Hodowla z Wojciechowic{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-4">{{ puppy.name }}</h1>
+            <p class="text-muted">{{ puppy.get_gender_display }} | {{ puppy.birth_date|date:"d.m.Y" }}</p>
+            
+            {% if puppy.photo %}
+            <img src="{{ puppy.photo.url }}" alt="{{ puppy.name }}" class="img-fluid mb-4 rounded">
+            {% endif %}
+            
+            <div class="content">
+                {{ puppy.description|linebreaks }}
+            </div>
+            
+            <div class="mt-4">
+                <a href="{% url 'puppies' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Powrót do listy szczeniąt
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Informacje o szczenięciu</h5>
+                    <p class="card-text">
+                        <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                        <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
+                        <strong>Matka:</strong> {{ puppy.mother.name }}<br>
+                        <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
+                        <strong>Cena:</strong> {{ puppy.price }} PLN
+                    </p>
+                    
+                    {% if puppy.certificate %}
+                    <div class="alert alert-success">
+                        <i class="fas fa-certificate"></i> Szczenię posiada certyfikat
+                    </div>
+                    
+                    <div class="certificate-container mb-3">
+                        <img src="{{ puppy.certificate.url }}" alt="Certyfikat {{ puppy.name }}" class="img-fluid rounded border" style="max-width: 100%;">
+                    </div>
+                    {% endif %}
+                    
+                    {% if puppy.is_available %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Szczenię jest dostępne do rezerwacji
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Szczenię zostało już zarezerwowane
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sekcja rezerwacji -->
+{% if puppy.is_available %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Rezerwacja szczenięcia {{ puppy.name }}</h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="puppy" value="{{ puppy.id }}">
+                
+                <div class="mb-3">
+                    <label for="{{ form.customer_name.id_for_label }}" class="form-label">Imię i nazwisko</label>
+                    {{ form.customer_name }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.customer_email.id_for_label }}" class="form-label">Email</label>
+                    {{ form.customer_email }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.customer_phone.id_for_label }}" class="form-label">Telefon</label>
+                    {{ form.customer_phone }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.message.id_for_label }}" class="form-label">Dodatkowa wiadomość</label>
+                    {{ form.message }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Zarezerwuj {{ puppy.name }}</button>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Informacje o rezerwacji</h5>
+                    <p class="card-text">
+                        • Rezerwacja jest bezpłatna<br>
+                        • Skontaktujemy się z Tobą w ciągu 24 godzin<br>
+                        • Możesz umówić się na wizytę<br>
+                        • Wszystkie szczenięta są zaszczepione i zdrowe
+                    </p>
+                    
+                    <div class="alert alert-warning mt-3">
+                        <small><strong>Uwaga:</strong> Rezerwacja dotyczy szczenięcia <strong>{{ puppy.name }}</strong> za <strong>{{ puppy.price }} PLN</strong></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

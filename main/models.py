@@ -60,6 +60,10 @@ class Puppy(models.Model):
         ordering = ['-birth_date']
         verbose_name = 'Szczeniak'
         verbose_name_plural = 'Szczeniaki'
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('puppy_detail', kwargs={'pk': self.pk})
     
     def __str__(self):
         return f"{self.name} - {self.get_gender_display()}"

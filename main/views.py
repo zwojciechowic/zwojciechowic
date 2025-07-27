@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.paginator import Paginator
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage
-from .forms import ReservationForm, ContactForm
+from .forms import ReservationForm, ContactForm, PuppyReservationForm
 
 def home(request):
     """Strona główna z blogami"""
@@ -56,6 +56,26 @@ def puppies(request):
         'puppies': available_puppies,
         'favicon': 'logo/puppy-logo.ico',
         'favicon_png': 'logo/puppy-logo.png'
+    })
+
+def puppy_detail(request, pk):
+    """Szczegółowa strona szczenięcia z formularzem rezerwacji"""
+    puppy = get_object_or_404(Puppy, pk=pk)
+    
+    if request.method == 'POST' and puppy.is_available:
+        form = PuppyReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.puppy = puppy
+            reservation.save()
+            messages.success(request, f'Rezerwacja szczenięcia {puppy.name} została wysłana pomyślnie!')
+            return redirect('puppy_detail', pk=puppy.pk)
+    else:
+        form = PuppyReservationForm()
+    
+    return render(request, 'puppy_detail.html', {
+        'puppy': puppy,
+        'form': form
     })
 
 def reservations(request):
@@ -137,3 +157,7 @@ def admin_dashboard_context(request):
             'about_exists': AboutPage.objects.exists(),
         }
     return {}
+
+def hotel(request):
+    """Strona hotelu - już wkrótce"""
+    return render(request, 'hotel.html')
