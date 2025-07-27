@@ -73,14 +73,3 @@
         padding: 15px !important;
     }
 }
-
-@media (min-width: 769px) {
-    .card {
-        margin-bottom: 20px;
-    }
-
-    .card-body {
-        padding: 15px !important;
-    }
-
-}
