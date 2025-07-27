@@ -84,19 +84,17 @@
         {% for puppy in available_puppies %}
         <div class="col-md-4 mb-4">
             <div class="card card-hover">
-                <div class="row g-0">
-                    <div class="col-md-8">
-                        {% if puppy.photo %}
-                        <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}">
-                        {% endif %}
-                        {% if puppy.certificate %}
-                        <div class="mb-2">
-                            <small class="text-success">
-                                <i class="fas fa-certificate"></i> Posiada certyfikat
-                            </small>
-                        </div>
-                        {% endif %}
+                <div class="col-md-8">
+                    {% if puppy.photo %}
+                    <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}">
+                    {% endif %}
+                    {% if puppy.certificate %}
+                    <div class="mb-2">
+                        <small class="text-success">
+                            <i class="fas fa-certificate"></i> Posiada certyfikat
+                        </small>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ puppy.name }}</h5>
