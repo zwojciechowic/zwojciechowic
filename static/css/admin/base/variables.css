@@ -115,8 +115,8 @@
     /* Kolory tabel */
     --table-border: #DEE2E6;
     --table-header-bg: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
-    --table-row-hover: rgba(139, 69, 19, 0.08);
-    --table-row-selected: rgba(139, 69, 19, 0.12);
+    --table-row-hover: rgba(225, 174, 137, 0.946);
+    --table-row-selected: rgba(222, 128, 211, 0.944);
     
     /* Kolory nawigacji */
     --nav-bg: rgba(255, 255, 255, 0.95);
