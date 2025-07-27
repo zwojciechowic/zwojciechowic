@@ -3,6 +3,11 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin/components/dashboard.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="dashboard-hero">
     <div class="dashboard-hero-content">
@@ -86,6 +91,24 @@
             <div class="card-stats">
                 <span class="stat-number">{{ posts_count|default:"0" }}</span>
                 <span class="stat-label">opublikowanych postów</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- Wiadomości Kontaktowe Card -->
+    <a href="{% url 'admin:main_contactmessage_changelist' %}" class="management-card" aria-label="Zarządzaj wiadomościami">
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">✉️</div>
+            <div class="card-actions">
+                <!-- Wiadomości kontaktowe nie są dodawane ręcznie -->
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>Wiadomości</h3>
+            <p>Zarządzaj wiadomościami kontaktowymi</p>
+            <div class="card-stats">
+                <span class="stat-number {% if unread_messages > 0 %}warning{% endif %}">{{ messages_count|default:"0" }}</span>
+                <span class="stat-label">{% if unread_messages > 0 %}({{ unread_messages }} nieprzeczytanych){% else %}wiadomości{% endif %}</span>
             </div>
         </div>
     </a>
