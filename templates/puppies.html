@@ -10,7 +10,7 @@
     <div class="row">
         {% for puppy in puppies %}
         <div class="col-md-6 col-lg-4 mb-4">
-            <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
+            <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link">
                 <div class="card card-hover">
                     <div class="card-img-container position-relative">
                         {% if puppy.photo %}
