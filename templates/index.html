@@ -4,7 +4,7 @@
 <div class="hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <h1 class="display-4">Hodowla Owczarków – Nasza Wiejska Pasja</h1>
                 <p class="lead">W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku.</p>
                 
@@ -21,7 +21,7 @@
                 
                 <a href="{% url 'puppies' %}" class="btn btn-primary btn-lg">Zobacz dostępne szczenięta</a>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <!-- Wyświetlanie psów jako karty -->
                 {% if featured_dogs %}
                 {% for dog in featured_dogs %}
@@ -85,7 +85,8 @@
             <div class="card card-hover">
                 <div class="col-md-8">
                     {% if puppy.photo %}
-                    <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}">
+                    <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}"
+                    style="height: 300px; width:500px; object-fit: cover;">
                     {% endif %}
                     {% if puppy.certificate %}
                     <div class="mb-2">
