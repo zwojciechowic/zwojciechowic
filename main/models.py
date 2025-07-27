@@ -52,6 +52,7 @@ class Puppy(models.Model):
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
     photo = models.ImageField(upload_to='puppies/', verbose_name='Zdjęcie')
+    certificate = models.ImageField(upload_to='certificates/', blank=True, null=True, verbose_name='Certyfikat')
     is_available = models.BooleanField(default=True, verbose_name='Dostępne')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
     

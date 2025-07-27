@@ -75,7 +75,7 @@ class BlogPostAdmin(admin.ModelAdmin):
 
 @admin.register(Dog)
 class DogAdmin(admin.ModelAdmin):
-    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'preview_image']
+    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'preview_image', 'has_certificate']
     list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
@@ -90,16 +90,18 @@ class DogAdmin(admin.ModelAdmin):
         ('Opis i zdjęcie', {
             'fields': ('description', 'photo', 'preview_image')
         }),
+        ('Certyfikat', {
+            'fields': ('certificate',)
+        }),
     )
+    
     class Media:
         css = {
             'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
 
-    
     def preview_image(self, obj):
-        
         if obj.photo:
             return format_html(
                 '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />',
@@ -107,10 +109,14 @@ class DogAdmin(admin.ModelAdmin):
             )
         return "Brak zdjęcia"
     preview_image.short_description = "Podgląd"
+    
+    def has_certificate(self, obj):
+        return "Tak" if obj.certificate else "Nie"
+    has_certificate.short_description = "Certyfikat"
 
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'preview_image']
+    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'preview_image', 'has_certificate']
     list_filter = ['gender', 'is_available', 'birth_date', 'mother', 'father']
     search_fields = ['name', 'mother__name', 'father__name', 'description']
     list_editable = ['is_available', 'price']
@@ -128,12 +134,17 @@ class PuppyAdmin(admin.ModelAdmin):
         ('Opis i zdjęcie', {
             'fields': ('description', 'photo', 'preview_image')
         }),
+        ('Certyfikat', {
+            'fields': ('certificate',)
+        }),
     )
+    
     class Media:
         css = {
             'all': ('css/admin/admin_custom.css',)
         }
         js = ('js/admin_image_preview.js',)
+    
     def preview_image(self, obj):
         if obj.photo:
             return format_html(
@@ -142,7 +153,10 @@ class PuppyAdmin(admin.ModelAdmin):
             )
         return "Brak zdjęcia"
     preview_image.short_description = "Podgląd"
-
+    
+    def has_certificate(self, obj):
+        return "Tak" if obj.certificate else "Nie"
+    has_certificate.short_description = "Certyfikat"
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']
