@@ -96,10 +96,33 @@
         </a>
         
         <div class="admin-nav-items">
+            <!-- Strona główna -->
+            <div class="admin-nav-item">
+                <a href="/" class="admin-nav-link" title="Strona główna">
+                    <span class="admin-nav-icon">🏠</span>
+                    <span class="admin-nav-text">Strona Główna</span>
+                </a>
+            </div>
+            
+            <!-- Panel główny -->
+            <div class="admin-nav-item">
+                <a href="{% url 'admin:index' %}" class="admin-nav-link" title="Panel główny">
+                    <span class="admin-nav-icon">⚙️</span>
+                    <span class="admin-nav-text">Panel Główny</span>
+                </a>
+            </div>
+            
             {% if available_apps %}
                 {% for app in available_apps %}
                     <div class="admin-nav-item">
-                        <a href="#" class="admin-nav-link">
+                        <a href="#" class="admin-nav-link" title="{{ app.name }}">
+                            {% if app.name == "Main" or app.name == "Panel główny" %}
+                                <span class="admin-nav-icon">🐕</span>
+                            {% elif app.name == "Authentication and Authorization" %}
+                                <span class="admin-nav-icon">👥</span>
+                            {% else %}
+                                <span class="admin-nav-icon">📁</span>
+                            {% endif %}
                             <span class="admin-nav-text">{{ app.name }}</span>
                         </a>
                         {% if app.models %}
@@ -107,12 +130,20 @@
                                 {% for model in app.models %}
                                     {% if model.admin_url %}
                                         <a href="{{ model.admin_url }}" class="admin-dropdown-link">
+                                            {% if model.name == "Dogs" or model.name == "Psy" %}🐕
+                                            {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
+                                            {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
+                                            {% elif model.name == "Blog posts" or model.name == "Posty" %}📝
+                                            {% elif model.name == "Users" or model.name == "Użytkownicy" %}👤
+                                            {% elif model.name == "Groups" or model.name == "Grupy" %}👥
+                                            {% else %}📄
+                                            {% endif %}
                                             {{ model.name }}
                                         </a>
                                     {% endif %}
                                     {% if model.add_url %}
                                         <a href="{{ model.add_url }}" class="admin-dropdown-link">
-                                            + Dodaj {{ model.name }}
+                                            ➕ Dodaj {{ model.name }}
                                         </a>
                                     {% endif %}
                                 {% endfor %}
@@ -120,25 +151,28 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-            {% else %}
-                <div class="admin-nav-item">
-                    <a href="{% url 'admin:index' %}" class="admin-nav-link">
-                        <span class="admin-nav-text">Strona główna</span>
-                    </a>
-                </div>
             {% endif %}
+            
+            <!-- Kontakt -->
+            <div class="admin-nav-item">
+                <a href="/contact" class="admin-nav-link" title="Kontakt">
+                    <span class="admin-nav-icon">✉️</span>
+                    <span class="admin-nav-text">Kontakt</span>
+                </a>
+            </div>
             
             <!-- User Menu -->
             <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link">
+                <a href="#" class="admin-nav-link" title="{{ user.get_short_name|default:user.get_username }}">
+                    <span class="admin-nav-icon">👤</span>
                     <span class="admin-nav-text">{{ user.get_short_name|default:user.get_username }}</span>
                 </a>
                 <div class="admin-nav-dropdown">
                     <a href="{% url 'admin:password_change' %}" class="admin-dropdown-link">
-                        Zmień hasło
+                        🔒 Zmień hasło
                     </a>
                     <a href="{% url 'admin:logout' %}" class="admin-dropdown-link">
-                        Wyloguj
+                        🚪 Wyloguj
                     </a>
                 </div>
             </div>

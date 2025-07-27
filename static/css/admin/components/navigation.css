@@ -123,6 +123,7 @@
     white-space: nowrap !important;
     width: 0 !important;
     overflow: hidden !important;
+    margin-left: 5px !important;
 }
 
 .admin-modern-navbar:hover .admin-nav-text {
@@ -175,6 +176,15 @@
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateX(-50%) translateY(0) !important;
+}
+
+.admin-nav-icon {
+    font-size: 18px !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    width: auto !important;
+    margin-right: 5px !important;
+    transition: all 0.3s ease !important;
 }
 
 .admin-dropdown-link {
