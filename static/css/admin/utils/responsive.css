@@ -51,34 +51,47 @@
         display: block;
     }
     
-    /* Ukryj domyślną nawigację i zmodyfikuj */
+    /* UKRYJ domyślną nawigację na mobile */
     .admin-modern-navbar {
         position: fixed;
         left: 0;
         top: 0;
         height: 100vh;
         width: 280px;
-        transform: translateX(-100%);
+        transform: translateX(-100%) !important; /* UKRYTE DOMYŚLNIE */
         transition: transform 0.3s ease;
         background: white;
         box-shadow: 2px 0 15px rgba(0,0,0,0.1);
         overflow-y: auto;
         z-index: 1001;
+        display: block !important; /* Force display */
     }
     
-    /* Aktywne menu */
+    /* POKAŻ tylko gdy aktywne */
     .admin-modern-navbar.mobile-active {
-        transform: translateX(0);
+        transform: translateX(0) !important;
     }
     
-    /* Dostosuj zawartość główną */
+    /* Dostosuj zawartość główną - więcej miejsca */
     #content-main {
         margin-left: 0 !important;
         padding-top: 80px;
+        width: 100% !important;
     }
     
-    /* Dostosuj header */
+    /* Dostosuj header - miejsce na hamburger */
     #header {
         padding-left: 70px;
+    }
+    
+    /* Ukryj inne elementy nawigacji na mobile */
+    #nav-sidebar {
+        display: none !important;
+    }
+    
+    /* Dostosuj breadcrumbs */
+    .breadcrumbs {
+        margin-top: 60px;
+        padding-left: 20px;
     }
 }
