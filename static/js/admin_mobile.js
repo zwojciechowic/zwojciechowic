@@ -1,4 +1,4 @@
-// Admin Mobile Hamburger Menu
+// Admin Mobile Hamburger Menu (jak na głównej stronie)
 document.addEventListener('DOMContentLoaded', function() {
     // Sprawdź czy jesteśmy na mobile
     function isMobile() {
@@ -20,88 +20,135 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function initMobileMenu() {
-        // Dodaj przycisk hamburgera jeśli nie istnieje
-        if (!document.getElementById('adminMobileToggle')) {
-            const toggleBtn = document.createElement('button');
-            toggleBtn.id = 'adminMobileToggle';
-            toggleBtn.className = 'admin-mobile-toggle';
-            toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            document.body.appendChild(toggleBtn);
-        }
+        // Usuń stare elementy jeśli istnieją
+        const oldToggle = document.getElementById('adminMobileToggle');
+        const oldMenu = document.getElementById('adminMobileMenu');
+        if (oldToggle) oldToggle.remove();
+        if (oldMenu) oldMenu.remove();
         
-        // Dodaj overlay jeśli nie istnieje
-        if (!document.getElementById('adminMobileOverlay')) {
-            const overlay = document.createElement('div');
-            overlay.id = 'adminMobileOverlay';
-            overlay.className = 'admin-mobile-overlay';
-            document.body.appendChild(overlay);
-        }
+        // Dodaj przycisk hamburgera
+        const toggleBtn = document.createElement('button');
+        toggleBtn.id = 'adminMobileToggle';
+        toggleBtn.className = 'admin-mobile-toggle';
+        toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        document.body.appendChild(toggleBtn);
         
-        const navbar = document.querySelector('.admin-modern-navbar');
-        const toggleBtn = document.getElementById('adminMobileToggle');
-        const overlay = document.getElementById('adminMobileOverlay');
-        
-        if (!navbar || !toggleBtn || !overlay) return;
+        // Stwórz pełnoekranowe menu
+        const mobileMenu = createMobileMenu();
+        document.body.appendChild(mobileMenu);
         
         // Event listeners
         toggleBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            navbar.classList.add('mobile-active');
-            overlay.classList.add('active');
-            overlay.style.display = 'block';
+            mobileMenu.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
         
-        // Zamknij po kliknięciu w overlay (ale nie w navbar)
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                closeMobileMenu();
-            }
+        // Zamknij przycisk
+        const closeBtn = mobileMenu.querySelector('.admin-mobile-close');
+        closeBtn.addEventListener('click', function() {
+            closeMobileMenu();
         });
         
         // Zamknij po kliknięciu w link
-        const navLinks = navbar.querySelectorAll('a');
+        const navLinks = mobileMenu.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
-                closeMobileMenu();
+                // Nie zamykaj od razu - pozwól na nawigację
+                setTimeout(() => {
+                    closeMobileMenu();
+                }, 100);
             });
         });
         
         // Zamknij na ESC
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && navbar.classList.contains('mobile-active')) {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                 closeMobileMenu();
             }
         });
         
         function closeMobileMenu() {
-            navbar.classList.remove('mobile-active');
-            overlay.classList.remove('active');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 300);
+            mobileMenu.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
+    }
+    
+    function createMobileMenu() {
+        const menu = document.createElement('div');
+        menu.id = 'adminMobileMenu';
+        menu.className = 'admin-mobile-menu';
         
-        // Zapobiegnij zamykaniu przy kliknięciu w navbar
-        navbar.addEventListener('click', function(e) {
-            e.stopPropagation();
+        menu.innerHTML = `
+            <button class="admin-mobile-close">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="admin-mobile-brand">
+                <img src="/static/logo/dog-logo.png" alt="Logo">
+                <span>Admin Panel</span>
+            </div>
+            
+            <div class="admin-mobile-nav-items">
+                <div class="admin-mobile-nav-group">
+                    <div class="admin-mobile-nav-title">
+                        ⚙️ Panel Główny
+                    </div>
+                    ${createNavLinks()}
+                </div>
+                
+                <div class="admin-mobile-nav-group">
+                    <div class="admin-mobile-nav-title">
+                        👤 Użytkownik
+                    </div>
+                    <a href="/admin/password_change/" class="admin-mobile-nav-link">
+                        🔒 Zmień hasło
+                    </a>
+                    <a href="/admin/logout/" class="admin-mobile-nav-link">
+                        🚪 Wyloguj
+                    </a>
+                </div>
+            </div>
+        `;
+        
+        return menu;
+    }
+    
+    function createNavLinks() {
+        // Znajdź istniejące linki z oryginalnego navbar
+        const originalNavbar = document.querySelector('.admin-modern-navbar');
+        if (!originalNavbar) return '';
+        
+        let linksHTML = '';
+        const dropdownLinks = originalNavbar.querySelectorAll('.admin-dropdown-link');
+        
+        dropdownLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            const text = link.textContent.trim();
+            const addBtn = link.parentNode.querySelector('.admin-dropdown-add-btn');
+            
+            if (href && text) {
+                linksHTML += `
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <a href="${href}" class="admin-mobile-nav-link" style="flex: 1; margin-bottom: 0;">
+                            ${text}
+                        </a>
+                        ${addBtn ? `<a href="${addBtn.getAttribute('href')}" class="admin-mobile-add-btn">+</a>` : ''}
+                    </div>
+                `;
+            }
         });
+        
+        return linksHTML;
     }
     
     function removeMobileMenu() {
         const toggleBtn = document.getElementById('adminMobileToggle');
-        const overlay = document.getElementById('adminMobileOverlay');
+        const mobileMenu = document.getElementById('adminMobileMenu');
         
         if (toggleBtn) toggleBtn.remove();
-        if (overlay) overlay.remove();
-        
-        const navbar = document.querySelector('.admin-modern-navbar');
-        if (navbar) {
-            navbar.classList.remove('mobile-active');
-            navbar.style.transform = ''; // Reset transform
-        }
+        if (mobileMenu) mobileMenu.remove();
         
         document.body.style.overflow = 'auto';
     }
