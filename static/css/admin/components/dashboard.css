@@ -1,0 +1,117 @@
+/* Dashboard Hero */
+.dashboard-hero {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-radius: 25px;
+    padding: 40px 30px;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+}
+
+.dashboard-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dashboard-hero-content { position: relative; z-index: 2; }
+
+.dashboard-hero h1 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dashboard-hero p {
+    color: #666;
+    font-size: 18px;
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* Stats Grid */
+.stats-grid, .quick-actions {
+    display: grid;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.quick-actions { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+.stat-card, .quick-action {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-card:hover, .quick-action:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.quick-action {
+    text-decoration: none;
+    color: inherit;
+}
+
+.quick-action:hover { text-decoration: none; color: inherit; }
+
+/* Text Styles */
+.stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.quick-action-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.quick-action h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.quick-action p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
