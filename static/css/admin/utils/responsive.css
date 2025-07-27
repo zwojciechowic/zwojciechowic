@@ -1,55 +1,84 @@
-/* utils/responsive.css - Style responsywne */
+/* Admin Mobile Hamburger Menu - Dodaj na koniec utils/responsive.css */
 
-/* Responsive */
-@media (max-width: 768px) {
-    #content {
-        margin: 0 var(--spacing-lg) !important;
-    }
-    
-    .dashboard #content-main,
-    .dashboard #content-related {
-        width: 100% !important;
-        float: none !important;
-        margin: 0 0 var(--spacing-lg) 0 !important;
-    }
-    
-    #header {
-        padding: var(--spacing-md) var(--spacing-lg) !important;
-    }
-    
-    .module th, .module td {
-        padding: var(--spacing-sm) var(--spacing-md) !important;
-    }
-    
-    .results th {
-        padding: var(--spacing-md) var(--spacing-sm) !important;
-    }
-    
-    .results td {
-        padding: var(--spacing-sm) !important;
-    }
+/* Przycisk hamburgera */
+.admin-mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: #417690;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
-@media (max-width: 480px) {
-    #content {
-        margin: 0 var(--spacing-sm) !important;
+.admin-mobile-toggle:hover {
+    background: #2c5aa0;
+    transform: scale(1.05);
+}
+
+.admin-mobile-toggle i {
+    font-size: 16px;
+}
+
+/* Overlay dla mobile menu */
+.admin-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.admin-mobile-overlay.active {
+    opacity: 1;
+}
+
+/* Mobile responsywność */
+@media (max-width: 768px) {
+    /* Pokaż hamburger */
+    .admin-mobile-toggle {
+        display: block;
     }
     
+    /* Ukryj domyślną nawigację i zmodyfikuj */
+    .admin-modern-navbar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        background: white;
+        box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+        overflow-y: auto;
+        z-index: 1001;
+    }
+    
+    /* Aktywne menu */
+    .admin-modern-navbar.mobile-active {
+        transform: translateX(0);
+    }
+    
+    /* Dostosuj zawartość główną */
+    #content-main {
+        margin-left: 0 !important;
+        padding-top: 80px;
+    }
+    
+    /* Dostosuj header */
     #header {
-        padding: var(--spacing-sm) var(--spacing-md) !important;
-    }
-    
-    #branding h1 {
-        font-size: 20px !important;
-    }
-    
-    .button, input[type=submit], input[type=button], a.button {
-        padding: var(--spacing-sm) var(--spacing-md) !important;
-        font-size: 14px !important;
-    }
-    
-    .module h2, .module caption {
-        padding: var(--spacing-md) !important;
-        font-size: 16px !important;
+        padding-left: 70px;
     }
 }
