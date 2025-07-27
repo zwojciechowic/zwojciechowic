@@ -1,13 +1,13 @@
 /* Dashboard Hero */
 .dashboard-hero {
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-    border-radius: 25px;
+    border-radius: 20px;
     padding: 40px 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .dashboard-hero::before {
@@ -15,8 +15,8 @@
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-    animation: rotate 20s linear infinite;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: rotate 30s linear infinite;
 }
 
 @keyframes rotate {
@@ -24,131 +24,235 @@
     100% { transform: rotate(360deg); }
 }
 
-.dashboard-hero-content { position: relative; z-index: 2; }
+.dashboard-hero-content { 
+    position: relative; 
+    z-index: 2; 
+}
 
 .dashboard-hero h1 {
     color: #667eea;
     margin-bottom: 15px;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .dashboard-hero p {
     color: #666;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
-/* Stats Grid - dostosowane dla 5 elementów */
-.stats-grid {
+/* Management Grid - nowy responsywny layout */
+.management-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    margin-bottom: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Quick Actions - dostosowane dla 5 elementów */
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.stat-card, .quick-action {
+/* Management Cards - redesign */
+.management-card {
     background: white;
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
 }
 
-.stat-card::before {
+.management-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 100%; height: 4px;
+    width: 100%; height: 3px;
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 }
 
-.stat-card:hover, .quick-action:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.quick-action {
+.management-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     text-decoration: none;
     color: inherit;
 }
 
-.quick-action:hover { text-decoration: none; color: inherit; }
-
-/* Text Styles */
-.stat-number {
-    font-size: 32px; /* Zmniejszone dla lepszego dopasowania */
-    font-weight: 700;
-    color: #667eea;
-    margin-bottom: 10px;
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
-.stat-label {
-    color: #666;
-    font-size: 13px; /* Zmniejszone */
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.quick-action-icon {
-    font-size: 44px; /* Zmniejszone */
-    margin-bottom: 15px;
+.card-icon {
+    font-size: 32px;
     opacity: 0.8;
 }
 
-.quick-action h3 {
-    color: #667eea;
-    margin-bottom: 10px;
-    font-size: 16px; /* Zmniejszone */
-    font-weight: 600;
+.card-actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.quick-action p {
+.management-card:hover .card-actions {
+    opacity: 1;
+}
+
+.add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.add-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.plus-icon {
+    line-height: 1;
+}
+
+/* Card Content */
+.card-content h3 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.card-content p {
     color: #666;
-    font-size: 13px; /* Zmniejszone */
-    margin: 0;
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+/* Card Stats */
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.stat-label {
+    color: #888;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Specjalne style dla karty "O Nas" */
+.no-add-button .card-actions {
+    display: none;
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .stats-grid, .quick-actions {
+@media (max-width: 768px) {
+    .management-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 16px;
+    }
+    
+    .management-card {
+        padding: 20px;
+    }
+    
+    .dashboard-hero {
+        margin: 0 16px 24px;
+        padding: 30px 20px;
+    }
+    
+    .dashboard-hero h1 {
+        font-size: 24px;
+    }
+    
+    .dashboard-hero p {
+        font-size: 14px;
+    }
+    
+    .card-icon {
+        font-size: 28px;
+    }
+    
+    .card-content h3 {
+        font-size: 18px;
+    }
+    
+    .stat-number {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .management-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .management-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 768px) {
-    .stats-grid, .quick-actions {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .stat-card, .quick-action {
-        padding: 20px;
-    }
-    
-    .quick-action-icon {
-        font-size: 40px;
-    }
-    
-    .quick-action h3 {
-        font-size: 15px;
-    }
+/* Dodatkowe style dla lepszego UX */
+.management-card:active {
+    transform: translateY(0);
 }
 
-@media (max-width: 480px) {
-    .stats-grid, .quick-actions {
-        grid-template-columns: 1fr;
+.management-card:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Animacje ładowania */
+.management-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.management-card:nth-child(1) { animation-delay: 0.1s; }
+.management-card:nth-child(2) { animation-delay: 0.2s; }
+.management-card:nth-child(3) { animation-delay: 0.3s; }
+.management-card:nth-child(4) { animation-delay: 0.4s; }
+.management-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
