@@ -1,4 +1,11 @@
-/* components/navigation.css - Nawigacja i breadcrumbs */
+/* ===============================================
+   NAVIGATION.CSS - Admin Panel Navigation
+   Hodowla z Wojciechowic - Professional Admin Interface
+   =============================================== */
+
+/* ===============================================
+   1. SIDEBAR RESET AND CONTENT LAYOUT
+   =============================================== */
 
 /* Ukrycie domyślnego Django nav sidebar */
 #nav-sidebar {
@@ -8,9 +15,13 @@
 /* Przywrócenie normalnej szerokości content bez sidebara */
 .colMS #content, .colM #content {
     margin-left: 0 !important;
+    padding-top: 100px !important;
 }
 
-/* Breadcrumbs */
+/* ===============================================
+   2. BREADCRUMBS STYLING
+   =============================================== */
+
 .breadcrumbs, div.breadcrumbs {
     background: var(--bg-white) !important;
     border: none !important;
@@ -31,7 +42,10 @@
     color: var(--link-hover) !important;
 }
 
-/* Modern Admin Navbar */
+/* ===============================================
+   3. MODERN FLOATING NAVBAR
+   =============================================== */
+
 .admin-modern-navbar {
     position: fixed !important;
     top: 20px !important;
@@ -53,6 +67,10 @@
     padding: 15px 40px !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
 }
+
+/* ===============================================
+   4. NAVBAR STRUCTURE AND BRAND
+   =============================================== */
 
 .admin-navbar-content {
     display: flex !important;
@@ -88,6 +106,10 @@
     width: auto !important;
 }
 
+/* ===============================================
+   5. NAVIGATION ITEMS AND LINKS
+   =============================================== */
+
 .admin-nav-items {
     display: flex !important;
     align-items: center !important;
@@ -114,23 +136,12 @@
     position: relative !important;
     overflow: hidden !important;
     font-size: 14px !important;
+    min-width: 44px !important;
+    justify-content: center !important;
 }
 
-.admin-nav-text {
-    opacity: 0 !important;
-    transform: translateX(-10px) !important;
-    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
-    white-space: nowrap !important;
-    width: 0 !important;
-    overflow: hidden !important;
-    margin-left: 5px !important;
-}
-
-.admin-modern-navbar:hover .admin-nav-text {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    width: auto !important;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+.admin-modern-navbar:hover .admin-nav-link {
+    justify-content: flex-start !important;
 }
 
 .admin-nav-link:hover {
@@ -146,38 +157,11 @@
     box-shadow: var(--shadow-primary) !important;
 }
 
-.admin-nav-link.active .admin-nav-text {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    width: auto !important;
-}
+/* ===============================================
+   6. ICONS AND TEXT VISIBILITY SYSTEM
+   =============================================== */
 
-/* Dropdown dla sekcji z wieloma modelami */
-.admin-nav-dropdown {
-    position: absolute !important;
-    top: 100% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(20px) !important;
-    border-radius: var(--radius-medium) !important;
-    box-shadow: var(--shadow-medium) !important;
-    border: 1px solid rgba(139, 69, 19, 0.2) !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: translateX(-50%) translateY(-10px) !important;
-    transition: var(--transition-medium) !important;
-    min-width: 200px !important;
-    margin-top: 10px !important;
-    padding: var(--spacing-md) 0 !important;
-}
-
-.admin-nav-item:hover .admin-nav-dropdown {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateX(-50%) translateY(0) !important;
-}
-
+/* Ikony zawsze widoczne */
 .admin-nav-icon {
     font-size: 18px !important;
     opacity: 1 !important;
@@ -185,6 +169,61 @@
     width: auto !important;
     margin-right: 5px !important;
     transition: all 0.3s ease !important;
+}
+
+/* Tekst ukryty domyślnie, pokazywany po hover na navbar */
+.admin-nav-text {
+    opacity: 0 !important;
+    transform: translateX(-10px) !important;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+    white-space: nowrap !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    margin-left: 5px !important;
+}
+
+/* Po hover na navbar - pokaż tekst */
+.admin-modern-navbar:hover .admin-nav-text {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    width: auto !important;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+}
+
+/* Aktywny link - zawsze pokazuj tekst */
+.admin-nav-link.active .admin-nav-text {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    width: auto !important;
+}
+
+/* ===============================================
+   7. DROPDOWN MENUS
+   =============================================== */
+
+.admin-nav-dropdown {
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-10px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: var(--radius-medium) !important;
+    box-shadow: var(--shadow-medium) !important;
+    border: 1px solid rgba(139, 69, 19, 0.2) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: var(--transition-medium) !important;
+    min-width: 200px !important;
+    margin-top: 10px !important;
+    padding: var(--spacing-md) 0 !important;
+    z-index: 1001 !important;
+}
+
+.admin-nav-item:hover .admin-nav-dropdown {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
 }
 
 .admin-dropdown-link {
@@ -203,13 +242,10 @@
     padding-left: calc(var(--spacing-lg) + 5px) !important;
 }
 
-/* Usunięcie marginesu dla content bez sidebara */
-.colMS #content, .colM #content {
-    margin-left: 0 !important;
-    padding-top: 100px !important;
-}
+/* ===============================================
+   8. FILTER SIDEBAR STYLING
+   =============================================== */
 
-/* Filter sidebar */
 #changelist-filter h2, #changelist-filter h3 {
     color: var(--text-primary) !important;
 }
@@ -223,7 +259,55 @@
     color: var(--link-hover) !important;
 }
 
-/* Mobile responsywność */
+/* ===============================================
+   9. ANIMATIONS AND EFFECTS
+   =============================================== */
+
+/* Animacje loading dla modułów */
+.module {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #D2691E 0%, #8B4513 100%);
+}
+
+/* ===============================================
+   10. RESPONSIVE DESIGN
+   =============================================== */
+
+/* Tablet - 1024px and down */
 @media (max-width: 1024px) {
     .admin-modern-navbar {
         padding: 10px 20px !important;
@@ -242,8 +326,13 @@
         padding: 10px 12px !important;
         font-size: 13px !important;
     }
+    
+    .admin-nav-icon {
+        font-size: 16px !important;
+    }
 }
 
+/* Mobile - 768px and down */
 @media (max-width: 768px) {
     .admin-modern-navbar {
         top: 10px !important;
@@ -273,11 +362,48 @@
         font-size: 12px !important;
     }
     
+    /* Na mobile ukryj tekst całkowicie */
     .admin-nav-text {
         display: none !important;
     }
     
+    .admin-nav-icon {
+        font-size: 16px !important;
+        margin-right: 0 !important;
+    }
+    
     .colMS #content, .colM #content {
         padding-top: 80px !important;
+    }
+    
+    /* Dropdown na mobile */
+    .admin-nav-dropdown {
+        min-width: 150px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* Small mobile - 480px and down */
+@media (max-width: 480px) {
+    .admin-modern-navbar {
+        padding: 6px 12px !important;
+    }
+    
+    .admin-modern-navbar:hover {
+        padding: 10px 15px !important;
+    }
+    
+    .admin-nav-link {
+        padding: 6px 8px !important;
+        min-width: 36px !important;
+    }
+    
+    .admin-nav-icon {
+        font-size: 14px !important;
+    }
+    
+    .admin-navbar-brand img {
+        width: 28px !important;
+        height: 28px !important;
     }
 }
