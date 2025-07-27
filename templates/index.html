@@ -87,6 +87,13 @@
                 {% if puppy.photo %}
                 <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}">
                 {% endif %}
+                {% if puppy.certificate %}
+                <div class="mb-2">
+                    <small class="text-success">
+                        <i class="fas fa-certificate"></i> Posiada certyfikat
+                    </small>
+                </div>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ puppy.name }}</h5>
                     <p class="card-text">{{ puppy.description|truncatewords:10 }}</p>
