@@ -41,43 +41,33 @@
     opacity: 0.8;
 }
 
-/* Management Grid - Używamy flex zamiast CSS Grid */
-.management-wrapper {
-    max-width: 1200px;
-    margin: 0 auto 40px auto;
-    padding: 0;
-    overflow: hidden;
+/* Stats Grid - dostosowane dla 5 elementów */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
-.management-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    margin: -10px;
+/* Quick Actions - dostosowane dla 5 elementów */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
 }
 
-.management-card {
+.stat-card, .quick-action {
     background: white;
-    border-radius: 16px;
-    text-decoration: none !important;
-    color: inherit !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
-    
-    /* Flex layout dla równych kart */
-    flex: 1 1 200px;
-    min-width: 200px;
-    max-width: 240px;
-    height: 200px;
-    margin: 10px;
-    
-    display: flex;
-    flex-direction: column;
 }
 
-.management-card::before {
+.stat-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
@@ -85,186 +75,80 @@
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 }
 
-.management-card:hover {
+.stat-card:hover, .quick-action:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    text-decoration: none !important;
-    color: inherit !important;
 }
 
-/* Card Header */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px 10px 20px;
-    position: relative;
+.quick-action {
+    text-decoration: none;
+    color: inherit;
 }
 
-.card-icon {
-    font-size: 36px;
-    opacity: 0.8;
-}
+.quick-action:hover { text-decoration: none; color: inherit; }
 
-.card-actions {
-    position: relative;
-    z-index: 10;
-}
-
-.add-button {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none !important;
-    color: white !important;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-}
-
-.add-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-    text-decoration: none !important;
-    color: white !important;
-}
-
-.plus-icon {
-    line-height: 1;
-}
-
-/* Card Content */
-.card-content {
-    padding: 0 20px 20px 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.card-content h3 {
-    color: #667eea;
-    margin-bottom: 5px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.card-content p {
-    color: #666;
-    font-size: 13px;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
-
-/* Card Stats */
-.card-stats {
-    text-align: center;
-    padding: 12px;
-    background: rgba(102, 126, 234, 0.05);
-    border-radius: 10px;
-    margin-top: auto;
-}
-
+/* Text Styles */
 .stat-number {
-    display: block;
-    font-size: 24px;
+    font-size: 32px; /* Zmniejszone dla lepszego dopasowania */
     font-weight: 700;
     color: #667eea;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 
 .stat-label {
     color: #666;
-    font-size: 11px;
+    font-size: 13px; /* Zmniejszone */
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
-/* Special styling dla AboutPage */
-.management-card.no-add-button .card-stats {
-    background: rgba(76, 175, 80, 0.05);
+.quick-action-icon {
+    font-size: 44px; /* Zmniejszone */
+    margin-bottom: 15px;
+    opacity: 0.8;
 }
 
-.management-card.no-add-button .stat-number {
-    color: #4caf50;
+.quick-action h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 16px; /* Zmniejszone */
+    font-weight: 600;
 }
 
-/* Hover efekty */
-.management-card:hover .card-icon {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
-.management-card:hover .add-button {
-    transform: scale(1.1) rotate(90deg);
-}
-
-/* Reset Django admin styles */
-.management-card, .management-card:link, .management-card:visited {
-    color: inherit !important;
-    text-decoration: none !important;
-}
-
-.add-button, .add-button:link, .add-button:visited {
-    color: white !important;
-    text-decoration: none !important;
+.quick-action p {
+    color: #666;
+    font-size: 13px; /* Zmniejszone */
+    margin: 0;
 }
 
 /* Responsive Design */
-@media (max-width: 1000px) {
-    .management-card {
-        flex: 1 1 180px;
-        min-width: 180px;
-        max-width: 220px;
+@media (max-width: 1200px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 800px) {
-    .management-grid {
-        justify-content: center;
+@media (max-width: 768px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .management-card {
-        flex: 1 1 160px;
-        min-width: 160px;
-        max-width: 200px;
-        height: 180px;
+    .stat-card, .quick-action {
+        padding: 20px;
     }
     
-    .card-header {
-        padding: 15px 15px 8px 15px;
+    .quick-action-icon {
+        font-size: 40px;
     }
     
-    .card-content {
-        padding: 0 15px 15px 15px;
-    }
-    
-    .card-icon {
-        font-size: 32px;
-    }
-    
-    .add-button {
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
+    .quick-action h3 {
+        font-size: 15px;
     }
 }
 
-@media (max-width: 600px) {
-    .management-grid {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .management-card {
-        flex: none;
-        width: 90%;
-        max-width: 300px;
-        margin: 5px 0;
+@media (max-width: 480px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: 1fr;
     }
 }
