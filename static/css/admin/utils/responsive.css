@@ -1,4 +1,4 @@
-/* Admin Mobile Hamburger Menu - Dodaj na koniec utils/responsive.css */
+/* Admin Mobile Menu Styles */
 
 /* Przycisk hamburgera */
 .admin-mobile-toggle {
@@ -7,189 +7,174 @@
     top: 20px;
     left: 20px;
     z-index: 1001;
-    background: #417690;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    color: #4a5568;
+    font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
 
 .admin-mobile-toggle:hover {
-    background: #2c5aa0;
-    transform: scale(1.05);
+    background: #f8f9fa;
+    border-color: #8B4513;
+    color: #8B4513;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-.admin-mobile-toggle i {
-    font-size: 16px;
-}
-
-/* Pełnoekranowe mobile menu (jak na głównej stronie) */
+/* Mobile Menu Overlay */
 .admin-mobile-menu {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 80px 20px 20px;
-    align-items: center;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-20px);
     transition: all 0.3s ease;
+    overflow-y: auto;
 }
 
 .admin-mobile-menu.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
 }
 
-/* Przycisk zamknij */
+/* Przycisk zamknięcia */
 .admin-mobile-close {
     position: absolute;
     top: 20px;
     right: 20px;
     background: none;
     border: none;
-    font-size: 2rem;
     color: #333;
+    font-size: 24px;
     cursor: pointer;
     padding: 10px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
 .admin-mobile-close:hover {
-    background: #f0f0f0;
+    background: rgba(0, 0, 0, 0.1);
 }
 
-/* Brand w mobile menu */
+/* Brand section */
 .admin-mobile-brand {
-    margin-bottom: 40px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #417690;
+    padding: 80px 20px 60px;
+    margin-bottom: 20px;
 }
 
 .admin-mobile-brand img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.admin-mobile-brand span {
+    color: #8B4513;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 /* Navigation items */
 .admin-mobile-nav-items {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
+    padding: 0 40px;
     max-width: 400px;
+    margin: 0 auto;
 }
 
 .admin-mobile-nav-group {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 50px;
 }
 
 .admin-mobile-nav-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #417690;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: none; /* Ukrywamy tytuły grup dla czystszego wyglądu */
+}
+
+.admin-mobile-nav-item {
+    margin-bottom: 30px;
 }
 
 .admin-mobile-nav-link {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px;
-    color: #333;
+    gap: 15px;
+    color: #4a5568;
     text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.3s ease;
+    padding: 20px 0;
+    font-size: 18px;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.8);
-    margin-bottom: 8px;
-    min-height: 50px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    justify-content: center;
 }
 
-.admin-mobile-nav-link:hover {
-    background: #417690;
+.admin-mobile-nav-link:hover,
+.admin-mobile-nav-link.active {
+    color: #8B4513;
+    background: #8B4513;
     color: white;
-    transform: translateX(5px);
-}
-
-.admin-mobile-nav-link:last-child {
-    margin-bottom: 0;
+    border-radius: 25px;
+    padding: 15px 30px;
+    border-bottom: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
 }
 
 .admin-mobile-add-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    display: none; /* Ukrywamy przyciski dodawania dla czystszego wyglądu */
 }
 
-.admin-mobile-add-btn:hover {
-    background: #218838;
-    transform: scale(1.1);
-}
-
-/* Mobile Responsive Design */
-@media (max-width: 768px) {
-    /* Pokaż hamburger */
+/* Responsive */
+@media screen and (max-width: 768px) {
     .admin-mobile-toggle {
         display: block;
     }
     
-    /* Ukryj oryginalny navbar */
+    .admin-mobile-menu {
+        display: block;
+    }
+    
+    /* Ukryj standardowy navbar na mobile */
     .admin-modern-navbar {
         display: none !important;
     }
-    
-    /* Dostosuj zawartość główną */
-    #content-main {
-        margin-left: 0 !important;
-        padding-top: 80px;
-        width: 100% !important;
+}
+
+/* Smooth scrolling dla mobile menu */
+.admin-mobile-menu {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Dodatkowe style dla lepszego UX */
+@media screen and (max-width: 480px) {
+    .admin-mobile-brand {
+        padding: 50px 15px 30px;
     }
     
-    /* Dostosuj header */
-    #header {
-        padding-left: 70px;
+    .admin-mobile-brand span {
+        font-size: 20px;
     }
     
-    /* Ukryj sidebar */
-    #nav-sidebar {
-        display: none !important;
+    .admin-mobile-nav-items {
+        padding: 0 15px;
     }
     
-    /* Dostosuj breadcrumbs */
-    .breadcrumbs {
-        margin-top: 60px;
-        padding-left: 20px;
+    .admin-mobile-nav-link {
+        font-size: 15px;
+        padding: 12px 15px;
     }
 }
