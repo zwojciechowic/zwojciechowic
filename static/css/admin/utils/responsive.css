@@ -26,164 +26,163 @@
     font-size: 16px;
 }
 
-/* Overlay dla mobile menu */
-.admin-mobile-overlay {
-    display: none;
+/* Pełnoekranowe mobile menu (jak na głównej stronie) */
+.admin-mobile-menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0,0,0,0.5);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 80px 20px 20px;
+    align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
 }
 
-.admin-mobile-overlay.active {
+.admin-mobile-menu.active {
     opacity: 1;
-    display: block !important;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-/* Mobile responsywność */
+/* Przycisk zamknij */
+.admin-mobile-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.admin-mobile-close:hover {
+    background: #f0f0f0;
+}
+
+/* Brand w mobile menu */
+.admin-mobile-brand {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #417690;
+}
+
+.admin-mobile-brand img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+/* Navigation items */
+.admin-mobile-nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.admin-mobile-nav-group {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-mobile-nav-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #417690;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+    min-height: 50px;
+}
+
+.admin-mobile-nav-link:hover {
+    background: #417690;
+    color: white;
+    transform: translateX(5px);
+}
+
+.admin-mobile-nav-link:last-child {
+    margin-bottom: 0;
+}
+
+.admin-mobile-add-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-mobile-add-btn:hover {
+    background: #218838;
+    transform: scale(1.1);
+}
+
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
     /* Pokaż hamburger */
     .admin-mobile-toggle {
         display: block;
     }
     
-    /* UKRYJ domyślną nawigację na mobile */
+    /* Ukryj oryginalny navbar */
     .admin-modern-navbar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        height: 100vh;
-        width: 280px;
-        transform: translateX(-100%) !important; /* UKRYTE DOMYŚLNIE */
-        transition: transform 0.3s ease;
-        background: white;
-        box-shadow: 2px 0 15px rgba(0,0,0,0.1);
-        overflow-y: auto;
-        z-index: 1001;
-        display: block !important; /* Force display */
-        padding: 20px;
+        display: none !important;
     }
     
-    /* POKAŻ tylko gdy aktywne */
-    .admin-modern-navbar.mobile-active {
-        transform: translateX(0) !important;
-    }
-    
-    /* Dostosuj elementy nawigacji do mobile */
-    .admin-navbar-content {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 15px;
-    }
-    
-    .admin-navbar-brand {
-        margin-bottom: 20px !important;
-        padding: 15px !important;
-        border-radius: 10px;
-        background: #f8f9fa;
-        text-align: center;
-    }
-    
-    .admin-nav-items {
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
-    
-    .admin-nav-item {
-        width: 100% !important;
-    }
-    
-    .admin-nav-link {
-        display: flex !important;
-        align-items: center !important;
-        padding: 15px 20px !important;
-        min-height: 50px !important;
-        border-radius: 10px !important;
-        background: #f8f9fa;
-        color: #333 !important;
-        text-decoration: none !important;
-        transition: all 0.3s ease;
-        font-size: 16px !important;
-        gap: 10px !important;
-    }
-    
-    .admin-nav-link:hover {
-        background: #417690 !important;
-        color: white !important;
-        transform: translateX(5px);
-    }
-    
-    .admin-nav-dropdown {
-        position: static !important;
-        display: none;
-        background: #e9ecef !important;
-        border-radius: 8px !important;
-        margin-top: 5px !important;
-        padding: 10px !important;
-    }
-    
-    .admin-nav-item:hover .admin-nav-dropdown {
-        display: block !important;
-    }
-    
-    .admin-dropdown-item-wrapper {
-        margin-bottom: 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 10px !important;
-    }
-    
-    .admin-dropdown-link {
-        flex: 1 !important;
-        padding: 12px 15px !important;
-        background: white !important;
-        border-radius: 6px !important;
-        color: #333 !important;
-        text-decoration: none !important;
-        min-height: 44px !important;
-        display: flex !important;
-        align-items: center !important;
-        font-size: 14px !important;
-    }
-    
-    .admin-dropdown-link:hover {
-        background: #417690 !important;
-        color: white !important;
-    }
-    
-    .admin-dropdown-add-btn {
-        width: 35px !important;
-        height: 35px !important;
-        background: #28a745 !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 6px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-decoration: none !important;
-        font-size: 18px !important;
-        font-weight: bold !important;
-    }
-    
-    /* Dostosuj zawartość główną - więcej miejsca */
+    /* Dostosuj zawartość główną */
     #content-main {
         margin-left: 0 !important;
         padding-top: 80px;
         width: 100% !important;
     }
     
-    /* Dostosuj header - miejsce na hamburger */
+    /* Dostosuj header */
     #header {
         padding-left: 70px;
     }
     
-    /* Ukryj inne elementy nawigacji na mobile */
+    /* Ukryj sidebar */
     #nav-sidebar {
         display: none !important;
     }
