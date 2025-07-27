@@ -140,7 +140,6 @@
     </div>
 </div>
 <!-- Przycisk hamburgera (dodaj w headerze) -->
-<!-- Przycisk hamburgera (dodaj w headerze) -->
 <button id="adminMobileToggle" class="admin-mobile-toggle">
     <div class="hamburger-lines">
         <span></span>
@@ -156,8 +155,10 @@
     </button>
     
     <div class="admin-mobile-brand">
-        <img src="{% load static %}{% static 'logo/dog-logo.png' %}" alt="Logo">
-        <span>Admin Panel</span>
+        <a href="/" class="admin-brand-link">
+            <img src="{% load static %}{% static 'logo/dog-logo.png' %}" alt="Logo">
+            <span>Admin Panel</span>
+        </a>
     </div>
     
     <div class="admin-mobile-nav-items">
