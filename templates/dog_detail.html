@@ -17,15 +17,6 @@
                 {{ dog.description|linebreaks }}
             </div>
             
-            {% if dog.certificate %}
-            <div class="certificate-section mt-4">
-                <h5>Certyfikat</h5>
-                <div class="certificate-container">
-                    <img src="{{ dog.certificate.url }}" alt="Certyfikat {{ dog.name }}" class="img-fluid rounded border" style="max-width: 400px;">
-                </div>
-            </div>
-            {% endif %}
-            
             <div class="mt-4">
                 <a href="{% url 'dogs' %}" class="btn btn-outline-primary">
                     <i class="fas fa-arrow-left"></i> Powrót do listy psów
@@ -46,6 +37,10 @@
                     {% if dog.certificate %}
                     <div class="alert alert-success">
                         <i class="fas fa-certificate"></i> Pies posiada certyfikat
+                    </div>
+                    
+                    <div class="certificate-container mb-3">
+                        <img src="{{ dog.certificate.url }}" alt="Certyfikat {{ dog.name }}" class="img-fluid rounded border" style="max-width: 100%;">
                     </div>
                     {% endif %}
                     
