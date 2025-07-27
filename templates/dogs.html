@@ -22,9 +22,17 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
                 <div class="card card-hover">
-                    <div class="card-img-container">
+                    <div class="card-img-container position-relative">
                         {% if dog.photo %}
                         <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        
+                        {% if dog.certificate %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">
+                                <i class="fas fa-certificate"></i> Certyfikowany
+                            </span>
+                        </div>
                         {% endif %}
                     </div>
                     
@@ -64,9 +72,17 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
                 <div class="card card-hover">
-                    <div class="card-img-container">
+                    <div class="card-img-container position-relative">
                         {% if dog.photo %}
                         <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        
+                        {% if dog.certificate %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">
+                                <i class="fas fa-certificate"></i> Certyfikowany
+                            </span>
+                        </div>
                         {% endif %}
                     </div>
                     
