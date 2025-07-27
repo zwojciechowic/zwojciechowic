@@ -26,6 +26,10 @@
         <div class="stat-number">✍️</div>
         <div class="stat-label">Wpisy Blog</div>
     </div>
+    <div class="stat-card">
+        <div class="stat-number">💌</div>
+        <div class="stat-label">Wiadomości</div>
+    </div>
 </div>
 
 <div class="quick-actions">
@@ -53,7 +57,11 @@
         <p>Napisz wpis na blog</p>
     </a>
 
-    
+    <a href="{% url 'admin:main_contactmessage_changelist' %}" class="quick-action">
+        <div class="quick-action-icon">💌</div>
+        <h3>Wiadomości Kontaktowe</h3>
+        <p>Sprawdź wiadomości od klientów</p>
+    </a>
 </div>
 
 {{ block.super }}
