@@ -41,13 +41,20 @@
     opacity: 0.8;
 }
 
-/* Management Grid - Wysokie karty */
+/* Management Wrapper */
+.management-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Management Grid - Poprawiona siatka */
 .management-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
     margin-bottom: 40px;
-    max-width: 1400px;
+    justify-items: center;
 }
 
 .management-card {
@@ -60,6 +67,8 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 280px;
     height: 200px;
     display: flex;
     flex-direction: column;
