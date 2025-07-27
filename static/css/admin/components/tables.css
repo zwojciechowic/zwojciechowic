@@ -28,6 +28,13 @@
     color: var(--text-primary) !important;
 }
 
+/* Dodatkowy styl dla wszystkich komórek tabeli */
+table tr td {
+    color: var(--text-primary) !important;
+    padding: var(--spacing-md) !important;
+    border-bottom: 1px solid var(--bg-light-gray) !important;
+}
+
 .results td a {
     color: var(--link-primary) !important;
     text-decoration: none !important;
