@@ -128,9 +128,8 @@
 
 .admin-mobile-nav-link:hover,
 .admin-mobile-nav-link.active {
-    color: #8B4513;
+    color: #f7fafc;
     background: #8B4513;
-    color: white;
     border-radius: 25px;
     padding: 15px 30px;
     border-bottom: none;
@@ -144,7 +143,7 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: #dd681a;
+    background: linear-gradient(135deg, #ff8a50 0%, #dd4814 100%);
     color: white;
     text-decoration: none;
     border-radius: 50%;
@@ -152,14 +151,15 @@
     font-weight: bold;
     transition: all 0.3s ease;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 4px 12px rgba(221, 72, 20, 0.3);
+    border: none;
 }
 
 .admin-mobile-add-btn:hover {
-    background: #b05602;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff7635 0%, #c23e0f 100%);
+    transform: scale(1.1) translateY(-2px);
     color: white;
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    box-shadow: 0 6px 20px rgba(221, 72, 20, 0.4);
 }
 
 /* Responsive */
