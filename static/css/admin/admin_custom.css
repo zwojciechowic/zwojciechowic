@@ -21,6 +21,7 @@
 @import 'utils/messages.css';
 @import 'utils/animations.css';
 @import 'utils/responsive.css';
+@import 'components/dashboard.css';
 
 body::after {
     content: '';
