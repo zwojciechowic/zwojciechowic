@@ -3,6 +3,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections
+from django.contrib.admin import AdminSite
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -261,3 +262,19 @@ class AboutPageAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return not AboutPage.objects.exists()
+    
+
+class HodowlaAdminSite(AdminSite):
+    def index(self, request, extra_context=None):
+        """Custom dashboard z licznikami"""
+        extra_context = extra_context or {}
+        extra_context.update({
+            'dogs_count': Dog.objects.count(),
+            'puppies_count': Puppy.objects.filter(is_available=True).count(),
+            'reservations_count': Reservation.objects.filter(status='pending').count(),
+            'posts_count': BlogPost.objects.filter(is_published=True).count(),
+            'about_exists': AboutPage.objects.exists(),
+        })
+        return super().index(request, extra_context)
+
+admin.site.__class__ = HodowlaAdminSite
