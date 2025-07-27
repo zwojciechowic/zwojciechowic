@@ -16,12 +16,13 @@
 @import 'components/forms.css';
 @import 'components/tables.css';
 @import 'components/navigation.css';
+@import 'components/dashboard.css';
 
 /* Import utilities */
 @import 'utils/messages.css';
 @import 'utils/animations.css';
 @import 'utils/responsive.css';
-@import 'components/dashboard.css';
+
 
 body::after {
     content: '';
