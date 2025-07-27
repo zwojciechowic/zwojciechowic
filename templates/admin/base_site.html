@@ -99,44 +99,14 @@
                                 </div>
                             {% endif %}
                         </div>
-                    {% elif app.name == "Authentication and Authorization" or app.name == "Uwierzytelnienie i autoryzacja" %}
-                        <div class="admin-nav-item">
-                            <a href="#" class="admin-nav-link" title="Uwierzytelnienie i autoryzacja">
-                                <span class="admin-nav-icon">👥</span>
-                                <span class="admin-nav-text">Uwierzytelnienie i autoryzacja</span>
-                            </a>
-                            {% if app.models %}
-                                <div class="admin-nav-dropdown">
-                                    {% for model in app.models %}
-                                        {% if model.admin_url %}
-                                            <div class="admin-dropdown-item-wrapper">
-                                                <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
-                                                    {% if model.name == "Users" or model.name == "Użytkownicy" %}👤
-                                                    {% elif model.name == "Groups" or model.name == "Grupy" %}👥
-                                                    {% else %}📄
-                                                    {% endif %}
-                                                    {{ model.name }}
-                                                </a>
-                                                {% if model.add_url %}
-                                                    <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="Dodaj {{ model.name }}">
-                                                        +
-                                                    </a>
-                                                {% endif %}
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
             
-            <!-- User Menu (zwojciechowic) -->
+            <!-- User Menu with Users model -->
             <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link" title="{{ user.get_short_name|default:user.get_username }}">
+                <a href="#" class="admin-nav-link" title="{{ user.get_username }}">
                     <span class="admin-nav-icon">👤</span>
-                    <span class="admin-nav-text">{{ user.get_short_name|default:user.get_username }}</span>
                 </a>
                 <div class="admin-nav-dropdown">
                     <a href="{% url 'admin:password_change' %}" class="admin-dropdown-link">
@@ -145,6 +115,24 @@
                     <a href="{% url 'admin:logout' %}" class="admin-dropdown-link">
                         🚪 Wyloguj
                     </a>
+                    {% for app in available_apps %}
+                        {% if app.name == "Authentication and Authorization" or app.name == "Uwierzytelnienie i autoryzacja" %}
+                            {% for model in app.models %}
+                                {% if model.name == "Users" or model.name == "Użytkownicy" %}
+                                    <div class="admin-dropdown-item-wrapper">
+                                        <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
+                                            👤 {{ model.name }}
+                                        </a>
+                                        {% if model.add_url %}
+                                            <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="Dodaj {{ model.name }}">
+                                                +
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
