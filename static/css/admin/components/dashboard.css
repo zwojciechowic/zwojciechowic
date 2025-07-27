@@ -41,15 +41,21 @@
     opacity: 0.8;
 }
 
-/* Stats Grid */
-.stats-grid, .quick-actions {
+/* Stats Grid - dostosowane dla 5 elementów */
+.stats-grid {
     display: grid;
-    gap: 25px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
     margin-bottom: 40px;
 }
 
-.stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-.quick-actions { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+/* Quick Actions - dostosowane dla 5 elementów */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
 
 .stat-card, .quick-action {
     background: white;
@@ -83,7 +89,7 @@
 
 /* Text Styles */
 .stat-number {
-    font-size: 36px;
+    font-size: 32px; /* Zmniejszone dla lepszego dopasowania */
     font-weight: 700;
     color: #667eea;
     margin-bottom: 10px;
@@ -91,14 +97,14 @@
 
 .stat-label {
     color: #666;
-    font-size: 14px;
+    font-size: 13px; /* Zmniejszone */
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .quick-action-icon {
-    font-size: 48px;
+    font-size: 44px; /* Zmniejszone */
     margin-bottom: 15px;
     opacity: 0.8;
 }
@@ -106,12 +112,43 @@
 .quick-action h3 {
     color: #667eea;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 16px; /* Zmniejszone */
     font-weight: 600;
 }
 
 .quick-action p {
     color: #666;
-    font-size: 14px;
+    font-size: 13px; /* Zmniejszone */
     margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-card, .quick-action {
+        padding: 20px;
+    }
+    
+    .quick-action-icon {
+        font-size: 40px;
+    }
+    
+    .quick-action h3 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid, .quick-actions {
+        grid-template-columns: 1fr;
+    }
 }
