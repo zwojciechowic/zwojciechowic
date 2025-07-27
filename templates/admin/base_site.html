@@ -21,9 +21,7 @@
         {% if forloop.last %}
             {{ breadcrumb.title }}
         {% else %}
-            {% if breadcrumb.title != "Strona główna" %}
-                <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a> › 
-            {% endif %}
+            <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a> › 
         {% endif %}
     {% endfor %}
 </div>
@@ -50,33 +48,36 @@
             <img src="{% static 'logo/dog-logo.png' %}" alt="Logo" style="width: 32px; height: 32px; border-radius: 50%;">
             <span class="admin-brand-text">Admin</span>
         </a>
-            
+        
+        <div class="admin-nav-items">
             {% if available_apps %}
                 {% for app in available_apps %}
                     {% if app.name == "Main" or app.name == "Panel główny" %}
                         <div class="admin-nav-item">
-                            <a href="#" class="admin-nav-link" title="Panel główny">
-                                <span class="admin-nav-icon">⚙️</span>
-                                <span class="admin-nav-text">Panel główny</span>
-                            </a>
                             {% if app.models %}
                                 <div class="admin-nav-dropdown">
                                     {% for model in app.models %}
                                         {% if model.admin_url %}
-                                            <a href="{{ model.admin_url }}" class="admin-dropdown-link">
-                                                {% if model.name == "Dogs" or model.name == "Psy" %}🐕
-                                                {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
-                                                {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
-                                                {% elif model.name == "Blog posts" or model.name == "Posty" %}📝
-                                                {% else %}📄
+                                            <div class="admin-dropdown-item-wrapper">
+                                                <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
+                                                    {% if model.name == "Dogs" or model.name == "Psy" %}🐕
+                                                    {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
+                                                    {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
+                                                    {% elif model.name == "Blog posts" or model.name == "Posty" %}📝
+                                                    {% elif model.name == "Strona O nas" %}📄
+                                                    {% elif model.name == "Sekcje" %}📂
+                                                    {% elif model.name == "Wiadomości kontaktowe" %}💌
+                                                    {% elif model.name == "Wpisy na blogu" %}📝
+                                                    {% else %}📄
+                                                    {% endif %}
+                                                    {{ model.name }}
+                                                </a>
+                                                {% if model.add_url %}
+                                                    <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="Dodaj {{ model.name }}">
+                                                        +
+                                                    </a>
                                                 {% endif %}
-                                                {{ model.name }}
-                                            </a>
-                                        {% endif %}
-                                        {% if model.add_url %}
-                                            <a href="{{ model.add_url }}" class="admin-dropdown-link">
-                                                ➕ Dodaj {{ model.name }}
-                                            </a>
+                                            </div>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
@@ -92,18 +93,20 @@
                                 <div class="admin-nav-dropdown">
                                     {% for model in app.models %}
                                         {% if model.admin_url %}
-                                            <a href="{{ model.admin_url }}" class="admin-dropdown-link">
-                                                {% if model.name == "Users" or model.name == "Użytkownicy" %}👤
-                                                {% elif model.name == "Groups" or model.name == "Grupy" %}👥
-                                                {% else %}📄
+                                            <div class="admin-dropdown-item-wrapper">
+                                                <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
+                                                    {% if model.name == "Users" or model.name == "Użytkownicy" %}👤
+                                                    {% elif model.name == "Groups" or model.name == "Grupy" %}👥
+                                                    {% else %}📄
+                                                    {% endif %}
+                                                    {{ model.name }}
+                                                </a>
+                                                {% if model.add_url %}
+                                                    <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="Dodaj {{ model.name }}">
+                                                        +
+                                                    </a>
                                                 {% endif %}
-                                                {{ model.name }}
-                                            </a>
-                                        {% endif %}
-                                        {% if model.add_url %}
-                                            <a href="{{ model.add_url }}" class="admin-dropdown-link">
-                                                ➕ Dodaj {{ model.name }}
-                                            </a>
+                                            </div>
                                         {% endif %}
                                     {% endfor %}
                                 </div>

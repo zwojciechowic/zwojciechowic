@@ -226,6 +226,54 @@
     transform: translateX(-50%) translateY(0) !important;
 }
 
+/* Wrapper dla każdego elementu dropdown */
+.admin-dropdown-item-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 var(--spacing-sm) !important;
+    gap: 8px !important;
+    transition: var(--transition-medium) !important;
+}
+
+.admin-dropdown-item-wrapper:hover {
+    background: var(--bg-hover) !important;
+}
+
+/* Główny link (np. "Psy") */
+.admin-dropdown-main {
+    flex: 1 !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    color: var(--text-dark) !important;
+    text-decoration: none !important;
+    transition: var(--transition-medium) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    border-radius: 6px !important;
+}
+
+/* Przycisk dodaj (+) */
+.admin-dropdown-add-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 50% !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    transition: var(--transition-medium) !important;
+    box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2) !important;
+}
+
+.admin-dropdown-add-btn:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3) !important;
+}
+
+/* Stary style dla kompatybilności */
 .admin-dropdown-link {
     display: block !important;
     padding: var(--spacing-sm) var(--spacing-lg) !important;
