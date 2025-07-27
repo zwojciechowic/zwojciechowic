@@ -24,48 +24,47 @@
             <div class="col-lg-6">
                 <!-- Wyświetlanie psów jako karty -->
                 {% if featured_dogs %}
-                    {% for dog in featured_dogs %}
-                    <div class="mb-3">
-                        <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
-                            <div class="card card-hover">
-                                <div class="row g-0">
-                                    <div class="col-md-8">
-                                        {% if dog.photo %}
-                                        <img src="{{ dog.photo.url }}" class="img-fluid rounded-start h-100" alt="{{ dog.name }}" style="object-fit: cover;">
-                                        {% endif %}
-                                        {% if dog.certificate %}
-                                        <div class="position-absolute top-0 end-0 m-2">
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-certificate"></i> Certyfikowany
-                                            </span>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card-body text-start">
-                                            <h5 class="card-title text-dark">{{ dog.name }}</h5>
-                                            <div class="card-details mb-2">
-                                                <small class="text-muted">
-                                                    <strong>Rasa:</strong> {{ dog.breed }}<br>
-                                                    <strong>Płeć:</strong> {% if dog.gender == 'male' %}Pies{% elif dog.gender == 'female' %}Suka{% endif %}<br>
-                                                    <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
-                                                </small>
-                                            </div>
-                                            <p class="card-text text-muted">{{ dog.description|truncatewords:15 }}</p>
-                                            <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
-                                        </div>
-                                    </div>
+                {% for dog in featured_dogs %}
+                <div class="mb-3">
+                    <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
+                        <div class="card card-hover">
+                            <!-- Zdjęcie na górze -->
+                            <div class="position-relative">
+                                {% if dog.photo %}
+                                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; object-fit: cover;">
+                                {% endif %}
+                                {% if dog.certificate %}
+                                <div class="position-absolute top-0 end-0 m-2">
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-certificate"></i> Certyfikowany
+                                    </span>
                                 </div>
+                                {% endif %}
                             </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                    
-                    <!-- Link do wszystkich psów -->
-                    <div class="text-center mt-3">
-                        <a href="{% url 'dogs' %}" class="btn btn-outline-primary">Zobacz wszystkie nasze psy</a>
-                    </div>
-                {% else %}
+                            
+                            <!-- Informacje na dole -->
+                            <div class="card-body text-start">
+                                <h5 class="card-title text-dark">{{ dog.name }}</h5>
+                                <div class="card-details mb-2">
+                                    <small class="text-muted">
+                                        <strong>Rasa:</strong> {{ dog.breed }}<br>
+                                        <strong>Płeć:</strong> {% if dog.gender == 'male' %}Pies{% elif dog.gender == 'female' %}Suka{% endif %}<br>
+                                        <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                                    </small>
+                                </div>
+                                <p class="card-text text-muted">{{ dog.description|truncatewords:15 }}</p>
+                                <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+                
+                <!-- Link do wszystkich psów -->
+                <div class="text-center mt-3">
+                    <a href="{% url 'dogs' %}" class="btn btn-outline-primary">Zobacz wszystkie nasze psy</a>
+                </div>
+            {% else %}
                     <!-- Fallback gdy nie ma psów -->
                     {% load static %}
                     <img src="{% static 'img/celta-3.jpeg' %}" alt="Celta - Owczarek niemiecki" class="img-fluid rounded mb-3">
