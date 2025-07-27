@@ -1,5 +1,3 @@
-// Dodaj na koniec admin_image_preview.js
-
 // Admin Mobile Hamburger Menu
 document.addEventListener('DOMContentLoaded', function() {
     // Sprawdź czy jesteśmy na mobile
@@ -93,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.querySelector('.admin-modern-navbar');
         if (navbar) {
             navbar.classList.remove('mobile-active');
+            navbar.style.transform = ''; // Reset transform
         }
         
         document.body.style.overflow = 'auto';
