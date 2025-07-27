@@ -70,6 +70,63 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #D2691E 0%, #8B4513 100%);
         }
+
+        /* Ikony zawsze widoczne */
+        .admin-nav-icon {
+            font-size: 18px !important;
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            width: auto !important;
+            margin-right: 5px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Tekst ukryty domyślnie, pokazywany po hover */
+        .admin-nav-text {
+            opacity: 0 !important;
+            transform: translateX(-10px) !important;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+            white-space: nowrap !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            margin-left: 5px !important;
+        }
+
+        /* Po hover na navbar - pokaż tekst */
+        .admin-modern-navbar:hover .admin-nav-text {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            width: auto !important;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+        }
+
+        /* Aktywny link - zawsze pokazuj tekst */
+        .admin-nav-link.active .admin-nav-text {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            width: auto !important;
+        }
+
+        /* Dodatkowe style dla lepszego wyglądu ikon */
+        .admin-nav-link {
+            min-width: 44px !important;
+            justify-content: center !important;
+        }
+
+        .admin-modern-navbar:hover .admin-nav-link {
+            justify-content: flex-start !important;
+        }
+
+        /* Responsive - na mobile ukryj tekst całkowicie */
+        @media (max-width: 768px) {
+            .admin-nav-text {
+                display: none !important;
+            }
+            
+            .admin-nav-icon {
+                font-size: 16px !important;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -96,72 +153,77 @@
         </a>
         
         <div class="admin-nav-items">
-            <!-- Strona główna -->
-            <div class="admin-nav-item">
-                <a href="/" class="admin-nav-link" title="Strona główna">
-                    <span class="admin-nav-icon">🏠</span>
-                    <span class="admin-nav-text">Strona Główna</span>
-                </a>
-            </div>
-            
             <!-- Panel główny -->
             <div class="admin-nav-item">
                 <a href="{% url 'admin:index' %}" class="admin-nav-link" title="Panel główny">
                     <span class="admin-nav-icon">⚙️</span>
-                    <span class="admin-nav-text">Panel Główny</span>
+                    <span class="admin-nav-text">Panel główny</span>
                 </a>
             </div>
             
             {% if available_apps %}
                 {% for app in available_apps %}
-                    <div class="admin-nav-item">
-                        <a href="#" class="admin-nav-link" title="{{ app.name }}">
-                            {% if app.name == "Main" or app.name == "Panel główny" %}
-                                <span class="admin-nav-icon">🐕</span>
-                            {% elif app.name == "Authentication and Authorization" %}
-                                <span class="admin-nav-icon">👥</span>
-                            {% else %}
-                                <span class="admin-nav-icon">📁</span>
+                    {% if app.name == "Main" or app.name == "Panel główny" %}
+                        <div class="admin-nav-item">
+                            <a href="#" class="admin-nav-link" title="Panel główny">
+                                <span class="admin-nav-icon">⚙️</span>
+                                <span class="admin-nav-text">Panel główny</span>
+                            </a>
+                            {% if app.models %}
+                                <div class="admin-nav-dropdown">
+                                    {% for model in app.models %}
+                                        {% if model.admin_url %}
+                                            <a href="{{ model.admin_url }}" class="admin-dropdown-link">
+                                                {% if model.name == "Dogs" or model.name == "Psy" %}🐕
+                                                {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
+                                                {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
+                                                {% elif model.name == "Blog posts" or model.name == "Posty" %}📝
+                                                {% else %}📄
+                                                {% endif %}
+                                                {{ model.name }}
+                                            </a>
+                                        {% endif %}
+                                        {% if model.add_url %}
+                                            <a href="{{ model.add_url }}" class="admin-dropdown-link">
+                                                ➕ Dodaj {{ model.name }}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
-                            <span class="admin-nav-text">{{ app.name }}</span>
-                        </a>
-                        {% if app.models %}
-                            <div class="admin-nav-dropdown">
-                                {% for model in app.models %}
-                                    {% if model.admin_url %}
-                                        <a href="{{ model.admin_url }}" class="admin-dropdown-link">
-                                            {% if model.name == "Dogs" or model.name == "Psy" %}🐕
-                                            {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
-                                            {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
-                                            {% elif model.name == "Blog posts" or model.name == "Posty" %}📝
-                                            {% elif model.name == "Users" or model.name == "Użytkownicy" %}👤
-                                            {% elif model.name == "Groups" or model.name == "Grupy" %}👥
-                                            {% else %}📄
-                                            {% endif %}
-                                            {{ model.name }}
-                                        </a>
-                                    {% endif %}
-                                    {% if model.add_url %}
-                                        <a href="{{ model.add_url }}" class="admin-dropdown-link">
-                                            ➕ Dodaj {{ model.name }}
-                                        </a>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% elif app.name == "Authentication and Authorization" or app.name == "Uwierzytelnienie i autoryzacja" %}
+                        <div class="admin-nav-item">
+                            <a href="#" class="admin-nav-link" title="Uwierzytelnienie i autoryzacja">
+                                <span class="admin-nav-icon">👥</span>
+                                <span class="admin-nav-text">Uwierzytelnienie i autoryzacja</span>
+                            </a>
+                            {% if app.models %}
+                                <div class="admin-nav-dropdown">
+                                    {% for model in app.models %}
+                                        {% if model.admin_url %}
+                                            <a href="{{ model.admin_url }}" class="admin-dropdown-link">
+                                                {% if model.name == "Users" or model.name == "Użytkownicy" %}👤
+                                                {% elif model.name == "Groups" or model.name == "Grupy" %}👥
+                                                {% else %}📄
+                                                {% endif %}
+                                                {{ model.name }}
+                                            </a>
+                                        {% endif %}
+                                        {% if model.add_url %}
+                                            <a href="{{ model.add_url }}" class="admin-dropdown-link">
+                                                ➕ Dodaj {{ model.name }}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
             
-            <!-- Kontakt -->
-            <div class="admin-nav-item">
-                <a href="/contact" class="admin-nav-link" title="Kontakt">
-                    <span class="admin-nav-icon">✉️</span>
-                    <span class="admin-nav-text">Kontakt</span>
-                </a>
-            </div>
-            
-            <!-- User Menu -->
+            <!-- User Menu (zwojciechowic) -->
             <div class="admin-nav-item">
                 <a href="#" class="admin-nav-link" title="{{ user.get_short_name|default:user.get_username }}">
                     <span class="admin-nav-icon">👤</span>
