@@ -15,83 +15,93 @@
 </div>
 
 <div class="management-grid">
-    <!-- Nasze Psy -->
-    <a href="{% url 'admin:main_dog_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla psów - wszystko w jednym miejscu -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">🐕</div>
-            <a href="{% url 'admin:main_dog_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj psa">
+            <a href="{% url 'admin:main_dog_add' %}" class="add-button" title="Dodaj psa">
                 +
             </a>
         </div>
         <div class="card-content">
-            <h3>Nasze Psy</h3>
-            <p>Zarządzaj psami w hodowli</p>
+            <a href="{% url 'admin:main_dog_changelist' %}" class="card-link">
+                <h3>Nasze Psy</h3>
+                <p>Zarządzaj psami w hodowli</p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number">{{ dogs_count|default:"0" }}</span>
                 <span class="stat-label">psów w hodowli</span>
             </div>
         </div>
-    </a>
+    </div>
 
-    <!-- Szczenięta -->
-    <a href="{% url 'admin:main_puppy_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla szczeniąt - wszystko w jednym miejscu -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">🐶</div>
-            <a href="{% url 'admin:main_puppy_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj szczenię">
+            <a href="{% url 'admin:main_puppy_add' %}" class="add-button" title="Dodaj szczenię">
                 +
             </a>
         </div>
         <div class="card-content">
-            <h3>Szczenięta</h3>
-            <p>Zarządzaj szczeniętami</p>
+            <a href="{% url 'admin:main_puppy_changelist' %}" class="card-link">
+                <h3>Szczenięta</h3>
+                <p>Zarządzaj szczeniętami</p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number">{{ puppies_count|default:"0" }}</span>
                 <span class="stat-label">dostępnych szczeniąt</span>
             </div>
         </div>
-    </a>
+    </div>
 
-    <!-- Rezerwacje -->
-    <a href="{% url 'admin:main_reservation_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla rezerwacji -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">📝</div>
         </div>
         <div class="card-content">
-            <h3>Rezerwacje</h3>
-            <p>Zarządzaj rezerwacjami</p>
+            <a href="{% url 'admin:main_reservation_changelist' %}" class="card-link">
+                <h3>Rezerwacje</h3>
+                <p>Zarządzaj rezerwacjami</p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number">{{ reservations_count|default:"0" }}</span>
                 <span class="stat-label">aktywnych rezerwacji</span>
             </div>
         </div>
-    </a>
+    </div>
 
-    <!-- Blog -->
-    <a href="{% url 'admin:main_blogpost_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla bloga -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">✍️</div>
-            <a href="{% url 'admin:main_blogpost_add' %}" class="add-button" onclick="event.stopPropagation();" title="Dodaj post">
+            <a href="{% url 'admin:main_blogpost_add' %}" class="add-button" title="Dodaj post">
                 +
             </a>
         </div>
         <div class="card-content">
-            <h3>Blog</h3>
-            <p>Zarządzaj wpisami na blogu</p>
+            <a href="{% url 'admin:main_blogpost_changelist' %}" class="card-link">
+                <h3>Blog</h3>
+                <p>Zarządzaj wpisami na blogu</p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number">{{ posts_count|default:"0" }}</span>
                 <span class="stat-label">opublikowanych postów</span>
             </div>
         </div>
-    </a>
+    </div>
 
-    <!-- Wiadomości -->
-    <a href="{% url 'admin:main_contactmessage_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla wiadomości -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">✉️</div>
         </div>
         <div class="card-content">
-            <h3>Wiadomości</h3>
-            <p>Wiadomości kontaktowe</p>
+            <a href="{% url 'admin:main_contactmessage_changelist' %}" class="card-link">
+                <h3>Wiadomości</h3>
+                <p>Wiadomości kontaktowe</p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number {% if unread_messages > 0 %}warning{% endif %}">{{ messages_count|default:"0" }}</span>
                 <span class="stat-label">
@@ -103,27 +113,29 @@
                 </span>
             </div>
         </div>
-    </a>
+    </div>
 
-    <!-- Strona O Nas -->
-    <a href="{% url 'admin:main_aboutpage_changelist' %}" class="management-card">
+    <!-- JEDYNA karta dla strony O Nas -->
+    <div class="management-card">
         <div class="card-header">
             <div class="card-icon">📄</div>
             {% if not about_exists %}
-            <a href="{% url 'admin:main_aboutpage_add' %}" class="add-button" onclick="event.stopPropagation();" title="Utwórz stronę">
+            <a href="{% url 'admin:main_aboutpage_add' %}" class="add-button" title="Utwórz stronę">
                 +
             </a>
             {% endif %}
         </div>
         <div class="card-content">
-            <h3>Strona O Nas</h3>
-            <p>
-                {% if about_exists %}
-                    Edytuj informacje o hodowli
-                {% else %}
-                    Utwórz stronę o hodowli
-                {% endif %}
-            </p>
+            <a href="{% url 'admin:main_aboutpage_changelist' %}" class="card-link">
+                <h3>Strona O Nas</h3>
+                <p>
+                    {% if about_exists %}
+                        Edytuj informacje o hodowli
+                    {% else %}
+                        Utwórz stronę o hodowli
+                    {% endif %}
+                </p>
+            </a>
             <div class="card-stats">
                 <span class="stat-number {% if about_exists %}success{% else %}warning{% endif %}">
                     {% if about_exists %}✓{% else %}!{% endif %}
@@ -137,21 +149,30 @@
                 </span>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 
 <script>
-// Prosta obsługa klawiatury
+// Obsługa kliknięć na karty - kliknięcie karty prowadzi do listy
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.management-card');
     
     cards.forEach(card => {
-        card.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                card.click();
+        card.addEventListener('click', function(e) {
+            // Jeśli kliknięto przycisk dodawania, nie rób nic
+            if (e.target.closest('.add-button')) {
+                return;
+            }
+            
+            // Znajdź link do listy i kliknij go
+            const cardLink = card.querySelector('.card-link');
+            if (cardLink) {
+                window.location.href = cardLink.href;
             }
         });
+        
+        // Dodaj cursor pointer dla całej karty
+        card.style.cursor = 'pointer';
     });
 });
 </script>
