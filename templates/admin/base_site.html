@@ -19,20 +19,12 @@
 {% block breadcrumbs %}
 <div class="breadcrumbs">
     {% if not is_popup %}
-        {% if cl and cl.opts.app_label == 'main' %}
-            {# Dla aplikacji main pokazuj tylko "Panel główny" #}
-            <a href="{% url 'admin:index' %}">Panel główny</a>
-            {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
-        {% elif opts and opts.app_label == 'main' %}
-            {# Dla widoków szczegółowych aplikacji main #}
-            <a href="{% url 'admin:index' %}">Panel główny</a>
-            {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
-        {% elif '/admin/' in request.path %}
-            {# Fallback dla wszystkich stron main #}
+        {# Prostsza logika - sprawdź czy jesteś w admin panelu #}
+        {% if request.resolver_match.namespace == 'admin' %}
             <a href="{% url 'admin:index' %}">Panel główny</a>
             {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
         {% else %}
-            {# Standardowe breadcrumbs dla innych aplikacji #}
+            {# Fallback dla innych przypadków #}
             <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
             {% if title %} › {{ title }}{% endif %}
         {% endif %}
