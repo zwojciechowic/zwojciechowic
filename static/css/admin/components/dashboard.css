@@ -88,13 +88,10 @@ body {
     background: var(--white);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
-    text-decoration: none;
-    color: inherit;
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
     position: relative;
-    display: block;
     min-height: 180px;
 }
 
@@ -102,8 +99,27 @@ body {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
     border-color: var(--primary-light);
+}
+
+/* Link wewnątrz karty - dla tytułu i opisu */
+.card-link {
     text-decoration: none;
     color: inherit;
+    display: block;
+    margin-bottom: var(--spacing-lg);
+}
+
+.card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-link h3 {
+    transition: color 0.2s ease;
+}
+
+.card-link:hover h3 {
+    color: var(--primary-color);
 }
 
 /* Card Header - uproszczony */
