@@ -27,7 +27,7 @@
             {# Dla widoków szczegółowych aplikacji main #}
             <a href="{% url 'admin:index' %}">Panel główny</a>
             {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
-        {% elif '/admin/main/' in request.path %}
+        {% elif '/admin/' in request.path %}
             {# Fallback dla wszystkich stron main #}
             <a href="{% url 'admin:index' %}">Panel główny</a>
             {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
