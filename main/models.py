@@ -28,7 +28,8 @@ class Dog(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(verbose_name='Opis')
-    photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')  # Wszystkie zdjęcia w jednym polu
+    photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')
+    certificates = models.JSONField(default=list, blank=True, verbose_name='Certyfikaty')
     is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
     
     class Meta:
@@ -51,7 +52,8 @@ class Puppy(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
-    photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')  # Wszystkie zdjęcia w jednym polu
+    photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')
+    certificates = models.JSONField(default=list, blank=True, verbose_name='Certyfikaty')
     is_available = models.BooleanField(default=True, verbose_name='Dostępne')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
     
@@ -66,8 +68,6 @@ class Puppy(models.Model):
     @property
     def main_photo(self):
         """Pierwsze zdjęcie jako główne"""
-        return self.photos[0] if self.photos else None
-
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
     customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')
