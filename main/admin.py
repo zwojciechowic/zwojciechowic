@@ -1,8 +1,7 @@
-# main/admin.py
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections
+from .models import BlogPost, Dog, DogImage, Puppy, PuppyImage, Reservation, ContactMessage, AboutPage, AboutSections
 from django.contrib.admin import AdminSite
 
 # Konfiguracja panelu administracyjnego
@@ -33,6 +32,18 @@ class BlogPostAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
+
+class DogImageInline(admin.TabularInline):
+    model = DogImage
+    extra = 3
+    fields = ('image', 'description', 'order')
+    ordering = ('order',)
+
+class PuppyImageInline(admin.TabularInline):
+    model = PuppyImage
+    extra = 3
+    fields = ('image', 'description', 'order')
+    ordering = ('order',)
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -82,12 +93,13 @@ class DogAdmin(admin.ModelAdmin):
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
     form = DogAdminForm
+    inlines = [DogImageInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
             'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding')
         }),
-        ('Opis i zdjęcie', {
+        ('Opis i zdjęcie główne', {
             'fields': ('description', 'photo', 'preview_image')
         }),
         ('Certyfikat', {
@@ -123,6 +135,7 @@ class PuppyAdmin(admin.ModelAdmin):
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
     form = PuppyAdminForm
+    inlines = [PuppyImageInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -131,7 +144,7 @@ class PuppyAdmin(admin.ModelAdmin):
         ('Dostępność i cena', {
             'fields': ('is_available', 'price')
         }),
-        ('Opis i zdjęcie', {
+        ('Opis i zdjęcie główne', {
             'fields': ('description', 'photo', 'preview_image')
         }),
         ('Certyfikat', {
@@ -157,6 +170,7 @@ class PuppyAdmin(admin.ModelAdmin):
     def has_certificate(self, obj):
         return "Tak" if obj.certificate else "Nie"
     has_certificate.short_description = "Certyfikat"
+
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']
@@ -228,7 +242,6 @@ class ContactMessageAdmin(admin.ModelAdmin):
         self.message_user(request, f"Oznaczono {queryset.count()} wiadomości jako nieprzeczytane.")
     mark_as_unread.short_description = "Oznacz jako nieprzeczytane"
 
-# Dodatkowe ustawienia panelu administracyjnego
 class CustomAdminSite(admin.AdminSite):
     def get_app_list(self, request):
         """
@@ -248,14 +261,6 @@ class CustomAdminSite(admin.AdminSite):
                 }.get(x['object_name'], 99))
         
         return app_list
-
-# Jeśli chcesz użyć niestandardowego admin site:
-# admin_site = CustomAdminSite(name='hodowla_admin')
-# admin_site.register(BlogPost, BlogPostAdmin)
-# admin_site.register(Dog, DogAdmin)
-# admin_site.register(Puppy, PuppyAdmin)
-# admin_site.register(Reservation, ReservationAdmin)
-# admin_site.register(ContactMessage, ContactMessageAdmin)
 
 @admin.register(AboutSections)
 class AboutSectionAdmin(admin.ModelAdmin):
@@ -277,16 +282,12 @@ class AboutPageAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return not AboutPage.objects.exists()
     
-
-# Zastąp Twoją obecną klasę HodowlaAdminSite na końcu pliku main/admin.py
-
 class HodowlaAdminSite(AdminSite):
     def index(self, request, extra_context=None):
         """Custom dashboard z licznikami - ulepszona wersja"""
         extra_context = extra_context or {}
         
         try:
-            # Podstawowe liczniki
             dogs_count = Dog.objects.count()
             puppies_count = Puppy.objects.filter(is_available=True).count()
             posts_count = BlogPost.objects.filter(is_published=True).count()

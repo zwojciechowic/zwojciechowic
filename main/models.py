@@ -28,7 +28,7 @@ class Dog(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(verbose_name='Opis')
-    photo = models.ImageField(upload_to='dogs/', verbose_name='Zdjęcie')
+    photo = models.ImageField(upload_to='dogs/', verbose_name='Zdjęcie główne')
     is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
     certificate = models.ImageField(upload_to='certificates/', blank=True, null=True, verbose_name='Certyfikat')
     
@@ -44,6 +44,20 @@ class Dog(models.Model):
         from django.urls import reverse
         return reverse('dog_detail', kwargs={'pk': self.pk})
 
+class DogImage(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='images', verbose_name='Pies')
+    image = models.ImageField(upload_to='dogs/', verbose_name='Zdjęcie')
+    description = models.CharField(max_length=200, blank=True, verbose_name='Opis zdjęcia')
+    order = models.PositiveIntegerField(default=0, verbose_name='Kolejność')
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Zdjęcie psa'
+        verbose_name_plural = 'Zdjęcia psów'
+    
+    def __str__(self):
+        return f"{self.dog.name} - Zdjęcie {self.order}"
+
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     mother = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='puppies_as_mother', verbose_name='Matka')
@@ -51,7 +65,7 @@ class Puppy(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
-    photo = models.ImageField(upload_to='puppies/', verbose_name='Zdjęcie')
+    photo = models.ImageField(upload_to='puppies/', verbose_name='Zdjęcie główne')
     certificate = models.ImageField(upload_to='certificates/', blank=True, null=True, verbose_name='Certyfikat')
     is_available = models.BooleanField(default=True, verbose_name='Dostępne')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
@@ -67,6 +81,20 @@ class Puppy(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.get_gender_display()}"
+
+class PuppyImage(models.Model):
+    puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, related_name='images', verbose_name='Szczeniak')
+    image = models.ImageField(upload_to='puppies/', verbose_name='Zdjęcie')
+    description = models.CharField(max_length=200, blank=True, verbose_name='Opis zdjęcia')
+    order = models.PositiveIntegerField(default=0, verbose_name='Kolejność')
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Zdjęcie szczeniaka'
+        verbose_name_plural = 'Zdjęcia szczeniąt'
+    
+    def __str__(self):
+        return f"{self.puppy.name} - Zdjęcie {self.order}"
 
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
