@@ -84,33 +84,34 @@ class BasePhotoAdmin(admin.ModelAdmin):
         return format_html(html)
     
     def save_model(self, request, obj, form, change):
+        print("=== SAVE_MODEL DEBUG ===")
+        print(f"Object: {obj}")
+        print(f"Change: {change}")
+        print(f"FILES keys: {list(request.FILES.keys())}")
+        print(f"POST keys: {list(request.POST.keys())}")
+        
         super().save_model(request, obj, form, change)
         
-        # Obsługa zdjęć
+        print("Before _save_photos")
         self._save_photos(request, obj, 'photos')
-        # Obsługa certyfikatów
         self._save_photos(request, obj, 'certificates')
-    
-    def _save_photos(self, request, obj, field_name):
-        # Sprawdź czy są pliki dla tego pola
-        file_key = f'{field_name}_files'  # lub jakakolwiek nazwa z HTML
+        print("After _save_photos")
         
-        if file_key in request.FILES:
-            files = request.FILES.getlist(file_key)
-            existing_photos = getattr(obj, field_name, []) or []
-            
-            for file in files:
-                if file.content_type.startswith('image/'):
-                    filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                    saved_file = default_storage.save(filename, file)
-                    
-                    existing_photos.append({
-                        'url': default_storage.url(saved_file),
-                        'filename': saved_file
-                    })
-            
-            setattr(obj, field_name, existing_photos)
-            obj.save(update_fields=[field_name])
+    def _save_photos(self, request, obj, field_name):
+        print(f"\n=== _save_photos for {field_name} ===")
+        print(f"Object ID: {obj.pk}")
+        
+        existing_photos = getattr(obj, field_name, []) or []
+        print(f"Existing photos count: {len(existing_photos)}")
+        
+        # Sprawdź WSZYSTKIE klucze plików
+        for key in request.FILES.keys():
+            print(f"File key found: {key}")
+            file = request.FILES[key]
+            print(f"  - File name: {file.name}")
+            print(f"  - Content type: {file.content_type}")
+        
+        # Reszta twojego kodu...
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):
