@@ -79,7 +79,7 @@ class DogAdmin(admin.ModelAdmin):
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
     date_hierarchy = 'birth_date'
-    readonly_fields = ['preview_image', 'additional_photos_preview']
+    readonly_fields = ['preview_image', 'additional_photos_manager']
     form = DogAdminForm
     
     fieldsets = (
@@ -90,7 +90,7 @@ class DogAdmin(admin.ModelAdmin):
             'fields': ('description', 'photo', 'preview_image')
         }),
         ('Dodatkowe zdjęcia', {
-            'fields': ('additional_photos_field', 'additional_photos_preview'),
+            'fields': ('additional_photos_manager',),
             'classes': ('multiple-photos-section',)
         }),
         ('Certyfikat', {
@@ -121,25 +121,77 @@ class DogAdmin(admin.ModelAdmin):
         return len(obj.additional_photos) if obj.additional_photos else 0
     additional_photos_count.short_description = "Dodatkowe zdjęcia"
     
-    def additional_photos_field(self, obj):
-        return format_html('<input type="file" id="additional_photos_input" multiple accept="image/*" />')
-    additional_photos_field.short_description = "Wybierz dodatkowe zdjęcia"
-    
-    def additional_photos_preview(self, obj):
-        if not obj.additional_photos:
-            return "Brak dodatkowych zdjęć"
+    def additional_photos_manager(self, obj):
+        html = '''
+        <div class="multiple-photos-widget">
+            <div class="upload-section">
+                <input type="file" id="additional_photos_input" multiple accept="image/*" 
+                       style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
+                <p style="margin: 10px 0; color: #666; font-size: 12px;">
+                    Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
+                </p>
+            </div>
+            <div id="additional-photos-container">
+        '''
         
-        html = '<div id="additional-photos-container">'
-        for i, photo_data in enumerate(obj.additional_photos):
-            html += format_html(
-                '<div class="photo-item" data-index="{}"><img src="{}" /><span class="remove-photo">×</span><input type="number" value="{}" min="1" class="order-input" /></div>',
-                i, photo_data['url'], photo_data.get('order', i+1)
-            )
-        html += '</div>'
+        if obj.additional_photos:
+            for i, photo_data in enumerate(obj.additional_photos):
+                html += f'''
+                <div class="photo-item" data-index="{i}">
+                    <img src="{photo_data.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
+                    <span class="remove-photo" onclick="removePhoto({i})">×</span>
+                    <input type="number" value="{photo_data.get('order', i+1)}" min="1" class="order-input" 
+                           onchange="updatePhotoOrder({i}, this.value)" />
+                </div>
+                '''
+        
+        html += '''
+            </div>
+            <input type="hidden" name="additional_photos_data" id="additional_photos_data" />
+        </div>
+        '''
+        
         return format_html(html)
-    additional_photos_preview.short_description = "Podgląd dodatkowych zdjęć"
+    additional_photos_manager.short_description = "Zarządzanie dodatkowymi zdjęciami"
 
-# Zmodyfikuj PuppyAdmin podobnie:
+    def save_model(self, request, obj, form, change):
+        # Najpierw zapisz obiekt
+        super().save_model(request, obj, form, change)
+        
+        # Obsługa dodatkowych zdjęć
+        additional_photos_data = request.POST.get('additional_photos_data')
+        if additional_photos_data:
+            try:
+                import json
+                photos_data = json.loads(additional_photos_data)
+                
+                # Sprawdź czy są nowe pliki do uploadu
+                uploaded_files = request.FILES.getlist('additional_photos_files')
+                for file in uploaded_files:
+                    if file.content_type.startswith('image/'):
+                        # Zapisz plik do odpowiedniego katalogu
+                        from django.core.files.storage import default_storage
+                        from django.core.files.base import ContentFile
+                        import uuid
+                        
+                        filename = f"additional_photos/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                        saved_file = default_storage.save(filename, ContentFile(file.read()))
+                        
+                        # Dodaj do photos_data
+                        photos_data.append({
+                            'url': default_storage.url(saved_file),
+                            'order': len(photos_data) + 1,
+                            'filename': saved_file
+                        })
+                
+                # Sortuj i zapisz
+                photos_data.sort(key=lambda x: x.get('order', 0))
+                obj.additional_photos = photos_data
+                obj.save(update_fields=['additional_photos'])
+                
+            except (json.JSONDecodeError, TypeError):
+                pass
+
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
     list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'preview_image', 'has_certificate', 'additional_photos_count']
@@ -147,7 +199,7 @@ class PuppyAdmin(admin.ModelAdmin):
     search_fields = ['name', 'mother__name', 'father__name', 'description']
     list_editable = ['is_available', 'price']
     date_hierarchy = 'birth_date'
-    readonly_fields = ['preview_image', 'additional_photos_preview']
+    readonly_fields = ['preview_image', 'additional_photos_manager']
     form = PuppyAdminForm
     
     fieldsets = (
@@ -161,7 +213,7 @@ class PuppyAdmin(admin.ModelAdmin):
             'fields': ('description', 'photo', 'preview_image')
         }),
         ('Dodatkowe zdjęcia', {
-            'fields': ('additional_photos_field', 'additional_photos_preview'),
+            'fields': ('additional_photos_manager',),
             'classes': ('multiple-photos-section',)
         }),
         ('Certyfikat', {
@@ -192,23 +244,76 @@ class PuppyAdmin(admin.ModelAdmin):
         return len(obj.additional_photos) if obj.additional_photos else 0
     additional_photos_count.short_description = "Dodatkowe zdjęcia"
     
-    def additional_photos_field(self, obj):
-        return format_html('<input type="file" id="additional_photos_input" multiple accept="image/*" />')
-    additional_photos_field.short_description = "Wybierz dodatkowe zdjęcia"
-    
-    def additional_photos_preview(self, obj):
-        if not obj.additional_photos:
-            return "Brak dodatkowych zdjęć"
+    def additional_photos_manager(self, obj):
+        html = '''
+        <div class="multiple-photos-widget">
+            <div class="upload-section">
+                <input type="file" id="additional_photos_input" multiple accept="image/*" 
+                       style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
+                <p style="margin: 10px 0; color: #666; font-size: 12px;">
+                    Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
+                </p>
+            </div>
+            <div id="additional-photos-container">
+        '''
         
-        html = '<div id="additional-photos-container">'
-        for i, photo_data in enumerate(obj.additional_photos):
-            html += format_html(
-                '<div class="photo-item" data-index="{}"><img src="{}" /><span class="remove-photo">×</span><input type="number" value="{}" min="1" class="order-input" /></div>',
-                i, photo_data['url'], photo_data.get('order', i+1)
-            )
-        html += '</div>'
+        if obj.additional_photos:
+            for i, photo_data in enumerate(obj.additional_photos):
+                html += f'''
+                <div class="photo-item" data-index="{i}">
+                    <img src="{photo_data.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
+                    <span class="remove-photo" onclick="removePhoto({i})">×</span>
+                    <input type="number" value="{photo_data.get('order', i+1)}" min="1" class="order-input" 
+                           onchange="updatePhotoOrder({i}, this.value)" />
+                </div>
+                '''
+        
+        html += '''
+            </div>
+            <input type="hidden" name="additional_photos_data" id="additional_photos_data" />
+        </div>
+        '''
+        
         return format_html(html)
-    additional_photos_preview.short_description = "Podgląd dodatkowych zdjęć"
+    additional_photos_manager.short_description = "Zarządzanie dodatkowymi zdjęciami"
+
+    def save_model(self, request, obj, form, change):
+        # Najpierw zapisz obiekt
+        super().save_model(request, obj, form, change)
+        
+        # Obsługa dodatkowych zdjęć
+        additional_photos_data = request.POST.get('additional_photos_data')
+        if additional_photos_data:
+            try:
+                import json
+                photos_data = json.loads(additional_photos_data)
+                
+                # Sprawdź czy są nowe pliki do uploadu
+                uploaded_files = request.FILES.getlist('additional_photos_files')
+                for file in uploaded_files:
+                    if file.content_type.startswith('image/'):
+                        # Zapisz plik do odpowiedniego katalogu
+                        from django.core.files.storage import default_storage
+                        from django.core.files.base import ContentFile
+                        import uuid
+                        
+                        filename = f"additional_photos/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                        saved_file = default_storage.save(filename, ContentFile(file.read()))
+                        
+                        # Dodaj do photos_data
+                        photos_data.append({
+                            'url': default_storage.url(saved_file),
+                            'order': len(photos_data) + 1,
+                            'filename': saved_file
+                        })
+                
+                # Sortuj i zapisz
+                photos_data.sort(key=lambda x: x.get('order', 0))
+                obj.additional_photos = photos_data
+                obj.save(update_fields=['additional_photos'])
+                
+            except (json.JSONDecodeError, TypeError):
+                pass
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']

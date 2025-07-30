@@ -162,3 +162,74 @@ def admin_dashboard_context(request):
 def hotel(request):
     """Strona hotelu - już wkrótce"""
     return render(request, 'hotel.html')
+
+def handle_additional_photos_upload(request, instance):
+    """
+    Obsługuje upload dodatkowych zdjęć z formularza administracyjnego
+    """
+    uploaded_files = request.FILES.getlist('additional_photos_files')
+    additional_photos_data = request.POST.get('additional_photos_data', '[]')
+    
+    try:
+        photos_data = json.loads(additional_photos_data)
+    except (json.JSONDecodeError, TypeError):
+        photos_data = []
+    
+    # Obsługa nowych plików
+    for file in uploaded_files:
+        if file.content_type.startswith('image/'):
+            # Zapisz plik
+            filename = f"additional_photos/{instance._meta.model_name}_{instance.pk}_{file.name}"
+            saved_file = default_storage.save(filename, ContentFile(file.read()))
+            
+            # Dodaj do danych
+            photos_data.append({
+                'url': default_storage.url(saved_file),
+                'order': len(photos_data) + 1,
+                'filename': saved_file
+            })
+    
+    # Sortuj według kolejności
+    photos_data.sort(key=lambda x: x.get('order', 0))
+    
+    return photos_data
+
+# Alternatywnie - dodaj do admin.py w metodzie save_model bardziej zaawansowaną obsługę:
+
+def save_model(self, request, obj, form, change):
+    # Najpierw zapisz obiekt
+    super().save_model(request, obj, form, change)
+    
+    # Obsługa dodatkowych zdjęć
+    additional_photos_data = request.POST.get('additional_photos_data')
+    if additional_photos_data:
+        try:
+            import json
+            photos_data = json.loads(additional_photos_data)
+            
+            # Sprawdź czy są nowe pliki do uploadu
+            uploaded_files = request.FILES.getlist('additional_photos_files')
+            for file in uploaded_files:
+                if file.content_type.startswith('image/'):
+                    # Zapisz plik do odpowiedniego katalogu
+                    from django.core.files.storage import default_storage
+                    from django.core.files.base import ContentFile
+                    import uuid
+                    
+                    filename = f"additional_photos/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                    saved_file = default_storage.save(filename, ContentFile(file.read()))
+                    
+                    # Dodaj do photos_data
+                    photos_data.append({
+                        'url': default_storage.url(saved_file),
+                        'order': len(photos_data) + 1,
+                        'filename': saved_file
+                    })
+            
+            # Sortuj i zapisz
+            photos_data.sort(key=lambda x: x.get('order', 0))
+            obj.additional_photos = photos_data
+            obj.save(update_fields=['additional_photos'])
+            
+        except (json.JSONDecodeError, TypeError):
+            pass

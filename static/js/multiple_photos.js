@@ -29,28 +29,19 @@ document.addEventListener('DOMContentLoaded', function() {
         photoItems.forEach((item, index) => {
             const img = item.querySelector('img');
             const orderInput = item.querySelector('.order-input');
-            const removeBtn = item.querySelector('.remove-photo');
 
             if (img && orderInput) {
                 photosData.push({
                     url: img.src,
                     order: parseInt(orderInput.value) || index + 1,
-                    index: index
-                });
-
-                // Obsługa zmiany kolejności
-                orderInput.addEventListener('change', function() {
-                    updatePhotoOrder(index, parseInt(this.value));
-                });
-
-                // Obsługa usuwania
-                removeBtn.addEventListener('click', function() {
-                    removePhoto(index);
+                    index: parseInt(item.dataset.index) || index
                 });
             }
         });
 
-        nextOrder = Math.max(...photosData.map(p => p.order), 0) + 1;
+        if (photosData.length > 0) {
+            nextOrder = Math.max(...photosData.map(p => p.order), 0) + 1;
+        }
     }
 
     function handleFileSelection(files) {
