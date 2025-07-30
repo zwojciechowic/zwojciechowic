@@ -38,20 +38,12 @@ class BlogPostAdminForm(forms.ModelForm):
     class Media:
         js = ('js/admin_image_preview.js',)
 
-# admin.py
-from django.contrib import admin
-from django.utils.html import format_html
-import json
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-import uuid
-
 class BasePhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['photos_manager', 'certificates_manager']
     
     class Media:
         css = {'all': ('css/admin/photos.css',)}
-        # Usuń JS z Media - dodamy inline
+        js = ('js/admin/photos.js',)
     
     def photos_manager(self, obj):
         return self._render_photo_widget(obj, 'photos', 'Zdjęcia')
@@ -64,103 +56,24 @@ class BasePhotoAdmin(admin.ModelAdmin):
     def _render_photo_widget(self, obj, field_name, label):
         photos = getattr(obj, field_name, []) or []
         
-        # JavaScript inline
-        js_code = '''
-        <script>
-        (function() {
-            const widget = document.querySelector('.photos-widget[data-field="''' + field_name + '''"]');
-            if (!widget) return;
-            
-            const input = widget.querySelector('.photo-input');
-            const container = widget.querySelector('.photos-container');
-            const hiddenField = widget.querySelector('.photos-data');
-            let photos = [];
-            let nextIndex = 0;
-            
-            // Załaduj istniejące zdjęcia
-            const items = container.querySelectorAll('.photo-item');
-            items.forEach((item, index) => {
-                const img = item.querySelector('img');
-                if (img) {
-                    photos.push({
-                        url: img.src,
-                        order: index + 1,
-                        index: index
-                    });
-                    nextIndex = Math.max(nextIndex, index + 1);
-                }
-            });
-            
-            // Obsługa nowych plików
-            input.addEventListener('change', function(e) {
-                Array.from(e.target.files).forEach(file => {
-                    if (file.type.startsWith('image/')) {
-                        addPhoto(file);
-                    }
-                });
-                e.target.value = '';
-            });
-            
-            function addPhoto(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const photo = {
-                        url: e.target.result,
-                        file: file,
-                        order: photos.length + 1,
-                        index: nextIndex++
-                    };
-                    photos.push(photo);
-                    renderPhoto(photo);
-                    updateHiddenField();
-                };
-                reader.readAsDataURL(file);
-            }
-            
-            function renderPhoto(photo) {
-                const div = document.createElement('div');
-                div.className = 'photo-item';
-                div.dataset.index = photo.index;
-                div.innerHTML = `
-                    <img src="${photo.url}" style="width: 150px; height: 100px; object-fit: cover; border-radius: 4px;" />
-                    <span class="remove-photo" onclick="removePhoto''' + field_name + '''(${photo.index})">×</span>
-                    <input type="text" value="${photo.order}" class="order-input" style="width: 30px; height: 30px; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;" />
-                `;
-                container.appendChild(div);
-            }
-            
-            function updateHiddenField() {
-                hiddenField.value = JSON.stringify(photos);
-            }
-            
-            // Globalna funkcja usuwania
-            window['removePhoto''' + field_name + ''''] = function(index) {
-                photos = photos.filter(p => p.index !== index);
-                const item = container.querySelector(`[data-index="${index}"]`);
-                if (item) item.remove();
-                updateHiddenField();
-            };
-        })();
-        </script>
-        '''
-        
         html = f'''
         <div class="photos-widget" data-field="{field_name}">
             <h4>{label}</h4>
             <input type="file" multiple accept="image/*" class="photo-input" 
-                   style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer; margin-bottom: 15px;" />
+                   style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
             <p style="margin: 10px 0; color: #666; font-size: 12px;">
                 Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
             </p>
-            <div class="photos-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
+            <div class="photos-container">
         '''
         
         for i, photo in enumerate(photos):
             html += f'''
-                <div class="photo-item" data-index="{i}" style="position: relative; border: 1px solid #ddd; border-radius: 6px; padding: 10px; background: white;">
-                    <img src="{photo.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 8px;" />
-                    <span class="remove-photo" onclick="removePhoto{field_name}({i})" style="position: absolute; top: 5px; right: 5px; background: #dc3545; color: white; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-size: 16px; line-height: 25px; text-align: center; font-weight: bold;">×</span>
-                    <input type="text" value="{i+1}" class="order-input" style="width: 30px; height: 30px; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;" />
+                <div class="photo-item" data-index="{i}">
+                    <img src="{photo.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
+                    <span class="remove-photo" onclick="removePhoto(this, '{field_name}')">×</span>
+                    <input type="number" value="{i+1}" min="1" class="order-input" 
+                           onchange="updatePhotoOrder(this, '{field_name}')" />
                 </div>
             '''
         
@@ -168,7 +81,6 @@ class BasePhotoAdmin(admin.ModelAdmin):
             </div>
             <input type="hidden" name="{field_name}_data" class="photos-data" />
         </div>
-        {js_code}
         '''
         return format_html(html)
     
@@ -227,12 +139,10 @@ class DogAdmin(BasePhotoAdmin):
             'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding', 'description')
         }),
         ('Zdjęcia', {
-            'fields': ('photos_manager',),
-            'classes': ('wide',)
+            'fields': ('photos_manager',)
         }),
         ('Certyfikaty', {
-            'fields': ('certificates_manager',),
-            'classes': ('wide',)
+            'fields': ('certificates_manager',)
         }),
     )
     
@@ -266,12 +176,10 @@ class PuppyAdmin(BasePhotoAdmin):
             'fields': ('is_available', 'price')
         }),
         ('Zdjęcia', {
-            'fields': ('photos_manager',),
-            'classes': ('wide',)
+            'fields': ('photos_manager',)
         }),
         ('Certyfikaty', {
-            'fields': ('certificates_manager',),
-            'classes': ('wide',)
+            'fields': ('certificates_manager',)
         }),
     )
     
