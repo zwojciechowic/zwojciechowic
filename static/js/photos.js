@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const widgets = document.querySelectorAll('.photos-widget');
     
     widgets.forEach(widget => {
+        const fieldName = widget.dataset.field;
         const input = widget.querySelector('.photo-input');
         const container = widget.querySelector('.photos-container');
         const hiddenField = widget.querySelector('.photos-data');
@@ -11,19 +12,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Załaduj istniejące zdjęcia
         loadExistingPhotos();
         
-        // Obsługa nowych plików
-        input.addEventListener('change', e => {
-            Array.from(e.target.files).forEach(addPhoto);
+        // Obsługa dodawania nowych plików
+        input.addEventListener('change', function(e) {
+            Array.from(e.target.files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    addPhoto(file);
+                }
+            });
         });
+        
+        // Drag & Drop
+        setupDragAndDrop();
         
         function loadExistingPhotos() {
             const items = container.querySelectorAll('.photo-item');
             items.forEach((item, index) => {
                 const img = item.querySelector('img');
+                const orderInput = item.querySelector('.order-input');
                 if (img) {
                     photos.push({
                         url: img.src,
-                        order: index
+                        order: parseInt(orderInput.value) || index + 1
                     });
                 }
             });
@@ -31,11 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function addPhoto(file) {
             const reader = new FileReader();
-            reader.onload = e => {
+            reader.onload = function(e) {
                 const photo = {
                     url: e.target.result,
                     file: file,
-                    order: photos.length
+                    order: photos.length + 1
                 };
                 photos.push(photo);
                 renderPhoto(photo, photos.length - 1);
@@ -47,49 +56,87 @@ document.addEventListener('DOMContentLoaded', function() {
         function renderPhoto(photo, index) {
             const div = document.createElement('div');
             div.className = 'photo-item';
+            div.dataset.index = index;
             div.innerHTML = `
-                <img src="${photo.url}" />
-                <button type="button" onclick="removePhoto(${index})">×</button>
-                <input type="number" value="${index + 1}" min="1" onchange="updateOrder(${index}, this.value)" />
+                <img src="${photo.url}" style="width: 150px; height: 100px; object-fit: cover;" />
+                <span class="remove-photo" onclick="removePhoto(this, '${fieldName}')">×</span>
+                <input type="number" value="${photo.order}" min="1" class="order-input" 
+                       onchange="updatePhotoOrder(this, '${fieldName}')" />
             `;
             container.appendChild(div);
         }
         
-        window.removePhoto = function(index) {
-            photos.splice(index, 1);
-            container.children[index].remove();
-            updateIndices();
-            updateHiddenField();
-        };
-        
-        window.updateOrder = function(index, newOrder) {
-            const photo = photos[index];
-            photos.splice(index, 1);
-            photos.splice(newOrder - 1, 0, photo);
-            reRender();
-            updateHiddenField();
-        };
-        
-        function updateIndices() {
-            Array.from(container.children).forEach((item, index) => {
-                const removeBtn = item.querySelector('button');
-                const orderInput = item.querySelector('input');
-                removeBtn.setAttribute('onclick', `removePhoto(${index})`);
-                orderInput.setAttribute('onchange', `updateOrder(${index}, this.value)`);
-                orderInput.value = index + 1;
+        function setupDragAndDrop() {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                input.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                input.addEventListener(eventName, () => input.style.background = '#e3f2fd', false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                input.addEventListener(eventName, () => input.style.background = '#f0f8ff', false);
+            });
+            
+            input.addEventListener('drop', function(e) {
+                const files = e.dataTransfer.files;
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        addPhoto(file);
+                    }
+                });
             });
         }
         
-        function reRender() {
-            container.innerHTML = '';
-            photos.forEach((photo, index) => renderPhoto(photo, index));
+        function updateHiddenField() {
+            hiddenField.value = JSON.stringify(photos);
         }
         
-        function updateHiddenField() {
-            hiddenField.value = JSON.stringify(photos.map(p => ({
-                url: p.url,
-                order: p.order
-            })));
+        // Zapisz referencje do funkcji dla tego konkretnego widgetu
+        widget.removePhoto = function(element) {
+            const photoItem = element.closest('.photo-item');
+            const index = parseInt(photoItem.dataset.index);
+            photos.splice(index, 1);
+            photoItem.remove();
+            reindexPhotos();
+            updateHiddenField();
+        };
+        
+        widget.updateOrder = function(element, newOrder) {
+            const photoItem = element.closest('.photo-item');
+            const index = parseInt(photoItem.dataset.index);
+            photos[index].order = parseInt(newOrder);
+            updateHiddenField();
+        };
+        
+        function reindexPhotos() {
+            Array.from(container.children).forEach((item, newIndex) => {
+                item.dataset.index = newIndex;
+                const orderInput = item.querySelector('.order-input');
+                orderInput.value = newIndex + 1;
+                photos[newIndex].order = newIndex + 1;
+            });
         }
     });
 });
+
+// Globalne funkcje wywoływane przez onclick
+function removePhoto(element, fieldName) {
+    const widget = element.closest('.photos-widget');
+    if (widget && widget.removePhoto) {
+        widget.removePhoto(element);
+    }
+}
+
+function updatePhotoOrder(element, fieldName) {
+    const widget = element.closest('.photos-widget');
+    if (widget && widget.updateOrder) {
+        widget.updateOrder(element, element.value);
+    }
+}
