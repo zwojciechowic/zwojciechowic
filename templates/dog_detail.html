@@ -1,3 +1,4 @@
+{# templates/dog_detail.html #}
 {% extends 'base.html' %}
 
 {% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
@@ -11,6 +12,20 @@
             
             {% if dog.photo %}
             <img src="{{ dog.photo.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
+            {% endif %}
+            
+            <!-- Dodatkowe zdjęcia -->
+            {% if dog.images.exists %}
+            <div class="row mb-4">
+                {% for image in dog.images.all %}
+                <div class="col-md-4 mb-3">
+                    <img src="{{ image.image.url }}" alt="{{ image.description|default:dog.name }}" class="img-fluid rounded">
+                    {% if image.description %}
+                    <p class="text-muted mt-1"><small>{{ image.description }}</small></p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
             {% endif %}
             
             <div class="content">
