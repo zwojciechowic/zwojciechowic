@@ -4,6 +4,14 @@
     border-radius: 6px;
     padding: 15px;
     background: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.photos-widget h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .photo-input {
@@ -14,6 +22,11 @@
     background: #f0f8ff;
     cursor: pointer;
     margin-bottom: 15px;
+    transition: background-color 0.3s;
+}
+
+.photo-input:hover {
+    background: #e3f2fd;
 }
 
 .photos-container {
@@ -28,6 +41,7 @@
     border-radius: 6px;
     padding: 10px;
     background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .photo-item img {
@@ -39,7 +53,7 @@
     margin-bottom: 8px;
 }
 
-.photo-item button {
+.remove-photo {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -50,14 +64,28 @@
     width: 25px;
     height: 25px;
     cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.photo-item input[type="number"] {
+.remove-photo:hover {
+    background: #c82333;
+}
+
+.order-input {
     width: 50px;
     padding: 4px;
     border: 1px solid #ddd;
     border-radius: 3px;
     text-align: center;
+    font-size: 12px;
+}
+
+.order-input:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.2);
 }

@@ -72,29 +72,43 @@ class BlogPostAdmin(admin.ModelAdmin):
             obj.author = request.user
         super().save_model(request, obj, form, change)
 
+
 class BasePhotoAdmin(admin.ModelAdmin):
-    readonly_fields = ['photos_manager']
+    readonly_fields = ['photos_manager', 'certificates_manager']
     
     class Media:
         css = {'all': ('css/admin/photos.css',)}
         js = ('js/admin/photos.js',)
     
     def photos_manager(self, obj):
-        field_name = self.get_photos_field_name()
+        return self._render_photo_widget(obj, 'photos', 'Zdjęcia')
+    photos_manager.short_description = "Zarządzanie zdjęciami"
+    
+    def certificates_manager(self, obj):
+        return self._render_photo_widget(obj, 'certificates', 'Certyfikaty')
+    certificates_manager.short_description = "Zarządzanie certyfikatami"
+    
+    def _render_photo_widget(self, obj, field_name, label):
         photos = getattr(obj, field_name, []) or []
         
         html = f'''
         <div class="photos-widget" data-field="{field_name}">
-            <input type="file" multiple accept="image/*" class="photo-input" />
+            <h4>{label}</h4>
+            <input type="file" multiple accept="image/*" class="photo-input" 
+                   style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
+            <p style="margin: 10px 0; color: #666; font-size: 12px;">
+                Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
+            </p>
             <div class="photos-container">
         '''
         
         for i, photo in enumerate(photos):
             html += f'''
                 <div class="photo-item" data-index="{i}">
-                    <img src="{photo.get('url', '')}" />
-                    <button type="button" class="remove-btn" onclick="removePhoto({i})">×</button>
-                    <input type="number" value="{i+1}" min="1" class="order-input" onchange="updateOrder({i}, this.value)" />
+                    <img src="{photo.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
+                    <span class="remove-photo" onclick="removePhoto(this, '{field_name}')">×</span>
+                    <input type="number" value="{i+1}" min="1" class="order-input" 
+                           onchange="updatePhotoOrder(this, '{field_name}')" />
                 </div>
             '''
         
@@ -105,15 +119,16 @@ class BasePhotoAdmin(admin.ModelAdmin):
         '''
         return format_html(html)
     
-    def get_photos_field_name(self):
-        return 'photos'  # Override w klasach dziedziczących
-    
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         
-        field_name = self.get_photos_field_name()
+        # Obsługa zdjęć
+        self._save_photos(request, obj, 'photos')
+        # Obsługa certyfikatów
+        self._save_photos(request, obj, 'certificates')
+    
+    def _save_photos(self, request, obj, field_name):
         photos_data = request.POST.get(f'{field_name}_data')
-        
         if photos_data:
             try:
                 photos = json.loads(photos_data)
@@ -125,9 +140,12 @@ class BasePhotoAdmin(admin.ModelAdmin):
                         saved_file = default_storage.save(filename, ContentFile(file.read()))
                         photos.append({
                             'url': default_storage.url(saved_file),
-                            'filename': saved_file
+                            'filename': saved_file,
+                            'order': len(photos) + 1
                         })
                 
+                # Sortuj według kolejności
+                photos.sort(key=lambda x: x.get('order', 0))
                 setattr(obj, field_name, photos)
                 obj.save(update_fields=[field_name])
             except (json.JSONDecodeError, TypeError):
@@ -135,7 +153,7 @@ class BasePhotoAdmin(admin.ModelAdmin):
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):
-    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo', 'photos_count']
+    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo', 'photos_count', 'certificates_count']
     list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
@@ -147,10 +165,10 @@ class DogAdmin(BasePhotoAdmin):
         ('Zdjęcia', {
             'fields': ('photos_manager',)
         }),
+        ('Certyfikaty', {
+            'fields': ('certificates_manager',)
+        }),
     )
-    
-    def get_photos_field_name(self):
-        return 'photos'
     
     def main_photo(self, obj):
         if obj.photos and len(obj.photos) > 0:
@@ -161,11 +179,15 @@ class DogAdmin(BasePhotoAdmin):
     
     def photos_count(self, obj):
         return len(obj.photos) if obj.photos else 0
-    photos_count.short_description = "Liczba zdjęć"
+    photos_count.short_description = "Zdjęcia"
+    
+    def certificates_count(self, obj):
+        return len(obj.certificates) if obj.certificates else 0
+    certificates_count.short_description = "Certyfikaty"
 
 @admin.register(Puppy)
 class PuppyAdmin(BasePhotoAdmin):
-    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo', 'photos_count']
+    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo', 'photos_count', 'certificates_count']
     list_filter = ['gender', 'is_available', 'birth_date']
     search_fields = ['name', 'mother__name', 'father__name']
     list_editable = ['is_available', 'price']
@@ -180,10 +202,10 @@ class PuppyAdmin(BasePhotoAdmin):
         ('Zdjęcia', {
             'fields': ('photos_manager',)
         }),
+        ('Certyfikaty', {
+            'fields': ('certificates_manager',)
+        }),
     )
-    
-    def get_photos_field_name(self):
-        return 'photos'
     
     def main_photo(self, obj):
         if obj.photos and len(obj.photos) > 0:
@@ -194,7 +216,11 @@ class PuppyAdmin(BasePhotoAdmin):
     
     def photos_count(self, obj):
         return len(obj.photos) if obj.photos else 0
-    photos_count.short_description = "Liczba zdjęć"
+    photos_count.short_description = "Zdjęcia"
+    
+    def certificates_count(self, obj):
+        return len(obj.certificates) if obj.certificates else 0
+    certificates_count.short_description = "Certyfikaty"
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
