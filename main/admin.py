@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, DogImage, Puppy, PuppyImage, Reservation, ContactMessage, AboutPage, AboutSections
+from .models import BlogPost, Dog, DogImages, Puppy, PuppyImages, Reservation, ContactMessage, AboutPage, AboutSections
 from django.contrib.admin import AdminSite
 
 # Konfiguracja panelu administracyjnego
@@ -33,14 +33,14 @@ class BlogPostAdminForm(forms.ModelForm):
     class Media:
         js = ('js/admin_image_preview.js',)
 
-class DogImageInline(admin.TabularInline):
-    model = DogImage
+class DogImagesInline(admin.TabularInline):
+    model = DogImages
     extra = 3
     fields = ('image', 'description', 'order')
     ordering = ('order',)
 
-class PuppyImageInline(admin.TabularInline):
-    model = PuppyImage
+class PuppyImagesInline(admin.TabularInline):
+    model = PuppyImages
     extra = 3
     fields = ('image', 'description', 'order')
     ordering = ('order',)
@@ -93,7 +93,7 @@ class DogAdmin(admin.ModelAdmin):
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
     form = DogAdminForm
-    inlines = [DogImageInline]
+    inlines = [DogImagesInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -135,7 +135,7 @@ class PuppyAdmin(admin.ModelAdmin):
     date_hierarchy = 'birth_date'
     readonly_fields = ['preview_image']
     form = PuppyAdminForm
-    inlines = [PuppyImageInline]
+    inlines = [PuppyImagesInline]
     
     fieldsets = (
         ('Podstawowe informacje', {

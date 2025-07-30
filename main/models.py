@@ -44,7 +44,7 @@ class Dog(models.Model):
         from django.urls import reverse
         return reverse('dog_detail', kwargs={'pk': self.pk})
 
-class DogImage(models.Model):
+class DogImages(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='images', verbose_name='Pies')
     image = models.ImageField(upload_to='dogs/', verbose_name='Zdjęcie')
     description = models.CharField(max_length=200, blank=True, verbose_name='Opis zdjęcia')
@@ -82,7 +82,7 @@ class Puppy(models.Model):
     def __str__(self):
         return f"{self.name} - {self.get_gender_display()}"
 
-class PuppyImage(models.Model):
+class PuppyImages(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, related_name='images', verbose_name='Szczeniak')
     image = models.ImageField(upload_to='puppies/', verbose_name='Zdjęcie')
     description = models.CharField(max_length=200, blank=True, verbose_name='Opis zdjęcia')
