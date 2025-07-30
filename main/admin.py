@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, DogImages, Puppy, PuppyImages, Reservation, ContactMessage, AboutPage, AboutSections
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections
 from django.contrib.admin import AdminSite
 
 # Konfiguracja panelu administracyjnego
@@ -32,18 +32,6 @@ class BlogPostAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
-
-class DogImagesInline(admin.TabularInline):
-    model = DogImages
-    extra = 3
-    fields = ('image', 'description', 'order')
-    ordering = ('order',)
-
-class PuppyImagesInline(admin.TabularInline):
-    model = PuppyImages
-    extra = 3
-    fields = ('image', 'description', 'order')
-    ordering = ('order',)
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -86,14 +74,13 @@ class BlogPostAdmin(admin.ModelAdmin):
 
 @admin.register(Dog)
 class DogAdmin(admin.ModelAdmin):
-    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'preview_image', 'has_certificate']
+    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'preview_image', 'has_certificate', 'additional_photos_count']
     list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
     date_hierarchy = 'birth_date'
-    readonly_fields = ['preview_image']
+    readonly_fields = ['preview_image', 'additional_photos_preview']
     form = DogAdminForm
-    inlines = [DogImagesInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -102,6 +89,10 @@ class DogAdmin(admin.ModelAdmin):
         ('Opis i zdjęcie główne', {
             'fields': ('description', 'photo', 'preview_image')
         }),
+        ('Dodatkowe zdjęcia', {
+            'fields': ('additional_photos_field', 'additional_photos_preview'),
+            'classes': ('multiple-photos-section',)
+        }),
         ('Certyfikat', {
             'fields': ('certificate',)
         }),
@@ -109,9 +100,9 @@ class DogAdmin(admin.ModelAdmin):
     
     class Media:
         css = {
-            'all': ('css/admin/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css', 'css/admin/multiple_photos.css')
         }
-        js = ('js/admin_image_preview.js',)
+        js = ('js/admin_image_preview.js', 'js/multiple_photos.js')
 
     def preview_image(self, obj):
         if obj.photo:
@@ -125,17 +116,39 @@ class DogAdmin(admin.ModelAdmin):
     def has_certificate(self, obj):
         return "Tak" if obj.certificate else "Nie"
     has_certificate.short_description = "Certyfikat"
+    
+    def additional_photos_count(self, obj):
+        return len(obj.additional_photos) if obj.additional_photos else 0
+    additional_photos_count.short_description = "Dodatkowe zdjęcia"
+    
+    def additional_photos_field(self, obj):
+        return format_html('<input type="file" id="additional_photos_input" multiple accept="image/*" />')
+    additional_photos_field.short_description = "Wybierz dodatkowe zdjęcia"
+    
+    def additional_photos_preview(self, obj):
+        if not obj.additional_photos:
+            return "Brak dodatkowych zdjęć"
+        
+        html = '<div id="additional-photos-container">'
+        for i, photo_data in enumerate(obj.additional_photos):
+            html += format_html(
+                '<div class="photo-item" data-index="{}"><img src="{}" /><span class="remove-photo">×</span><input type="number" value="{}" min="1" class="order-input" /></div>',
+                i, photo_data['url'], photo_data.get('order', i+1)
+            )
+        html += '</div>'
+        return format_html(html)
+    additional_photos_preview.short_description = "Podgląd dodatkowych zdjęć"
 
+# Zmodyfikuj PuppyAdmin podobnie:
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'preview_image', 'has_certificate']
+    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'preview_image', 'has_certificate', 'additional_photos_count']
     list_filter = ['gender', 'is_available', 'birth_date', 'mother', 'father']
     search_fields = ['name', 'mother__name', 'father__name', 'description']
     list_editable = ['is_available', 'price']
     date_hierarchy = 'birth_date'
-    readonly_fields = ['preview_image']
+    readonly_fields = ['preview_image', 'additional_photos_preview']
     form = PuppyAdminForm
-    inlines = [PuppyImagesInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
@@ -147,6 +160,10 @@ class PuppyAdmin(admin.ModelAdmin):
         ('Opis i zdjęcie główne', {
             'fields': ('description', 'photo', 'preview_image')
         }),
+        ('Dodatkowe zdjęcia', {
+            'fields': ('additional_photos_field', 'additional_photos_preview'),
+            'classes': ('multiple-photos-section',)
+        }),
         ('Certyfikat', {
             'fields': ('certificate',)
         }),
@@ -154,9 +171,9 @@ class PuppyAdmin(admin.ModelAdmin):
     
     class Media:
         css = {
-            'all': ('css/admin/admin_custom.css',)
+            'all': ('css/admin/admin_custom.css', 'css/admin/multiple_photos.css')
         }
-        js = ('js/admin_image_preview.js',)
+        js = ('js/admin_image_preview.js', 'js/multiple_photos.js')
     
     def preview_image(self, obj):
         if obj.photo:
@@ -170,7 +187,28 @@ class PuppyAdmin(admin.ModelAdmin):
     def has_certificate(self, obj):
         return "Tak" if obj.certificate else "Nie"
     has_certificate.short_description = "Certyfikat"
-
+    
+    def additional_photos_count(self, obj):
+        return len(obj.additional_photos) if obj.additional_photos else 0
+    additional_photos_count.short_description = "Dodatkowe zdjęcia"
+    
+    def additional_photos_field(self, obj):
+        return format_html('<input type="file" id="additional_photos_input" multiple accept="image/*" />')
+    additional_photos_field.short_description = "Wybierz dodatkowe zdjęcia"
+    
+    def additional_photos_preview(self, obj):
+        if not obj.additional_photos:
+            return "Brak dodatkowych zdjęć"
+        
+        html = '<div id="additional-photos-container">'
+        for i, photo_data in enumerate(obj.additional_photos):
+            html += format_html(
+                '<div class="photo-item" data-index="{}"><img src="{}" /><span class="remove-photo">×</span><input type="number" value="{}" min="1" class="order-input" /></div>',
+                i, photo_data['url'], photo_data.get('order', i+1)
+            )
+        html += '</div>'
+        return format_html(html)
+    additional_photos_preview.short_description = "Podgląd dodatkowych zdjęć"
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']
