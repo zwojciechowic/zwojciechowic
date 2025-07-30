@@ -15,8 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Obsługa dodawania nowych plików
         input.addEventListener('change', function(e) {
+            console.log('Files selected:', e.target.files.length); // Debug
             handleFiles(e.target.files);
-            e.target.value = ''; // Reset input aby można było dodać te same pliki ponownie
+            // Nie resetuj input od razu - zrób to po przetworzeniu
+            setTimeout(() => {
+                e.target.value = '';
+            }, 100);
         });
         
         // Drag & Drop
@@ -39,16 +43,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function handleFiles(files) {
-            Array.from(files).forEach(file => {
+            console.log('Processing files:', files.length); // Debug
+            Array.from(files).forEach((file, index) => {
+                console.log('File', index, ':', file.name, file.type); // Debug
                 if (file.type.startsWith('image/')) {
                     addPhoto(file);
+                } else {
+                    console.log('Skipping non-image file:', file.type);
                 }
             });
         }
         
         function addPhoto(file) {
+            console.log('Adding photo:', file.name); // Debug
             const reader = new FileReader();
             reader.onload = function(e) {
+                console.log('Photo loaded, creating preview'); // Debug
                 const photo = {
                     url: e.target.result,
                     file: file,
@@ -62,6 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Przygotuj plik do przesłania
                 prepareFileForUpload(file, photo.index);
+            };
+            reader.onerror = function(e) {
+                console.error('Error reading file:', e);
             };
             reader.readAsDataURL(file);
         }
@@ -83,16 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function renderPhoto(photo) {
+            console.log('Rendering photo:', photo.url.substring(0, 50) + '...'); // Debug
             const div = document.createElement('div');
             div.className = 'photo-item';
             div.dataset.index = photo.index;
             div.innerHTML = `
-                <img src="${photo.url}" style="width: 150px; height: 100px; object-fit: cover;" />
+                <img src="${photo.url}" alt="Zdjęcie" style="width: 150px; height: 100px; object-fit: cover; border-radius: 4px;" />
                 <span class="remove-photo" onclick="removePhoto(this, '${fieldName}')">×</span>
                 <input type="number" value="${photo.order}" min="1" class="order-input" 
                        onchange="updatePhotoOrder(this, '${fieldName}')" />
             `;
             container.appendChild(div);
+            console.log('Photo rendered, container now has', container.children.length, 'items');
         }
         
         function setupDragAndDrop() {
