@@ -43,7 +43,7 @@ class BasePhotoAdmin(admin.ModelAdmin):
     
     class Media:
         css = {'all': ('css/admin/photos.css',)}
-        js = ('js/admin/photos.js',)
+        # js = ('js/admin/photos.js',)
     
     def photos_manager(self, obj):
         return self._render_photo_widget(obj, 'photos', 'Zdjęcia')
@@ -71,9 +71,8 @@ class BasePhotoAdmin(admin.ModelAdmin):
             html += f'''
                 <div class="photo-item" data-index="{i}">
                     <img src="{photo.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
-                    <span class="remove-photo" onclick="removePhoto(this, '{field_name}')">×</span>
-                    <input type="number" value="{i+1}" min="1" class="order-input" 
-                           onchange="updatePhotoOrder(this, '{field_name}')" />
+                    <span style="background: red; color: white; padding: 2px 6px; cursor: pointer;">×</span>
+                    <input type="number" value="{i+1}" min="1" style="width: 50px;" />
                 </div>
             '''
         
