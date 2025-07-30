@@ -38,6 +38,14 @@ class BlogPostAdminForm(forms.ModelForm):
     class Media:
         js = ('js/admin_image_preview.js',)
 
+# admin.py
+from django.contrib import admin
+from django.utils.html import format_html
+import json
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import uuid
+
 class BasePhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['photos_manager', 'certificates_manager']
     
@@ -219,10 +227,12 @@ class DogAdmin(BasePhotoAdmin):
             'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding', 'description')
         }),
         ('Zdjęcia', {
-            'fields': ('photos_manager',)
+            'fields': ('photos_manager',),
+            'classes': ('wide',)
         }),
         ('Certyfikaty', {
-            'fields': ('certificates_manager',)
+            'fields': ('certificates_manager',),
+            'classes': ('wide',)
         }),
     )
     
@@ -256,10 +266,12 @@ class PuppyAdmin(BasePhotoAdmin):
             'fields': ('is_available', 'price')
         }),
         ('Zdjęcia', {
-            'fields': ('photos_manager',)
+            'fields': ('photos_manager',),
+            'classes': ('wide',)
         }),
         ('Certyfikaty', {
-            'fields': ('certificates_manager',)
+            'fields': ('certificates_manager',),
+            'classes': ('wide',)
         }),
     )
     

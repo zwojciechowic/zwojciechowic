@@ -10,20 +10,28 @@
             <h1 class="display-4">{{ dog.name }}</h1>
             <p class="text-muted">{{ dog.breed }} | {{ dog.get_gender_display }}</p>
             
-            {% if dog.photo %}
-            <img src="{{ dog.photo.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
+            {# Główne zdjęcie - pierwsze z listy photos #}
+            {% if dog.photos and dog.photos|length > 0 %}
+            <img src="{{ dog.photos.0.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
             {% endif %}
             
-            {% if dog.additional_photos %}
+            {# Wszystkie zdjęcia jako galeria #}
+            {% if dog.photos and dog.photos|length > 1 %}
             <div class="row mb-4">
-                {% for photo_data in dog.additional_photos %}
+                <div class="col-12">
+                    <h5>Galeria zdjęć</h5>
+                </div>
+                {% for photo in dog.photos %}
                 <div class="col-md-4 mb-3">
-                    <img src="{{ photo_data.url }}" alt="{{ dog.name }} - zdjęcie {{ photo_data.order }}" class="img-fluid rounded">
+                    <img src="{{ photo.url }}" alt="{{ dog.name }} - zdjęcie {{ forloop.counter }}" 
+                         class="img-fluid rounded shadow-sm" style="cursor: pointer;" 
+                         data-bs-toggle="modal" data-bs-target="#photoModal{{ forloop.counter }}">
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
             
+            {# Opisy #}
             <div class="content">
                 {{ dog.description|linebreaks }}
             </div>
@@ -34,6 +42,7 @@
                 </a>
             </div>
         </div>
+        
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -45,13 +54,21 @@
                         <strong>Wiek:</strong> {{ dog.birth_date|timesince }}
                     </p>
                     
-                    {% if dog.certificate %}
+                    {# Certyfikaty #}
+                    {% if dog.certificates %}
                     <div class="alert alert-success">
-                        <i class="fas fa-certificate"></i> Pies posiada certyfikat
+                        <i class="fas fa-certificate"></i> 
+                        Pies posiada {{ dog.certificates|length }} certyfikat{{ dog.certificates|length|pluralize:"y,ów" }}
                     </div>
                     
-                    <div class="certificate-container mb-3">
-                        <img src="{{ dog.certificate.url }}" alt="Certyfikat {{ dog.name }}" class="img-fluid rounded border" style="max-width: 100%;">
+                    <div class="certificates-container mb-3">
+                        {% for cert in dog.certificates %}
+                        <div class="mb-2">
+                            <img src="{{ cert.url }}" alt="Certyfikat {{ dog.name }} #{{ forloop.counter }}" 
+                                 class="img-fluid rounded border" style="max-width: 100%; cursor: pointer;"
+                                 data-bs-toggle="modal" data-bs-target="#certModal{{ forloop.counter }}">
+                        </div>
+                        {% endfor %}
                     </div>
                     {% endif %}
                     
@@ -65,4 +82,43 @@
         </div>
     </div>
 </div>
+
+{# Modale dla zdjęć - opcjonalne #}
+{% if dog.photos %}
+{% for photo in dog.photos %}
+<div class="modal fade" id="photoModal{{ forloop.counter }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ dog.name }} - Zdjęcie {{ forloop.counter }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ photo.url }}" alt="{{ dog.name }}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{# Modale dla certyfikatów - opcjonalne #}
+{% if dog.certificates %}
+{% for cert in dog.certificates %}
+<div class="modal fade" id="certModal{{ forloop.counter }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ dog.name }} - Certyfikat {{ forloop.counter }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ cert.url }}" alt="Certyfikat {{ dog.name }}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
 {% endblock %}
