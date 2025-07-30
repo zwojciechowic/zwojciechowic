@@ -8,17 +8,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = widget.querySelector('.photos-container');
         const hiddenField = widget.querySelector('.photos-data');
         let photos = [];
+        let nextIndex = 0;
         
         // Załaduj istniejące zdjęcia
         loadExistingPhotos();
         
         // Obsługa dodawania nowych plików
         input.addEventListener('change', function(e) {
-            Array.from(e.target.files).forEach(file => {
-                if (file.type.startsWith('image/')) {
-                    addPhoto(file);
-                }
-            });
+            handleFiles(e.target.files);
+            e.target.value = ''; // Reset input aby można było dodać te same pliki ponownie
         });
         
         // Drag & Drop
@@ -32,8 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (img) {
                     photos.push({
                         url: img.src,
-                        order: parseInt(orderInput.value) || index + 1
+                        order: parseInt(orderInput.value) || index + 1,
+                        index: index
                     });
+                    nextIndex = Math.max(nextIndex, index + 1);
+                }
+            });
+        }
+        
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    addPhoto(file);
                 }
             });
         }
@@ -44,19 +52,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 const photo = {
                     url: e.target.result,
                     file: file,
-                    order: photos.length + 1
+                    order: photos.length + 1,
+                    index: nextIndex++,
+                    isNew: true
                 };
                 photos.push(photo);
-                renderPhoto(photo, photos.length - 1);
+                renderPhoto(photo);
                 updateHiddenField();
+                
+                // Przygotuj plik do przesłania
+                prepareFileForUpload(file, photo.index);
             };
             reader.readAsDataURL(file);
         }
         
-        function renderPhoto(photo, index) {
+        function prepareFileForUpload(file, photoIndex) {
+            // Utwórz ukryty input file dla każdego nowego zdjęcia
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = `new_photo_${photoIndex}`;
+            fileInput.style.display = 'none';
+            
+            // Stwórz DataTransfer aby przypisać plik do input
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            fileInput.files = dt.files;
+            
+            // Dodaj do formularza
+            widget.appendChild(fileInput);
+        }
+        
+        function renderPhoto(photo) {
             const div = document.createElement('div');
             div.className = 'photo-item';
-            div.dataset.index = index;
+            div.dataset.index = photo.index;
             div.innerHTML = `
                 <img src="${photo.url}" style="width: 150px; height: 100px; object-fit: cover;" />
                 <span class="remove-photo" onclick="removePhoto(this, '${fieldName}')">×</span>
@@ -67,8 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function setupDragAndDrop() {
+            const uploadArea = input.parentElement;
+            
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                input.addEventListener(eventName, preventDefaults, false);
+                uploadArea.addEventListener(eventName, preventDefaults, false);
             });
             
             function preventDefaults(e) {
@@ -77,66 +108,85 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             ['dragenter', 'dragover'].forEach(eventName => {
-                input.addEventListener(eventName, () => input.style.background = '#e3f2fd', false);
+                uploadArea.addEventListener(eventName, () => {
+                    input.style.background = '#e3f2fd';
+                    input.style.borderColor = '#1976d2';
+                }, false);
             });
             
             ['dragleave', 'drop'].forEach(eventName => {
-                input.addEventListener(eventName, () => input.style.background = '#f0f8ff', false);
+                uploadArea.addEventListener(eventName, () => {
+                    input.style.background = '#f0f8ff';
+                    input.style.borderColor = '#007cba';
+                }, false);
             });
             
-            input.addEventListener('drop', function(e) {
+            uploadArea.addEventListener('drop', function(e) {
                 const files = e.dataTransfer.files;
-                Array.from(files).forEach(file => {
-                    if (file.type.startsWith('image/')) {
-                        addPhoto(file);
-                    }
-                });
+                handleFiles(files);
             });
         }
         
         function updateHiddenField() {
-            hiddenField.value = JSON.stringify(photos);
+            const photoData = photos.map(photo => ({
+                url: photo.url,
+                order: photo.order,
+                filename: photo.filename || ''
+            }));
+            hiddenField.value = JSON.stringify(photoData);
         }
         
         // Zapisz referencje do funkcji dla tego konkretnego widgetu
-        widget.removePhoto = function(element) {
+        widget.removePhotoFunction = function(element) {
             const photoItem = element.closest('.photo-item');
             const index = parseInt(photoItem.dataset.index);
-            photos.splice(index, 1);
+            
+            // Usuń z tablicy photos
+            photos = photos.filter(photo => photo.index !== index);
+            
+            // Usuń z DOM
             photoItem.remove();
-            reindexPhotos();
+            
+            // Przeindeksuj kolejność
+            photos.forEach((photo, newIndex) => {
+                photo.order = newIndex + 1;
+            });
+            
+            // Aktualizuj numerację w DOM
+            Array.from(container.children).forEach((item, domIndex) => {
+                const orderInput = item.querySelector('.order-input');
+                orderInput.value = domIndex + 1;
+            });
+            
             updateHiddenField();
         };
         
-        widget.updateOrder = function(element, newOrder) {
+        widget.updateOrderFunction = function(element) {
             const photoItem = element.closest('.photo-item');
             const index = parseInt(photoItem.dataset.index);
-            photos[index].order = parseInt(newOrder);
-            updateHiddenField();
+            const newOrder = parseInt(element.value);
+            
+            // Znajdź zdjęcie i zaktualizuj kolejność
+            const photo = photos.find(p => p.index === index);
+            if (photo) {
+                photo.order = newOrder;
+                updateHiddenField();
+            }
         };
-        
-        function reindexPhotos() {
-            Array.from(container.children).forEach((item, newIndex) => {
-                item.dataset.index = newIndex;
-                const orderInput = item.querySelector('.order-input');
-                orderInput.value = newIndex + 1;
-                photos[newIndex].order = newIndex + 1;
-            });
-        }
     });
 });
 
 // Globalne funkcje wywoływane przez onclick
 function removePhoto(element, fieldName) {
     const widget = element.closest('.photos-widget');
-    if (widget && widget.removePhoto) {
-        widget.removePhoto(element);
+    if (widget && widget.removePhotoFunction) {
+        widget.removePhotoFunction(element);
     }
 }
 
 function updatePhotoOrder(element, fieldName) {
     const widget = element.closest('.photos-widget');
-    if (widget && widget.updateOrder) {
-        widget.updateOrder(element, element.value);
+    if (widget && widget.updateOrderFunction) {
+        widget.updateOrderFunction(element);
     }
 }

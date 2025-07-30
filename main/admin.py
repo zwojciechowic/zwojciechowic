@@ -1,8 +1,13 @@
+# admin.py
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections
 from django.contrib.admin import AdminSite
+import json
+import uuid
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -32,46 +37,6 @@ class BlogPostAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
-
-@admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'created_at', 'is_published', 'preview_image']
-    list_filter = ['is_published', 'created_at', 'author']
-    search_fields = ['title', 'content', 'excerpt']
-    prepopulated_fields = {'slug': ('title',)}
-    list_editable = ['is_published']
-    date_hierarchy = 'created_at'
-    readonly_fields = ['created_at', 'updated_at', 'preview_image']
-    form = BlogPostAdminForm
-    
-    
-    fieldsets = (
-        ('Podstawowe informacje', {
-            'fields': ('title', 'slug', 'author', 'is_published')
-        }),
-        ('Treść', {
-            'fields': ('excerpt', 'content', 'featured_image', 'preview_image')
-        }),
-        ('Daty', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-    )
-    
-    def preview_image(self, obj):
-        if obj.featured_image:
-            return format_html(
-                '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />',
-                obj.featured_image.url
-            )
-        return "Brak zdjęcia"
-    preview_image.short_description = "Podgląd"
-    
-    def save_model(self, request, obj, form, change):
-        if not change:  # Jeśli to nowy wpis
-            obj.author = request.user
-        super().save_model(request, obj, form, change)
-
 
 class BasePhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['photos_manager', 'certificates_manager']
@@ -128,28 +93,39 @@ class BasePhotoAdmin(admin.ModelAdmin):
         self._save_photos(request, obj, 'certificates')
     
     def _save_photos(self, request, obj, field_name):
+        # Pobierz istniejące zdjęcia
+        existing_photos = getattr(obj, field_name, []) or []
+        
+        # Sprawdź czy są nowe pliki przesłane przez JavaScript
+        new_photos = []
+        for key, file in request.FILES.items():
+            if key.startswith('new_photo_') and file.content_type.startswith('image/'):
+                filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                saved_file = default_storage.save(filename, ContentFile(file.read()))
+                new_photos.append({
+                    'url': default_storage.url(saved_file),
+                    'filename': saved_file,
+                    'order': len(existing_photos) + len(new_photos) + 1
+                })
+        
+        # Połącz istniejące z nowymi
+        all_photos = existing_photos + new_photos
+        
+        # Sprawdź dane z hidden field (może zawierać info o usuniętych zdjęciach)
         photos_data = request.POST.get(f'{field_name}_data')
         if photos_data:
             try:
-                photos = json.loads(photos_data)
-                uploaded_files = request.FILES.getlist(f'{field_name}_files')
-                
-                for file in uploaded_files:
-                    if file.content_type.startswith('image/'):
-                        filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                        saved_file = default_storage.save(filename, ContentFile(file.read()))
-                        photos.append({
-                            'url': default_storage.url(saved_file),
-                            'filename': saved_file,
-                            'order': len(photos) + 1
-                        })
-                
-                # Sortuj według kolejności
-                photos.sort(key=lambda x: x.get('order', 0))
-                setattr(obj, field_name, photos)
-                obj.save(update_fields=[field_name])
+                client_photos = json.loads(photos_data)
+                # Jeśli klient przesłał dane, użyj ich do określenia kolejności
+                if client_photos:
+                    # Sortuj według kolejności z klienta
+                    all_photos.sort(key=lambda x: next((p['order'] for p in client_photos if p['url'] == x['url']), 999))
             except (json.JSONDecodeError, TypeError):
                 pass
+        
+        # Zapisz zaktualizowane zdjęcia
+        setattr(obj, field_name, all_photos)
+        obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):
@@ -222,42 +198,45 @@ class PuppyAdmin(BasePhotoAdmin):
         return len(obj.certificates) if obj.certificates else 0
     certificates_count.short_description = "Certyfikaty"
 
-@admin.register(Reservation)
-class ReservationAdmin(admin.ModelAdmin):
-    list_display = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']
-    list_filter = ['status', 'created_at', 'puppy']
-    search_fields = ['customer_name', 'customer_email', 'puppy__name']
-    list_editable = ['status']
-    readonly_fields = ['created_at']
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'created_at', 'is_published', 'preview_image']
+    list_filter = ['is_published', 'created_at', 'author']
+    search_fields = ['title', 'content', 'excerpt']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_published']
     date_hierarchy = 'created_at'
+    readonly_fields = ['created_at', 'updated_at', 'preview_image']
+    form = BlogPostAdminForm
+    
     
     fieldsets = (
-        ('Informacje o rezerwacji', {
-            'fields': ('puppy', 'status', 'created_at')
+        ('Podstawowe informacje', {
+            'fields': ('title', 'slug', 'author', 'is_published')
         }),
-        ('Dane klienta', {
-            'fields': ('customer_name', 'customer_email', 'customer_phone')
+        ('Treść', {
+            'fields': ('excerpt', 'content', 'featured_image', 'preview_image')
         }),
-        ('Wiadomość', {
-            'fields': ('message',)
+        ('Daty', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
         }),
     )
-    class Media:
-        css = {
-            'all': ('css/admin/admin_custom.css',)
-        }
-        js = ('js/admin_image_preview.js',)
-    actions = ['mark_as_confirmed', 'mark_as_cancelled']
     
-    def mark_as_confirmed(self, request, queryset):
-        queryset.update(status='confirmed')
-        self.message_user(request, f"Potwierdzono {queryset.count()} rezerwacji.")
-    mark_as_confirmed.short_description = "Potwierdź wybrane rezerwacje"
+    def preview_image(self, obj):
+        if obj.featured_image:
+            return format_html(
+                '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />',
+                obj.featured_image.url
+            )
+        return "Brak zdjęcia"
+    preview_image.short_description = "Podgląd"
     
-    def mark_as_cancelled(self, request, queryset):
-        queryset.update(status='cancelled')
-        self.message_user(request, f"Anulowano {queryset.count()} rezerwacji.")
-    mark_as_cancelled.short_description = "Anuluj wybrane rezerwacje"
+    def save_model(self, request, obj, form, change):
+        if not change:  # Jeśli to nowy wpis
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
+        
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
