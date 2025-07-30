@@ -31,8 +31,8 @@
                         <div class="card card-hover">
                             <!-- Zdjęcie na górze -->
                             <div class="position-relative">
-                                {% if dog.photo %}
-                                <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; width:700px; object-fit: cover;">
+                                {% if dog.photos %}
+                                <img src="{{ dog.photos.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; width:700px; object-fit: cover;">
                                 {% endif %}
                                 {% if dog.certificate %}
                                 <div class="position-absolute top-0 end-0 m-2">
@@ -87,8 +87,8 @@
                 <div class="card card-hover">
                     <!-- Zdjęcie z certyfikatem na tle -->
                     <div class="position-relative">
-                        {% if puppy.photo %}
-                        <img src="{{ puppy.photo.url }}" class="card-img-top" alt="{{ puppy.name }}"
+                        {% if puppy.photos %}
+                        <img src="{{ puppy.photos.url }}" class="card-img-top" alt="{{ puppy.name }}"
                         style="height: 300px; object-fit: cover;">
                         {% endif %}
                         {% if puppy.certificate %}

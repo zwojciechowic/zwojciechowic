@@ -93,39 +93,27 @@ class BasePhotoAdmin(admin.ModelAdmin):
         self._save_photos(request, obj, 'certificates')
     
     def _save_photos(self, request, obj, field_name):
-        # Pobierz istniejące zdjęcia
         existing_photos = getattr(obj, field_name, []) or []
-        
-        # Sprawdź czy są nowe pliki przesłane przez JavaScript
         new_photos = []
+        
+        # Szukaj plików z odpowiednim prefiksem
         for key, file in request.FILES.items():
-            if key.startswith('new_photo_') and file.content_type.startswith('image/'):
+            if key.startswith(f'new_photo_{field_name}') and file.content_type.startswith('image/'):
+                # Przeczytaj zawartość pliku raz
+                file_content = file.read()
                 filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                saved_file = default_storage.save(filename, ContentFile(file.read()))
+                saved_file = default_storage.save(filename, ContentFile(file_content))
+                
                 new_photos.append({
                     'url': default_storage.url(saved_file),
                     'filename': saved_file,
                     'order': len(existing_photos) + len(new_photos) + 1
                 })
         
-        # Połącz istniejące z nowymi
-        all_photos = existing_photos + new_photos
-        
-        # Sprawdź dane z hidden field (może zawierać info o usuniętych zdjęciach)
-        photos_data = request.POST.get(f'{field_name}_data')
-        if photos_data:
-            try:
-                client_photos = json.loads(photos_data)
-                # Jeśli klient przesłał dane, użyj ich do określenia kolejności
-                if client_photos:
-                    # Sortuj według kolejności z klienta
-                    all_photos.sort(key=lambda x: next((p['order'] for p in client_photos if p['url'] == x['url']), 999))
-            except (json.JSONDecodeError, TypeError):
-                pass
-        
-        # Zapisz zaktualizowane zdjęcia
-        setattr(obj, field_name, all_photos)
-        obj.save(update_fields=[field_name])
+        if new_photos:
+            all_photos = existing_photos + new_photos
+            setattr(obj, field_name, all_photos)
+            obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):
