@@ -59,7 +59,7 @@ class BasePhotoAdmin(admin.ModelAdmin):
         html = f'''
         <div class="photos-widget" data-field="{field_name}">
             <h4>{label}</h4>
-            <input type="file" multiple accept="image/*" class="photo-input" 
+            <input type="file" multiple accept="image/*" name="{field_name}_files"
                    style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
             <p style="margin: 10px 0; color: #666; font-size: 12px;">
                 Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
@@ -93,26 +93,24 @@ class BasePhotoAdmin(admin.ModelAdmin):
         self._save_photos(request, obj, 'certificates')
     
     def _save_photos(self, request, obj, field_name):
-        existing_photos = getattr(obj, field_name, []) or []
-        new_photos = []
+        # Sprawdź czy są pliki dla tego pola
+        file_key = f'{field_name}_files'  # lub jakakolwiek nazwa z HTML
         
-        # Szukaj plików z odpowiednim prefiksem
-        for key, file in request.FILES.items():
-            if key.startswith(f'new_photo_{field_name}') and file.content_type.startswith('image/'):
-                # Przeczytaj zawartość pliku raz
-                file_content = file.read()
-                filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                saved_file = default_storage.save(filename, ContentFile(file_content))
-                
-                new_photos.append({
-                    'url': default_storage.url(saved_file),
-                    'filename': saved_file,
-                    'order': len(existing_photos) + len(new_photos) + 1
-                })
-        
-        if new_photos:
-            all_photos = existing_photos + new_photos
-            setattr(obj, field_name, all_photos)
+        if file_key in request.FILES:
+            files = request.FILES.getlist(file_key)
+            existing_photos = getattr(obj, field_name, []) or []
+            
+            for file in files:
+                if file.content_type.startswith('image/'):
+                    filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                    saved_file = default_storage.save(filename, file)
+                    
+                    existing_photos.append({
+                        'url': default_storage.url(saved_file),
+                        'filename': saved_file
+                    })
+            
+            setattr(obj, field_name, existing_photos)
             obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
