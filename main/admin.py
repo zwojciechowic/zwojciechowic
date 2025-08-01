@@ -98,26 +98,25 @@ class BasePhotoAdmin(admin.ModelAdmin):
         print("After _save_photos")
         
     def _save_photos(self, request, obj, field_name):
-        # Pobierz nowe pliki - popraw nazwy kluczy
-        uploaded_files = request.FILES.getlist(f'{field_name}_files')
+        # Sprawdź czy są pliki dla tego pola
+        file_key = f'{field_name}_files'  # lub jakakolwiek nazwa z HTML
         
-        existing_photos = getattr(obj, field_name, []) or []
-        
-        for file in uploaded_files:
-            if file.content_type.startswith('image/'):
-                # TUTAJ BRAKUJE - zapisz plik na dysk
-                filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{file.name}"
-                saved_file = default_storage.save(filename, ContentFile(file.read()))
-                
-                # Dodaj do existing_photos
-                existing_photos.append({
-                    'url': default_storage.url(saved_file),
-                    'filename': saved_file
-                })
-        
-        # Zapisz z powrotem do obiektu
-        setattr(obj, field_name, existing_photos)
-        obj.save(update_fields=[field_name])
+        if file_key in request.FILES:
+            files = request.FILES.getlist(file_key)
+            existing_photos = getattr(obj, field_name, []) or []
+            
+            for file in files:
+                if file.content_type.startswith('image/'):
+                    filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
+                    saved_file = default_storage.save(filename, file)
+                    
+                    existing_photos.append({
+                        'url': default_storage.url(saved_file),
+                        'filename': saved_file
+                    })
+            
+            setattr(obj, field_name, existing_photos)
+            obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):

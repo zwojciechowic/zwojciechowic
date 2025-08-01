@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Utwórz ukryty input file dla każdego nowego zdjęcia
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
-            fileInput.name = `new_photo_${photoIndex}`;
+            fileInput.name = `${fieldName}_files`;
             fileInput.style.display = 'none';
             
             // Stwórz DataTransfer aby przypisać plik do input
