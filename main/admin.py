@@ -98,20 +98,26 @@ class BasePhotoAdmin(admin.ModelAdmin):
         print("After _save_photos")
         
     def _save_photos(self, request, obj, field_name):
-        print(f"\n=== _save_photos for {field_name} ===")
-        print(f"Object ID: {obj.pk}")
+        # Pobierz nowe pliki - popraw nazwy kluczy
+        uploaded_files = request.FILES.getlist(f'{field_name}_files')
         
         existing_photos = getattr(obj, field_name, []) or []
-        print(f"Existing photos count: {len(existing_photos)}")
         
-        # Sprawdź WSZYSTKIE klucze plików
-        for key in request.FILES.keys():
-            print(f"File key found: {key}")
-            file = request.FILES[key]
-            print(f"  - File name: {file.name}")
-            print(f"  - Content type: {file.content_type}")
+        for file in uploaded_files:
+            if file.content_type.startswith('image/'):
+                # TUTAJ BRAKUJE - zapisz plik na dysk
+                filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{file.name}"
+                saved_file = default_storage.save(filename, ContentFile(file.read()))
+                
+                # Dodaj do existing_photos
+                existing_photos.append({
+                    'url': default_storage.url(saved_file),
+                    'filename': saved_file
+                })
         
-        # Reszta twojego kodu...
+        # Zapisz z powrotem do obiektu
+        setattr(obj, field_name, existing_photos)
+        obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
 class DogAdmin(BasePhotoAdmin):
