@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function prepareFileForUpload(file, photoIndex) {
+            console.log('prepareFileForUpload called for:', file.name, 'index:', photoIndex);
+            
             // Utwórz ukryty input file dla każdego nowego zdjęcia
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
@@ -91,8 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
             dt.items.add(file);
             fileInput.files = dt.files;
             
-            // Dodaj do formularza
-            widget.appendChild(fileInput);
+            // POPRAWKA: Dodaj do formularza, nie do widget
+            const form = widget.closest('form');
+            if (form) {
+                form.appendChild(fileInput);
+                console.log('File input added to form:', fileInput.name);
+            } else {
+                console.error('Could not find form element');
+            }
         }
         
         function renderPhoto(photo) {
