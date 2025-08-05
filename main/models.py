@@ -28,8 +28,10 @@ class Dog(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(verbose_name='Opis')
-    photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')
-    certificates = models.JSONField(default=list, blank=True, verbose_name='Certyfikaty')
+    # Usuń: photos = models.JSONField(default=list, blank=True, verbose_name='Zdjęcia')
+    # Dodaj:
+    photo_gallery = models.ForeignKey('gallery.GallerySet', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Galeria zdjęć')
+    certificates = models.JSONField(default=list, blank=True, verbose_name='Certyfikaty')  # Zostaw na razie
     is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
     
     class Meta:
@@ -42,8 +44,11 @@ class Dog(models.Model):
     
     @property
     def main_photo(self):
-        """Pierwsze zdjęcie jako główne"""
-        return self.photos[0] if self.photos else None
+        """Pierwsze zdjęcie z galerii jako główne"""
+        if self.photo_gallery:
+            photos = self.photo_gallery.get_photos()
+            return photos.first() if photos.exists() else None
+        return None
 
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')

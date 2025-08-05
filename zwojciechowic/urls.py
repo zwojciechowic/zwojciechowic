@@ -9,7 +9,8 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    path('admin/', admin.site.urls),  # ← PRZENIEŚ TUTAJ
+    path('admin/', admin.site.urls),
+    path('gallery/', include('gallery.urls')),
     path('', include('main.urls')),
     prefix_default_language=True
 )

@@ -1,0 +1,153 @@
+.gallery-widget {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.gallery-container {
+    position: relative;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.gallery-main {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.gallery-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.gallery-slide {
+    display: none;
+    position: relative;
+}
+
+.gallery-slide.active {
+    display: block;
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 20px;
+}
+
+.gallery-caption h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.gallery-caption p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.gallery-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.gallery-btn:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-prev {
+    left: 15px;
+}
+
+.gallery-next {
+    right: 15px;
+}
+
+.gallery-indicators {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    gap: 8px;
+    background: rgba(0,0,0,0.05);
+}
+
+.gallery-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-indicator.active,
+.gallery-indicator:hover {
+    background: #007bff;
+    transform: scale(1.2);
+}
+
+.gallery-empty {
+    padding: 40px;
+    text-align: center;
+    color: #666;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .gallery-btn {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .gallery-prev {
+        left: 10px;
+    }
+    
+    .gallery-next {
+        right: 10px;
+    }
+    
+    .gallery-caption {
+        padding: 15px;
+    }
+    
+    .gallery-caption h4 {
+        font-size: 1em;
+    }
+    
+    .gallery-caption p {
+        font-size: 0.8em;
+    }
+}

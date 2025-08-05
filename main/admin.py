@@ -96,7 +96,7 @@ class BasePhotoAdmin(admin.ModelAdmin):
         self._save_photos(request, obj, 'photos')
         self._save_photos(request, obj, 'certificates')
         print("After _save_photos")
-        
+
     def _save_photos(self, request, obj, field_name):
         # Sprawdź czy są pliki dla tego pola
         file_key = f'{field_name}_files'  # lub jakakolwiek nazwa z HTML
@@ -119,8 +119,8 @@ class BasePhotoAdmin(admin.ModelAdmin):
             obj.save(update_fields=[field_name])
 
 @admin.register(Dog)
-class DogAdmin(BasePhotoAdmin):
-    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo', 'photos_count', 'certificates_count']
+class DogAdmin(admin.ModelAdmin):
+    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
@@ -129,23 +129,27 @@ class DogAdmin(BasePhotoAdmin):
         ('Podstawowe informacje', {
             'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding', 'description')
         }),
-        ('Zdjęcia', {
-            'fields': ('photos_manager',)
+        ('Galeria zdjęć', {
+            'fields': ('photo_gallery',),
+            'description': 'Wybierz istniejącą galerię lub stwórz nową w sekcji "Galeria zdjęć"'
         }),
         ('Certyfikaty', {
-            'fields': ('certificates_manager',)
+            'fields': ('certificates_manager',)  # Zostaw jak było
         }),
     )
     
-    def main_photo(self, obj):
-        if obj.photos and len(obj.photos) > 0:
+    def main_photo_preview(self, obj):
+        main_photo = obj.main_photo
+        if main_photo and main_photo.image:
             return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
-                             obj.photos[0].get('url', ''))
+                             main_photo.image.url)
         return "Brak"
-    main_photo.short_description = "Główne zdjęcie"
+    main_photo_preview.short_description = "Główne zdjęcie"
     
     def photos_count(self, obj):
-        return len(obj.photos) if obj.photos else 0
+        if obj.photo_gallery:
+            return obj.photo_gallery.get_photos().count()
+        return 0
     photos_count.short_description = "Zdjęcia"
     
     def certificates_count(self, obj):

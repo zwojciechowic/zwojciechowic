@@ -194,8 +194,6 @@ def handle_additional_photos_upload(request, instance):
     
     return photos_data
 
-# Alternatywnie - dodaj do admin.py w metodzie save_model bardziej zaawansowaną obsługę:
-
 def save_model(self, request, obj, form, change):
     # Najpierw zapisz obiekt
     super().save_model(request, obj, form, change)
