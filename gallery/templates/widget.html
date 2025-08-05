@@ -1,0 +1,52 @@
+{% load static %}
+
+<div class="gallery-widget {{ css_class }}" data-gallery-id="{{ gallery.id }}">
+    {% if gallery and photos %}
+        <div class="gallery-container">
+            <div class="gallery-main">
+                <button class="gallery-btn gallery-prev" aria-label="Poprzednie zdjęcie">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </button>
+                
+                <div class="gallery-image-container">
+                    {% for photo in photos %}
+                        <div class="gallery-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
+                            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="gallery-image">
+                            {% if photo.title or photo.description %}
+                                <div class="gallery-caption">
+                                    {% if photo.title %}<h4>{{ photo.title }}</h4>{% endif %}
+                                    {% if photo.description %}<p>{{ photo.description }}</p>{% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <button class="gallery-btn gallery-next" aria-label="Następne zdjęcie">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            
+            {% if photos|length > 1 %}
+                <div class="gallery-indicators">
+                    {% for photo in photos %}
+                        <button class="gallery-indicator {% if forloop.first %}active{% endif %}" 
+                                data-slide="{{ forloop.counter0 }}" 
+                                aria-label="Przejdź do zdjęcia {{ forloop.counter }}"></button>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="gallery-empty">
+            <p>Brak zdjęć w galerii</p>
+        </div>
+    {% endif %}
+</div>
+
+<link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+<script src="{% static 'gallery/js/gallery.js' %}"></script>

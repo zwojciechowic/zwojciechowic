@@ -1,5 +1,5 @@
-{# templates/dog_detail.html #}
 {% extends 'base.html' %}
+{% load gallery_tags %}
 
 {% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
 
@@ -10,25 +10,13 @@
             <h1 class="display-4">{{ dog.name }}</h1>
             <p class="text-muted">{{ dog.breed }} | {{ dog.get_gender_display }}</p>
             
-            {# Główne zdjęcie - pierwsze z listy photos #}
-            {% if dog.photos and dog.photos|length > 0 %}
-            <img src="{{ dog.photos.0.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
-            {% endif %}
-            
-            {# Wszystkie zdjęcia jako galeria #}
-            {% if dog.photos and dog.photos|length > 1 %}
-            <div class="row mb-4">
-                <div class="col-12">
-                    <h5>Galeria zdjęć</h5>
-                </div>
-                {% for photo in dog.photos %}
-                <div class="col-md-4 mb-3">
-                    <img src="{{ photo.url }}" alt="{{ dog.name }} - zdjęcie {{ forloop.counter }}" 
-                         class="img-fluid rounded shadow-sm" style="cursor: pointer;" 
-                         data-bs-toggle="modal" data-bs-target="#photoModal{{ forloop.counter }}">
-                </div>
-                {% endfor %}
-            </div>
+            {# Galeria zdjęć używając naszego widgetu #}
+            {% if dog.photo_gallery %}
+                {% gallery_widget dog.photo_gallery.id "dog-gallery mb-4" %}
+            {% elif dog.main_photo %}
+                <img src="{{ dog.main_photo.image.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
+            {% else %}
+                <div class="alert alert-info">Brak zdjęć dla tego psa</div>
             {% endif %}
             
             {# Opisy #}
@@ -54,7 +42,7 @@
                         <strong>Wiek:</strong> {{ dog.birth_date|timesince }}
                     </p>
                     
-                    {# Certyfikaty #}
+                    {# Certyfikaty - zostaw jak było na razie #}
                     {% if dog.certificates %}
                     <div class="alert alert-success">
                         <i class="fas fa-certificate"></i> 
@@ -83,26 +71,7 @@
     </div>
 </div>
 
-{# Modale dla zdjęć - opcjonalne #}
-{% if dog.photos %}
-{% for photo in dog.photos %}
-<div class="modal fade" id="photoModal{{ forloop.counter }}" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ dog.name }} - Zdjęcie {{ forloop.counter }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="{{ photo.url }}" alt="{{ dog.name }}" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-{% endif %}
-
-{# Modale dla certyfikatów - opcjonalne #}
+{# Modale dla certyfikatów - zostaw jak było #}
 {% if dog.certificates %}
 {% for cert in dog.certificates %}
 <div class="modal fade" id="certModal{{ forloop.counter }}" tabindex="-1">
