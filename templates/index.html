@@ -1,6 +1,10 @@
 {# templates/index.html #}
 {% extends 'base.html' %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="hero-section">
     <div class="container">
@@ -181,4 +185,8 @@
     </nav>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}
