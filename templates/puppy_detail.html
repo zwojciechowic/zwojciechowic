@@ -3,6 +3,10 @@
 
 {% block title %}{{ puppy.name }} - Hodowla z Wojciechowic{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="hero-section">
     <div class="row">
@@ -124,4 +128,8 @@
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}
