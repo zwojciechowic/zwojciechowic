@@ -38,86 +38,6 @@ class BlogPostAdminForm(forms.ModelForm):
     class Media:
         js = ('js/admin_image_preview.js',)
 
-class BasePhotoAdmin(admin.ModelAdmin):
-    readonly_fields = ['photos_manager', 'certificates_manager']
-    
-    class Media:
-        css = {'all': ('css/admin/photos.css',)}
-        # js = ('js/admin/photos.js',)
-    
-    def photos_manager(self, obj):
-        return self._render_photo_widget(obj, 'photos', 'Zdjęcia')
-    photos_manager.short_description = "Zarządzanie zdjęciami"
-    
-    def certificates_manager(self, obj):
-        return self._render_photo_widget(obj, 'certificates', 'Certyfikaty')
-    certificates_manager.short_description = "Zarządzanie certyfikatami"
-    
-    def _render_photo_widget(self, obj, field_name, label):
-        photos = getattr(obj, field_name, []) or []
-        
-        html = f'''
-        <div class="photos-widget" data-field="{field_name}">
-            <h4>{label}</h4>
-            <input type="file" multiple accept="image/*" name="{field_name}_files"
-                   style="width: 100%; padding: 10px; border: 2px dashed #007cba; border-radius: 6px; background: #f0f8ff; cursor: pointer;" />
-            <p style="margin: 10px 0; color: #666; font-size: 12px;">
-                Wybierz wiele zdjęć naraz. Możesz je przeciągnąć i upuścić tutaj.
-            </p>
-            <div class="photos-container">
-        '''
-        
-        for i, photo in enumerate(photos):
-            html += f'''
-                <div class="photo-item" data-index="{i}">
-                    <img src="{photo.get('url', '')}" style="width: 150px; height: 100px; object-fit: cover;" />
-                    <span style="background: red; color: white; padding: 2px 6px; cursor: pointer;">×</span>
-                    <input type="number" value="{i+1}" min="1" style="width: 50px;" />
-                </div>
-            '''
-        
-        html += f'''
-            </div>
-            <input type="hidden" name="{field_name}_data" class="photos-data" />
-        </div>
-        '''
-        return format_html(html)
-    
-    def save_model(self, request, obj, form, change):
-        print("=== SAVE_MODEL DEBUG ===")
-        print(f"Object: {obj}")
-        print(f"Change: {change}")
-        print(f"FILES keys: {list(request.FILES.keys())}")
-        print(f"POST keys: {list(request.POST.keys())}")
-        
-        super().save_model(request, obj, form, change)
-        
-        print("Before _save_photos")
-        self._save_photos(request, obj, 'photos')
-        self._save_photos(request, obj, 'certificates')
-        print("After _save_photos")
-
-    def _save_photos(self, request, obj, field_name):
-        # Sprawdź czy są pliki dla tego pola
-        file_key = f'{field_name}_files'  # lub jakakolwiek nazwa z HTML
-        
-        if file_key in request.FILES:
-            files = request.FILES.getlist(file_key)
-            existing_photos = getattr(obj, field_name, []) or []
-            
-            for file in files:
-                if file.content_type.startswith('image/'):
-                    filename = f"{field_name}/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                    saved_file = default_storage.save(filename, file)
-                    
-                    existing_photos.append({
-                        'url': default_storage.url(saved_file),
-                        'filename': saved_file
-                    })
-            
-            setattr(obj, field_name, existing_photos)
-            obj.save(update_fields=[field_name])
-
 @admin.register(Dog)
 class DogAdmin(admin.ModelAdmin):
     list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo_preview', 'photos_count', 'certificates_count']
@@ -129,20 +49,17 @@ class DogAdmin(admin.ModelAdmin):
         ('Podstawowe informacje', {
             'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding', 'description')
         }),
-        ('Galeria zdjęć', {
-            'fields': ('photo_gallery',),
-            'description': 'Wybierz istniejącą galerię lub stwórz nową w sekcji "Galeria zdjęć"'
-        }),
-        ('Certyfikaty', {
-            'fields': ('certificates_manager',)  # Zostaw jak było
+        ('Media', {
+            'fields': ('photo_gallery', 'certificates_gallery'),
+            'description': 'Wybierz istniejące galerie lub stwórz nowe w sekcji "Zbiory zdjęć"'
         }),
     )
     
     def main_photo_preview(self, obj):
-        main_photo = obj.main_photo
-        if main_photo and main_photo.image:
+        main_photo_obj = obj.main_photo
+        if main_photo_obj and main_photo_obj.image:
             return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
-                             main_photo.image.url)
+                             main_photo_obj.image.url)
         return "Brak"
     main_photo_preview.short_description = "Główne zdjęcie"
     
@@ -153,12 +70,14 @@ class DogAdmin(admin.ModelAdmin):
     photos_count.short_description = "Zdjęcia"
     
     def certificates_count(self, obj):
-        return len(obj.certificates) if obj.certificates else 0
+        if obj.certificates_gallery:
+            return obj.certificates_gallery.get_photos().count()
+        return 0
     certificates_count.short_description = "Certyfikaty"
 
 @admin.register(Puppy)
-class PuppyAdmin(BasePhotoAdmin):
-    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo', 'photos_count', 'certificates_count']
+class PuppyAdmin(admin.ModelAdmin):
+    list_display = ['name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['gender', 'is_available', 'birth_date']
     search_fields = ['name', 'mother__name', 'father__name']
     list_editable = ['is_available', 'price']
@@ -170,27 +89,29 @@ class PuppyAdmin(BasePhotoAdmin):
         ('Dostępność', {
             'fields': ('is_available', 'price')
         }),
-        ('Zdjęcia', {
-            'fields': ('photos_manager',)
-        }),
-        ('Certyfikaty', {
-            'fields': ('certificates_manager',)
+        ('Media', {
+            'fields': ('photo_gallery', 'certificates_gallery')
         }),
     )
     
-    def main_photo(self, obj):
-        if obj.photos and len(obj.photos) > 0:
+    def main_photo_preview(self, obj):
+        main_photo_obj = obj.main_photo
+        if main_photo_obj and main_photo_obj.image:
             return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
-                             obj.photos[0].get('url', ''))
+                             main_photo_obj.image.url)
         return "Brak"
-    main_photo.short_description = "Główne zdjęcie"
+    main_photo_preview.short_description = "Główne zdjęcie"
     
     def photos_count(self, obj):
-        return len(obj.photos) if obj.photos else 0
+        if obj.photo_gallery:
+            return obj.photo_gallery.get_photos().count()
+        return 0
     photos_count.short_description = "Zdjęcia"
     
     def certificates_count(self, obj):
-        return len(obj.certificates) if obj.certificates else 0
+        if obj.certificates_gallery:
+            return obj.certificates_gallery.get_photos().count()
+        return 0
     certificates_count.short_description = "Certyfikaty"
 
 @admin.register(BlogPost)

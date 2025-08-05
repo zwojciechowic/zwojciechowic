@@ -31,9 +31,11 @@
                         <div class="card card-hover">
                             <!-- Zdjęcie na górze -->
                             <div class="position-relative">
-                                {% if dog.photos %}
-                                <img src="{{ dog.photos.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; width:700px; object-fit: cover;">
-                                {% endif %}
+                                {% with main_photo=dog.main_photo %}
+                                    {% if main_photo %}
+                                        <img src="{{ main_photo.image.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; object-fit: cover;">
+                                    {% endif %}
+                                {% endwith %}
                                 {% if dog.certificate %}
                                 <div class="position-absolute top-0 end-0 m-2">
                                     <span class="badge bg-success">
@@ -87,10 +89,11 @@
                 <div class="card card-hover">
                     <!-- Zdjęcie z certyfikatem na tle -->
                     <div class="position-relative">
-                        {% if puppy.photos %}
-                        <img src="{{ puppy.photos.url }}" class="card-img-top" alt="{{ puppy.name }}"
-                        style="height: 300px; object-fit: cover;">
-                        {% endif %}
+                        {% with main_photo=puppy.main_photo %}
+                            {% if main_photo %}
+                                <img src="{{ main_photo.image.url }}" class="card-img-top" alt="{{ puppy.name }}" style="height: 300px; object-fit: cover;">
+                            {% endif %}
+                        {% endwith %}
                         {% if puppy.certificate %}
                         <div class="position-absolute top-0 end-0 m-2">
                             <span class="badge bg-success">
