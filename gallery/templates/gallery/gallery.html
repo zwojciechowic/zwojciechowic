@@ -1,0 +1,26 @@
+<!-- templates/gallery/gallery.html -->
+{% if photos %}
+<div class="gallery" data-gallery>
+    <div class="gallery-main">
+        {% for photo in photos %}
+        <div class="slide">
+            <img src="{{ photo.image.url }}" alt="Zdjęcie {{ forloop.counter }} w galerii">
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if photos|length > 1 %}
+        <!-- Przyciski i kropki są teraz czystsze, bez atrybutów onclick -->
+        <button class="gallery-btn prev" aria-label="Poprzednie zdjęcie">‹</button>
+        <button class="gallery-btn next" aria-label="Następne zdjęcie">›</button>
+        
+        <div class="gallery-dots">
+            {% for photo in photos %}
+            <span class="dot"></span>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% else %}
+    <div class="alert alert-info">Brak zdjęć w tej galerii.</div>
+{% endif %}

@@ -23,8 +23,8 @@
             <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
                 <div class="card card-hover">
                     <div class="card-img-container position-relative">
-                        {% if dog.photo %}
-                        <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 250px; object-fit: cover;">
+                        {% if dog.photo_gallery %}
+                            {% show_gallery dog.photo_gallery.id %}
                         {% endif %}
                         
                         {% if dog.certificate %}
