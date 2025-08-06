@@ -40,8 +40,8 @@ class BlogPostAdminForm(forms.ModelForm):
 
 @admin.register(Dog)
 class DogAdmin(admin.ModelAdmin):
-    list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo_preview', 'photos_count', 'certificates_count']
-    list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
+    # list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo_preview', 'photos_count', 'certificates_count']
+    # list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
     search_fields = ['name', 'breed', 'description']
     list_editable = ['is_breeding']
     
