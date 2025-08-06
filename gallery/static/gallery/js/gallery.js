@@ -1,3 +1,4 @@
+// Gallery Widget JavaScript - Fixed
 document.addEventListener('DOMContentLoaded', function() {
     // Inicjalizuj wszystkie galerie na stronie
     const galleries = document.querySelectorAll('.gallery-widget');
@@ -17,12 +18,19 @@ function initGallery(galleryElement) {
         // Ukryj przyciski jeśli jest tylko jedno zdjęcie lub mniej
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
+        if (galleryElement.querySelector('.gallery-indicators')) {
+            galleryElement.querySelector('.gallery-indicators').style.display = 'none';
+        }
         return;
     }
     
     let currentSlide = 0;
     
     function showSlide(index) {
+        // Sprawdź czy index jest prawidłowy
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        
         // Ukryj wszystkie slajdy
         slides.forEach(slide => slide.classList.remove('active'));
         indicators.forEach(indicator => indicator.classList.remove('active'));
@@ -50,19 +58,29 @@ function initGallery(galleryElement) {
     
     // Event listenery dla przycisków
     if (nextBtn) {
-        nextBtn.addEventListener('click', nextSlide);
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nextSlide();
+        });
     }
     
     if (prevBtn) {
-        prevBtn.addEventListener('click', prevSlide);
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            prevSlide();
+        });
     }
     
     // Event listenery dla wskaźników
     indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => showSlide(index));
+        indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSlide(index);
+        });
     });
     
-    // Obsługa klawiatury
+    // Obsługa klawiatury (tylko gdy galeria jest w fokusie)
+    galleryElement.setAttribute('tabindex', '0');
     galleryElement.addEventListener('keydown', (e) => {
         switch(e.key) {
             case 'ArrowLeft':
@@ -76,7 +94,42 @@ function initGallery(galleryElement) {
         }
     });
     
-    // Opcjonalne: automatyczne przewijanie
+    // Obsługa touch/swipe na urządzeniach mobilnych
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    galleryElement.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    galleryElement.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+        
+        // Sprawdź czy to poziomy swipe (bardziej poziomy niż pionowy)
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+            if (diffX > 0) {
+                // Swipe left - next slide
+                nextSlide();
+            } else {
+                // Swipe right - prev slide
+                prevSlide();
+            }
+        }
+    }
+    
+    // Opcjonalne: automatyczne przewijanie (odkomentuj jeśli chcesz)
+    /*
     let autoSlideInterval;
     
     function startAutoSlide() {
@@ -91,34 +144,10 @@ function initGallery(galleryElement) {
     galleryElement.addEventListener('mouseenter', stopAutoSlide);
     galleryElement.addEventListener('mouseleave', startAutoSlide);
     
-    // Uruchom automatyczne przewijanie (opcjonalne)
-    // startAutoSlide();
+    // Uruchom automatyczne przewijanie
+    startAutoSlide();
+    */
     
-    // Obsługa touch/swipe na urządzeniach mobilnych
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    galleryElement.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    galleryElement.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe left - next slide
-                nextSlide();
-            } else {
-                // Swipe right - prev slide
-                prevSlide();
-            }
-        }
-    }
+    // Upewnij się że pierwszy slide jest aktywny
+    showSlide(0);
 }
