@@ -1,23 +1,13 @@
-# gallery/templatetags/gallery_tags.py
 from django import template
-from ..models import GallerySet
+from ..models import Gallery
 
 register = template.Library()
 
-@register.inclusion_tag('gallery/widget.html')
-def gallery_widget(gallery_id, css_class=''):
-    """Template tag do wstawienia galerii"""
+@register.inclusion_tag('gallery/gallery.html')
+def show_gallery(gallery_id):
     try:
-        gallery = GallerySet.objects.get(id=gallery_id, is_active=True)
-        photos = gallery.get_photos()
-        return {
-            'gallery': gallery,
-            'photos': photos,
-            'css_class': css_class,
-        }
-    except GallerySet.DoesNotExist:
-        return {
-            'gallery': None, 
-            'photos': [],
-            'css_class': css_class,
-        }
+        gallery = Gallery.objects.get(id=gallery_id)
+        photos = gallery.photos.all()
+        return {'photos': photos}
+    except Gallery.DoesNotExist:
+        return {'photos': []}
