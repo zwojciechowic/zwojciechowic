@@ -22,14 +22,24 @@
     <div class="row">
         {% for dog in breeding_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
-            <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
-                <div class="card card-hover">
+            {# Link obejmuje całą kartę #}
+            <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
+                
+                <div class="card card-hover h-100">
+                    
+                    {# === TO JEST KLUCZOWA CZĘŚĆ DO NAPRAWY === #}
+                    {# Kontener na obrazek/galerię o stałej wysokości #}
                     <div class="card-img-container position-relative">
                         {% if dog.photo_gallery %}
+                            {# Galeria MUSI być W ŚRODKU tego diva #}
                             {% show_gallery dog.photo_gallery.id %}
+                        {% else %}
+                            {# Tutaj wstaw obrazek zastępczy, jeśli pies nie ma galerii #}
+                            <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="Brak zdjęcia" style="height: 100%; width: 100%; object-fit: cover;">
                         {% endif %}
                         
-                        {% if dog.certificate %}
+                        {# Odznaka certyfikatu #}
+                        {% if dog.certificates_gallery %}
                         <div class="position-absolute top-0 end-0 m-2">
                             <span class="badge bg-success">
                                 <i class="fas fa-certificate"></i> Certyfikowany
@@ -38,7 +48,8 @@
                         {% endif %}
                     </div>
                     
-                    <div class="card-body">
+                    {# Treść karty poniżej obrazka #}
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ dog.name }}</h5>
                         
                         <div class="card-details mb-3">
@@ -51,10 +62,11 @@
                         
                         <p class="card-text">{{ dog.description|truncatewords:20 }}</p>
                         
-                        <div class="mt-3">
+                        <div class="mt-auto"> {# Wypycha przycisk na dół karty #}
                             <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
                         </div>
                     </div>
+    
                 </div>
             </a>
         </div>
