@@ -2,72 +2,114 @@
 {% extends 'base.html' %}
 {% load static gallery_tags %}
 
-{% block title %}Nasze Psy - Hodowla z Wojciechowic{% endblock %}
-
-{% block extra_css %}
-    {# Mimo że nie używamy tu galerii, zostawienie tego nie zaszkodzi #}
-    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
-{% endblock %}
+{% block title %}Nasze psy - Hodowla z Wojciechowic{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row mb-4">
-        <div class="col-12 text-center">
-            <h1 class="display-4">Nasze Psy</h1>
-            <p class="lead">Poznaj członków naszej psiej rodziny.</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-5">Nasze psy</h1>
+        </div>
+    </div>
+    
+    {% if breeding_dogs %}
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-4">Psy hodowlane</h2>
         </div>
     </div>
     
     <div class="row">
-        {# Zakładam, że lista psów nazywa się 'dogs' lub 'breeding_dogs' #}
-        {% for dog in dogs %}
+        {% for dog in breeding_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
-            {# Karta jest teraz w całości klikalna dzięki "stretched-link" #}
-            <div class="card card-hover h-100">
-                <a href="{% url 'dog_detail' dog.pk %}" class="stretched-link" aria-label="Zobacz szczegóły psa {{ dog.name }}"></a>
-                
-                <div class="position-relative">
-                    {# --- NAJWAŻNIEJSZA ZMIANA JEST TUTAJ --- #}
-                    {# Wyświetlamy tylko JEDNO zdjęcie jako miniaturkę, a nie całą galerię. #}
-                    {# Logika: 1. Pierwsze zdjęcie z galerii. 2. Główne zdjęcie. 3. Placeholder. #}
-                    {% with first_photo=dog.photo_gallery.photos.first %}
-                        {% if first_photo %}
-                            <img src="{{ first_photo.image.url }}" class="card-img-top" alt="{{ dog.name }}" style="aspect-ratio: 4 / 3; object-fit: cover;">
-                        {% elif dog.main_photo %}
-                            <img src="{{ dog.main_photo.image.url }}" class="card-img-top" alt="{{ dog.name }}" style="aspect-ratio: 4 / 3; object-fit: cover;">
-                        {% else %}
-                            <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="Brak zdjęcia" style="aspect-ratio: 4 / 3; object-fit: cover;">
+            <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
+                <div class="card card-hover">
+                    <div class="card-img-container position-relative">
+                        {% if dog.photo_gallery %}
+                            {% show_gallery dog.photo_gallery.id %}
                         {% endif %}
-                    {% endwith %}
-
-                    {% if dog.certificate %}
-                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 2;">
-                        <span class="badge bg-success">
-                            <i class="fas fa-certificate"></i> Certyfikowany
-                        </span>
+                        
+                        {% if dog.certificate %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">
+                                <i class="fas fa-certificate"></i> Certyfikowany
+                            </span>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ dog.name }}</h5>
+                        
+                        <div class="card-details mb-3">
+                            <small class="text-muted">
+                                <strong>Rasa:</strong> {{ dog.breed }}<br>
+                                <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                                <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                            </small>
+                        </div>
+                        
+                        <p class="card-text">{{ dog.description|truncatewords:20 }}</p>
+                        
+                        <div class="mt-3">
+                            <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="card-body">
-                    <h5 class="card-title">{{ dog.name }}</h5>
-                    <p class="card-text text-muted">{{ dog.breed }} | {{ dog.get_gender_display }}</p>
-                </div>
-            </div>
+            </a>
         </div>
-        {% empty %}
-            <div class="col-12">
-                <div class="alert alert-info">
-                    Aktualnie nie ma żadnych psów do wyświetlenia.
-                </div>
-            </div>
         {% endfor %}
     </div>
+    {% endif %}
+    
+    {% if other_dogs %}
+    <div class="row mb-5 mt-5">
+        <div class="col-12">
+            <h2 class="mb-4">Inne psy</h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for dog in other_dogs %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <a href="{% url 'dog_detail' dog.pk %}" class="card-link">
+                <div class="card card-hover">
+                    <div class="card-img-container position-relative">
+                        {% if dog.photo %}
+                        <img src="{{ dog.photo.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        
+                        {% if dog.certificate %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">
+                                <i class="fas fa-certificate"></i> Certyfikowany
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ dog.name }}</h5>
+                        
+                        <div class="card-details mb-3">
+                            <small class="text-muted">
+                                <strong>Rasa:</strong> {{ dog.breed }}<br>
+                                <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
+                                <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                            </small>
+                        </div>
+                        
+                        <p class="card-text">{{ dog.description|truncatewords:20 }}</p>
+                        
+                        <div class="mt-3">
+                            <span class="btn btn-primary btn-sm">Zobacz szczegóły</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
-{% endblock %}
-
-{# Nie potrzebujemy tutaj skryptu galerii, bo jej nie renderujemy, #}
-{# ale jego załadowanie nie powoduje błędu. #}
-{% block extra_js %}
-    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}

@@ -1,6 +1,6 @@
 <!-- templates/gallery/gallery.html -->
 {% if photos %}
-<div class="gallery" data-gallery>
+<div class="gallery {{extra_classes}}" data-gallery>
     <div class="gallery-main">
         {% for photo in photos %}
         <div class="slide">
