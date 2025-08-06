@@ -65,13 +65,13 @@ class DogAdmin(admin.ModelAdmin):
     
     def photos_count(self, obj):
         if obj.photo_gallery:
-            return obj.photo_gallery.get_photos().count()
+            return obj.photo_gallery.photos.count()
         return 0
     photos_count.short_description = "Zdjęcia"
     
     def certificates_count(self, obj):
         if obj.certificates_gallery:
-            return obj.certificates_gallery.get_photos().count()
+            return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
 
@@ -104,13 +104,13 @@ class PuppyAdmin(admin.ModelAdmin):
     
     def photos_count(self, obj):
         if obj.photo_gallery:
-            return obj.photo_gallery.get_photos().count()
+            return obj.photo_gallery.photos.count()
         return 0
     photos_count.short_description = "Zdjęcia"
     
     def certificates_count(self, obj):
         if obj.certificates_gallery:
-            return obj.certificates_gallery.get_photos().count()
+            return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
 

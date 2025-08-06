@@ -30,7 +30,7 @@ class Dog(models.Model):
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(verbose_name='Opis')
     photo_gallery = models.ForeignKey(
-        'gallery.GallerySet', 
+        'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
@@ -38,7 +38,7 @@ class Dog(models.Model):
         related_name='dog_photos'
     )
     certificates_gallery = models.ForeignKey(
-        'gallery.GallerySet', 
+        'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
@@ -59,7 +59,7 @@ class Dog(models.Model):
     def main_photo(self):
         """Pierwsze zdjęcie z galerii jako główne"""
         if self.photo_gallery:
-            return self.photo_gallery.get_photos().first()
+            return self.photo_gallery.photos.first()
         return None
 
 class Puppy(models.Model):
@@ -70,7 +70,7 @@ class Puppy(models.Model):
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
     photo_gallery = models.ForeignKey(
-        'gallery.GallerySet', 
+        'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
@@ -78,7 +78,7 @@ class Puppy(models.Model):
         related_name='puppy_photos'
     )
     certificates_gallery = models.ForeignKey(
-        'gallery.GallerySet', 
+        'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
@@ -100,7 +100,7 @@ class Puppy(models.Model):
     def main_photo(self):
         """Pierwsze zdjęcie z galerii jako główne"""
         if self.photo_gallery:
-            return self.photo_gallery.get_photos().first()
+            return self.photo_gallery.photos.first()
         return None
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')

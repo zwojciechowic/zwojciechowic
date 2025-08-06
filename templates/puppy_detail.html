@@ -52,7 +52,7 @@
                     </div>
                     
                     <div class="certificates-container mb-3">
-                        {% for cert in puppy.certificates_gallery.get_photos %}
+                        {% for cert in puppy.certificates_gallery.photos %}
                         <div class="mb-2">
                             <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }}" class="img-fluid rounded border">
                         </div>
