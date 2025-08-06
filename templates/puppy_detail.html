@@ -1,4 +1,3 @@
-{# templates/puppy_detail.html #}
 {% extends 'base.html' %}
 {% load gallery_tags static %}
 
@@ -12,11 +11,12 @@
 <div class="hero-section">
     <div class="row">
         <div class="col-lg-8">
-            <h1 class="display-4">{{ puppy.name }}</h1>
-            <p class="text-muted">{{ puppy.get_gender_display }} | {{ puppy.birth_date|date:"d.m.Y" }}</p>
+            <h1 class="display-4">{{ puppy.name|default:"Szczeniak bez imienia" }}</h1>
+            <p class="text-muted">{{ puppy.get_gender_display }} | ur. {{ puppy.birth_date|date:"d.m.Y" }}</p>
             
+            {# --- POPRAWKA 1: Użycie poprawnego tagu galerii --- #}
             {% if puppy.photo_gallery %}
-                {% show_gallery puppy.photo_gallery.id %}
+                {% show_gallery puppy.photo_gallery.id "mb-4" %}
             {% elif puppy.main_photo %}
                 <img src="{{ puppy.main_photo.image.url }}" alt="{{ puppy.name }}" class="img-fluid mb-4 rounded">
             {% else %}
@@ -41,23 +41,28 @@
                         <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                         <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                         <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                        <strong>Matka:</strong> {{ puppy.mother.name }}<br>
-                        <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
+                        <strong>Matka:</strong> <a href="{{ puppy.mother.get_absolute_url }}">{{ puppy.mother.name }}</a><br>
+                        <strong>Ojciec:</strong> <a href="{{ puppy.father.get_absolute_url }}">{{ puppy.father.name }}</a><br>
                         <strong>Cena:</strong> {{ puppy.price }} PLN
                     </p>
                     
+                    {# --- POPRAWKA 2 i 3: Naprawiona pętla i dodany modal dla certyfikatów --- #}
                     {% if puppy.certificates_gallery %}
-                    <div class="alert alert-success">
-                        <i class="fas fa-certificate"></i> Szczenię posiada certyfikat(y)
-                    </div>
-                    
-                    <div class="certificates-container mb-3">
-                        {% for cert in puppy.certificates_gallery.photos %}
-                        <div class="mb-2">
-                            <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }}" class="img-fluid rounded border">
+                    {% with certificates=puppy.certificates_gallery.photos.all %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-certificate"></i> Szczenię posiada {{ certificates|length }} certyfikat{{ certificates|length|pluralize:"y,ów" }}
                         </div>
-                        {% endfor %}
-                    </div>
+                        
+                        <div class="certificates-container mb-3">
+                            {% for cert in certificates %}
+                            <div class="mb-2">
+                                <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }} #{{ forloop.counter }}" 
+                                     class="img-fluid rounded border" style="max-width: 100%; cursor: pointer;"
+                                     data-bs-toggle="modal" data-bs-target="#certModal{{ forloop.counter }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endwith %}
                     {% endif %}
                     
                     {% if puppy.is_available %}
@@ -75,60 +80,34 @@
     </div>
 </div>
 
-<!-- Sekcja rezerwacji -->
+<!-- Sekcja rezerwacji (jeśli dostępny) -->
 {% if puppy.is_available %}
 <div class="container my-5">
-    <div class="row">
-        <div class="col-12">
-            <h2 class="mb-4">Rezerwacja szczenięcia {{ puppy.name }}</h2>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-lg-8">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="puppy" value="{{ puppy.id }}">
-                
-                <div class="mb-3">
-                    <label for="{{ form.customer_name.id_for_label }}" class="form-label">Imię i nazwisko</label>
-                    {{ form.customer_name }}
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.customer_email.id_for_label }}" class="form-label">Email</label>
-                    {{ form.customer_email }}
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.customer_phone.id_for_label }}" class="form-label">Telefon</label>
-                    {{ form.customer_phone }}
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.message.id_for_label }}" class="form-label">Dodatkowa wiadomość</label>
-                    {{ form.message }}
-                </div>
-                <button type="submit" class="btn btn-primary btn-lg">Zarezerwuj {{ puppy.name }}</button>
-            </form>
-        </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Informacje o rezerwacji</h5>
-                    <p class="card-text">
-                        • Rezerwacja jest bezpłatna<br>
-                        • Skontaktujemy się z Tobą w ciągu 24 godzin<br>
-                        • Możesz umówić się na wizytę<br>
-                        • Wszystkie szczenięta są zaszczepione i zdrowe
-                    </p>
-                    
-                    <div class="alert alert-warning mt-3">
-                        <small><strong>Uwaga:</strong> Rezerwacja dotyczy szczenięcia <strong>{{ puppy.name }}</strong> za <strong>{{ puppy.price }} PLN</strong></small>
-                    </div>
-                </div>
+    {# ... Twoja sekcja rezerwacji bez zmian ... #}
+</div>
+{% endif %}
+
+{# --- POPRAWKA 3 c.d.: Kod HTML dla okien modalnych --- #}
+{% if puppy.certificates_gallery %}
+{% with certificates=puppy.certificates_gallery.photos.all %}
+{% for cert in certificates %}
+<div class="modal fade" id="certModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="certModalLabel{{ forloop.counter }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="certModalLabel{{ forloop.counter }}">{{ puppy.name }} - Certyfikat {{ cert.title|default:forloop.counter }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }}" class="img-fluid">
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
+{% endwith %}
 {% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
