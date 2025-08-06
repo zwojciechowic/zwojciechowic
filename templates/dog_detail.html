@@ -48,24 +48,13 @@
                         <strong>Wiek:</strong> {{ dog.birth_date|timesince }}
                     </p>
                     
-                    {# Certyfikaty - zostaw jak było na razie #}
                     {% if dog.certificates_gallery %}
-                    {% with certificates=dog.certificates_gallery.photos %}
                         <div class="alert alert-success">
-                            <i class="fas fa-certificate"></i> 
-                            Pies posiada {{ certificates.count }} certyfikat{{ certificates.count|pluralize:"y,ów" }}
+                            <i class="fas fa-certificate"></i>
+                            Pies posiada {{ dog.certificates_gallery.photos.count }} certyfikat{{ dog.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
-                        
-                        <div class="certificates-container mb-3">
-                            {% for cert in certificates %}
-                            <div class="mb-2">
-                                <img src="{{ cert.image.url }}" alt="Certyfikat {{ dog.name }} #{{ forloop.counter }}" 
-                                     class="img-fluid rounded border" style="max-width: 100%; cursor: pointer;"
-                                     data-bs-toggle="modal" data-bs-target="#certModal{{ forloop.counter }}">
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% endwith %}
+                    
+                        {% show_gallery dog.certificates_gallery.id "mt-3" %}
                     {% endif %}
                     
                     {% if dog.is_breeding %}
