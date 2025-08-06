@@ -1,8 +1,41 @@
-{# templates/dogs.html #}
 {% extends 'base.html' %}
 {% load static gallery_tags %}
 
 {% block title %}Nasze psy - Hodowla z Wojciechowic{% endblock %}
+
+{% block extra_css %}
+    {# Te style naprawią wygląd galerii TYLKO na tej stronie #}
+    <style>
+        .card-img-container {
+            height: 250px; /* Stała wysokość dla kontenera na obraz */
+            background-color: #f0f0f0; /* Tło na wypadek braku zdjęcia */
+        }
+
+        /* Używamy tej klasy, aby stylować tylko galerie w miniaturkach */
+        .miniature-gallery.gallery {
+            height: 100%;
+            width: 100%;
+            border-radius: 0;
+        }
+
+        .miniature-gallery .gallery-main {
+            height: 100%; /* Wypełnij wysokość kontenera */
+            aspect-ratio: unset; /* KLUCZOWE: To wyłącza domyślne proporcje i zapobiega "zoomowi" */
+        }
+
+        /* Dostosowanie przycisków do miniatury */
+        .miniature-gallery .gallery-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 1.3rem;
+        }
+
+        /* Ukrycie kropek, które nie pasują do miniatury */
+        .miniature-gallery .gallery-dots {
+            display: none;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
@@ -11,14 +44,15 @@
             <h1 class="text-center mb-5">Nasze psy</h1>
         </div>
     </div>
-
-    {# --- SEKCJA PSÓW HODOWLANYCH --- #}
+    
+    {# === SEKCJA "PSY HODOWLANE" === #}
     {% if breeding_dogs %}
     <div class="row mb-5">
         <div class="col-12">
             <h2 class="mb-4">Psy hodowlane</h2>
         </div>
     </div>
+    
     <div class="row">
         {% for dog in breeding_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
@@ -28,7 +62,7 @@
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
                             {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'images/placeholder.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="Brak zdjęcia">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="Brak zdjęcia">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
@@ -58,15 +92,15 @@
     </div>
     {% endif %}
 
-    {# --- SEKCJA INNYCH PSÓW (Z POPRAWIONĄ PĘTLĄ) --- #}
+    {# === SEKCJA "INNE PSY" (PRZYWRÓCONA I NAPRAWIONA) === #}
     {% if other_dogs %}
     <div class="row mb-5 mt-5">
         <div class="col-12">
             <h2 class="mb-4">Inne psy</h2>
         </div>
     </div>
+    
     <div class="row">
-        {# NAPRAWIONO: Pętla iteruje teraz po 'other_dogs' #}
         {% for dog in other_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card card-hover h-100">
@@ -75,7 +109,7 @@
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
                             {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'images/placeholder.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="Brak zdjęcia">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="Brak zdjęcia">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
@@ -108,21 +142,6 @@
 </div>
 {% endblock %}
 
-
-{% block extra_css %}
-{# Style do naprawy wyglądu galerii w miniaturce #}
-<style>
-    .card-img-container { height: 250px; background-color: #eee; }
-    .miniature-gallery.gallery { height: 100%; width: 100%; border-radius: 0; }
-    .miniature-gallery .gallery-main { height: 100%; aspect-ratio: unset; }
-    .miniature-gallery .gallery-btn { width: 36px; height: 36px; font-size: 1.2rem; }
-    .miniature-gallery .prev { left: 10px; }
-    .miniature-gallery .next { right: 10px; }
-    .miniature-gallery .gallery-dots { display: none; }
-</style>
-{% endblock %}
-
-
 {% block extra_js %}
-<script src="{% static 'gallery/js/gallery.js' %}"></script>
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}

@@ -36,6 +36,15 @@ body::after {
     pointer-events: none;
 }
 
+/* Ukrycie filtrowania */
 #changelist-filter {
+    display: none !important;
+}
+
+#changelist-display {
+    display: none !important;
+}
+
+#changelist-search {
     display: none !important;
 }
