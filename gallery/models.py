@@ -1,37 +1,33 @@
-# gallery/models.py
+# gallery/models.py - UPROSZCZONY
 from django.db import models
-from django.urls import reverse
 
 class GallerySet(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Nazwa galerii")
-    description = models.TextField(blank=True, verbose_name="Opis")
+    """Zestaw zdjęć - bez zbędnego syfu"""
+    name = models.CharField(max_length=100, help_text="Tylko nazwa do identyfikacji")
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True, verbose_name="Aktywna")
-    
-    class Meta:
-        verbose_name = "Zbiór zdjęć"
-        verbose_name_plural = "Zbiory zdjęć"
-        ordering = ['-created_at']
-    
-    def __str__(self):
-        return self.name
     
     def get_photos(self):
-        return self.photos.filter(is_active=True).order_by('order', 'id')
-
-class Photo(models.Model):
-    gallery_set = models.ForeignKey(GallerySet, on_delete=models.CASCADE, related_name='photos')
-    image = models.ImageField(upload_to='gallery/%Y/%m/', verbose_name="Zdjęcie")
-    title = models.CharField(max_length=200, blank=True, verbose_name="Tytuł")
-    description = models.TextField(blank=True, verbose_name="Opis")
-    order = models.PositiveIntegerField(default=0, verbose_name="Kolejność")
-    is_active = models.BooleanField(default=True, verbose_name="Aktywne")
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        verbose_name = "Zdjęcie"
-        verbose_name_plural = "Zdjęcia"
-        ordering = ['order', 'id']
+        """Zwraca wszystkie zdjęcia z tego zestawu"""
+        return self.photos.filter(is_active=True).order_by('order')
     
     def __str__(self):
-        return self.title or f"Zdjęcie {self.id}"
+        return f"{self.name} ({self.get_photos().count()} zdjęć)"
+    
+    class Meta:
+        verbose_name = "Galeria"
+        verbose_name_plural = "Galerie"
+
+class Photo(models.Model):
+    """Pojedyncze zdjęcie - BEZ tytułów i opisów"""
+    gallery = models.ForeignKey(GallerySet, on_delete=models.CASCADE, related_name='photos')
+    image = models.ImageField(upload_to='gallery/', help_text="Po prostu wrzuć zdjęcie")
+    order = models.PositiveIntegerField(default=0, help_text="Kolejność (0, 1, 2...)")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Zdjęcie #{self.order} z {self.gallery.name}"
+    
+    class Meta:
+        ordering = ['order', 'created_at']

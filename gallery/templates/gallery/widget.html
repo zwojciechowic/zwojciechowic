@@ -1,23 +1,33 @@
-{# gallery/templates/gallery/widget.html - ULTRA PROSTY #}
-<div class="simple-gallery {{ css_class }}">
+{# templates/gallery/widget.html #}
+<div class="gallery-widget {{ css_class }}">
     {% if photos %}
-        {% for photo in photos %}
-            <div class="gallery-slide {% if forloop.first %}active{% endif %}">
-                <img src="{{ photo.image.url }}" alt="Zdjęcie {{ forloop.counter }}">
+        <div class="gallery-container">
+            <div class="gallery-main">
+                <div class="gallery-image-container">
+                    {% for photo in photos %}
+                    <div class="gallery-slide {% if forloop.first %}active{% endif %}">
+                        <img src="{{ photo.image.url }}" alt="Zdjęcie {{ forloop.counter }}" class="gallery-image">
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if photos|length > 1 %}
+                    <button class="gallery-btn gallery-prev">‹</button>
+                    <button class="gallery-btn gallery-next">›</button>
+                {% endif %}
             </div>
-        {% endfor %}
-        
-        {% if photos|length > 1 %}
-            <button class="gallery-prev">‹</button>
-            <button class="gallery-next">›</button>
             
-            <div class="gallery-dots">
+            {% if photos|length > 1 %}
+            <div class="gallery-indicators">
                 {% for photo in photos %}
-                    <span class="dot {% if forloop.first %}active{% endif %}"></span>
+                    <button class="gallery-indicator {% if forloop.first %}active{% endif %}"></button>
                 {% endfor %}
             </div>
-        {% endif %}
+            {% endif %}
+        </div>
     {% else %}
-        <p>Brak zdjęć</p>
+        <div class="gallery-empty">
+            <p>Brak zdjęć w galerii</p>
+        </div>
     {% endif %}
 </div>

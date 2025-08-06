@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .models import GallerySet
 
 def gallery_widget(request, gallery_id):
-    """Widok do wyświetlania galerii jako widget"""
+    """Widok do wyświetlania galerii jako widget (jeśli potrzebny)"""
     gallery = get_object_or_404(GallerySet, id=gallery_id, is_active=True)
     photos = gallery.get_photos()
     
@@ -19,8 +19,7 @@ def gallery_widget(request, gallery_id):
                 {
                     'id': photo.id,
                     'url': photo.image.url,
-                    'title': photo.title,
-                    'description': photo.description
+                    'order': photo.order
                 } for photo in photos
             ]
         })
