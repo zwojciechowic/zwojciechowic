@@ -311,6 +311,7 @@
     transition: var(--transition) !important;
 }
 
+
 .actions select:focus {
     border-color: var(--primary-color) !important;
     outline: none !important;

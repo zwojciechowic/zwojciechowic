@@ -75,3 +75,45 @@
 .dot.active, .dot:hover {
     background-color: #fff;
 }
+
+
+/* ============================================================= */
+/*       Style nadpisujące galerię na potrzeby karty (dogs.html)      */
+/* ============================================================= */
+
+/* 1. Ustawiamy stałą wysokość dla kontenera z obrazem na karcie,
+      aby wszystkie karty w rzędzie były równe. */
+      .card .card-img-container {
+        height: 250px;
+    }
+    
+    /* 2. Zmuszamy galerię, aby w całości wypełniła ten kontener. */
+    .card .gallery {
+        height: 100%;
+        width: 100%;
+        border-radius: 0; /* Opcjonalnie: usuń zaokrąglenie, jeśli karta ma ostre rogi u góry */
+    }
+    
+    /* 3. Nadpisujemy 'aspect-ratio', aby galeria dopasowała się do stałej wysokości. */
+    .card .gallery .gallery-main {
+        aspect-ratio: unset;
+        height: 100%;
+    }
+    
+    /* 4. Zmniejszamy przyciski nawigacyjne, aby pasowały do miniaturki. */
+    .card .gallery .gallery-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        background-color: rgba(0, 0, 0, 0.45); /* Przyciemniamy tło dla lepszego kontrastu */
+    }
+    
+    /* 5. Przesuwamy przyciski bliżej krawędzi. */
+    .card .gallery .prev { left: 10px; }
+    .card .gallery .next { right: 10px; }
+    
+    /* 6. CAŁKOWICIE ukrywamy kropki nawigacyjne w miniaturce.
+          Zajmują za dużo miejsca i są niepraktyczne na małej przestrzeni. */
+    .card .gallery .gallery-dots {
+        display: none;
+    }
