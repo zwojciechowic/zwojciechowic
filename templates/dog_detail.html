@@ -25,11 +25,6 @@
                 <div class="alert alert-info">Brak zdjęć dla tego psa</div>
             {% endif %}
             
-            {# Opisy #}
-            <div class="content">
-                {{ dog.description|linebreaks }}
-            </div>
-            
             <div class="mt-4">
                 <a href="{% url 'dogs' %}" class="btn btn-outline-primary">
                     <i class="fas fa-arrow-left"></i> Powrót do listy psów
@@ -40,16 +35,14 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Informacje o psie</h5>
-                    <p class="card-text">
-                        ... (reszta informacji o psie) ...
-                    </p>
+                    {# Opisy #}
+                    <div class="content">
+                        {{ dog.description|linebreaks }}
+                    </div>
             
                     <!-- START BLOKU DIAGNOSTYCZNEGO -->
                     <div class="alert alert-warning">
-                        <p class="mb-0"><strong>Diagnostyka certyfikatów:</strong></p>
-                        <p class="mb-0">Wartość `dog.certificates_gallery`: <strong>{{ dog.certificates_gallery|default:"Brak (None)" }}</strong></p>
-                        <p class="mb-0">ID galerii: <strong>{{ dog.certificates_gallery.id|default:"Brak ID" }}</strong></p>
+                        {# UZYJE JAK CHCE ZASYGNALIZOWAC NP SZCZENIAK NA AUKCJI/NIEDOSTEPNY #}
                     </div>
                     <!-- KONIEC BLOKU DIAGNOSTYCZNEGO -->
             
