@@ -24,15 +24,12 @@ input[type="url"], input[type="number"], input[type="date"],
 textarea, select {
     border: 2px solid var(--bg-border) !important;
     border-radius: var(--radius-small) !important;
-    padding: 8px var(--spacing-md) !important;
+    padding: 12px var(--spacing-md) !important;
     font-size: 14px !important;
-    line-height: 30px !important;
     transition: var(--transition-medium) !important;
     background: var(--bg-light) !important;
     color: var(--text-primary) !important;
-    box-sizing: border-box !important;
 }
-
 
 input[type="text"]:focus, input[type="password"]:focus, 
 input[type="email"]:focus, input[type="url"]:focus,
