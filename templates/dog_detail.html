@@ -39,14 +39,7 @@
                     <div class="content">
                         {{ dog.description|linebreaks }}
                     </div>
-            
-                    <!-- START BLOKU DIAGNOSTYCZNEGO -->
-                    <div class="alert alert-warning">
-                        {# UZYJE JAK CHCE ZASYGNALIZOWAC NP SZCZENIAK NA AUKCJI/NIEDOSTEPNY #}
-                    </div>
-                    <!-- KONIEC BLOKU DIAGNOSTYCZNEGO -->
-            
-                    {# Certyfikaty wyświetlane jako galeria #}
+                    
                     {% if dog.certificates_gallery %}
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
