@@ -42,25 +42,24 @@
                 <div class="card-body">
                     <h5 class="card-title">Informacje o psie</h5>
                     <p class="card-text">
-                        <strong>Rasa:</strong> {{ dog.breed }}<br>
-                        <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
-                        <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}<br>
-                        <strong>Wiek:</strong> {{ dog.birth_date|timesince }}
+                        ... (reszta informacji o psie) ...
                     </p>
-                    
+            
+                    <!-- START BLOKU DIAGNOSTYCZNEGO -->
+                    <div class="alert alert-warning">
+                        <p class="mb-0"><strong>Diagnostyka certyfikatów:</strong></p>
+                        <p class="mb-0">Wartość `dog.certificates_gallery`: <strong>{{ dog.certificates_gallery|default:"Brak (None)" }}</strong></p>
+                        <p class="mb-0">ID galerii: <strong>{{ dog.certificates_gallery.id|default:"Brak ID" }}</strong></p>
+                    </div>
+                    <!-- KONIEC BLOKU DIAGNOSTYCZNEGO -->
+            
+                    {# Certyfikaty wyświetlane jako galeria #}
                     {% if dog.certificates_gallery %}
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
                             Pies posiada {{ dog.certificates_gallery.photos.count }} certyfikat{{ dog.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
-                    
                         {% show_gallery dog.certificates_gallery.id "mt-3" %}
-                    {% endif %}
-                    
-                    {% if dog.is_breeding %}
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Ten pies bierze udział w hodowli
-                    </div>
                     {% endif %}
                 </div>
             </div>
