@@ -16,7 +16,7 @@
             <p class="text-muted">{{ puppy.get_gender_display }} | {{ puppy.birth_date|date:"d.m.Y" }}</p>
             
             {% if puppy.photo_gallery %}
-                {% gallery_widget puppy.photo_gallery.id "puppy-gallery mb-4" %}
+                {% show_gallery puppy.photo_gallery.id %}
             {% elif puppy.main_photo %}
                 <img src="{{ puppy.main_photo.image.url }}" alt="{{ puppy.name }}" class="img-fluid mb-4 rounded">
             {% else %}
