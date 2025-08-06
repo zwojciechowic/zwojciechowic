@@ -1,6 +1,7 @@
+/* Gallery Widget - Fixed CSS */
 .gallery-widget {
     position: relative;
-    max-width: 100%;
+    max-width: 600px; /* Ograniczenie szerokości */
     margin: 0 auto;
 }
 
@@ -21,26 +22,41 @@
 .gallery-image-container {
     position: relative;
     width: 100%;
+    height: 400px; /* Stała wysokość - zmniejszona */
     overflow: hidden;
 }
 
+/* KLUCZOWE ZMIANY - slider logic */
 .gallery-slide {
-    display: none;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
 }
 
 .gallery-slide.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
 .gallery-image {
     width: 100%;
-    height: auto;
-    max-height: 500px;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
 
+/* UKRYJ NAPISY jeśli nie chcesz */
+.gallery-caption {
+    display: none;
+}
+
+/* Jeśli chcesz napisy, zamień display: none na poniższe: */
+/*
 .gallery-caption {
     position: absolute;
     bottom: 0;
@@ -48,29 +64,30 @@
     right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,0.7));
     color: white;
-    padding: 20px;
+    padding: 15px;
 }
 
 .gallery-caption h4 {
     margin: 0 0 5px 0;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 600;
 }
 
 .gallery-caption p {
     margin: 0;
-    font-size: 0.9em;
+    font-size: 0.85em;
     opacity: 0.9;
 }
+*/
 
 .gallery-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -78,12 +95,19 @@
     cursor: pointer;
     z-index: 10;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    color: #333;
 }
 
 .gallery-btn:hover {
     background: white;
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.gallery-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 .gallery-prev {
@@ -103,8 +127,8 @@
 }
 
 .gallery-indicator {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     border: none;
     background: rgba(0,0,0,0.3);
@@ -122,13 +146,34 @@
     padding: 40px;
     text-align: center;
     color: #666;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Ukryj przyciski jeśli jest tylko jedno zdjęcie */
+.gallery-widget[data-single-image="true"] .gallery-btn,
+.gallery-widget[data-single-image="true"] .gallery-indicators {
+    display: none;
 }
 
 /* Responsywność */
 @media (max-width: 768px) {
+    .gallery-widget {
+        max-width: 100%;
+    }
+    
+    .gallery-image-container {
+        height: 300px;
+    }
+    
     .gallery-btn {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .gallery-btn svg {
+        width: 18px;
+        height: 18px;
     }
     
     .gallery-prev {
@@ -138,16 +183,20 @@
     .gallery-next {
         right: 10px;
     }
-    
-    .gallery-caption {
-        padding: 15px;
+}
+
+@media (max-width: 480px) {
+    .gallery-image-container {
+        height: 250px;
     }
     
-    .gallery-caption h4 {
-        font-size: 1em;
+    .gallery-btn {
+        width: 35px;
+        height: 35px;
     }
     
-    .gallery-caption p {
-        font-size: 0.8em;
+    .gallery-btn svg {
+        width: 16px;
+        height: 16px;
     }
 }
