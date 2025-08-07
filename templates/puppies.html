@@ -4,6 +4,104 @@
 
 {% block title %}Szczeniaki - Hodowla z Wojciechowic{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+    
+    {# Style dla miniaturek galerii w kartach #}
+    <style>
+        .card-img-container {
+            height: 250px !important;
+            overflow: hidden !important;
+            position: relative; /* WAŻNE: kontener musi mieć position: relative */
+        }
+
+        .card-img-container img {
+            height: 100% !important;
+            width: 100% !important;
+            object-fit: cover !important;
+        }
+
+        /* Style dla galerii w kartach */
+        .miniature-gallery.gallery {
+            height: 100%;
+            width: 100%;
+            border-radius: 0;
+            position: relative; /* WAŻNE */
+        }
+
+        .miniature-gallery .gallery-main {
+            height: 100%;
+            aspect-ratio: unset;
+            border-radius: 0;
+            position: relative; /* WAŻNE */
+            overflow: hidden;
+        }
+
+        /* KLUCZOWE STYLE DLA PRZYCISKÓW - mają być NA zdjęciu */
+        .miniature-gallery .gallery-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.4rem !important;
+            background-color: rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            z-index: 100 !important; /* BARDZO WYSOKI Z-INDEX */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .miniature-gallery .gallery-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            transform: translateY(-50%) scale(1.1) !important;
+        }
+
+        /* Pozycje przycisków */
+        .miniature-gallery .gallery-btn.prev {
+            left: 10px !important;
+        }
+
+        .miniature-gallery .gallery-btn.next {
+            right: 10px !important;
+        }
+
+        /* Ukrycie kropek w miniaturach */
+        .miniature-gallery .gallery-dots {
+            display: none !important;
+        }
+
+        /* Upewnij się, że slajdy są pod przyciskami */
+        .miniature-gallery .slide {
+            position: relative;
+            z-index: 1;
+        }
+
+        .miniature-gallery .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ROZWIĄZANIE PROBLEMU Z KLIKANIEM - wyłączenie linku w obszarze galerii */
+        .card-img-container a {
+            pointer-events: none !important;
+        }
+
+        /* Przywrócenie klikania dla przycisków galerii */
+        .miniature-gallery .gallery-btn {
+            pointer-events: all !important;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="container my-5">
     <h1>Dostępne szczenięta</h1>
@@ -12,45 +110,52 @@
     <div class="row">
         {% for puppy in puppies %}
         <div class="col-md-6 col-lg-4 mb-4">
-            <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link">
-                <div class="card card-hover">
+            <div class="card card-hover h-100">
+                <!-- Link tylko na obrazku bez galerii, ale wyłączony w obszarze galerii -->
+                <a href="{% url 'puppy_detail' puppy.pk %}" class="card-img-link">
                     <div class="card-img-container position-relative">
-                        {% if puppy.photo_gallery %}
-                            {% show_gallery puppy.photo_gallery.id %}
+                        {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
+                            {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
+                        {% else %}
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
                         {% endif %}
                         
-                        {% if puppy.certificate %}
-                        <div class="position-absolute top-0 end-0 m-2">
+                        {% if puppy.certificates_gallery %}
+                        <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
                             <span class="badge bg-success">
                                 <i class="fas fa-certificate"></i> Certyfikowany
                             </span>
                         </div>
                         {% endif %}
                     </div>
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">{{ puppy.name }}</h5>
-                        <p class="card-text">
+                </a>
+                
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ puppy.name }}</h5>
+                    <div class="card-details mb-3">
+                        <small class="text-muted">
                             <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                             <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                             <strong>Matka:</strong> {{ puppy.mother.name }}<br>
                             <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
                             <strong>Cena:</strong> {{ puppy.price }} PLN
-                        </p>
-                        
-                        {% if puppy.certificate %}
-                        <div class="mb-2">
-                            <small class="text-success">
-                                <i class="fas fa-certificate"></i> Posiada certyfikat
-                            </small>
-                        </div>
-                        {% endif %}
-                        
-                        <p class="card-text">{{ puppy.description|truncatewords:15 }}</p>
-                        <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary">Zobacz szczegóły</a>
+                        </small>
+                    </div>
+                    
+                    {% if puppy.certificates_gallery %}
+                    <div class="mb-2">
+                        <small class="text-success">
+                            <i class="fas fa-certificate"></i> Posiada certyfikat
+                        </small>
+                    </div>
+                    {% endif %}
+                    
+                    <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
+                    <div class="mt-auto">
+                        <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -61,4 +166,21 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
+    
+    <!-- Dodatkowy skrypt dla rozwiązania problemu z klikaniem -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Zapobiegnij propagacji kliknięcia na przyciskach galerii
+            document.querySelectorAll('.gallery-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
 {% endblock %}
