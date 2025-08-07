@@ -48,3 +48,7 @@ body::after {
 #changelist-search {
     display: none !important;
 }
+
+#toolbar {
+    background: transparent !important;
+}
