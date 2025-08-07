@@ -24,7 +24,7 @@ input[type="url"], input[type="number"], input[type="date"],
 textarea, select {
     border: 2px solid var(--bg-border) !important;
     border-radius: var(--radius-small) !important;
-    padding: 12px var(--spacing-md) !important;
+    padding: 3px 3px !important;
     font-size: 14px !important;
     transition: var(--transition-medium) !important;
     background: var(--bg-light) !important;

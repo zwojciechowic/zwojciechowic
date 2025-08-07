@@ -19,8 +19,8 @@
 
 /* Success messages */
 .success {
-    background: var(--secondary-gradient) !important;
-    color: var(--text-white) !important;
+    background: var(--success-gradient) !important;
+    color: var(--success-color) !important;
     border: none !important;
     border-radius: var(--radius-small) !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
