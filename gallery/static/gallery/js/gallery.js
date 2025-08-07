@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Znajdź wszystkie galerie na stronie i zainicjuj każdą z nich
-    const galleries = document.querySelectorAll('[gallery]');
+    const galleries = document.querySelectorAll('.gallery');
+    console.log('Znalezione galerie:', galleries.length); // DODAJ TO
+    console.log('Galerie:', galleries); // I TO
     galleries.forEach(initGallery);
 });
