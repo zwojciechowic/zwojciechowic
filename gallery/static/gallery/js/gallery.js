@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Funkcja do inicjalizacji pojedynczej galerii
     function initGallery(galleryElement) {
+        console.log("Zainicjowano galerie");
         const slides = galleryElement.querySelectorAll('.slide');
         const dots = galleryElement.querySelectorAll('.dot');
         const prevBtn = galleryElement.querySelector('.prev');
@@ -53,11 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(0);
     }
 
-    const galleries = document.querySelectorAll('.gallery');
-    console.log('Znalezione galerie:', galleries.length);
-    
-    for (let i = 0; i < galleries.length; i++) {
-        console.log('WYWOŁUJĘ dla galerii nr', i);
-        initGallery(galleries[i]);
-    }
+    // Znajdź wszystkie galerie na stronie i zainicjuj każdą z nich
+    const galleries = document.querySelectorAll('[gallery]');
+    galleries.forEach(initGallery);
 });
