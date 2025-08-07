@@ -1,16 +1,21 @@
+/* Styl dla naszego komponentu galerii */
 .gallery {
     position: relative;
     max-width: 100%;
     margin: 0 auto;
+    background: #f0f0f0;
+    /* Usunięto "overflow: hidden", który chował strzałki w dog_detail */
+    border-radius: 8px;
 }
 
 .gallery-main {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
+    /* Dodano "overflow: hidden" tutaj, aby ucinać obrazki, a nie strzałki */
     overflow: hidden;
+    /* Przeniesiono zaokrąglenie tutaj, aby dotyczyło samego obrazu */
     border-radius: 8px;
-    background: #f0f0f0;
 }
 
 .slide {
@@ -44,12 +49,8 @@
     transition: background-color 0.2s ease;
 }
 
-.prev {
-    left: 15px;
-}
-.next {
-    right: 15px;
-}
+.prev { left: 15px; }
+.next { right: 15px; }
 
 .gallery-btn:hover {
     background: rgba(255, 255, 255, 1);
@@ -78,13 +79,14 @@
     background-color: #fff;
 }
 
+
 /* ============================================================= */
-/*       Style dla karty psa (dogs.html) - NAPRAWIONE            */
+/*       Style nadpisujące galerię na potrzeby karty (dogs.html)      */
 /* ============================================================= */
 
 .card .card-img-container {
     height: 250px;
-    /* TO JEST KLUCZOWA POPRAWKA: Ucinamy wszystko, co wystaje z tego kontenera */
+    /* KLUCZOWA POPRAWKA: Ten kontener musi ucinać zawartość na liście psów */
     overflow: hidden;
 }
 
@@ -107,13 +109,8 @@
     background-color: rgba(0, 0, 0, 0.45);
 }
 
-.card .gallery .prev {
-    left: 10px;
-}
-
-.card .gallery .next {
-    right: 10px;
-}
+.card .gallery .prev { left: 10px; }
+.card .gallery .next { right: 10px; }
 
 .card .gallery .gallery-dots {
     display: none;
