@@ -88,6 +88,16 @@
             z-index: 1;
         }
 
+        /* ROZWIĄZANIE PROBLEMU Z KLIKANIEM - wyłączenie linku w obszarze galerii */
+        .card-img-container a {
+            pointer-events: none !important;
+        }
+
+        /* Przywrócenie klikania dla przycisków galerii */
+        .miniature-gallery .gallery-btn {
+            pointer-events: all !important;
+        }
+
         /* Specjalne style dla kart psów na stronie głównej */
         .featured-dog-card .card-img-container {
             height: 300px !important;
@@ -297,4 +307,17 @@
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
+    
+    <!-- Dodatkowy skrypt dla rozwiązania problemu z klikaniem -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Zapobiegnij propagacji kliknięcia na przyciskach galerii
+            document.querySelectorAll('.gallery-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
 {% endblock %}
