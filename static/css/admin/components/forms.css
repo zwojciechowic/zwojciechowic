@@ -41,3 +41,7 @@ textarea:focus, select:focus {
     outline: none !important;
     color: var(--text-primary) !important;
 }
+
+.submit-row a.deletelink {
+    height: 2rem;   
+}
