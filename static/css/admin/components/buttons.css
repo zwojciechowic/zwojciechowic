@@ -75,14 +75,14 @@
     border: 2px solid var(--bg-border) !important;
     border-radius: var(--radius-small) !important;
     padding: 8px 12px !important;
-    /* background: var(--bg-white) !important; */
+    background: var(--bg-white) !important;
     color: var(--text-primary) !important;
     transition: var(--transition-medium) !important;
 }
 
 .actions select:focus, .actions input:focus {
     border-color: var(--link-primary) !important;
-    /* box-shadow: 0 0 0 3px var(--primary-light) !important; */
+    box-shadow: 0 0 0 3px var(--primary-light) !important;
     outline: none !important;
 }
 
@@ -139,10 +139,10 @@
     color: var(--link-primary) !important;
 }
 
-.sorted.ascending a, .sorted.descending a {
+/* .sorted.ascending a, .sorted.descending a {
     color: var(--link-primary) !important;
     background: var(--primary-light) !important;
-}
+} */
 
 /* Przyciski paginacji */
 .paginator a {
