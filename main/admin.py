@@ -116,22 +116,25 @@ class PuppyAdmin(admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'created_at', 'is_published', 'preview_image']
+    list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count']
     list_filter = ['is_published', 'created_at', 'author']
     search_fields = ['title', 'content', 'excerpt']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
-    readonly_fields = ['created_at', 'updated_at', 'preview_image']
+    readonly_fields = ['created_at', 'updated_at']
     form = BlogPostAdminForm
-    
     
     fieldsets = (
         ('Podstawowe informacje', {
             'fields': ('title', 'slug', 'author', 'is_published')
         }),
         ('Treść', {
-            'fields': ('excerpt', 'content', 'featured_image', 'preview_image')
+            'fields': ('excerpt', 'content')
+        }),
+        ('Media', {
+            'fields': ('photo_gallery',),
+            'description': 'Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"'
         }),
         ('Daty', {
             'fields': ('created_at', 'updated_at'),
@@ -139,20 +142,24 @@ class BlogPostAdmin(admin.ModelAdmin):
         }),
     )
     
-    def preview_image(self, obj):
-        if obj.featured_image:
-            return format_html(
-                '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />',
-                obj.featured_image.url
-            )
-        return "Brak zdjęcia"
-    preview_image.short_description = "Podgląd"
+    def main_photo_preview(self, obj):
+        main_photo_obj = obj.main_photo
+        if main_photo_obj and main_photo_obj.image:
+            return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
+                             main_photo_obj.image.url)
+        return "Brak"
+    main_photo_preview.short_description = "Główne zdjęcie"
+    
+    def photos_count(self, obj):
+        if obj.photo_gallery:
+            return obj.photo_gallery.photos.count()
+        return 0
+    photos_count.short_description = "Zdjęcia"
     
     def save_model(self, request, obj, form, change):
         if not change:  # Jeśli to nowy wpis
             obj.author = request.user
-        super().save_model(request, obj, form, change)
-        
+        super().save_model(request, obj, form, change)      
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
