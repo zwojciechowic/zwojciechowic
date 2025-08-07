@@ -32,21 +32,33 @@
             display: none;
         }
 
-        .miniature-gallery .slide img {
-            display: flex;
-            align-items: center;      /* Wycentruj w pionie */
-            justify-content: center;  /* Wycentruj w poziomie */
-            height: 100%;
-            width: 100%;
-        }
-
-        .miniature-gallery .slide img {
-            /* Ograniczamy rozmiar, ale nie narzucamy go, zachowując proporcje */
-            max-width: 100%;
-            max-height: 100%;
-            /* Te linie zapewniają, że przeglądarka sama obliczy prawidłowy rozmiar */
-            width: auto;
-            height: auto;
+        /*
+        Wklej ten cały fragment do bloku <style> w pliku dogs.html.
+        Usuń stamtąd poprzednie reguły dla .miniature-gallery .slide i .miniature-gallery .slide img.
+      */
+      
+      /* Krok 1: Ustawiamy kontener slajdu jako "płótno" do pozycjonowania */
+      .miniature-gallery .slide {
+          position: relative; /* Niezbędne dla pozycjonowania obrazka wewnątrz */
+          width: 100%;
+          height: 100%;
+      }
+      
+      /* Krok 2: Wyjmujemy obrazek z normalnego układu i centrujemy go siłowo */
+      .miniature-gallery .slide img {
+          /* To jest kluczowa część - pozycjonowanie absolutne */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%); /* Perfekcyjne centrowanie */
+      
+          /* Ograniczamy rozmiar, aby nie wyszedł poza kontener */
+          max-width: 100%;
+          max-height: 100%;
+      
+          /* I pozwalamy przeglądarce zachować jego proporcje */
+          width: auto;
+          height: auto;
         }
     </style>
 {% endblock %}
