@@ -24,7 +24,7 @@
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain !important; /* Zdjęcie wypełni kontener bez deformacji */
+    object-fit: cover !important; /* Zdjęcie wypełni kontener bez deformacji */
 }
 
 .gallery-btn {

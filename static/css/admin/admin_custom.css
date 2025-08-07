@@ -55,6 +55,6 @@ body::after {
     border-bottom: transparent !important;
 }
 
-.historylink {
+.object-tools a[href*="/history/"] {
     display: none !important;
 }
