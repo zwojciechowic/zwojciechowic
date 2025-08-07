@@ -34,6 +34,10 @@
         .miniature-gallery .gallery-dots {
             display: none;
         }
+
+        .miniature-gallery .slide img {
+            object-fit: contain !important; /* !important wymusi ten styl */
+        }
     </style>
 {% endblock %}
 
@@ -109,7 +113,7 @@
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
                             {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="Brak zdjęcia">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
