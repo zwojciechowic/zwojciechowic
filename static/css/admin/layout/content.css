@@ -293,7 +293,7 @@
 }
 
 .actions {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--secondary-color) !important;
     border: 1px solid rgba(139, 69, 19, 0.2) !important;
     border-radius: var(--radius-medium) !important;
     padding: var(--spacing-lg) !important;
@@ -324,7 +324,7 @@
 }
 
 .actions .button {
-    background: var(--secondary-color) !important;
+    background: var(--primary-color) !important;
     border: none !important;
     color: white !important;
     padding: var(--spacing-sm) var(--spacing-lg) !important;
