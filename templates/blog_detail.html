@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load gallery_tags static %}
 
 {% block title %}{{ post.title }} - Hodowla z Wojciechowic{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="hero-section">
@@ -9,18 +14,26 @@
             <h1 class="display-4">{{ post.title }}</h1>
             <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | Autor: {{ post.author.get_full_name|default:post.author.username }}</p>
             
-            {% if post.featured_image %}
-            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid mb-4 rounded">
+            {# Galeria zdjęć używając naszego widgetu #}
+            {% if post.photo_gallery %}
+                {% show_gallery post.photo_gallery.id %}
+            {% elif post.main_photo %}
+                <img src="{{ post.main_photo.image.url }}" alt="{{ post.title }}" class="img-fluid mb-4 rounded">
+            {% else %}
+                <div class="alert alert-info">Brak zdjęć dla tego wpisu</div>
             {% endif %}
             
-            <div class="content">
+            <div class="content mt-4">
                 {{ post.content|linebreaks }}
             </div>
             
             <div class="mt-4">
-                <a href="{% url 'home' %}" class="btn btn-outline-primary">← Powrót do strony głównej</a>
+                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Powrót do strony głównej
+                </a>
             </div>
         </div>
+        
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -30,9 +43,27 @@
                         <strong>Autor:</strong> {{ post.author.get_full_name|default:post.author.username }}<br>
                         <strong>Ostatnia aktualizacja:</strong> {{ post.updated_at|date:"d.m.Y" }}
                     </p>
+                    
+                    {% if post.excerpt %}
+                        <hr>
+                        <h6>Krótki opis:</h6>
+                        <p class="text-muted small">{{ post.excerpt }}</p>
+                    {% endif %}
+                    
+                    {% if post.photo_gallery %}
+                        <hr>
+                        <div class="alert alert-info small">
+                            <i class="fas fa-images"></i>
+                            Ten wpis zawiera {{ post.photo_gallery.photos.count }} zdjęć{{ post.photo_gallery.photos.count|pluralize:"e,a,ć" }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}
