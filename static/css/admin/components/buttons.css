@@ -75,7 +75,7 @@
     border: 2px solid var(--bg-border) !important;
     border-radius: var(--radius-small) !important;
     padding: 8px 12px !important;
-    background: var(--bg-white) !important;
+    /* background: var(--bg-white) !important; */
     color: var(--text-primary) !important;
     transition: var(--transition-medium) !important;
 }
