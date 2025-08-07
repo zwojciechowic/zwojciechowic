@@ -58,3 +58,7 @@ body::after {
 .object-tools a[href*="/history/"] {
     display: none !important;
 }
+
+#changelist .actions .button {
+    height: 2.5rem  !important;
+}
