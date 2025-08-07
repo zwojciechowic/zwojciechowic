@@ -144,37 +144,76 @@ table td a:hover {
     border-radius: var(--radius-small) !important;
 }
 
-/* Actions */
+/* Tło głównego kontenera */
+#changelist,
+.changelist-form,
+#content-main {
+    background: transparent !important;
+}
+
+/* Actions - pomarańczowy pasek */
 .actions {
-    background: var(--bg-light) !important;
+    background: var(--secondary-color) !important;
     padding: var(--spacing-md) !important;
     border-bottom: 1px solid var(--bg-border) !important;
+    border-radius: var(--radius-small) var(--radius-small) 0 0 !important;
 }
 
 .actions select,
 .actions input {
     margin-right: var(--spacing-md) !important;
-    padding: var(--spacing-sm) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
     border: 1px solid var(--bg-border) !important;
     border-radius: var(--radius-small) !important;
     color: var(--text-primary) !important;
+    background: var(--bg-white) !important;
 }
 
-.actions button {
+.actions button,
+.actions input[type="submit"] {
     background: var(--primary-color) !important;
     color: var(--text-white) !important;
     border: none !important;
-    padding: var(--spacing-sm) var(--spacing-md) !important;
+    padding: var(--spacing-sm) var(--spacing-lg) !important;
     border-radius: var(--radius-small) !important;
     cursor: pointer !important;
     transition: var(--transition-fast) !important;
+    min-width: 80px !important;
+    white-space: nowrap !important;
 }
 
-.actions button:hover {
+.actions button:hover,
+.actions input[type="submit"]:hover {
     background: var(--link-hover) !important;
 }
 
-/* Responsive dla tabel */
+/* Usunięcie dziwnych efektów sortowania */
+.results th.sorted,
+.results th.ascending,
+.results th.descending {
+    background: var(--primary-gradient) !important;
+}
+
+.results th.sorted a,
+.results th.ascending a,
+.results th.descending a {
+    color: var(--text-white) !important;
+}
+
+/* Usunięcie numerów sortowania */
+.results th.sorted .text:after,
+.results th.ascending .text:after,
+.results th.descending .text:after {
+    display: none !important;
+}
+
+.results th .sortoptions {
+    display: none !important;
+}
+
+.results th .sortpriority {
+    display: none !important;
+}
 @media (max-width: 768px) {
     .results,
     #result_list,
