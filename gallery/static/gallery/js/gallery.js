@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Funkcja do inicjalizacji pojedynczej galerii
     function initGallery(galleryElement) {
+        console.log('Inicjalizuję galerię:', galleryElement);
+        console.log('Znalezione slajdy:', galleryElement.querySelectorAll('.slide').length);
+        console.log('Znaleziony przycisk prev:', galleryElement.querySelector('.prev'));
+        console.log('Znaleziony przycisk next:', galleryElement.querySelector('.next'));
+        
         const slides = galleryElement.querySelectorAll('.slide');
         const dots = galleryElement.querySelectorAll('.dot');
         const prevBtn = galleryElement.querySelector('.prev');
@@ -54,8 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Znajdź wszystkie galerie na stronie i zainicjuj każdą z nich
-    const galleries = document.querySelectorAll('.gallery');
-    console.log('Znalezione galerie:', galleries.length); // DODAJ TO
-    console.log('Galerie:', galleries); // I TO
+    const galleries = document.querySelectorAll('[gallery]');
     galleries.forEach(initGallery);
 });
