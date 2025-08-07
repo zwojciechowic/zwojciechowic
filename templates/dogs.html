@@ -3,7 +3,7 @@
 
 {% block title %}Nasze psy - Hodowla z Wojciechowic{% endblock %}
 
-{% comment %} {% block extra_css %}
+{% block extra_css %}
     {# Te style naprawią wygląd galerii TYLKO na tej stronie #}
     <style>
         .card-img-container {
@@ -34,8 +34,19 @@
         .miniature-gallery .gallery-dots {
             display: none;
         }
+
+        .card-img-container {
+            height: 250px !important;
+            overflow: hidden !important;
+        }
+    
+        .card-img-container img {
+            height: 100% !important;
+            width: 100% !important;
+            object-fit: cover !important;
+        }
     </style>
-{% endblock %} {% endcomment %}
+{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
