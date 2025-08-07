@@ -53,8 +53,8 @@
 
 /* Dashboard modules */
 #content-main .module {
-    background: var(--bg-white) !important;
-    border: 1px solid var(--bg-border) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
 }
 
 .dashboard .module table {
