@@ -9,6 +9,7 @@
         .card-img-container {
             height: 250px; /* Stała wysokość dla kontenera na obraz */
             background-color: #f0f0f0; /* Tło na wypadek braku zdjęcia */
+            position: relative; /* WAŻNE: pozycjonowanie dla przycisków */
         }
 
         /* Używamy tej klasy, aby stylować tylko galerie w miniaturkach */
@@ -23,11 +24,18 @@
             aspect-ratio: unset; /* KLUCZOWE: To wyłącza domyślne proporcje i zapobiega "zoomowi" */
         }
 
-        /* Dostosowanie przycisków do miniatury */
+        /* NAPRAWKA PRZYCISKÓW - wyższy z-index i lepsze pozycjonowanie */
         .miniature-gallery .gallery-btn {
             width: 36px;
             height: 36px;
             font-size: 1.3rem;
+            z-index: 20 !important; /* Wyższy z-index */
+            background: rgba(0, 0, 0, 0.6) !important; /* Ciemniejsze tło */
+            color: white !important;
+        }
+
+        .miniature-gallery .gallery-btn:hover {
+            background: rgba(0, 0, 0, 0.8) !important;
         }
 
         /* Ukrycie kropek, które nie pasują do miniatury */
@@ -44,6 +52,11 @@
             height: 100% !important;
             width: 100% !important;
             object-fit: cover !important;
+        }
+
+        /* Badge certyfikacji ma niższy z-index niż przyciski galerii */
+        .card-img-container .badge {
+            z-index: 15;
         }
     </style>
 {% endblock %}
@@ -68,21 +81,19 @@
         {% for dog in breeding_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card card-hover h-100">
-                <a href="{% url 'dog_detail' dog.pk %}">
-                    <div class="card-img-container position-relative">
-                        {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
-                            {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
-                        {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
-                        {% endif %}
+                <div class="card-img-container position-relative">
+                    {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
+                        {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
+                    {% else %}
+                        <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                    {% endif %}
 
-                        {% if dog.certificates_gallery %}
-                        <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
-                            <span class="badge bg-success"><i class="fas fa-certificate"></i> Certyfikowany</span>
-                        </div>
-                        {% endif %}
+                    {% if dog.certificates_gallery %}
+                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
+                        <span class="badge bg-success"><i class="fas fa-certificate"></i> Certyfikowany</span>
                     </div>
-                </a>
+                    {% endif %}
+                </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ dog.name }}</h5>
                     <div class="card-details mb-3">
@@ -115,21 +126,19 @@
         {% for dog in other_dogs %}
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card card-hover h-100">
-                <a href="{% url 'dog_detail' dog.pk %}">
-                    <div class="card-img-container position-relative">
-                        {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
-                            {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
-                        {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
-                        {% endif %}
+                <div class="card-img-container position-relative">
+                    {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
+                        {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
+                    {% else %}
+                        <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                    {% endif %}
 
-                        {% if dog.certificates_gallery %}
-                        <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
-                            <span class="badge bg-success"><i class="fas fa-certificate"></i> Certyfikowany</span>
-                        </div>
-                        {% endif %}
+                    {% if dog.certificates_gallery %}
+                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
+                        <span class="badge bg-success"><i class="fas fa-certificate"></i> Certyfikowany</span>
                     </div>
-                </a>
+                    {% endif %}
+                </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ dog.name }}</h5>
                     <div class="card-details mb-3">
