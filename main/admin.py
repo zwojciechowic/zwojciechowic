@@ -117,6 +117,7 @@ class PuppyAdmin(admin.ModelAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
+
 @admin.register(BlogSection)
 class BlogSectionAdmin(admin.ModelAdmin):
     list_display = ('blog_post', 'title', 'order')
