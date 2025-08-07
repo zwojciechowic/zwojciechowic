@@ -153,7 +153,7 @@ table td a:hover {
 
 /* Actions - pomarańczowy pasek */
 .actions {
-    background: var(--secondary-color) !important;
+    background: var(--bg-white) !important;
     padding: var(--spacing-md) !important;
     border-bottom: 1px solid var(--bg-border) !important;
     border-radius: var(--radius-small) var(--radius-small) 0 0 !important;
