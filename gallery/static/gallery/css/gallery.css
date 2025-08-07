@@ -6,12 +6,12 @@
     border-radius: 8px;
 }
 
-/* To jest najważniejszy kontener. Trzyma obrazek. I to on go ucina. */
+/* To jest nasz pojemnik na obrazek. On ucina treść. */
 .gallery-main {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
-    overflow: hidden; /* <--- GILOTYNA JEST TUTAJ. Ucina obrazek, ale nie strzałki. */
+    overflow: hidden;
     border-radius: 8px;
     background: #f0f0f0;
 }
@@ -28,7 +28,7 @@
     object-fit: cover;
 }
 
-/* Przyciski są na zewnątrz .gallery-main, więc gilotyna ich nie dotyka. */
+/* Przyciski są POZA pojemnikiem .gallery-main, więc nie zostaną ucięte. */
 .gallery-btn {
     position: absolute;
     top: 50%;
@@ -86,10 +86,10 @@
 /* Ustawiamy stałą wysokość dla kontenera obrazu na karcie. */
 .card .card-img-container {
     height: 250px;
-    /* WAŻNE: BEZ "overflow: hidden" TUTAJ! */
 }
 
-/* Reszta stylów dla karty sprawia, że galeria wypełnia tę wysokość */
+/* Reszta stylów dla karty pozostaje taka sama, ponieważ teraz
+   problem jest rozwiązany u źródła. */
 .card .gallery {
     height: 100%;
     width: 100%;
@@ -100,7 +100,6 @@
     aspect-ratio: unset;
     height: 100%;
     border-radius: 0;
-    /* 'overflow: hidden' jest dziedziczone z głównej reguły, więc obrazek jest ucięty. */
 }
 
 .card .gallery .gallery-btn {
