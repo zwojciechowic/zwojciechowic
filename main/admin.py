@@ -75,11 +75,12 @@ class DogAdmin(admin.ModelAdmin):
         return 0
     certificates_count.short_description = "Certyfikaty"
 
+
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ['litter', 'name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
-    list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother', 'father']
-    search_fields = ['name', 'litter', 'mother__name', 'father__name']
+    list_display = ['litter', 'name', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
+    list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother_name', 'father_name']
+    search_fields = ['name', 'litter', 'mother_name', 'father_name']
     list_editable = ['is_available', 'price']
     
     # Grupowanie po miocie w liście
@@ -88,7 +89,11 @@ class PuppyAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Podstawowe informacje', {
-            'fields': ('litter', 'name', 'mother', 'father', 'birth_date', 'gender', 'description')
+            'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
+        }),
+        ('Rodzice', {
+            'fields': ('mother_name', 'father_name'),
+            'description': 'Wpisz imiona rodziców - nie będą tworzone nowe rekordy psów w bazie danych'
         }),
         ('Dostępność', {
             'fields': ('is_available', 'price')

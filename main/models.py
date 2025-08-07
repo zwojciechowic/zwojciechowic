@@ -101,22 +101,18 @@ class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
     
-    # Pola mother i father z dodanymi null=True i blank=True
-    mother = models.ForeignKey(
-        Dog, 
-        on_delete=models.CASCADE, 
-        related_name='puppies_as_mother', 
-        verbose_name='Matka',
-        null=True,      # Pozwala na NULL w bazie danych
-        blank=True      # Pozwala na puste pole w formularzach Django admin
+    # Pola mother i father jako zwykłe pola tekstowe zamiast ForeignKey
+    mother_name = models.CharField(
+        max_length=100, 
+        verbose_name='Matka', 
+        blank=True,
+        help_text='Imię matki - tylko do wyświetlania'
     )
-    father = models.ForeignKey(
-        Dog, 
-        on_delete=models.CASCADE, 
-        related_name='puppies_as_father', 
-        verbose_name='Ojciec',
-        null=True,      # Pozwala na NULL w bazie danych
-        blank=True      # Pozwala na puste pole w formularzach Django admin
+    father_name = models.CharField(
+        max_length=100, 
+        verbose_name='Ojciec', 
+        blank=True,
+        help_text='Imię ojca - tylko do wyświetlania'
     )
     
     birth_date = models.DateField(verbose_name='Data urodzenia')
@@ -148,12 +144,12 @@ class Puppy(models.Model):
     
     def __str__(self):
         parent_info = ""
-        if self.mother and self.father:
-            parent_info = f" ({self.mother.name} x {self.father.name})"
-        elif self.mother:
-            parent_info = f" (matka: {self.mother.name})"
-        elif self.father:
-            parent_info = f" (ojciec: {self.father.name})"
+        if self.mother_name and self.father_name:
+            parent_info = f" ({self.mother_name} x {self.father_name})"
+        elif self.mother_name:
+            parent_info = f" (matka: {self.mother_name})"
+        elif self.father_name:
+            parent_info = f" (ojciec: {self.father_name})"
         
         return f"{self.litter}-{self.name} - {self.get_gender_display()}{parent_info}"
     
