@@ -187,11 +187,55 @@
 {% if available_puppies %}
 <div class="container my-5">
     <h2 class="text-center mb-4">Dostępne szczenięta</h2>
+    
+    <!-- Dodaj style dla paska miotu -->
+    <style>
+        .litter-bar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px 8px 0 0;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        
+        .litter-bar h6 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .litter-info-small {
+            opacity: 0.9;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+        }
+        
+        .card-with-litter-bar {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .card-with-litter-bar .card-img-container {
+            border-radius: 0;
+        }
+    </style>
+    
     <div class="row">
         {% for puppy in available_puppies %}
         <div class="col-md-4 mb-4">
             <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
-                <div class="card card-hover h-100">
+                <div class="card card-hover h-100 card-with-litter-bar">
+                    <!-- Pasek z informacjami o miocie -->
+                    <div class="litter-bar">
+                        <h6>Miot {{ puppy.litter }}</h6>
+                        <div class="litter-info-small">
+                            <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
+                            <i class="fas fa-heart"></i> {{ puppy.mother.name }} | 
+                            <i class="fas fa-paw"></i> {{ puppy.father.name }}
+                        </div>
+                    </div>
+                    
                     <!-- Zdjęcie z galerią -->
                     <div class="card-img-container position-relative">
                         {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
