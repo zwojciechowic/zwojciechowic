@@ -32,13 +32,25 @@
             display: none;
         }
 
+        /*
+        Wklej ten fragment do <style> w pliku dogs.html.
+        To jest jedyny kod, jakiego potrzebujesz do naprawy galerii.
+      */
       
-        /* To jest ostateczna wersja - zamień nią poprzednie reguły */
-        .miniature-gallery .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* KLUCZOWA ZMIANA: Wypełnij całą przestrzeń, ucinając nadmiar */
-        }
+      /* 1. Główny kontener obrazka: To jest nasz strażnik.
+            Ustalamy jego wysokość i najważniejsze - ucinamy wszystko, co wystaje. */
+      .card-img-container {
+          height: 250px;
+          overflow: hidden; /* <-- TO JEST KLUCZ DO ROZWIĄZANIA PROBLEMU */
+      }
+      
+      /* 2. Obrazek w galerii: Teraz bezpiecznie możemy mu kazać się rozciągnąć,
+            bo jego kontener go przypilnuje. */
+      .miniature-gallery .slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
     </style>
 {% endblock %}
 
