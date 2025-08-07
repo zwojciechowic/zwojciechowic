@@ -3,17 +3,19 @@
     position: relative;
     max-width: 100%;
     margin: 0 auto;
+    background: #f0f0f0;
     border-radius: 8px;
+    /* USUNIĘTO "overflow: hidden", żeby strzałki na stronie szczegółów działały */
 }
 
-/* To jest nasz pojemnik na obrazek. On ucina treść. */
 .gallery-main {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
+    /* DODANO "overflow: hidden" TUTAJ, żeby ucinać obrazek, a nie całą galerię */
     overflow: hidden;
+    /* Przeniesiono zaokrąglenie tutaj, żeby dotyczyło samego obrazu */
     border-radius: 8px;
-    background: #f0f0f0;
 }
 
 .slide {
@@ -28,7 +30,6 @@
     object-fit: cover;
 }
 
-/* Przyciski są POZA pojemnikiem .gallery-main, więc nie zostaną ucięte. */
 .gallery-btn {
     position: absolute;
     top: 50%;
@@ -77,45 +78,44 @@
 .dot.active, .dot:hover {
     background-color: #fff;
 }
+
+
 /* ============================================================= */
 /*       Style nadpisujące galerię na potrzeby karty (dogs.html)      */
 /* ============================================================= */
 
-/* 1. Ustawiamy kontener jako "scenę" do pozycjonowania i ucinamy go. */
+/*
+TO JEST TA LOGIKA Z TWOJEGO "NAJBLIŻSZEGO DZIAŁANIA" HACKA,
+ALE ZROBIONA POPRAWNIE TUTAJ.
+*/
 .card .card-img-container {
     height: 250px;
-    overflow: hidden; /* Ucinamy obrazek */
-    position: relative; /* <--- TO JEST KLUCZ. Tworzy nową warstwę. */
+    /* TO JEST GILOTYNA DLA LISTY PSÓW. UCINA WSZYSTKO WEWNĄTRZ DO 250PX. */
+    overflow: hidden;
 }
 
-/* 2. Zmuszamy galerię, aby w całości wypełniła tę "scenę". */
 .card .gallery {
     height: 100%;
     width: 100%;
     border-radius: 0;
 }
 
-/* 3. Nadpisujemy 'aspect-ratio', aby galeria dopasowała się do stałej wysokości. */
 .card .gallery .gallery-main {
     aspect-ratio: unset;
     height: 100%;
     border-radius: 0;
 }
 
-/* 4. PRZYCISKI: Wyciągamy je na NAJWYŻSZĄ warstwę. */
 .card .gallery .gallery-btn {
     width: 36px;
     height: 36px;
     font-size: 1.2rem;
     background-color: rgba(0, 0, 0, 0.45);
-    z-index: 10; /* <--- TO JEST KLUCZ. Nakaz "bądź na wierzchu". */
 }
 
-/* 5. Przesuwamy przyciski bliżej krawędzi. */
 .card .gallery .prev { left: 10px; }
 .card .gallery .next { right: 10px; }
 
-/* 6. CAŁKOWICIE ukrywamy kropki nawigacyjne w miniaturce. */
 .card .gallery .gallery-dots {
     display: none;
 }
