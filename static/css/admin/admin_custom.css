@@ -51,4 +51,6 @@ body::after {
 
 #toolbar {
     background: transparent !important;
+    border-top: transparent !important;
+    border-bottom: transparent !important;
 }
