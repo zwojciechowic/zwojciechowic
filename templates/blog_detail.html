@@ -23,8 +23,28 @@
                 <div class="alert alert-info">Brak zdjęć dla tego wpisu</div>
             {% endif %}
             
+            {# Wyświetlanie sekcji treści #}
             <div class="content mt-4">
-                {{ post.content|linebreaks }}
+                {% if post.sections.all %}
+                    {% for section in post.sections.all %}
+                        <div class="blog-section mb-4">
+                            {% if section.title %}
+                                <h3 class="section-title">{{ section.title }}</h3>
+                            {% endif %}
+                            <div class="section-content">
+                                {{ section.content|linebreaks }}
+                            </div>
+                        </div>
+                        {% if not forloop.last %}
+                            <hr class="section-divider my-4">
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Ten wpis nie ma jeszcze treści.
+                    </div>
+                {% endif %}
             </div>
             
             <div class="mt-4">
@@ -57,11 +77,53 @@
                             Ten wpis zawiera {{ post.photo_gallery.photos.count }} zdjęć{{ post.photo_gallery.photos.count|pluralize:"e,a,ć" }}
                         </div>
                     {% endif %}
+                    
+                    {% if post.sections.all %}
+                        <hr>
+                        <h6>Struktura wpisu:</h6>
+                        <ul class="list-unstyled small">
+                            {% for section in post.sections.all %}
+                                <li class="mb-1">
+                                    <i class="fas fa-bookmark text-primary"></i>
+                                    {% if section.title %}
+                                        {{ section.title }}
+                                    {% else %}
+                                        Sekcja {{ forloop.counter }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Style dla sekcji wpisu */
+.blog-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+}
+
+.section-content {
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px dashed #ddd;
+    margin: 2rem 0;
+}
+</style>
 {% endblock %}
 
 {% block extra_js %}

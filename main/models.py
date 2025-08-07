@@ -4,10 +4,23 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+class BlogSection(models.Model):
+    blog_post = models.ForeignKey('BlogPost', on_delete=models.CASCADE, related_name='sections', verbose_name='Wpis na blogu')
+    title = models.CharField("Tytuł sekcji", max_length=200, blank=True)
+    content = models.TextField("Treść sekcji")
+    order = models.PositiveIntegerField("Kolejność", default=0)
+    
+    class Meta:
+        ordering = ('order',)
+        verbose_name = "Sekcja wpisu"
+        verbose_name_plural = "Sekcje wpisu"
+    
+    def __str__(self):
+        return f"{self.blog_post.title} - {self.title or 'Sekcja ' + str(self.order)}"
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=200, verbose_name='Tytuł')
     slug = models.SlugField(unique=True, verbose_name='URL (slug)')
-    content = models.TextField(verbose_name='Treść')
     excerpt = models.TextField(max_length=300, blank=True, verbose_name='Krótki opis')
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
@@ -36,6 +49,15 @@ class BlogPost(models.Model):
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
+    
+    @property
+    def content(self):
+        """Złączenie wszystkich sekcji w jedną treść dla kompatybilności wstecznej"""
+        return "\n\n".join([
+            f"<h3>{section.title}</h3>\n{section.content}" if section.title 
+            else section.content 
+            for section in self.sections.all()
+        ])
 class Dog(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     breed = models.CharField(max_length=100, verbose_name='Rasa')
