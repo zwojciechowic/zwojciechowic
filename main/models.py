@@ -99,9 +99,9 @@ class Dog(models.Model):
 
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
+    litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
     mother = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='puppies_as_mother', verbose_name='Matka')
     father = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='puppies_as_father', verbose_name='Ojciec')
-    litter = models.CharField(max_length=1, verbose_name='Miot', help_text='Jedna litera identyfikująca miot (np. A, B, C)')
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
@@ -125,12 +125,12 @@ class Puppy(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
     
     class Meta:
-        ordering = ['litter', '-birth_date', 'name']  # Najpierw miot, potem data, potem imię
+        ordering = ['litter', 'name']  # Sortowanie najpierw po miocie, potem po imieniu
         verbose_name = 'Szczeniak'
         verbose_name_plural = 'Szczeniaki'
     
     def __str__(self):
-        return f"Miot {self.litter} - {self.name} ({self.get_gender_display()})"
+        return f"{self.litter}-{self.name} - {self.get_gender_display()}"
     
     @property
     def main_photo(self):
@@ -138,6 +138,7 @@ class Puppy(models.Model):
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
+
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
     customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')

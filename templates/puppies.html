@@ -104,20 +104,22 @@
         .litter-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .litter-title {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .litter-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .litter-info {
+            font-size: 0.9rem;
             opacity: 0.9;
+            margin-top: 0.5rem;
         }
     </style>
 {% endblock %}
@@ -127,22 +129,23 @@
     <h1 class="text-center mb-5">Dostępne szczenięta</h1>
     
     {% if puppies_by_litter %}
-        {% for litter_key, litter_info in puppies_by_litter.items %}
-            {# Nagłówek miotu #}
-            <div class="litter-header text-center">
-                <div class="litter-title">Miot {{ litter_key }}</div>
+        {% for litter, litter_data in puppies_by_litter.items %}
+            <div class="litter-header">
+                <h2>Miot {{ litter }}</h2>
                 <div class="litter-info">
-                    <strong>Matka:</strong> {{ litter_info.mother.name }} | 
-                    <strong>Ojciec:</strong> {{ litter_info.father.name }} | 
-                    <strong>Data urodzenia:</strong> {{ litter_info.birth_date|date:"d.m.Y" }}
+                    {% with first_puppy=litter_data.puppies.0 %}
+                        <i class="fas fa-calendar-alt"></i> Data urodzenia: {{ first_puppy.birth_date|date:"d.m.Y" }} | 
+                        <i class="fas fa-heart"></i> Matka: {{ first_puppy.mother.name }} | 
+                        <i class="fas fa-paw"></i> Ojciec: {{ first_puppy.father.name }} | 
+                        <i class="fas fa-dog"></i> Dostępnych: {{ litter_data.available_count }}/{{ litter_data.total_count }}
+                    {% endwith %}
                 </div>
             </div>
-
-            {# Szczenięta z tego miotu #}
+            
             <div class="row mb-5">
-                {% for puppy in litter_info.puppies %}
+                {% for puppy in litter_data.puppies %}
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card card-hover h-100">
+                    <div class="card card-hover h-100 {% if not puppy.is_available %}opacity-75{% endif %}">
                         <a href="{% url 'puppy_detail' puppy.pk %}" class="card-img-link">
                             <div class="card-img-container position-relative">
                                 {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
@@ -158,20 +161,27 @@
                                     </span>
                                 </div>
                                 {% endif %}
-
-                                {# Badge z literą miotu #}
+                                
+                                {% if not puppy.is_available %}
                                 <div class="position-absolute top-0 start-0 m-2" style="z-index: 15;">
-                                    <span class="badge bg-primary fs-6">{{ puppy.litter }}</span>
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times"></i> Niedostępne
+                                    </span>
                                 </div>
+                                {% endif %}
                             </div>
                         </a>
                         
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ puppy.name }}</h5>
+                            <h5 class="card-title">
+                                {{ puppy.litter }}-{{ puppy.name }}
+                                <small class="text-muted">({{ puppy.get_gender_display }})</small>
+                            </h5>
                             <div class="card-details mb-3">
                                 <small class="text-muted">
-                                    <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                                    <strong>Matka:</strong> {{ puppy.mother.name }}<br>
+                                    <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
                                     <strong>Cena:</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>
@@ -186,7 +196,11 @@
                             
                             <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
                             <div class="mt-auto">
-                                <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
+                                {% if puppy.is_available %}
+                                    <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
+                                {% else %}
+                                    <button class="btn btn-secondary btn-sm" disabled>Niedostępne</button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -195,7 +209,7 @@
             </div>
         {% endfor %}
     {% else %}
-        <div class="puppy-alert text-center">
+        <div class="puppy-alert">
             <h3>Brak dostępnych szczeniąt</h3>
             <p>Aktualnie nie mamy dostępnych szczeniąt. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
         </div>
