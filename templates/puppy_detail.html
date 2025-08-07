@@ -14,7 +14,7 @@
             <h1 class="display-4">{{ puppy.name|default:"Szczeniak bez imienia" }}</h1>
             <p class="text-muted">{{ puppy.get_gender_display }} | ur. {{ puppy.birth_date|date:"d.m.Y" }}</p>
             
-            {# --- POPRAWKA 1: Użycie poprawnego tagu galerii --- #}
+            {# Galeria zdjęć używając naszego widgetu #}
             {% if puppy.photo_gallery %}
                 {% show_gallery puppy.photo_gallery.id %}
             {% elif puppy.main_photo %}
@@ -23,16 +23,13 @@
                 <div class="alert alert-info">Brak zdjęć dla tego szczeniaka</div>
             {% endif %}
             
-            <div class="content">
-                {{ puppy.description|linebreaks }}
-            </div>
-            
             <div class="mt-4">
                 <a href="{% url 'puppies' %}" class="btn btn-outline-primary">
                     <i class="fas fa-arrow-left"></i> Powrót do listy szczeniąt
                 </a>
             </div>
         </div>
+        
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -46,23 +43,17 @@
                         <strong>Cena:</strong> {{ puppy.price }} PLN
                     </p>
                     
-                    {# --- POPRAWKA 2 i 3: Naprawiona pętla i dodany modal dla certyfikatów --- #}
+                    {# Opisy #}
+                    <div class="content">
+                        {{ puppy.description|linebreaks }}
+                    </div>
+                    
                     {% if puppy.certificates_gallery %}
-                    {% with certificates=puppy.certificates_gallery.photos.all %}
                         <div class="alert alert-success">
-                            <i class="fas fa-certificate"></i> Szczenię posiada {{ certificates|length }} certyfikat{{ certificates|length|pluralize:"y,ów" }}
+                            <i class="fas fa-certificate"></i>
+                            Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
-                        
-                        <div class="certificates-container mb-3">
-                            {% for cert in certificates %}
-                            <div class="mb-2">
-                                <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }} #{{ forloop.counter }}" 
-                                     class="img-fluid rounded border" style="max-width: 100%; cursor: pointer;"
-                                     data-bs-toggle="modal" data-bs-target="#certModal{{ forloop.counter }}">
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% endwith %}
+                        {% show_gallery puppy.certificates_gallery.id "mt-3" %}
                     {% endif %}
                     
                     {% if puppy.is_available %}
@@ -85,27 +76,6 @@
 <div class="container my-5">
     {# ... Twoja sekcja rezerwacji bez zmian ... #}
 </div>
-{% endif %}
-
-{# --- POPRAWKA 3 c.d.: Kod HTML dla okien modalnych --- #}
-{% if puppy.certificates_gallery %}
-{% with certificates=puppy.certificates_gallery.photos.all %}
-{% for cert in certificates %}
-<div class="modal fade" id="certModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="certModalLabel{{ forloop.counter }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="certModalLabel{{ forloop.counter }}">{{ puppy.name }} - Certyfikat {{ cert.title|default:forloop.counter }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="{{ cert.image.url }}" alt="Certyfikat {{ puppy.name }}" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-{% endwith %}
 {% endif %}
 
 {% endblock %}
