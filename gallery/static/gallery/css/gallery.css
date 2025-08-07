@@ -78,8 +78,14 @@
     background-color: #fff;
 }
 
+/* ============================================================= */
+/*       Style dla karty psa (dogs.html) - NAPRAWIONE            */
+/* ============================================================= */
+
 .card .card-img-container {
     height: 250px;
+    /* TO JEST KLUCZOWA POPRAWKA: Ucinamy wszystko, co wystaje z tego kontenera */
+    overflow: hidden;
 }
 
 .card .gallery {
