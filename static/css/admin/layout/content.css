@@ -327,6 +327,7 @@
     background: var(--primary-gradient) !important;
     border: none !important;
     color: white !important;
+    padding: var(--spacing-sm) var(--spacing-lg) !important;
     border-radius: var(--radius-small) !important;
     margin-left: var(--spacing-md) !important;
     font-weight: 500 !important;
