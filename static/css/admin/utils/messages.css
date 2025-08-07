@@ -20,7 +20,7 @@
 /* Success messages */
 .success {
     background: var(--success-gradient) !important;
-    color: var(--success-color) !important;
+    color: var(--text-white) !important;
     border: none !important;
     border-radius: var(--radius-small) !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
