@@ -8,6 +8,8 @@ from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage
 from .forms import ReservationForm, ContactForm, PuppyReservationForm
 from django.db.models import Count
 from collections import OrderedDict
+from collections import defaultdict
+from django.db.models import Count, Q
 
 def home(request):
     """Strona główna z najnowszymi wpisami, psami i szczeniakami"""
@@ -54,21 +56,24 @@ def dog_detail(request, pk):
     })
 
 def puppies(request):
-    """Strona szczeniaki z grupowaniem według miotów"""
-    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')
+    """Strona szczeniaki z grupowaniem po miotach"""
+    all_puppies = Puppy.objects.all().order_by('litter', 'name')
     
-    # Grupowanie szczeniąt według miotów
-    puppies_by_litter = OrderedDict()
-    for puppy in available_puppies:
-        if puppy.litter not in puppies_by_litter:
-            puppies_by_litter[puppy.litter] = {
-                'litter': puppy.litter,
-                'mother': puppy.mother,
-                'father': puppy.father,
-                'birth_date': puppy.birth_date,
-                'puppies': []
-            }
+    # Grupowanie szczeniąt po miotach
+    puppies_by_litter = defaultdict(lambda: {
+        'puppies': [],
+        'total_count': 0,
+        'available_count': 0
+    })
+    
+    for puppy in all_puppies:
         puppies_by_litter[puppy.litter]['puppies'].append(puppy)
+        puppies_by_litter[puppy.litter]['total_count'] += 1
+        if puppy.is_available:
+            puppies_by_litter[puppy.litter]['available_count'] += 1
+    
+    # Sortowanie miotów alfabetycznie
+    puppies_by_litter = dict(sorted(puppies_by_litter.items()))
     
     return render(request, 'puppies.html', {
         'puppies_by_litter': puppies_by_litter,

@@ -77,15 +77,18 @@ class DogAdmin(admin.ModelAdmin):
 
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'litter', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
+    list_display = ['litter', 'name', 'mother', 'father', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother', 'father']
     search_fields = ['name', 'litter', 'mother__name', 'father__name']
     list_editable = ['is_available', 'price']
-    ordering = ['litter', '-birth_date', 'name']
+    
+    # Grupowanie po miocie w liście
+    def get_queryset(self, request):
+        return super().get_queryset(request).order_by('litter', 'name')
     
     fieldsets = (
         ('Podstawowe informacje', {
-            'fields': ('name', 'litter', 'mother', 'father', 'birth_date', 'gender', 'description')
+            'fields': ('litter', 'name', 'mother', 'father', 'birth_date', 'gender', 'description')
         }),
         ('Dostępność', {
             'fields': ('is_available', 'price')
