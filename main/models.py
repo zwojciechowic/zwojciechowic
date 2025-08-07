@@ -100,8 +100,25 @@ class Dog(models.Model):
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
-    mother = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='puppies_as_mother', verbose_name='Matka')
-    father = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name='puppies_as_father', verbose_name='Ojciec')
+    
+    # Pola mother i father z dodanymi null=True i blank=True
+    mother = models.ForeignKey(
+        Dog, 
+        on_delete=models.CASCADE, 
+        related_name='puppies_as_mother', 
+        verbose_name='Matka',
+        null=True,      # Pozwala na NULL w bazie danych
+        blank=True      # Pozwala na puste pole w formularzach Django admin
+    )
+    father = models.ForeignKey(
+        Dog, 
+        on_delete=models.CASCADE, 
+        related_name='puppies_as_father', 
+        verbose_name='Ojciec',
+        null=True,      # Pozwala na NULL w bazie danych
+        blank=True      # Pozwala na puste pole w formularzach Django admin
+    )
+    
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
@@ -130,7 +147,15 @@ class Puppy(models.Model):
         verbose_name_plural = 'Szczeniaki'
     
     def __str__(self):
-        return f"{self.litter}-{self.name} - {self.get_gender_display()}"
+        parent_info = ""
+        if self.mother and self.father:
+            parent_info = f" ({self.mother.name} x {self.father.name})"
+        elif self.mother:
+            parent_info = f" (matka: {self.mother.name})"
+        elif self.father:
+            parent_info = f" (ojciec: {self.father.name})"
+        
+        return f"{self.litter}-{self.name} - {self.get_gender_display()}{parent_info}"
     
     @property
     def main_photo(self):
@@ -138,7 +163,6 @@ class Puppy(models.Model):
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
-
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
     customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')
