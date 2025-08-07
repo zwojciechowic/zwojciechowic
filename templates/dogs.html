@@ -24,18 +24,31 @@
             aspect-ratio: unset; /* KLUCZOWE: To wyłącza domyślne proporcje i zapobiega "zoomowi" */
         }
 
-        /* NAPRAWKA PRZYCISKÓW - wyższy z-index i lepsze pozycjonowanie */
+        /* NAPRAWKA PRZYCISKÓW - BARDZO wysoki z-index */
         .miniature-gallery .gallery-btn {
             width: 36px;
             height: 36px;
             font-size: 1.3rem;
-            z-index: 20 !important; /* Wyższy z-index */
-            background: rgba(0, 0, 0, 0.6) !important; /* Ciemniejsze tło */
+            z-index: 999 !important; /* BARDZO wysoki z-index */
+            background: rgba(0, 0, 0, 0.7) !important; /* Ciemniejsze tło */
             color: white !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important; /* Białe obramowanie */
+            pointer-events: auto !important; /* Wymusza kliknięcie */
         }
 
         .miniature-gallery .gallery-btn:hover {
-            background: rgba(0, 0, 0, 0.8) !important;
+            background: rgba(0, 0, 0, 0.9) !important;
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            transform: translateY(-50%) scale(1.1) !important; /* Powiększenie przy hover */
+        }
+
+        /* Upewnij się że galeria nie blokuje przycisków */
+        .miniature-gallery .gallery-main {
+            pointer-events: none; /* Wyłącz zdarzenia myszy na głównym kontenerze */
+        }
+
+        .miniature-gallery .gallery-main img {
+            pointer-events: none; /* Wyłącz zdarzenia myszy na obrazkach */
         }
 
         /* Ukrycie kropek, które nie pasują do miniatury */
@@ -54,9 +67,13 @@
             object-fit: cover !important;
         }
 
-        /* Badge certyfikacji ma niższy z-index niż przyciski galerii */
-        .card-img-container .badge {
-            z-index: 15;
+        /* Również upewnij się że karta nie blokuje przycisków */
+        .card-img-container * {
+            position: relative;
+        }
+
+        .card .card-img-container:hover .gallery-btn {
+            opacity: 1; /* Pokaż przyciski przy hover na karcie */
         }
     </style>
 {% endblock %}
