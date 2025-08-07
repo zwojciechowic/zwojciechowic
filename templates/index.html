@@ -4,6 +4,95 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+    
+    {# Style dla miniaturek galerii w kartach #}
+    <style>
+        .card-img-container {
+            height: 250px !important;
+            overflow: hidden !important;
+            position: relative; /* WAŻNE: kontener musi mieć position: relative */
+        }
+
+        .card-img-container img {
+            height: 100% !important;
+            width: 100% !important;
+            object-fit: cover !important;
+        }
+
+        /* Style dla galerii w kartach */
+        .miniature-gallery.gallery {
+            height: 100%;
+            width: 100%;
+            border-radius: 0;
+            position: relative; /* WAŻNE */
+        }
+
+        .miniature-gallery .gallery-main {
+            height: 100%;
+            aspect-ratio: unset;
+            border-radius: 0;
+            position: relative; /* WAŻNE */
+            overflow: hidden;
+        }
+
+        /* KLUCZOWE STYLE DLA PRZYCISKÓW - mają być NA zdjęciu */
+        .miniature-gallery .gallery-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.4rem !important;
+            background-color: rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            z-index: 100 !important; /* BARDZO WYSOKI Z-INDEX */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .miniature-gallery .gallery-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            transform: translateY(-50%) scale(1.1) !important;
+        }
+
+        /* Pozycje przycisków */
+        .miniature-gallery .gallery-btn.prev {
+            left: 10px !important;
+        }
+
+        .miniature-gallery .gallery-btn.next {
+            right: 10px !important;
+        }
+
+        /* Ukrycie kropek w miniaturach */
+        .miniature-gallery .gallery-dots {
+            display: none !important;
+        }
+
+        /* Upewnij się, że slajdy są pod przyciskami */
+        .miniature-gallery .slide {
+            position: relative;
+            z-index: 1;
+        }
+
+        .miniature-gallery .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Specjalne style dla kart psów na stronie głównej */
+        .featured-dog-card .card-img-container {
+            height: 300px !important;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -31,18 +120,19 @@
                 <!-- Wyświetlanie psów jako karty -->
                 {% if featured_dogs %}
                 {% for dog in featured_dogs %}
-                <div class="mb-3">
+                <div class="mb-3 featured-dog-card">
                     <a href="{% url 'dog_detail' dog.pk %}" class="card-link text-decoration-none">
                         <div class="card card-hover">
-                            <!-- Zdjęcie na górze -->
-                            <div class="position-relative">
-                                {% with main_photo=dog.main_photo %}
-                                    {% if main_photo %}
-                                        <img src="{{ main_photo.image.url }}" class="card-img-top" alt="{{ dog.name }}" style="height: 300px; object-fit: cover;">
-                                    {% endif %}
-                                {% endwith %}
-                                {% if dog.certificate %}
-                                <div class="position-absolute top-0 end-0 m-2">
+                            <!-- Zdjęcie na górze z galerią -->
+                            <div class="card-img-container position-relative">
+                                {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
+                                    {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
+                                {% else %}
+                                    <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                                {% endif %}
+                                
+                                {% if dog.certificates_gallery %}
+                                <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
                                     <span class="badge bg-success">
                                         <i class="fas fa-certificate"></i> Certyfikowany
                                     </span>
@@ -91,16 +181,17 @@
         {% for puppy in available_puppies %}
         <div class="col-md-4 mb-4">
             <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
-                <div class="card card-hover">
-                    <!-- Zdjęcie z certyfikatem na tle -->
-                    <div class="position-relative">
-                        {% with main_photo=puppy.main_photo %}
-                            {% if main_photo %}
-                                <img src="{{ main_photo.image.url }}" class="card-img-top" alt="{{ puppy.name }}" style="height: 300px; object-fit: cover;">
-                            {% endif %}
-                        {% endwith %}
-                        {% if puppy.certificate %}
-                        <div class="position-absolute top-0 end-0 m-2">
+                <div class="card card-hover h-100">
+                    <!-- Zdjęcie z galerią -->
+                    <div class="card-img-container position-relative">
+                        {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
+                            {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
+                        {% else %}
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                        {% endif %}
+                        
+                        {% if puppy.certificates_gallery %}
+                        <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
                             <span class="badge bg-success">
                                 <i class="fas fa-certificate"></i> Certyfikowany
                             </span>
@@ -108,11 +199,19 @@
                         {% endif %}
                     </div>
                     
-                    <div class="card-body">
-                        <h5 class="card-title">{{ puppy.name }}</h5>
-                        <p class="card-text">{{ puppy.description|truncatewords:10 }}</p>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-dark">{{ puppy.name }}</h5>
+                        <div class="card-details mb-2">
+                            <small class="text-muted">
+                                <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                                <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                                <strong>Matka:</strong> {{ puppy.mother.name }}<br>
+                                <strong>Ojciec:</strong> {{ puppy.father.name }}
+                            </small>
+                        </div>
+                        <p class="card-text text-muted flex-grow-1">{{ puppy.description|truncatewords:10 }}</p>
                         <p class="card-text"><strong>Cena: {{ puppy.price }} PLN</strong></p>
-                        <a href="{% url 'reservations' %}" class="btn btn-primary">Zarezerwuj</a>
+                        <span class="btn btn-primary mt-auto">Zarezerwuj</span>
                     </div>
                 </div>
             </a>
@@ -140,9 +239,17 @@
         <div class="col-md-4 mb-4">
             <a href="{% url 'blog_detail' post.slug %}" class="card-link text-decoration-none">
                 <div class="card h-100 card-hover">
-                    {% if post.featured_image %}
-                    <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
-                    {% endif %}
+                    <!-- Zdjęcie z galerią -->
+                    <div class="card-img-container position-relative">
+                        {% if post.photo_gallery and post.photo_gallery.photos.all %}
+                            {% show_gallery post.photo_gallery.id "miniature-gallery" %}
+                        {% elif post.main_photo %}
+                            <img src="{{ post.main_photo.image.url }}" alt="{{ post.title }}" style="height: 100%; width: 100%; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                        {% endif %}
+                    </div>
+                    
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-dark">{{ post.title }}</h5>
                         <p class="card-text text-muted flex-grow-1">{{ post.excerpt|default:post.content|truncatewords:15 }}</p>
