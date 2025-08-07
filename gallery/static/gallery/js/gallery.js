@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dots.forEach(dot => dot.classList.remove('active'));
 
             // Pokaż wybrany slajd i aktywuj kropkę
-            slides[index].style.display = 'block';
+            slides[index].style.display = 'flex';
             if (dots[index]) {
                 dots[index].classList.add('active');
             }

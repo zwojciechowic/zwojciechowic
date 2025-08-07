@@ -11,7 +11,6 @@
             background-color: #f0f0f0; /* Tło na wypadek braku zdjęcia */
         }
 
-        /* Używamy tej klasy, aby stylować tylko galerie w miniaturkach */
         .miniature-gallery.gallery {
             height: 100%;
             width: 100%;
@@ -19,26 +18,35 @@
         }
 
         .miniature-gallery .gallery-main {
-            height: 100%; /* Wypełnij wysokość kontenera */
-            aspect-ratio: unset; /* KLUCZOWE: To wyłącza domyślne proporcje i zapobiega "zoomowi" */
+            height: 100%;
+            aspect-ratio: unset;
         }
 
-        /* Dostosowanie przycisków do miniatury */
         .miniature-gallery .gallery-btn {
             width: 36px;
             height: 36px;
             font-size: 1.3rem;
         }
 
-        /* Ukrycie kropek, które nie pasują do miniatury */
         .miniature-gallery .gallery-dots {
             display: none;
         }
 
         .miniature-gallery .slide img {
-            width: 100%;
+            display: flex;
+            align-items: center;      /* Wycentruj w pionie */
+            justify-content: center;  /* Wycentruj w poziomie */
             height: 100%;
-            object-fit: contain;
+            width: 100%;
+        }
+
+        .miniature-gallery .slide img {
+            /* Ograniczamy rozmiar, ale nie narzucamy go, zachowując proporcje */
+            max-width: 100%;
+            max-height: 100%;
+            /* Te linie zapewniają, że przeglądarka sama obliczy prawidłowy rozmiar */
+            width: auto;
+            height: auto;
         }
     </style>
 {% endblock %}
