@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
 from django.contrib.admin import AdminSite
 import json
 import uuid
@@ -114,23 +114,38 @@ class PuppyAdmin(admin.ModelAdmin):
         return 0
     certificates_count.short_description = "Certyfikaty"
 
+@admin.register(BlogSection)
+class BlogSectionAdmin(admin.ModelAdmin):
+    list_display = ('blog_post', 'title', 'order')
+    list_editable = ('order',)
+    list_filter = ('blog_post',)
+    ordering = ('blog_post', 'order')
+
+class BlogSectionInline(admin.TabularInline):
+    model = BlogSection
+    extra = 1
+    fields = ('order', 'title', 'content')
+    ordering = ('order',)
+
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count']
+    list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
     list_filter = ['is_published', 'created_at', 'author']
-    search_fields = ['title', 'content', 'excerpt']
+    search_fields = ['title', 'excerpt', 'sections__content', 'sections__title']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'updated_at']
     form = BlogPostAdminForm
+    inlines = [BlogSectionInline]
     
     fieldsets = (
         ('Podstawowe informacje', {
             'fields': ('title', 'slug', 'author', 'is_published')
         }),
-        ('Treść', {
-            'fields': ('excerpt', 'content')
+        ('Opis', {
+            'fields': ('excerpt',),
+            'description': 'Krótki opis wpisu wyświetlany na liście i w kartach'
         }),
         ('Media', {
             'fields': ('photo_gallery',),
@@ -140,6 +155,7 @@ class BlogPostAdmin(admin.ModelAdmin):
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
+        # Sekcje treści będą dodawane przez inline poniżej
     )
     
     def main_photo_preview(self, obj):
@@ -156,11 +172,14 @@ class BlogPostAdmin(admin.ModelAdmin):
         return 0
     photos_count.short_description = "Zdjęcia"
     
+    def sections_count(self, obj):
+        return obj.sections.count()
+    sections_count.short_description = "Sekcje"
+    
     def save_model(self, request, obj, form, change):
         if not change:  # Jeśli to nowy wpis
             obj.author = request.user
-        super().save_model(request, obj, form, change)      
-
+        super().save_model(request, obj, form, change)
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'subject', 'created_at', 'is_read']
