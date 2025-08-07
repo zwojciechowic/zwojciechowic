@@ -21,6 +21,7 @@ class DogAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
+        css = {'all': ('css/admin/admin_custom.css',)}
 
 class PuppyAdminForm(forms.ModelForm):
     class Meta:
