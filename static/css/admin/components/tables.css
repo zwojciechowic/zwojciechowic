@@ -7,7 +7,7 @@
 .changelist-results, 
 .module table,
 table {
-    background: var(--bg-white) !important;
+    background: transparent !important;
     border-radius: var(--radius-medium) !important;
     overflow: hidden !important;
     box-shadow: var(--shadow-medium) !important;
