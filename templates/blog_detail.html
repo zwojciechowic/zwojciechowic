@@ -66,21 +66,20 @@
                     
                     {% if post.excerpt %}
                         <hr>
-                        <h6>Krótki opis:</h6>
-                        <p class="text-muted small">{{ post.excerpt }}</p>
+                        <h6 class="text-muted small">{{ post.excerpt }}</h6>
                     {% endif %}
                     
                     {% if post.photo_gallery %}
                         <hr>
                         <div class="alert alert-info small">
                             <i class="fas fa-images"></i>
-                            Ten wpis zawiera {{ post.photo_gallery.photos.count }} zdjęć{{ post.photo_gallery.photos.count|pluralize:"e,a,ć" }}
+                            Post zawiera {{ post.photo_gallery.photos.count }} zdjęć{{ post.photo_gallery.photos.count|pluralize:"e,a,ć" }}
                         </div>
                     {% endif %}
                     
                     {% if post.sections.all %}
                         <hr>
-                        <h6>Struktura wpisu:</h6>
+                        <h5 class="card-title text-dark">{{ post.title }}</h5>
                         <ul class="list-unstyled small">
                             {% for section in post.sections.all %}
                                 <li class="mb-1">
