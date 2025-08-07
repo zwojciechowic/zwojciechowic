@@ -99,71 +99,106 @@
         .miniature-gallery .gallery-btn {
             pointer-events: all !important;
         }
+
+        /* Style dla nagłówków miotów */
+        .litter-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .litter-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .litter-info {
+            opacity: 0.9;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
 <div class="container my-5">
-    <h1>Dostępne szczenięta</h1>
+    <h1 class="text-center mb-5">Dostępne szczenięta</h1>
     
-    {% if puppies %}
-    <div class="row">
-        {% for puppy in puppies %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card card-hover h-100">
-                <!-- Link tylko na obrazku bez galerii, ale wyłączony w obszarze galerii -->
-                <a href="{% url 'puppy_detail' puppy.pk %}" class="card-img-link">
-                    <div class="card-img-container position-relative">
-                        {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
-                            {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
-                        {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
-                        {% endif %}
-                        
-                        {% if puppy.certificates_gallery %}
-                        <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
-                            <span class="badge bg-success">
-                                <i class="fas fa-certificate"></i> Certyfikowany
-                            </span>
-                        </div>
-                        {% endif %}
-                    </div>
-                </a>
-                
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ puppy.name }}</h5>
-                    <div class="card-details mb-3">
-                        <small class="text-muted">
-                            <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
-                            <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                            <strong>Matka:</strong> {{ puppy.mother.name }}<br>
-                            <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
-                            <strong>Cena:</strong> {{ puppy.price }} PLN
-                        </small>
-                    </div>
-                    
-                    {% if puppy.certificates_gallery %}
-                    <div class="mb-2">
-                        <small class="text-success">
-                            <i class="fas fa-certificate"></i> Posiada certyfikat
-                        </small>
-                    </div>
-                    {% endif %}
-                    
-                    <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
-                    <div class="mt-auto">
-                        <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
-                    </div>
+    {% if puppies_by_litter %}
+        {% for litter_key, litter_info in puppies_by_litter.items %}
+            {# Nagłówek miotu #}
+            <div class="litter-header text-center">
+                <div class="litter-title">Miot {{ litter_key }}</div>
+                <div class="litter-info">
+                    <strong>Matka:</strong> {{ litter_info.mother.name }} | 
+                    <strong>Ojciec:</strong> {{ litter_info.father.name }} | 
+                    <strong>Data urodzenia:</strong> {{ litter_info.birth_date|date:"d.m.Y" }}
                 </div>
             </div>
-        </div>
+
+            {# Szczenięta z tego miotu #}
+            <div class="row mb-5">
+                {% for puppy in litter_info.puppies %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card card-hover h-100">
+                        <a href="{% url 'puppy_detail' puppy.pk %}" class="card-img-link">
+                            <div class="card-img-container position-relative">
+                                {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
+                                    {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
+                                {% else %}
+                                    <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                                {% endif %}
+                                
+                                {% if puppy.certificates_gallery %}
+                                <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-certificate"></i> Certyfikowany
+                                    </span>
+                                </div>
+                                {% endif %}
+
+                                {# Badge z literą miotu #}
+                                <div class="position-absolute top-0 start-0 m-2" style="z-index: 15;">
+                                    <span class="badge bg-primary fs-6">{{ puppy.litter }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ puppy.name }}</h5>
+                            <div class="card-details mb-3">
+                                <small class="text-muted">
+                                    <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                                    <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                                    <strong>Cena:</strong> {{ puppy.price }} PLN
+                                </small>
+                            </div>
+                            
+                            {% if puppy.certificates_gallery %}
+                            <div class="mb-2">
+                                <small class="text-success">
+                                    <i class="fas fa-certificate"></i> Posiada certyfikat
+                                </small>
+                            </div>
+                            {% endif %}
+                            
+                            <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
+                            <div class="mt-auto">
+                                <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         {% endfor %}
-    </div>
     {% else %}
-    <div class="puppy-alert">
-        <h3>Brak dostępnych szczeniąt</h3>
-        <p>Aktualnie nie mamy dostępnych szczeniąt. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
-    </div>
+        <div class="puppy-alert text-center">
+            <h3>Brak dostępnych szczeniąt</h3>
+            <p>Aktualnie nie mamy dostępnych szczeniąt. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
+        </div>
     {% endif %}
 </div>
 {% endblock %}
