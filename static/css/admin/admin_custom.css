@@ -54,3 +54,7 @@ body::after {
     border-top: transparent !important;
     border-bottom: transparent !important;
 }
+
+.historylink {
+    display: none !important;
+}

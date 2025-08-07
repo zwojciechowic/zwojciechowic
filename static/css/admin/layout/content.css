@@ -179,8 +179,8 @@
     clear: both !important; /* Dodane clear both */
 }
 
-#changelist .actions .button {
-    height: 2.5rem;
+.submit-row a.deletelink{
+    height: 2rem !important;
 }
 
 .change-list .object-tools {
