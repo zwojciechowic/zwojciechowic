@@ -6,25 +6,28 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage
 from .forms import ReservationForm, ContactForm, PuppyReservationForm
+from django.db.models import Count
+from collections import OrderedDict
 
 def home(request):
-    """Strona główna z blogami"""
-    posts = BlogPost.objects.filter(is_published=True)
-    paginator = Paginator(posts, 6)  # 6 postów na stronę
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    """Strona główna z najnowszymi wpisami, psami i szczeniakami"""
+    # Pobierz najnowsze wpisy blogowe
+    latest_posts = BlogPost.objects.filter(is_published=True)[:3]
     
-    # Najnowsze szczeniaki dla sekcji "Dostępne szczenięta"
-    available_puppies = Puppy.objects.filter(is_available=True)[:3]
-
+    # Pobierz wybrane psy hodowlane
     featured_dogs = Dog.objects.filter(is_breeding=True)[:2]
     
-    return render(request, 'index.html', {
-        'page_obj': page_obj,
+    # Pobierz dostępne szczenięta (maksymalnie 3)
+    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')[:3]
+    
+    context = {
+        'latest_posts': latest_posts,
+        'featured_dogs': featured_dogs,
         'available_puppies': available_puppies,
-        'featured_dogs': featured_dogs
-    })
-
+        'page_obj': latest_posts,  # Dla kompatybilności z szablonem
+    }
+    
+    return render(request, 'index.html', context)
 def blog_detail(request, slug):
     """Szczegóły wpisu na blogu"""
     post = get_object_or_404(BlogPost, slug=slug, is_published=True)
@@ -51,17 +54,36 @@ def dog_detail(request, pk):
     })
 
 def puppies(request):
-    """Strona szczeniaki"""
-    available_puppies = Puppy.objects.filter(is_available=True)
+    """Strona szczeniaki z grupowaniem według miotów"""
+    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')
+    
+    # Grupowanie szczeniąt według miotów
+    puppies_by_litter = OrderedDict()
+    for puppy in available_puppies:
+        if puppy.litter not in puppies_by_litter:
+            puppies_by_litter[puppy.litter] = {
+                'litter': puppy.litter,
+                'mother': puppy.mother,
+                'father': puppy.father,
+                'birth_date': puppy.birth_date,
+                'puppies': []
+            }
+        puppies_by_litter[puppy.litter]['puppies'].append(puppy)
+    
     return render(request, 'puppies.html', {
-        'puppies': available_puppies,
+        'puppies_by_litter': puppies_by_litter,
         'favicon': 'logo/puppy-logo.ico',
         'favicon_png': 'logo/puppy-logo.png'
     })
-
 def puppy_detail(request, pk):
     """Szczegółowa strona szczenięcia z formularzem rezerwacji"""
     puppy = get_object_or_404(Puppy, pk=pk)
+    
+    # Pobierz innych szczeniąt z tego samego miotu
+    litter_siblings = Puppy.objects.filter(
+        litter=puppy.litter, 
+        is_available=True
+    ).exclude(pk=puppy.pk).order_by('name')
     
     if request.method == 'POST' and puppy.is_available:
         form = PuppyReservationForm(request.POST)
@@ -69,16 +91,16 @@ def puppy_detail(request, pk):
             reservation = form.save(commit=False)
             reservation.puppy = puppy
             reservation.save()
-            messages.success(request, f'Rezerwacja szczenięcia {puppy.name} została wysłana pomyślnie!')
+            messages.success(request, f'Rezerwacja szczenięcia {puppy.name} z miotu {puppy.litter} została wysłana pomyślnie!')
             return redirect('puppy_detail', pk=puppy.pk)
     else:
         form = PuppyReservationForm()
     
     return render(request, 'puppy_detail.html', {
         'puppy': puppy,
-        'form': form
+        'form': form,
+        'litter_siblings': litter_siblings
     })
-
 def reservations(request):
     """Strona rezerwacji"""
     if request.method == 'POST':
