@@ -135,8 +135,8 @@
                 <div class="litter-info">
                     {% with first_puppy=litter_data.puppies.0 %}
                         <i class="fas fa-calendar-alt"></i> Data urodzenia: {{ first_puppy.birth_date|date:"d.m.Y" }} | 
-                        <i class="fas fa-heart"></i> Matka: {{ first_puppy.mother.name }} | 
-                        <i class="fas fa-paw"></i> Ojciec: {{ first_puppy.father.name }} | 
+                        {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i>{{ first_puppy.mother_name }}{% endif %}
+                        {% if first_puppy.father_name %} | <i class="fas fa-paw"></i>{{ first_puppy.father_name }}{% endif %}
                         <i class="fas fa-dog"></i> Dostępnych: {{ litter_data.available_count }}/{{ litter_data.total_count }}
                     {% endwith %}
                 </div>
@@ -180,8 +180,8 @@
                             <div class="card-details mb-3">
                                 <small class="text-muted">
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                    <strong>Matka:</strong> {{ puppy.mother.name }}<br>
-                                    <strong>Ojciec:</strong> {{ puppy.father.name }}<br>
+                                    {% if first_puppy.mother_name %} | Matka: {{ first_puppy.mother_name }}{% endif %}
+                                    {% if first_puppy.father_name %} | Ojciec: {{ first_puppy.father_name }}{% endif %}
                                     <strong>Cena:</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>
