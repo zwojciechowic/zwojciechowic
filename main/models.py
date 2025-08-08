@@ -1,5 +1,6 @@
 # models.py
 from django.db import models
+from django.utils.html import format_html
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -97,14 +98,6 @@ class Dog(models.Model):
             return self.photo_gallery.photos.first()
         return None
 
-    @property
-    def color_display(self):
-        """Wyświetlanie kolorów w czytelnej formie"""
-        if self.color1 and self.color2:
-            return f"{self.color1}/{self.color2}"
-        elif self.color1:
-            return self.color1
-        return "Nie określono"# models.py
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
@@ -162,7 +155,7 @@ class Puppy(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
     
     class Meta:
-        ordering = ['litter', 'name']  # Sortowanie najpierw po miocie, potem po imieniu
+        ordering = ['litter', 'name']
         verbose_name = 'Szczeniak'
         verbose_name_plural = 'Szczeniaki'
     
@@ -194,10 +187,10 @@ class Puppy(models.Model):
     @property
     def color_display(self):
         """Wyświetlanie kolorów w czytelnej formie"""
-        if self.primary_color and self.secondary_color:
-            return f"{self.get_primary_color_display()}/{self.get_secondary_color_display()}"
-        elif self.primary_color:
-            return self.get_primary_color_display()
+        if self.color1 and self.color2:
+            return f"{self.color1}/{self.color2}"
+        elif self.color1:
+            return self.color1
         return "Nie określono"
 
 class Reservation(models.Model):
