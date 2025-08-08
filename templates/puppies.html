@@ -102,12 +102,17 @@
 
         /* Style dla nagłówków miotów */
         .litter-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 1rem 1.5rem;
             margin: 2rem 0 1.5rem 0;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Domyślny gradient dla nagłówków miotów */
+        .litter-header.default-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .litter-header h2 {
@@ -121,6 +126,20 @@
             opacity: 0.9;
             margin-top: 0.5rem;
         }
+
+        /* Style dla kolorowych pasków w kartach szczeniąt */
+        .puppy-color-bar {
+            height: 4px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .puppy-color-bar.default-color {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
     </style>
 {% endblock %}
 
@@ -130,22 +149,42 @@
     
     {% if puppies_by_litter %}
         {% for litter, litter_data in puppies_by_litter.items %}
-            <div class="litter-header">
+            {% with first_puppy=litter_data.puppies.0 %}
+            <div class="litter-header {% if not first_puppy.color1 or not first_puppy.color2 %}default-gradient{% endif %}"
+                 {% if first_puppy.color1 and first_puppy.color2 %}
+                 style="background: linear-gradient(135deg, {{ first_puppy.color1 }} 0%, {{ first_puppy.color2 }} 100%);"
+                 {% elif first_puppy.color1 %}
+                 style="background: linear-gradient(135deg, {{ first_puppy.color1 }} 0%, {{ first_puppy.color1 }} 100%);"
+                 {% endif %}>
                 <h2>Miot {{ litter }}</h2>
                 <div class="litter-info">
-                    {% with first_puppy=litter_data.puppies.0 %}
                     <i class="fas fa-calendar-alt"></i> Data urodzenia: {{ first_puppy.birth_date|date:"d.m.Y" }}
-                    {% if first_puppy.mother_name %} | Matka: {{ first_puppy.mother_name }}{% endif %}
-                    {% if first_puppy.father_name %} | Ojciec: {{ first_puppy.father_name }}{% endif %}
-                        <i class="fas fa-dog"></i> Dostępnych: {{ litter_data.available_count }}/{{ litter_data.total_count }}
-                    {% endwith %}
+                    {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i> Matka: {{ first_puppy.mother_name }}{% endif %}
+                    {% if first_puppy.father_name %} | <i class="fas fa-paw"></i> Ojciec: {{ first_puppy.father_name }}{% endif %}
+                    | <i class="fas fa-dog"></i> Dostępnych: {{ litter_data.available_count }}/{{ litter_data.total_count }}
+                    {% if first_puppy.color1 %}
+                    <br><i class="fas fa-palette"></i> Kolory miotu: 
+                    <span style="background-color: {{ first_puppy.color1 }}; width: 18px; height: 18px; display: inline-block; border: 1px solid rgba(255,255,255,0.5); border-radius: 3px; vertical-align: middle; margin: 0 2px;"></span>
+                    {% if first_puppy.color2 %}
+                    <span style="background-color: {{ first_puppy.color2 }}; width: 18px; height: 18px; display: inline-block; border: 1px solid rgba(255,255,255,0.5); border-radius: 3px; vertical-align: middle; margin: 0 2px;"></span>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
+            {% endwith %}
             
             <div class="row mb-5">
                 {% for puppy in litter_data.puppies %}
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card card-hover h-100 {% if not puppy.is_available %}opacity-75{% endif %}">
+                    <div class="card card-hover h-100 {% if not puppy.is_available %}opacity-75{% endif %}" style="position: relative; overflow: hidden; border-radius: 8px;">
+                        <!-- Kolorowy pasek dla każdego szczeniaka -->
+                        <div class="puppy-color-bar {% if not puppy.color1 %}default-color{% endif %}"
+                             {% if puppy.color1 and puppy.color2 %}
+                             style="background: linear-gradient(90deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
+                             {% elif puppy.color1 %}
+                             style="background: {{ puppy.color1 }};"
+                             {% endif %}></div>
+                        
                         <a href="{% url 'puppy_detail' puppy.pk %}" class="card-img-link">
                             <div class="card-img-container position-relative">
                                 {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
@@ -182,6 +221,14 @@
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                                     {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
                                     {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                                    {% if puppy.color1 %}
+                                    <strong>Kolory:</strong> 
+                                    <span style="background-color: {{ puppy.color1 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle;"></span>
+                                    {% if puppy.color2 %}
+                                    <span style="background-color: {{ puppy.color2 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle; margin-left: 3px;"></span>
+                                    {% endif %}
+                                    <br>
+                                    {% endif %}
                                     <strong>Cena:</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>
