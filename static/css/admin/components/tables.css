@@ -234,3 +234,126 @@ table td a:hover {
         font-size: 12px !important;
     }
 }
+
+
+@media (max-width: 1400px) {
+    #changelist .results,
+    #changelist #result_list,
+    .changelist-results {
+        overflow-x: auto !important;
+        display: block !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+        -webkit-overflow-scrolling: touch !important; /* smooth scrolling na mobile */
+    }
+    
+    /* Tabelka ma mieć minimalną szerokość */
+    .results table,
+    #result_list,
+    .changelist-results table {
+        min-width: 800px !important; /* Minimalna szerokość tabeli */
+        width: auto !important;
+    }
+    
+    /* Komórki nie mogą się zawijać */
+    .results th,
+    .results td,
+    #result_list th,
+    #result_list td {
+        white-space: nowrap !important;
+        min-width: 120px !important; /* Minimalna szerokość kolumny */
+    }
+}
+
+/* Na bardzo wąskich ekranach (mobilne) */
+@media (max-width: 768px) {
+    /* Kontener przewijania */
+    #changelist {
+        padding: var(--spacing-sm) !important;
+    }
+    
+    /* Tabela jako card z przewijaniem */
+    .results,
+    #result_list {
+        border-radius: var(--radius-small) !important;
+        box-shadow: var(--shadow-light) !important;
+        margin: var(--spacing-sm) 0 !important;
+    }
+    
+    /* Mniejsze paddingi dla mobile */
+    .results th,
+    .results td,
+    #result_list th,
+    #result_list td {
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        font-size: 12px !important;
+        min-width: 100px !important;
+    }
+    
+    /* Ukryj mniej ważne kolumny na mobile */
+    .results .action-column,
+    .results th:last-child,
+    .results td:last-child {
+        display: none !important;
+    }
+}
+
+/* ALTERNATYWNE ROZWIĄZANIE - CARD LAYOUT DLA MOBILE */
+@media (max-width: 768px) {
+    /* Opcja: Zamień tabelę na karty na mobile */
+    .mobile-card-view .results tbody tr {
+        display: block !important;
+        margin-bottom: var(--spacing-md) !important;
+        background: var(--bg-white) !important;
+        border-radius: var(--radius-medium) !important;
+        box-shadow: var(--shadow-light) !important;
+        padding: var(--spacing-md) !important;
+        border: 1px solid var(--bg-border) !important;
+    }
+    
+    .mobile-card-view .results thead {
+        display: none !important; /* Ukryj nagłówki */
+    }
+    
+    .mobile-card-view .results td {
+        display: block !important;
+        padding: var(--spacing-xs) 0 !important;
+        border: none !important;
+        text-align: left !important;
+    }
+    
+    .mobile-card-view .results td:before {
+        content: attr(data-label) ": " !important;
+        font-weight: 600 !important;
+        color: var(--text-secondary) !important;
+        display: inline-block !important;
+        min-width: 100px !important;
+    }
+}
+
+/* SCROLL INDICATOR - pokazuje że można przewijać */
+.table-scroll-wrapper {
+    position: relative;
+}
+
+.table-scroll-wrapper:after {
+    content: "→ Przesuń w prawo" !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 10px !important;
+    transform: translateY(-50%) !important;
+    background: rgba(0,0,0,0.7) !important;
+    color: white !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+    border-radius: var(--radius-small) !important;
+    font-size: 12px !important;
+    pointer-events: none !important;
+    opacity: 0.8 !important;
+    z-index: 10 !important;
+}
+
+@media (min-width: 1401px) {
+    .table-scroll-wrapper:after {
+        display: none !important;
+    }
+}
