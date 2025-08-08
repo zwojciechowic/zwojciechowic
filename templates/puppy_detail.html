@@ -5,6 +5,35 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+    
+    <!-- Style dla paska miotu -->
+    <style>
+        .litter-bar {
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        /* Domyślny gradient jeśli nie ma kolorów */
+        .litter-bar.default-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .litter-bar h6 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .litter-info-small {
+            opacity: 0.9;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -31,6 +60,29 @@
         </div>
         
         <div class="col-lg-4">
+            <!-- Pasek miotu z kolorami szczeniaka -->
+            <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
+                 {% if puppy.color1 and puppy.color2 %}
+                 style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
+                 {% elif puppy.color1 %}
+                 style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color1 }} 100%);"
+                 {% endif %}>
+                <h6>Miot {{ puppy.litter }}</h6>
+                <div class="litter-info-small">
+                    <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
+                    &#9792; {{ puppy.mother_name }} | 
+                    &#9794; {{ puppy.father_name }}
+                    {% if puppy.color1 %}
+                    <br><i class="fas fa-palette"></i> 
+                    {% if puppy.color2 %}
+                        {{ puppy.color1 }} / {{ puppy.color2 }}
+                    {% else %}
+                        {{ puppy.color1 }}
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Informacje o szczenięciu</h5>
@@ -38,10 +90,16 @@
                         <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                         <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                         <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                        <strong>Matka:</strong>                     
-                        {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i> {{ first_puppy.mother_name }}{% endif %}
-                        <strong>Ojciec:</strong> 
-                        {% if first_puppy.father_name %} | <i class="fas fa-paw"></i> {{ first_puppy.father_name }}{% endif %}
+                        <strong>Matka:</strong> {{ puppy.mother_name }}<br>
+                        <strong>Ojciec:</strong> {{ puppy.father_name }}<br>
+                        {% if puppy.color1 %}
+                        <strong>Kolory:</strong> 
+                        <span style="background-color: {{ puppy.color1 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle;"></span>
+                        {% if puppy.color2 %}
+                        <span style="background-color: {{ puppy.color2 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle; margin-left: 3px;"></span>
+                        {% endif %}
+                        <br>
+                        {% endif %}
                         <strong>Cena:</strong> {{ puppy.price }} PLN
                     </p>
                     
