@@ -28,37 +28,8 @@
                     <i class="fas fa-arrow-left"></i> Powrót do listy szczeniąt
                 </a>
             </div>
-        </div>
-        
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Informacje o szczenięciu</h5>
-                    <p class="card-text">
-                        <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
-                        <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                        <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                        <strong>Matka:</strong>                     
-                        {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i> {{ first_puppy.mother_name }}{% endif %}
-                        <strong>Ojciec:</strong> 
-                        {% if first_puppy.father_name %} | <i class="fas fa-paw"></i> {{ first_puppy.father_name }}{% endif %}
-                        <strong>Cena:</strong> {{ puppy.price }} PLN
-                    </p>
-                    
-                    {# Opisy #}
-                    <div class="content">
-                        {{ puppy.description|linebreaks }}
-                    </div>
-                    
-                    {% if puppy.certificates_gallery %}
-                        <div class="alert alert-success">
-                            <i class="fas fa-certificate"></i>
-                            Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
-                        </div>
-                        {% show_gallery puppy.certificates_gallery.id "mt-3" %}
-                    {% endif %}
-                    
-                    {% if puppy.is_available %}
+
+            {% if puppy.is_available %}
                     <div class="reservation-form-section mt-4 p-4 border rounded bg-light">
                         <h4 class="text-success mb-3">
                             <i class="fas fa-heart"></i> Szczeniak dostępny do rezerwacji
@@ -171,6 +142,37 @@
                     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                 }
                 </style>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Informacje o szczenięciu</h5>
+                    <p class="card-text">
+                        <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                        <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                        <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
+                        <strong>Matka:</strong>                     
+                        {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i> {{ first_puppy.mother_name }}{% endif %}
+                        <strong>Ojciec:</strong> 
+                        {% if first_puppy.father_name %} | <i class="fas fa-paw"></i> {{ first_puppy.father_name }}{% endif %}
+                        <strong>Cena:</strong> {{ puppy.price }} PLN
+                    </p>
+                    
+                    {# Opisy #}
+                    <div class="content">
+                        {{ puppy.description|linebreaks }}
+                    </div>
+                    
+                    {% if puppy.certificates_gallery %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-certificate"></i>
+                            Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                        </div>
+                        {% show_gallery puppy.certificates_gallery.id "mt-3" %}
+                    {% endif %}
+                    
+                    
                 </div>
             </div>
         </div>
