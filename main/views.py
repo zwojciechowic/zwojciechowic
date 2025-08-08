@@ -134,42 +134,54 @@ def contact_view(request):
             subject = form.cleaned_data['subject'].strip()
             message = form.cleaned_data['message'].strip()
             
+            # ZAPISZ WIADOMOŚĆ DO BAZY DANYCH
+            contact_message = ContactMessage.objects.create(
+                name=name,
+                email=email,
+                phone=phone,
+                subject=subject,
+                message=message,
+                is_read=False  # Domyślnie jako nieprzeczytana
+            )
+            
             # Przygotuj treść e-maila
             email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject}"
             email_message = f"""Nowa wiadomość z formularza kontaktowego na stronie hodowli:
 
-                Imię i nazwisko: {name}
-                Email: {email}
-                Telefon: {phone if phone else 'Nie podano'}
-                Temat: {subject}
+Imię i nazwisko: {name}
+Email: {email}
+Telefon: {phone if phone else 'Nie podano'}
+Temat: {subject}
 
-                Wiadomość:
-                {message}
+Wiadomość:
+{message}
 
-                ---
-                Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
-                """
+---
+Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
+ID wiadomości w systemie: {contact_message.id}
+"""
             
             try:
-                email = EmailMessage(
+                email_obj = EmailMessage(
                     subject=email_subject,
                     body=email_message,
                     from_email=settings.EMAIL_HOST_USER,
                     to=['zwojciechowic@gmail.com'],
                 )
-                email.send()
+                email_obj.send()
                 
                 messages.success(request, 'Wiadomość została wysłana pomyślnie!')
                 return redirect('contact')
                 
             except Exception as e:
-                messages.error(request, 'Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.')
+                # Nawet jeśli wysyłka maila się nie powiedzie, wiadomość jest już zapisana w bazie
+                messages.warning(request, 'Wiadomość została zapisana, ale wystąpił problem z wysyłką e-maila. Skontaktujemy się z Tobą wkrótce.')
                 print(f"Błąd wysyłania e-maila: {e}")
+                return redirect('contact')
     else:
         form = ContactForm()
     
     return render(request, 'contact.html', {'form': form})
-
 def about(request):
     about_page = AboutPage.objects.first()
     return render(request, 'about.html', {'about': about_page})
