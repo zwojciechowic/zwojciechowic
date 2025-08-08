@@ -2,15 +2,30 @@ from django import forms
 from .models import Reservation, ContactMessage
 
 class PuppyReservationForm(forms.ModelForm):
-    """Formularz rezerwacji dla konkretnego szczenięcia (bez wyboru szczenięcia)"""
     class Meta:
         model = Reservation
-        fields = ['customer_name', 'customer_email', 'customer_phone', 'message']
+        fields = ['customer_name', 'customer_email', 'customer_phone']
         widgets = {
-            'customer_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
-            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'customer_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Wpisz swoje imię i nazwisko',
+                'required': True
+            }),
+            'customer_email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Wpisz swój adres e-mail',
+                'required': True
+            }),
+            'customer_phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Wpisz swój numer telefonu',
+                'required': True
+            }),
+        }
+        labels = {
+            'customer_name': 'Imię i nazwisko',
+            'customer_email': 'E-mail',
+            'customer_phone': 'Telefon',
         }
 
 class ReservationForm(forms.ModelForm):
