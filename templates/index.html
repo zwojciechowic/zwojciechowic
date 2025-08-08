@@ -259,8 +259,8 @@
                             <small class="text-muted">
                                 <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                                 <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                <strong>Matka:</strong> {{ puppy.mother.name }}<br>
-                                <strong>Ojciec:</strong> {{ puppy.father.name }}
+                                {% if first_puppy.mother_name %} | <strong>Matka:</strong> {{ first_puppy.mother_name }}{% endif %}
+                                {% if first_puppy.father_name %} | <strong>Ojciec:</strong> {{ first_puppy.father_name }}{% endif %}
                             </small>
                         </div>
                         <p class="card-text text-muted flex-grow-1">{{ puppy.description|truncatewords:10 }}</p>

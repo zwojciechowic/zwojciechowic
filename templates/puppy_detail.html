@@ -38,8 +38,10 @@
                         <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                         <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                         <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                        <strong>Matka:</strong> <a href="{{ puppy.mother.get_absolute_url }}">{{ puppy.mother.name }}</a><br>
-                        <strong>Ojciec:</strong> <a href="{{ puppy.father.get_absolute_url }}">{{ puppy.father.name }}</a><br>
+                        <strong>Matka:</strong>                     
+                        {% if first_puppy.mother_name %} | <i class="fas fa-heart"></i> {{ first_puppy.mother_name }}{% endif %}
+                        <strong>Ojciec:</strong> 
+                        {% if first_puppy.father_name %} | <i class="fas fa-paw"></i> {{ first_puppy.father_name }}{% endif %}
                         <strong>Cena:</strong> {{ puppy.price }} PLN
                     </p>
                     
