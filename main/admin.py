@@ -286,8 +286,49 @@ class AboutPageAdmin(admin.ModelAdmin):
     created_info.short_description = "Status"
     
 class HodowlaAdminSite(AdminSite):
+    def get_app_list(self, request):
+        """
+        Sortuje aplikacje i modele w panelu administracyjnym
+        oraz ukrywa niepotrzebne modele
+        """
+        app_list = super().get_app_list(request)
+        
+        # Lista modeli do ukrycia
+        hidden_models = [
+            'BlogSection', 'Blog sections', 'Sekcje wpisu',
+            'AboutSections', 'About sections', 'Sekcje'
+        ]
+        
+        # Filtruj modele w aplikacji main
+        for app in app_list:
+            if app['app_label'] == 'main':
+                # Usuń ukryte modele
+                app['models'] = [
+                    model for model in app['models'] 
+                    if model['object_name'] not in hidden_models and 
+                       model['name'] not in hidden_models
+                ]
+                
+                # Sortowanie pozostałych modeli
+                app['models'].sort(key=lambda x: {
+                    'BlogPost': 1,
+                    'Wpisy na blogu': 1,
+                    'Dog': 2,
+                    'Psy': 2,
+                    'Puppy': 3,
+                    'Szczenięta': 3,
+                    'Reservation': 4,
+                    'Rezerwacje': 4,
+                    'ContactMessage': 5,
+                    'Wiadomości kontaktowe': 5,
+                    'AboutPage': 6,
+                    'Strona O nas': 6
+                }.get(x['object_name'], 99))
+        
+        return app_list
+
     def index(self, request, extra_context=None):
-        """Custom dashboard z licznikami - ulepszona wersja"""
+        """Custom dashboard z licznikami"""
         extra_context = extra_context or {}
         
         try:
@@ -305,25 +346,20 @@ class HodowlaAdminSite(AdminSite):
             total_messages = ContactMessage.objects.count()
             unread_messages = ContactMessage.objects.filter(is_read=False).count()
             
-            # Dodatkowe statystyki (opcjonalnie)
+            # Dodatkowe statystyki
             total_puppies = Puppy.objects.count()
             sold_puppies = total_puppies - puppies_count
             draft_posts = BlogPost.objects.filter(is_published=False).count()
             breeding_dogs = Dog.objects.filter(is_breeding=True).count()
             
             extra_context.update({
-                # Podstawowe dane dla kart
                 'dogs_count': dogs_count,
                 'puppies_count': puppies_count,
                 'posts_count': posts_count,
                 'reservations_count': total_reservations,
                 'about_exists': about_exists,
-                
-                # Dane dla wiadomości
                 'messages_count': total_messages,
                 'unread_messages': unread_messages,
-                
-                # Dodatkowe szczegóły
                 'pending_reservations': pending_reservations,
                 'confirmed_reservations': confirmed_reservations,
                 'sold_puppies': sold_puppies,
@@ -332,7 +368,6 @@ class HodowlaAdminSite(AdminSite):
             })
             
         except Exception as e:
-            # W przypadku błędu (np. przy pierwszym uruchomieniu bez migracji)
             print(f"Błąd w dashboard: {e}")
             extra_context.update({
                 'dogs_count': 0,
