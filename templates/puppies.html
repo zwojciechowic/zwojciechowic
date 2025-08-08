@@ -219,8 +219,8 @@
                             <div class="card-details mb-3">
                                 <small class="text-muted">
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                    {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                                    {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                                    &#9792; {{ puppy.mother_name }} | 
+                                    &#9794; {{ puppy.father_name }}
                                     {% if puppy.color1 %}
                                     <strong>Kolory:</strong> 
                                     <span style="background-color: {{ puppy.color1 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle;"></span>
