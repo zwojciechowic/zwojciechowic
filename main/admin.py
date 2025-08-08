@@ -102,9 +102,9 @@ class PuppyAdmin(admin.ModelAdmin):
         ('Podstawowe informacje', {
             'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
         }),
-        ('Wygląd', {
-            'fields': ('primary_color', 'secondary_color'),
-            'description': 'Określ kolory szczeniaka'
+        ('Kolory', {
+            'fields': ('color1', 'color2'),
+            'description': 'Wybierz kolory szczeniaka'
         }),
         ('Rodzice', {
             'fields': ('mother_name', 'father_name'),
@@ -150,7 +150,6 @@ class PuppyAdmin(admin.ModelAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
 
 @admin.register(BlogSection)
 class BlogSectionAdmin(admin.ModelAdmin):
