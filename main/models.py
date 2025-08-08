@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils import timezone
 from django.contrib.auth.models import User
+from colorfield.fields import ColorField
 from django.utils.translation import gettext_lazy as _
 
 class BlogSection(models.Model):
@@ -103,19 +104,16 @@ class Puppy(models.Model):
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
     
     # Pola kolorów - hex values dla color pickera
-    color1 = models.CharField(
-        max_length=7, 
+    color1 = ColorField(
+        default='#FFFFFF',
         verbose_name='Kolor 1',
-        blank=True,
-        help_text='Pierwszy kolor (hex)',
-        default='#FFFFFF'
+        help_text='Pierwszy kolor'
     )
-    color2 = models.CharField(
-        max_length=7, 
+    color2 = ColorField(
+        default='#FFFFFF',
         verbose_name='Kolor 2',
         blank=True,
-        help_text='Drugi kolor (hex, opcjonalny)',
-        default=''
+        help_text='Drugi kolor (opcjonalny)'
     )
     
     # Pola mother i father jako zwykłe pola tekstowe zamiast ForeignKey
