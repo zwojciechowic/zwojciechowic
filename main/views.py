@@ -93,10 +93,59 @@ def puppy_detail(request, pk):
     if request.method == 'POST' and puppy.is_available:
         form = PuppyReservationForm(request.POST)
         if form.is_valid():
+            # Zapisz rezerwację do bazy danych
             reservation = form.save(commit=False)
             reservation.puppy = puppy
+            reservation.message = f"Rezerwacja złożona przez formularz na stronie szczenięcia {puppy.name}"
             reservation.save()
-            messages.success(request, f'Rezerwacja szczenięcia {puppy.name} z miotu {puppy.litter} została wysłana pomyślnie!')
+            
+            # Przygotuj dane do e-maila
+            customer_name = form.cleaned_data['customer_name']
+            customer_email = form.cleaned_data['customer_email']
+            customer_phone = form.cleaned_data['customer_phone']
+            
+            # Wyślij e-mail z powiadomieniem o rezerwacji
+            email_subject = f"Nowa rezerwacja szczenięcia: {puppy.name} z miotu {puppy.litter}"
+            email_message = f"""Nowa rezerwacja szczenięcia została złożona:
+
+SZCZENIAK:
+Imię: {puppy.name}
+Miot: {puppy.litter}
+Płeć: {puppy.get_gender_display()}
+Cena: {puppy.price} zł
+Rodzice: {puppy.mother_name} x {puppy.father_name}
+
+DANE KLIENTA:
+Imię i nazwisko: {customer_name}
+E-mail: {customer_email}
+Telefon: {customer_phone}
+
+---
+Rezerwacja została automatycznie zapisana w systemie.
+ID rezerwacji: {reservation.id}
+Data złożenia: {reservation.created_at.strftime('%d.%m.%Y %H:%M')}
+
+Aby potwierdzić lub odrzucić rezerwację, zaloguj się do panelu administracyjnego.
+"""
+            
+            try:
+                from django.core.mail import EmailMessage
+                from django.conf import settings
+                
+                email = EmailMessage(
+                    subject=email_subject,
+                    body=email_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=['zwojciechowic@gmail.com'],
+                )
+                email.send()
+                
+                messages.success(request, f'Rezerwacja szczenięcia {puppy.name} z miotu {puppy.litter} została wysłana pomyślnie! Skontaktujemy się z Tobą wkrótce.')
+                
+            except Exception as e:
+                messages.warning(request, f'Rezerwacja została zapisana, ale wystąpił problem z wysyłką e-maila. Skontaktujemy się z Tobą wkrótce.')
+                print(f"Błąd wysyłania e-maila rezerwacji: {e}")
+            
             return redirect('puppy_detail', pk=puppy.pk)
     else:
         form = PuppyReservationForm()
