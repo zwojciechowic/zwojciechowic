@@ -9,6 +9,58 @@
 
 {% block content %}
 <div class="hero-section">
+    <!-- Nawigacja między wpisami -->
+    <div class="blog-navigation mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                {% if previous_post %}
+                    <a href="{% url 'blog_detail' previous_post.slug %}" class="btn btn-outline-primary btn-nav-prev">
+                        <i class="fas fa-chevron-left"></i>
+                        <div class="nav-text">
+                            <small class="text-muted d-block">Poprzedni</small>
+                            <span class="nav-title">{{ previous_post.title|truncatechars:30 }}</span>
+                        </div>
+                    </a>
+                {% else %}
+                    <div class="btn btn-nav-disabled">
+                        <i class="fas fa-chevron-left text-muted"></i>
+                        <div class="nav-text">
+                            <small class="text-muted d-block">Brak</small>
+                            <span class="text-muted">poprzedniego</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6 text-center">
+                <a href="{% url 'home' %}" class="btn btn-primary btn-nav-home">
+                    <i class="fas fa-home"></i>
+                    <span>Wszystkie wpisy</span>
+                </a>
+            </div>
+            
+            <div class="col-md-3 text-end">
+                {% if next_post %}
+                    <a href="{% url 'blog_detail' next_post.slug %}" class="btn btn-outline-primary btn-nav-next">
+                        <div class="nav-text">
+                            <small class="text-muted d-block">Następny</small>
+                            <span class="nav-title">{{ next_post.title|truncatechars:30 }}</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <div class="btn btn-nav-disabled">
+                        <div class="nav-text">
+                            <small class="text-muted d-block">Brak</small>
+                            <span class="text-muted">następnego</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-muted"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-8">
             <h1 class="display-4">{{ post.title }}</h1>
@@ -47,10 +99,24 @@
                 {% endif %}
             </div>
             
-            <div class="mt-4">
-                <a href="{% url 'home' %}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Powrót do strony głównej
-                </a>
+            <!-- Nawigacja na dole strony -->
+            <div class="blog-navigation-bottom mt-5 pt-4 border-top">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {% if previous_post %}
+                            <a href="{% url 'blog_detail' previous_post.slug %}" class="btn btn-outline-secondary btn-block">
+                                <i class="fas fa-arrow-left"></i> {{ previous_post.title|truncatechars:40 }}
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3 text-end">
+                        {% if next_post %}
+                            <a href="{% url 'blog_detail' next_post.slug %}" class="btn btn-outline-secondary btn-block">
+                                {{ next_post.title|truncatechars:40 }} <i class="fas fa-arrow-right"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -79,7 +145,7 @@
                     
                     {% if post.sections.all %}
                         <hr>
-                        <h5 class="card-title text-dark">{{ post.title }}</h5>
+                        <h5 class="card-title text-dark">Spis treści</h5>
                         <ul class="list-unstyled small">
                             {% for section in post.sections.all %}
                                 <li class="mb-1">
@@ -100,6 +166,89 @@
 </div>
 
 <style>
+/* Style dla nawigacji między wpisami */
+.blog-navigation {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.btn-nav-prev, .btn-nav-next, .btn-nav-home {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    min-height: 70px;
+}
+
+.btn-nav-prev {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #dee2e6;
+    justify-content: flex-start;
+}
+
+.btn-nav-next {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #dee2e6;
+    justify-content: flex-end;
+}
+
+.btn-nav-home {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    justify-content: center;
+}
+
+.btn-nav-prev:hover, .btn-nav-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,123,255,0.2);
+    border-color: #007bff;
+}
+
+.btn-nav-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+}
+
+.btn-nav-disabled {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    min-height: 70px;
+    cursor: not-allowed;
+}
+
+.nav-text {
+    text-align: left;
+}
+
+.btn-nav-next .nav-text {
+    text-align: right;
+}
+
+.nav-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    color: #333;
+}
+
+.btn-nav-prev i, .btn-nav-next i {
+    font-size: 1.2rem;
+    margin: 0 10px;
+}
+
+.btn-nav-home i {
+    margin-right: 8px;
+}
+
 /* Style dla sekcji wpisu */
 .blog-section {
     margin-bottom: 2rem;
@@ -121,6 +270,24 @@
     border: none;
     border-top: 1px dashed #ddd;
     margin: 2rem 0;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .blog-navigation .col-md-3, 
+    .blog-navigation .col-md-6 {
+        margin-bottom: 15px;
+    }
+    
+    .btn-nav-prev, .btn-nav-next, .btn-nav-home {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .nav-text {
+        text-align: center !important;
+    }
 }
 </style>
 {% endblock %}

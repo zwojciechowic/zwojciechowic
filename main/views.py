@@ -30,11 +30,36 @@ def home(request):
     }
     
     return render(request, 'index.html', context)
-def blog_detail(request, slug):
-    """Szczegóły wpisu na blogu"""
-    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
-    return render(request, 'blog_detail.html', {'post': post})
 
+def blog_detail(request, slug):
+    """Szczegóły wpisu na blogu z nawigacją poprzedni/następny"""
+    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    
+    # Pobierz poprzedni wpis (starszy)
+    try:
+        previous_post = BlogPost.objects.filter(
+            created_at__lt=post.created_at,
+            is_published=True
+        ).order_by('-created_at').first()
+    except BlogPost.DoesNotExist:
+        previous_post = None
+    
+    # Pobierz następny wpis (nowszy)
+    try:
+        next_post = BlogPost.objects.filter(
+            created_at__gt=post.created_at,
+            is_published=True
+        ).order_by('created_at').first()
+    except BlogPost.DoesNotExist:
+        next_post = None
+    
+    context = {
+        'post': post,
+        'previous_post': previous_post,
+        'next_post': next_post,
+    }
+    
+    return render(request, 'blog_detail.html', context)
 def about(request):
     """Strona o nas"""
     return render(request, 'about.html')
