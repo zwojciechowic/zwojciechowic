@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'gallery',
+    'colorfield',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
