@@ -5,10 +5,12 @@ from .models import Gallery, Photo
 class PhotoInline(admin.TabularInline):
     model = Photo
     fields = ['image', 'order']
+    extra = 1
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'photo_count']
+    list_display = ['title', 'created_at', 'photo_count']
+    search_fields = ['title']
     inlines = [PhotoInline]
     
     def photo_count(self, obj):
