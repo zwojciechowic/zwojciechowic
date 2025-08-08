@@ -8,58 +8,20 @@
 {% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <!-- Nawigacja między wpisami -->
-    <div class="blog-navigation mb-4">
-        <div class="row align-items-center">
-            <div class="col-md-3">
-                {% if previous_post %}
-                    <a href="{% url 'blog_detail' previous_post.slug %}" class="btn btn-outline-primary btn-nav-prev">
-                        <i class="fas fa-chevron-left"></i>
-                        <div class="nav-text">
-                            <small class="text-muted d-block">Poprzedni</small>
-                            <span class="nav-title">{{ previous_post.title|truncatechars:30 }}</span>
-                        </div>
-                    </a>
-                {% else %}
-                    <div class="btn btn-nav-disabled">
-                        <i class="fas fa-chevron-left text-muted"></i>
-                        <div class="nav-text">
-                            <small class="text-muted d-block">Brak</small>
-                            <span class="text-muted">poprzedniego</span>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            
-            <div class="col-md-6 text-center">
-                <a href="{% url 'home' %}" class="btn btn-primary btn-nav-home">
-                    <i class="fas fa-home"></i>
-                    <span>Wszystkie wpisy</span>
-                </a>
-            </div>
-            
-            <div class="col-md-3 text-end">
-                {% if next_post %}
-                    <a href="{% url 'blog_detail' next_post.slug %}" class="btn btn-outline-primary btn-nav-next">
-                        <div class="nav-text">
-                            <small class="text-muted d-block">Następny</small>
-                            <span class="nav-title">{{ next_post.title|truncatechars:30 }}</span>
-                        </div>
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                {% else %}
-                    <div class="btn btn-nav-disabled">
-                        <div class="nav-text">
-                            <small class="text-muted d-block">Brak</small>
-                            <span class="text-muted">następnego</span>
-                        </div>
-                        <i class="fas fa-chevron-right text-muted"></i>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+<div class="hero-section position-relative">
+    
+    <!-- OVERLAY NAVIGATION - NAŁOŻONE NA HERO -->
+    {% if previous_post %}
+        <a href="{% url 'blog_detail' previous_post.slug %}" class="carousel-nav carousel-nav-prev" title="{{ previous_post.title }}">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+    {% endif %}
+    
+    {% if next_post %}
+        <a href="{% url 'blog_detail' next_post.slug %}" class="carousel-nav carousel-nav-next" title="{{ next_post.title }}">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    {% endif %}
 
     <div class="row">
         <div class="col-lg-8">
@@ -99,24 +61,10 @@
                 {% endif %}
             </div>
             
-            <!-- Nawigacja na dole strony -->
-            <div class="blog-navigation-bottom mt-5 pt-4 border-top">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        {% if previous_post %}
-                            <a href="{% url 'blog_detail' previous_post.slug %}" class="btn btn-outline-secondary btn-block">
-                                <i class="fas fa-arrow-left"></i> {{ previous_post.title|truncatechars:40 }}
-                            </a>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6 mb-3 text-end">
-                        {% if next_post %}
-                            <a href="{% url 'blog_detail' next_post.slug %}" class="btn btn-outline-secondary btn-block">
-                                {{ next_post.title|truncatechars:40 }} <i class="fas fa-arrow-right"></i>
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
+            <div class="mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Powrót do strony głównej
+                </a>
             </div>
         </div>
         
@@ -159,6 +107,32 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
+                    
+                    <!-- Nawigacyjny podgląd -->
+                    <hr>
+                    <div class="navigation-preview">
+                        <h6 class="text-muted">Nawigacja</h6>
+                        <div class="row text-center small">
+                            <div class="col-6">
+                                {% if previous_post %}
+                                    <i class="fas fa-arrow-left text-primary"></i>
+                                    <div class="text-truncate">{{ previous_post.title|truncatechars:20 }}</div>
+                                {% else %}
+                                    <i class="fas fa-arrow-left text-muted"></i>
+                                    <div class="text-muted">Brak poprzedniego</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                {% if next_post %}
+                                    <i class="fas fa-arrow-right text-primary"></i>
+                                    <div class="text-truncate">{{ next_post.title|truncatechars:20 }}</div>
+                                {% else %}
+                                    <i class="fas fa-arrow-right text-muted"></i>
+                                    <div class="text-muted">Brak następnego</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,87 +140,57 @@
 </div>
 
 <style>
-/* Style dla nawigacji między wpisami */
-.blog-navigation {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+/* OVERLAY NAVIGATION - NAŁOŻONE STRZAŁKI */
+.hero-section {
+    position: relative;
 }
 
-.btn-nav-prev, .btn-nav-next, .btn-nav-home {
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    min-height: 70px;
-}
-
-.btn-nav-prev {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border: 2px solid #dee2e6;
-    justify-content: flex-start;
-}
-
-.btn-nav-next {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border: 2px solid #dee2e6;
-    justify-content: flex-end;
-}
-
-.btn-nav-home {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.7);
     color: white;
-    justify-content: center;
-}
-
-.btn-nav-prev:hover, .btn-nav-next:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,123,255,0.2);
-    border-color: #007bff;
-}
-
-.btn-nav-home:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-}
-
-.btn-nav-disabled {
-    background: #f8f9fa;
-    border: 2px solid #dee2e6;
-    border-radius: 10px;
-    padding: 12px 20px;
     display: flex;
     align-items: center;
-    min-height: 70px;
-    cursor: not-allowed;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.nav-text {
-    text-align: left;
+.carousel-nav:hover {
+    background: rgba(0, 123, 255, 0.9);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
+    text-decoration: none;
 }
 
-.btn-nav-next .nav-text {
-    text-align: right;
+.carousel-nav-prev {
+    left: 20px;
 }
 
-.nav-title {
-    font-weight: 600;
-    font-size: 0.9rem;
-    line-height: 1.2;
-    color: #333;
+.carousel-nav-next {
+    right: 20px;
 }
 
-.btn-nav-prev i, .btn-nav-next i {
-    font-size: 1.2rem;
-    margin: 0 10px;
+.carousel-nav i {
+    font-size: 18px;
 }
 
-.btn-nav-home i {
-    margin-right: 8px;
+/* Animacja pojawiania się */
+.carousel-nav {
+    opacity: 0.7;
+}
+
+.carousel-nav:hover {
+    opacity: 1;
 }
 
 /* Style dla sekcji wpisu */
@@ -272,26 +216,78 @@
     margin: 2rem 0;
 }
 
+.navigation-preview {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+}
+
 /* Responsywność */
 @media (max-width: 768px) {
-    .blog-navigation .col-md-3, 
-    .blog-navigation .col-md-6 {
-        margin-bottom: 15px;
+    .carousel-nav {
+        width: 45px;
+        height: 45px;
+        left: 10px;
     }
     
-    .btn-nav-prev, .btn-nav-next, .btn-nav-home {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
+    .carousel-nav-next {
+        right: 10px;
     }
     
-    .nav-text {
-        text-align: center !important;
+    .carousel-nav i {
+        font-size: 14px;
     }
+}
+
+/* Efekt fade in dla całej hero sekcji */
+.hero-section {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Dodatkowy efekt - pulsowanie gdy mouse over na hero */
+.hero-section:hover .carousel-nav {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
 }
 </style>
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
+    
+    <script>
+    // Dodatkowa funkcjonalność - nawigacja klawiszami strzałek
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+            const prevLink = document.querySelector('.carousel-nav-prev');
+            if (prevLink) {
+                window.location.href = prevLink.href;
+            }
+        } else if (e.key === 'ArrowRight') {
+            const nextLink = document.querySelector('.carousel-nav-next');
+            if (nextLink) {
+                window.location.href = nextLink.href;
+            }
+        }
+    });
+    
+    // Animacja hover na hero section
+    document.querySelector('.hero-section').addEventListener('mouseenter', function() {
+        this.classList.add('hero-hovered');
+    });
+    
+    document.querySelector('.hero-section').addEventListener('mouseleave', function() {
+        this.classList.remove('hero-hovered');
+    });
+    </script>
 {% endblock %}

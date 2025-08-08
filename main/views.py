@@ -30,27 +30,34 @@ def home(request):
     }
     
     return render(request, 'index.html', context)
-
 def blog_detail(request, slug):
-    """Szczegóły wpisu na blogu z nawigacją poprzedni/następny"""
+    """Szczegóły wpisu na blogu z nawigacją karuzeli (pętla)"""
     post = get_object_or_404(BlogPost, slug=slug, is_published=True)
     
-    # Pobierz poprzedni wpis (starszy)
-    try:
-        previous_post = BlogPost.objects.filter(
-            created_at__lt=post.created_at,
-            is_published=True
-        ).order_by('-created_at').first()
-    except BlogPost.DoesNotExist:
-        previous_post = None
+    # Pobierz wszystkie opublikowane wpisy w kolejności chronologicznej
+    all_posts = BlogPost.objects.filter(is_published=True).order_by('-created_at')
     
-    # Pobierz następny wpis (nowszy)
-    try:
-        next_post = BlogPost.objects.filter(
-            created_at__gt=post.created_at,
-            is_published=True
-        ).order_by('created_at').first()
-    except BlogPost.DoesNotExist:
+    # Znajdź indeks aktualnego wpisu
+    current_index = None
+    for i, p in enumerate(all_posts):
+        if p.id == post.id:
+            current_index = i
+            break
+    
+    # Logika karuzeli - jeśli jesteśmy na końcu, idź na początek i odwrotnie
+    if current_index is not None:
+        total_posts = len(all_posts)
+        
+        # Poprzedni wpis (z pętlą)
+        prev_index = (current_index - 1) % total_posts
+        previous_post = all_posts[prev_index]
+        
+        # Następny wpis (z pętlą) 
+        next_index = (current_index + 1) % total_posts
+        next_post = all_posts[next_index]
+    else:
+        # Fallback gdyby coś poszło nie tak
+        previous_post = None
         next_post = None
     
     context = {
