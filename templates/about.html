@@ -31,6 +31,12 @@
             {% endif %}
             
             <div class="card">
+                {% if about.certificates_gallery %}
+                    <div class="certificates-section mt-5">
+                        <h3>Nasze certyfikaty i nagrody</h3>
+                        {% show_gallery about.certificates_gallery.id %}
+                    </div>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{% trans "Kontakt" %}</h5>
                     <div class="card-text">

@@ -205,6 +205,16 @@ class AboutPage(models.Model):
         upload_to='about/',
         blank=True
     )
+    # DODANE: Galeria certyfikatów
+    certificates_gallery = models.ForeignKey(
+        'gallery.Gallery', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        verbose_name='Galeria certyfikatów',
+        related_name='about_certificates',
+        help_text='Certyfikaty hodowli, nagrody, dyplomy itp.'
+    )
 
     class Meta:
         verbose_name = "Strona O nas"
@@ -214,6 +224,22 @@ class AboutPage(models.Model):
         return "Strona 'O nas'"
 
 class AboutSections(models.Model):
+    about_page = models.ForeignKey(
+        AboutPage,
+        on_delete=models.CASCADE,
+        related_name='sections'
+    )
+    title = models.CharField("Nagłówek H3", max_length=200, blank=True)
+    content = models.TextField("Treść paragrafu")
+    order = models.PositiveIntegerField("Kolejność", default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Sekcja"
+        verbose_name_plural = "Sekcje"
+
+    def __str__(self):
+        return f"Sekcja {self.order}"
     about_page = models.ForeignKey(
         AboutPage,
         on_delete=models.CASCADE,

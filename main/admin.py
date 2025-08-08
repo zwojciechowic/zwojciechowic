@@ -258,10 +258,32 @@ class AboutSectionInline(admin.TabularInline):
 @admin.register(AboutPage)
 class AboutPageAdmin(admin.ModelAdmin):
     inlines = [AboutSectionInline]
-    fields = ('main_title', 'top_image', 'quote_text')
-
+    list_display = ['main_title', 'certificates_count', 'created_info']
+    
+    fieldsets = (
+        ('Podstawowe informacje', {
+            'fields': ('main_title', 'top_image', 'quote_text')
+        }),
+        ('Certyfikaty', {
+            'fields': ('certificates_gallery',),
+            'description': 'Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp.'
+        }),
+    )
+    
     def has_add_permission(self, request):
         return not AboutPage.objects.exists()
+    
+    def certificates_count(self, obj):
+        """Liczba certyfikatów w galerii"""
+        if obj.certificates_gallery:
+            return obj.certificates_gallery.photos.count()
+        return 0
+    certificates_count.short_description = "Certyfikaty"
+    
+    def created_info(self, obj):
+        """Informacja o istnieniu strony"""
+        return "✓ Skonfigurowana"
+    created_info.short_description = "Status"
     
 class HodowlaAdminSite(AdminSite):
     def index(self, request, extra_context=None):
