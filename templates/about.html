@@ -32,12 +32,6 @@
             {% endif %}
             
             <div class="card">
-                {% if about.certificates_gallery %}
-                    <div class="certificates-section mt-5">
-                        <h3>Nasze certyfikaty i nagrody</h3>
-                        {% show_gallery about.certificates_gallery.id %}
-                    </div>
-                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{% trans "Kontakt" %}</h5>
                     <div class="card-text">
@@ -45,6 +39,14 @@
                         <p>+48 533 498 384</p>
                         <p>zwojciechowic@gmail.com</p>
                     </div>
+                    
+                    {% if about.certificates_gallery %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-certificate"></i>
+                            Posiadamy {{ about.certificates_gallery.photos.count }} certyfikat{{ about.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                        </div>
+                        {% show_gallery about.certificates_gallery.id "mt-3" %}
+                    {% endif %}
                 </div>
             </div>
         </div>
