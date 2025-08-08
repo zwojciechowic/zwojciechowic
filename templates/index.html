@@ -230,11 +230,10 @@
                     <div class="litter-bar">
                         <h6>Miot {{ puppy.litter }}</h6>
                         <div class="litter-info-small">
-                            <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
-                            <i class="fas fa-heart"></i> {{ puppy.mother.name }} | 
-                            <i class="fas fa-paw"></i> {{ puppy.father.name }}
+                            <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }}
+                            {% if puppy.mother_name %} | <i class="fas fa-heart"></i> {{ puppy.mother_name }}{% endif %}
+                            {% if puppy.father_name %} | <i class="fas fa-paw"></i> {{ puppy.father_name }}{% endif %}
                         </div>
-                    </div>
                     
                     <!-- Zdjęcie z galerią -->
                     <div class="card-img-container position-relative">
