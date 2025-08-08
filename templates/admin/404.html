@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>404 – Strona nie znaleziona</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="error-page">
+    <header class="header">
+        <a href="/" class="logo">z Wojciechowic</a>
+        <nav class="nav">
+            <a href="/">Strona Główna</a>
+            <a href="/o-nas/">O nas</a>
+            <a href="/nasze-psy/">Nasze psy</a>
+            <a href="/szczeniaki/">Szczeniaki</a>
+            <a href="/hotel/">Hotel</a>
+            <a href="/kontakt/">Kontakt</a>
+        </nav>
+    </header>
+    <main class="content">
+        <h1>404</h1>
+        <p>Ups… Nie znaleziono strony, której szukasz.</p>
+        <a href="/" class="btn">Wróć na stronę główną</a>
+    </main>
+    <footer class="footer">
+        <p>© 2025 Hodowla z Wojciechowic. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+</body>
+</html>
