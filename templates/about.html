@@ -43,15 +43,17 @@
                         <p>+48 533 498 384</p>
                         <p>zwojciechowic@gmail.com</p>
                     </div>
-                    
-                    {% if about.certificates_gallery %}
+                </div>
+                
+                {% if about.certificates_gallery %}
+                    <div class="card-body">
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
                             Hodowla posiada {{ about.certificates_gallery.photos.count }} certyfikat{{ about.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
                         {% show_gallery about.certificates_gallery.id "mt-3" %}
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
