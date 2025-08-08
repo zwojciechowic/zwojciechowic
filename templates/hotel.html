@@ -16,11 +16,13 @@
             font-family: 'Arial', sans-serif;
         }
         
+        {% load static %}
+
         .hotel-container {
             position: relative;
             height: 100vh;
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                        url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+                        url('{% static "img/view-7.jpeg" %}') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
