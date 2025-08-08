@@ -22,14 +22,6 @@ class DogAdminForm(forms.ModelForm):
     class Media:
         js = ('js/admin_image_preview.js',)
 
-class PuppyAdminForm(forms.ModelForm):
-    class Meta:
-        model = Puppy
-        fields = '__all__'
-    
-    class Media:
-        js = ('js/admin_image_preview.js',)
-
 class BlogPostAdminForm(forms.ModelForm):
     class Meta:
         model = BlogPost
@@ -76,9 +68,28 @@ class DogAdmin(admin.ModelAdmin):
     certificates_count.short_description = "Certyfikaty"
 
 
+class ColorWidget(forms.TextInput):
+    """Custom widget dla color pickera"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attrs.update({
+            'type': 'color',
+            'style': 'width: 60px; height: 40px; border: none; cursor: pointer;'
+        })
+
+class PuppyAdminForm(forms.ModelForm):
+    class Meta:
+        model = Puppy
+        fields = '__all__'
+        widgets = {
+            'color1': ColorWidget(),
+            'color2': ColorWidget(),
+        }
+
 @admin.register(Puppy)
 class PuppyAdmin(admin.ModelAdmin):
-    list_display = ['litter', 'name', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
+    form = PuppyAdminForm
+    list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother_name', 'father_name']
     search_fields = ['name', 'litter', 'mother_name', 'father_name']
     list_editable = ['is_available', 'price']
@@ -91,6 +102,10 @@ class PuppyAdmin(admin.ModelAdmin):
         ('Podstawowe informacje', {
             'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
         }),
+        ('Wygląd', {
+            'fields': ('primary_color', 'secondary_color'),
+            'description': 'Określ kolory szczeniaka'
+        }),
         ('Rodzice', {
             'fields': ('mother_name', 'father_name'),
             'description': 'Wpisz imiona rodziców - nie będą tworzone nowe rekordy psów w bazie danych'
@@ -102,6 +117,19 @@ class PuppyAdmin(admin.ModelAdmin):
             'fields': ('photo_gallery', 'certificates_gallery')
         }),
     )
+    
+    def color_display_admin(self, obj):
+        """Wyświetlanie kolorów w panelu admina z preview"""
+        colors_html = ""
+        if obj.color1:
+            colors_html += f'<span style="background-color: {obj.color1}; width: 20px; height: 20px; display: inline-block; border: 1px solid #ccc; margin-right: 5px; vertical-align: middle;"></span>'
+        if obj.color2:
+            colors_html += f'<span style="background-color: {obj.color2}; width: 20px; height: 20px; display: inline-block; border: 1px solid #ccc; margin-right: 5px; vertical-align: middle;"></span>'
+        
+        if colors_html:
+            return format_html(colors_html + f' {obj.color_display}')
+        return "Nie określono"
+    color_display_admin.short_description = "Kolory"
     
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo
@@ -122,6 +150,7 @@ class PuppyAdmin(admin.ModelAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
+
 
 @admin.register(BlogSection)
 class BlogSectionAdmin(admin.ModelAdmin):

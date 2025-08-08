@@ -97,9 +97,33 @@ class Dog(models.Model):
             return self.photo_gallery.photos.first()
         return None
 
+    @property
+    def color_display(self):
+        """Wyświetlanie kolorów w czytelnej formie"""
+        if self.color1 and self.color2:
+            return f"{self.color1}/{self.color2}"
+        elif self.color1:
+            return self.color1
+        return "Nie określono"# models.py
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
+    
+    # Pola kolorów - hex values dla color pickera
+    color1 = models.CharField(
+        max_length=7, 
+        verbose_name='Kolor 1',
+        blank=True,
+        help_text='Pierwszy kolor (hex)',
+        default='#FFFFFF'
+    )
+    color2 = models.CharField(
+        max_length=7, 
+        verbose_name='Kolor 2',
+        blank=True,
+        help_text='Drugi kolor (hex, opcjonalny)',
+        default=''
+    )
     
     # Pola mother i father jako zwykłe pola tekstowe zamiast ForeignKey
     mother_name = models.CharField(
@@ -151,7 +175,14 @@ class Puppy(models.Model):
         elif self.father_name:
             parent_info = f" (ojciec: {self.father_name})"
         
-        return f"{self.litter}-{self.name} - {self.get_gender_display()}{parent_info}"
+        # Dodanie informacji o kolorach do wyświetlania
+        color_info = ""
+        if self.color1:
+            color_info = f" - {self.color1}"
+            if self.color2:
+                color_info += f"/{self.color2}"
+        
+        return f"{self.litter}-{self.name} - {self.get_gender_display()}{color_info}{parent_info}"
     
     @property
     def main_photo(self):
@@ -159,6 +190,16 @@ class Puppy(models.Model):
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
+    
+    @property
+    def color_display(self):
+        """Wyświetlanie kolorów w czytelnej formie"""
+        if self.primary_color and self.secondary_color:
+            return f"{self.get_primary_color_display()}/{self.get_secondary_color_display()}"
+        elif self.primary_color:
+            return self.get_primary_color_display()
+        return "Nie określono"
+
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
     customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')
