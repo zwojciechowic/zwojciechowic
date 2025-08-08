@@ -2,6 +2,10 @@
 {% load gallery_tags %}
 {% load i18n static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="hero-section">
     <h1 class="display-4 mb-4">{% trans "O nas" %}</h1>
@@ -52,4 +56,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}
