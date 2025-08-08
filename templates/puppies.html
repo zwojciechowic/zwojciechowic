@@ -221,14 +221,6 @@
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                                     &#9792; {{ puppy.mother_name }} | 
                                     &#9794; {{ puppy.father_name }}
-                                    {% if puppy.color1 %}
-                                    <strong>Kolory:</strong> 
-                                    <span style="background-color: {{ puppy.color1 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle;"></span>
-                                    {% if puppy.color2 %}
-                                    <span style="background-color: {{ puppy.color2 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle; margin-left: 3px;"></span>
-                                    {% endif %}
-                                    <br>
-                                    {% endif %}
                                     <strong>Cena:</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>
