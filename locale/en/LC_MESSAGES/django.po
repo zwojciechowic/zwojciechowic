@@ -18,108 +18,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/base.html:7 templates/base.html:52 templates/base.html:120
-#: templates/base.html:140
+
+
+
+### NAVBAR
 msgid "z Wojciechowic"
 msgstr "z Wojciechowic"
 
-#: templates/base.html:59
 msgid "Strona Główna"
 msgstr "Main Page"
 
-#: templates/base.html:62 templates/base.html:131
 msgid "O nas"
 msgstr "About us"
 
-#: templates/base.html:65 templates/base.html:132
 msgid "Nasze psy"
 msgstr "Our dogs"
 
-#: templates/base.html:68 templates/base.html:133
 msgid "Szczeniaki"
 msgstr "Puppies"
 
-#: templates/base.html:71
 msgid "Rezerwacje"
 msgstr "Reservations"
 
-#: templates/base.html:74 templates/base.html:124 templates/base.html:134
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:87
 msgid "Polski"
 msgstr "Polish"
 
-#: templates/base.html:94
 msgid "Angielski"
 msgstr "English"
 
-#: templates/base.html:121
+
+
+### STRONA GLOWNA
+msgid "Hodowla Owczarków - Nasza Wiejska Pasja"
+msgstr "Shepherd Breeding – Our Rural Passion"
+
+msgid 'W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku.'
+msgstr 'In the heart of a picturesque village, amidst green meadows and the murmur of trees and the river, we breed German Shepherds and Old German Shepherds with true love and devotion. Our dogs are not just pets – they are family members, raised in an atmosphere of trust, care, and respect.'
+
+msgid '"Życie w harmonii i spokoju"'
+msgstr '"A Life in Harmony and Peace"'
+
+msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
+msgstr "Our shepherds grow up in a rural home, where they have the freedom to run and play, while also learning obedience and cooperation with their humans. Daily walks through the fields and meadows make them not only athletic, but also balanced and happy."
+
+msgid '❤️ „Hodowla z sercem"'
+msgstr '❤️ „Breeding with Heart"'
+
+msgid 'W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane.'
+msgstr 'This year, we begin our puppy adventure. Each puppy will be lovingly cared for – from the very first moments of life, we will ensure their health, socialization, and proper development. We work with veterinarians and experienced trainers to ensure that our dogs are not only beautiful but also intelligent and devoted.'
+
+msgid '„Tradycja i nowoczesność"'
+msgstr '„Tradition and Modernity"'
+
+msgid 'Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska.'
+msgstr 'We combine rural traditions with modern breeding knowledge. Our shepherd dogs have excellent genes, proven in work and at shows, while maintaining a loyal, gentle nature. These dogs are perfect both as family companions and as faithful guardians of the home.'
+
+msgid 'Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕'
+msgstr 'If you're looking for a dog with passion, raised with love in a natural environment, we invite you to join us! 🌟🐕'
+
+msgid 'Zobacz dostępne szczenięta'
+msgstr 'SEE AVALIABLE PUPPIES'
+
+
+
+
+### FOOTER
 msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
 msgstr "Professional dog breeding with passion and experience."
 
-#: templates/base.html:126
 msgid "Telefon"
 msgstr "Phone"
 
-#: templates/base.html:129
 msgid "Szybkie linki"
 msgstr "Quick links"
 
-#: templates/base.html:140
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "All rights reserved."
 
- 
-# Strona About Us
-msgid "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
-msgstr "Our Breeding History – Love for Dogs and Each Other"
-
-msgid "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
-msgstr "Life can write extraordinary stories. Our story began where two worlds meet today – a Belgian soul and Polish rural hospitality."
-
-msgid "On – Belg z miłością do zwierząt"
-msgstr "He – A Belgian with Love for Animals"
-
-msgid "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
-msgstr "He came from Flanders, where he had been surrounded by dogs since childhood, and his family had been breeding shepherds for generations. After difficult experiences – breakup, longing for meaning – he decided to seek a new beginning. On social media, he found her profile, full of photos of rural landscapes and smiling animals."
-
-msgid "Ona – dziewczyna ze wsi z pasją"
-msgstr "She – A Village Girl with Passion"
-
-msgid "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
-msgstr "She works in logistics, but her true world was animals. Raised among dogs, farm animals and rural chatter, she always dreamed of combining her daily work with love for four-legged friends. When he first wrote to her, she didn't even suspect that this conversation would change their lives."
-
-msgid "Spotkanie, które dało początek czemuś większemu"
-msgstr "A Meeting That Started Something Greater"
-
-msgid "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
-msgstr "He came to Poland – first for a weekend, then for a month, finally… he stayed forever. They discovered that they were connected not only by feelings, but also by a common vision. He – with knowledge of breeding, breed lines and European standards. She – with practical experience, intuition and love for rural life."
-
-msgid "Hodowla zrodzona z pasji"
-msgstr "Breeding Born from Passion"
-
-msgid "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
-msgstr "They decided to create something special – a shepherd breeding where not only beauty and breed matter, but above all health, character and welfare of dogs. Their animals grow up among fields, close to people, surrounded by care. He still works, combining Belgian precision with Polish hospitality, she manages logistics – not only at work, but also in breeding."
-
-msgid "Dziś"
-msgstr "Today"
-
-msgid "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
-msgstr "Their home is a haven for shepherds of certain origin, but above all – happy dogs. This is a place where Belgian stubbornness met Polish warmth, and love for animals became a common life project."
-
-msgid "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
-msgstr "We didn't plan this... but sometimes the best things come unexpectedly. Together we found our way – between Belgian fields and Polish countryside."
-
-msgid "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
-msgstr "Is this a romantic story? Maybe. But above all – true."
-
-msgid "Adres"
-msgstr "Address"
 
 
-
-
-
-
+### 404
