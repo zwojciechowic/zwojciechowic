@@ -239,12 +239,12 @@
                          {% elif puppy.color1 %}
                          style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color1 }} 100%);"
                          {% endif %}>
-                        <h6>Miot {{ puppy.litter }}</h6>
-                        <div class="litter-info-small">
-                            <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
-                            &#9792; {{ puppy.mother_name }} | 
-                            &#9794; {{ puppy.father_name }}
-                        </div>
+                         <h2>Miot {{ puppy.litter }}</h2>
+                         <div class="litter-info-small">
+                             <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
+                             &#9792; {{ puppy.mother_name }} | 
+                             &#9794; {{ puppy.father_name }}
+                         </div>
                     </div>
                     
                     <!-- Zdjęcie z galerią -->
