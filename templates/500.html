@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}404 – {% trans "Strona nie znaleziona" %} | {% trans "Hodowla z Wojciechowic" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/404.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <div class="error-number">500</div>
+        <h1 class="error-title">{% trans "Strona nie znaleziona" %}</h1>
+        <p class="error-message">
+            {% trans "Ups… Coś poszło nie tak!" %}
+            <br>
+            {% trans "Spróbuj ponownien później albo skontaktuj się z nami." %}
+        </p>
+        
+        <div class="error-actions">
+            <a href="{% url 'home' %}" class="btn-primary">
+                <i class="fas fa-home"></i>
+                {% trans "Wróć na stronę główną" %}
+            </a>
+            <a href="{% url 'contact' %}" class="btn-secondary">
+                <i class="fas fa-envelope"></i>
+                {% trans "Skontaktuj się z nami" %}
+            </a>
+        </div>
+
+        <div class="error-suggestions">
+            <h3>{% trans "Może Cię zainteresuje:" %}</h3>
+            <div class="suggestion-links">
+                <a href="{% url 'dogs' %}" class="suggestion-link">
+                    <i class="fas fa-dog"></i>
+                    <span>{% trans "Nasze psy" %}</span>
+                </a>
+                <a href="{% url 'puppies' %}" class="suggestion-link">
+                    <i class="fas fa-heart"></i>
+                    <span>{% trans "Szczeniaki" %}</span>
+                </a>
+                <a href="{% url 'hotel' %}" class="suggestion-link">
+                    <i class="fas fa-hotel"></i>
+                    <span>{% trans "Hotel" %}</span>
+                </a>
+                <a href="{% url 'about' %}" class="suggestion-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>{% trans "O nas" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
