@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR THE PACKAGE"S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -55,32 +55,32 @@ msgstr "English"
 msgid "Hodowla Owczarków - Nasza Wiejska Pasja"
 msgstr "Shepherd Breeding – Our Rural Passion"
 
-msgid 'W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku.'
-msgstr 'In the heart of a picturesque village, amidst green meadows and the murmur of trees and the river, we breed German Shepherds and Old German Shepherds with true love and devotion. Our dogs are not just pets – they are family members, raised in an atmosphere of trust, care, and respect.'
+msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
+msgstr "In the heart of a picturesque village, amidst green meadows and the murmur of trees and the river, we breed German Shepherds and Old German Shepherds with true love and devotion. Our dogs are not just pets – they are family members, raised in an atmosphere of trust, care, and respect."
 
-msgid '"Życie w harmonii i spokoju"'
-msgstr '"A Life in Harmony and Peace"'
+msgid "\"Życie w harmonii i spokoju\""
+msgstr "\"A Life in Harmony and Peace\""
 
 msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
 msgstr "Our shepherds grow up in a rural home, where they have the freedom to run and play, while also learning obedience and cooperation with their humans. Daily walks through the fields and meadows make them not only athletic, but also balanced and happy."
 
-msgid '❤️ „Hodowla z sercem"'
-msgstr '❤️ „Breeding with Heart"'
+msgid "❤️ „Hodowla z sercem\""
+msgstr "❤️ „Breeding with Heart\""
 
-msgid 'W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane.'
-msgstr 'This year, we begin our puppy adventure. Each puppy will be lovingly cared for – from the very first moments of life, we will ensure their health, socialization, and proper development. We work with veterinarians and experienced trainers to ensure that our dogs are not only beautiful but also intelligent and devoted.'
+msgid "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane."
+msgstr "This year, we begin our puppy adventure. Each puppy will be lovingly cared for – from the very first moments of life, we will ensure their health, socialization, and proper development. We work with veterinarians and experienced trainers to ensure that our dogs are not only beautiful but also intelligent and devoted."
 
-msgid '„Tradycja i nowoczesność"'
-msgstr '„Tradition and Modernity"'
+msgid "„Tradycja i nowoczesność\""
+msgstr "„Tradition and Modernity\""
 
-msgid 'Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska.'
-msgstr 'We combine rural traditions with modern breeding knowledge. Our shepherd dogs have excellent genes, proven in work and at shows, while maintaining a loyal, gentle nature. These dogs are perfect both as family companions and as faithful guardians of the home.'
+msgid "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska."
+msgstr "We combine rural traditions with modern breeding knowledge. Our shepherd dogs have excellent genes, proven in work and at shows, while maintaining a loyal, gentle nature. These dogs are perfect both as family companions and as faithful guardians of the home."
 
-msgid 'Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕'
-msgstr 'If you're looking for a dog with passion, raised with love in a natural environment, we invite you to join us! 🌟🐕'
+msgid "Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕"
+msgstr "If you're looking for a dog with passion, raised with love in a natural environment, we invite you to join us! 🌟🐕"
 
-msgid 'Zobacz dostępne szczenięta'
-msgstr 'SEE AVALIABLE PUPPIES'
+msgid "Zobacz dostępne szczenięta"
+msgstr "SEE AVALIABLE PUPPIES"
 
 
 
