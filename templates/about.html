@@ -49,7 +49,11 @@
                     <div class="card-body">
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
-                            {% trans "Hodowla posiada" %} {{ about.certificates_gallery.photos.count }} {% trans "certyfikat" %}{{ about.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                            {% blocktrans count count=about.certificates_gallery.photos.count %}
+                            Hodowla posiada {{ count }} certyfikat
+                            {% plural %}
+                            Hodowla posiada {{ count }} certyfikaty
+                            {% endblocktrans %}
                         </div>
                         {% show_gallery about.certificates_gallery.id "mt-3" %}
                     </div>

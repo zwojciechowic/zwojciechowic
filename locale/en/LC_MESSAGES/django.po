@@ -149,8 +149,8 @@ msgid "Wszystkie nasze psy posiadają rodowody FCI"
 msgstr "All our dogs have FCI pedigrees"
 
 msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
-msgstr "Note!
-A new litter of puppies will be available soon. Leave your contact details to be notified!"
+msgstr "Note!"
+"A new litter of puppies will be available soon. Leave your contact details to be notified!"
 
 
 
@@ -165,5 +165,7 @@ msgstr "Author"
 
 
 ### About
-msgid "Hodowla posiada"
-msgstr "
+msgid "Hodowla posiada %(count)s certyfikat"
+msgid_plural "Hodowla posiada %(count)s certyfikaty"
+msgstr[0] "The kennel has %(count)s certificate"
+msgstr[1] "The kennel has %(count)s certificates"
