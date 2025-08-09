@@ -169,5 +169,8 @@ msgstr "Autor
 
 
 ### about
-msgid "Hodowla posiada"
-msgstr "Hodowla posiada"
+msgid "Hodowla posiada %(count)s certyfikat"
+msgid_plural "Hodowla posiada %(count)s certyfikaty"
+msgstr[0] "Hodowla posiada %(count)s certyfikat"
+msgstr[1] "Hodowla posiada %(count)s certyfikaty"
+msgstr[2] "Hodowla posiada %(count)s certyfikatów"
