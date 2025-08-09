@@ -121,3 +121,53 @@ msgstr "Ups… Coś poszło nie tak!"
 
 msgid "Spróbuj ponownien później albo skontaktuj się z nami."
 msgstr "Spróbuj ponownien później albo skontaktuj się z nami."
+
+
+
+
+
+### BASE
+msgid "Profesjonalna hodowla psów z pasją i doświadczeniem"
+msgstr "Profesjonalna hodowla psów z pasją i doświadczeniem"
+
+msgid "Poznaj nasze szczeniaki"
+msgstr "Poznaj nasze szczeniaki"
+
+msgid "Doświadczenie"
+msgstr "Doświadczenie"
+
+msgid "Ponad 15 lat doświadczenia w hodowli psów rasowych"
+msgstr "Ponad 15 lat doświadczenia w hodowli psów rasowych"
+
+msgid "Pasja"
+msgstr "Pasja"
+
+msgid "Hodowla z miłości do psów i troski o ich dobrostan"
+msgstr "Hodowla z miłości do psów i troski o ich dobrostan"
+
+msgid "Jakość"
+msgstr "Jakość"
+
+msgid "Wszystkie nasze psy posiadają rodowody FCI"
+msgstr "Wszystkie nasze psy posiadają rodowody FCI"
+
+msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+msgstr "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+
+
+
+
+
+
+
+
+
+msgid "Autor"
+msgstr "Autor
+
+
+
+
+### about
+msgid "Hodowla posiada"
+msgstr "Hodowla posiada"
