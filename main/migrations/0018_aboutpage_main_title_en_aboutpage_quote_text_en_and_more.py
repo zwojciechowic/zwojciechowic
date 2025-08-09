@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='blogpost',
             name='slug_en',
-            field=models.SlugField(blank=True, unique=True, verbose_name='URL (slug) (EN)'),
+            field=models.SlugField(blank=True, null=True, verbose_name='URL (slug) (EN)'),
         ),
         migrations.AddField(
             model_name='blogpost',
