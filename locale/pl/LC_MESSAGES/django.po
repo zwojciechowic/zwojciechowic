@@ -20,109 +20,84 @@ msgstr ""
 "(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: templates/base.html:7 templates/base.html:52 templates/base.html:120
-#: templates/base.html:140
+
+### NAVBAR
 msgid "z Wojciechowic"
 msgstr "z Wojciechowic"
 
-#: templates/base.html:59
 msgid "Strona Główna"
 msgstr "Strona Główna"
 
-#: templates/base.html:62 templates/base.html:131
 msgid "O nas"
 msgstr "O nas"
 
-#: templates/base.html:65 templates/base.html:132
 msgid "Nasze psy"
 msgstr "Nasze psy"
 
-#: templates/base.html:68 templates/base.html:133
 msgid "Szczeniaki"
 msgstr "Szczeniaki"
 
-#: templates/base.html:71
-msgid "Rezerwacje"
-msgstr "Rezerwacje"
+msgid "Hotel"
+msgstr "Hotel"
 
-#: templates/base.html:74 templates/base.html:124 templates/base.html:134
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:87
 msgid "Polski"
 msgstr "Polski"
 
-#: templates/base.html:94
 msgid "Angielski"
 msgstr "Angielski"
 
-#: templates/base.html:121
+
+
+### STRONA GLOWNA
+msgid "Hodowla Owczarków - Nasza Wiejska Pasja"
+msgstr "Hodowla Owczarków - Nasza Wiejska Pasja"
+
+msgid 'W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
+msgstr "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku.'
+
+msgid '"Życie w harmonii i spokoju"'
+msgstr '"Życie w harmonii i spokoju"'
+
+msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
+msgstr "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
+
+msgid '❤️ „Hodowla z sercem"'
+msgstr '❤️ „Hodowla z sercem"'
+
+msgid 'W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane.'
+msgstr 'W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane.'
+
+msgid '„Tradycja i nowoczesność"'
+msgstr '„Tradycja i nowoczesność"'
+
+msgid 'Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska.'
+msgstr 'Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska.'
+
+msgid 'Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕'
+msgstr 'Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕'
+
+msgid 'Zobacz dostępne szczenięta'
+msgstr 'Zobacz dostępne szczenięta'
+
+
+
+
+### FOOTER
+msgid "Hodowla z Wojciechowic"
+msgstr "Hodowla z Wojciechowic"
+
 msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
 msgstr "Profesjonalna hodowla psów z pasją i doświadczeniem."
 
-#: templates/base.html:126
 msgid "Telefon"
 msgstr "Telefon"
 
-#: templates/base.html:129
 msgid "Szybkie linki"
 msgstr "Szybkie linki"
 
-#: templates/base.html:140
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "Wszystkie prawa zastrzeżone."
-
-
-
-
-
-
-
-
-# Strona About Us
-msgid "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
-msgstr "Historia Naszej Hodowli – Miłość do Psów i Do Siebie"
-
-msgid "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
-msgstr "Życie potrafi pisać niezwykłe scenariusze. Nasza historia zaczęła się tam, gdzie dziś łączą się dwa światy – belgijska dusza i polska wiejska gościnność."
-
-msgid "On – Belg z miłością do zwierząt"
-msgstr "On – Belg z miłością do zwierząt"
-
-msgid "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
-msgstr "Przybył z Flandrii, gdzie od dziecka otaczał się psami, a jego rodzina od pokoleń hodowała owczarki. Po trudnych przejściach – rozstaniu, tęsknocie za sensem – postanowił szukać nowego początku. W mediach społecznościowych trafił na jej profil, pełny zdjęć wiejskich pejzaży i uśmiechniętych zwierząt."
-
-msgid "Ona – dziewczyna ze wsi z pasją"
-msgstr "Ona – dziewczyna ze wsi z pasją"
-
-msgid "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
-msgstr "Pracuje w logistyce, ale jej prawdziwym światem były zwierzęta. Wychowana wśród psów, zwierząt gospodarskich i wiejskiego gwaru, zawsze marzyła, by połączyć codzienną pracę z miłością do czworonogów. Gdy on napisał do niej pierwszy raz, nawet nie przypuszczała, że ta rozmowa zmieni ich życie."
-
-msgid "Spotkanie, które dało początek czemuś większemu"
-msgstr "Spotkanie, które dało początek czemuś większemu"
-
-msgid "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
-msgstr "On przyjechał do Polski – najpierw na weekend, potem na miesiąc, w końcu… został na zawsze. Odkryli, że łączy ich nie tylko uczucie, ale też wspólna wizja. On – z wiedzą o hodowli, rasowych liniach i europejskich standardach. Ona – z praktycznym doświadczeniem, intuicją i zamiłowaniem do wiejskiego życia."
-
-msgid "Hodowla zrodzona z pasji"
-msgstr "Hodowla zrodzona z pasji"
-
-msgid "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
-msgstr "Postanowili stworzyć coś wyjątkowego – hodowlę owczarków, w której liczy się nie tylko piękno i rasa, ale przede wszystkim zdrowie, charakter i dobrostan psów. Ich zwierzęta dorastają wśród pól, w bliskości ludzi, otoczone troską. On nadal pracuje, łącząc belgijską precyzję z polską gościnnością, ona zarządza logistyką – nie tylko w pracy, ale i w hodowli."
-
-msgid "Dziś"
-msgstr "Dziś"
-
-msgid "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
-msgstr "Ich dom to przystań dla owczarków o pewnym pochodzeniu, ale przede wszystkim – szczęśliwych psów. To miejsce, gdzie belgijski upór spotkał Polską ciepłotę, a miłość do zwierząt stała się wspólnym życiowym projektem."
-
-msgid "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
-msgstr "Nie planowaliśmy tego… ale czasem najlepsze rzeczy przychodzą niespodziewanie. Razem znaleźliśmy naszą drogę – między belgijskimi polami a polską wsią."
-
-msgid "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
-msgstr "Czy to romantyczna historia? Może. Ale przede wszystkim – prawdziwa."
-
-msgid "Adres"
-msgstr "Adres"
 
