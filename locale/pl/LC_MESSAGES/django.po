@@ -58,20 +58,20 @@ msgstr "Hodowla Owczarków – Nasza Wiejska Pasja"
 msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
 msgstr "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
 
-msgid "\"Życie w harmonii i spokoju\""
-msgstr "\"Życie w harmonii i spokoju\""
+msgid "Życie w harmonii i spokoju"
+msgstr "Życie w harmonii i spokoju"
 
 msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
 msgstr "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
 
-msgid "❤️ „Hodowla z sercem\""
-msgstr "❤️ „Hodowla z sercem\""
+msgid "❤️ Hodowla z sercem"
+msgstr "❤️ Hodowla z sercem"
 
 msgid "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane."
 msgstr "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane."
 
-msgid "„Tradycja i nowoczesność\""
-msgstr "„Tradycja i nowoczesność\""
+msgid "Tradycja i nowoczesność"
+msgstr "Tradycja i nowoczesność"
 
 msgid "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska."
 msgstr "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska."
@@ -163,7 +163,7 @@ msgstr "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dan
 
 
 msgid "Autor"
-msgstr "Autor
+msgstr "Autor"
 
 
 
