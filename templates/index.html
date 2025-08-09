@@ -232,7 +232,8 @@
             <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
                 <div class="card card-hover h-100 card-with-litter-bar">
                     <!-- Pasek z informacjami o miocie - z kolorami szczeniaka -->
-                    <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
+                    <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradien
+                        {%endif%}"
                          {% if puppy.color1 and puppy.color2 %}
                          style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
                          {% elif puppy.color1 %}
@@ -269,15 +270,8 @@
                             <small class="text-muted">
                                 <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
                                 <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                <strong>Matka:</strong> {{ puppy.mother_name }}<br>
-                                <strong>Ojciec:</strong> {{ puppy.father_name }}
-                                {% if puppy.color1 %}
-                                <br><strong>Kolory:</strong> 
-                                <span style="background-color: {{ puppy.color1 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle;"></span>
-                                {% if puppy.color2 %}
-                                <span style="background-color: {{ puppy.color2 }}; width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc; border-radius: 2px; vertical-align: middle; margin-left: 3px;"></span>
-                                {% endif %}
-                                {% endif %}
+                                {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
+                                {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
                             </small>
                         </div>
                         <p class="card-text text-muted flex-grow-1">{{ puppy.description|truncatewords:10 }}</p>
