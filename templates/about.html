@@ -49,7 +49,7 @@
                     <div class="card-body">
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
-                            Hodowla posiada {{ about.certificates_gallery.photos.count }} certyfikat{{ about.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                            {% trans "Hodowla posiada" %} {{ about.certificates_gallery.photos.count }} {% trans "certyfikat" %}{{ about.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
                         {% show_gallery about.certificates_gallery.id "mt-3" %}
                     </div>

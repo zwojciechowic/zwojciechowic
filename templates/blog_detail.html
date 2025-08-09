@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-lg-8">
             <h1 class="display-4">{{ post.title }}</h1>
-            <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | Autor: {{ post.author.get_full_name|default:post.author.username }}</p>
+            <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | {% trans "Autor" %}: {{ post.author.get_full_name|default:post.author.username }}</p>
             
             {# Galeria zdjęć używając naszego widgetu #}
             {% if post.photo_gallery %}
@@ -34,7 +34,7 @@
             {% elif post.main_photo %}
                 <img src="{{ post.main_photo.image.url }}" alt="{{ post.title }}" class="img-fluid mb-4 rounded">
             {% else %}
-                <div class="alert alert-info">Brak zdjęć dla tego wpisu</div>
+                <div class="alert alert-info">{% trans "Brak zdjęć dla tego wpisu" %}</div>
             {% endif %}
             
             {# Wyświetlanie sekcji treści #}
