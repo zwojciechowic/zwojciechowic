@@ -25,7 +25,7 @@ class Gallery(models.Model):
 class Photo(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField(upload_to='gallery/')
-    order = models.PositiveIntegerField(default=0)
+    order = models.PositiveIntegerField(default=1)
     
     class Meta:
         ordering = ['order']
