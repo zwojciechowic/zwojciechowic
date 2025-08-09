@@ -110,21 +110,21 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4">{% trans 'Hodowla Owczarków – Nasza Wiejska Pasja' %}</h1>
-                <p class="lead">{% trans 'W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku.' %}</p>
+                <h1 class="display-4">{% trans "Hodowla Owczarków – Nasza Wiejska Pasja" %}</h1>
+                <p class="lead">{% trans "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku." %}</p>
                 
-                <h3>{% trans '"Życie w harmonii i spokoju"' %}</h3>
-                <p>{% trans 'Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe.' %}</p>
+                <h3>{% trans "Życie w harmonii i spokoju" %}</h3>
+                <p>{% trans "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe." %}</p>
                 
-                <h3>{% trans '❤️ „Hodowla z sercem"' %}</h3>
-                <p>{% trans 'W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane.' %}</p>
+                <h3>{% trans "❤️ Hodowla z sercem" %}</h3>
+                <p>{% trans "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane." %}</p>
                 
-                <h3>{% trans '„Tradycja i nowoczesność"' %}</h3>
-                <p>{% trans 'Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska.' %}</p>
+                <h3>{% trans "Tradycja i nowoczesność" %}</h3>
+                <p>{% trans "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska." %}</p>
                 
-                <p><strong>{% trans 'Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕' %}</strong></p>
+                <p><strong>{% trans "Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕" %}</strong></p>
                 
-                <a href="{% url 'puppies' %}" class="btn btn-primary btn-lg">{% trans 'Zobacz dostępne szczenięta' %}</a>
+                <a href="{% url 'puppies' %}" class="btn btn-primary btn-lg">{% trans "Zobacz dostępne szczenięta" %}</a>
             </div>
             <div class="col-lg-4">
                 <!-- Wyświetlanie psów jako karty -->
@@ -155,13 +155,13 @@
                                 <h5 class="card-title text-dark">{{ dog.name }}</h5>
                                 <div class="card-details mb-2">
                                     <small class="text-muted">
-                                        <strong>{% trans 'Rasa:' %}</strong> {{ dog.breed }}<br>
-                                        <strong>{% trans 'Płeć:' %}</strong> {% if dog.gender == 'male' %}Pies{% elif dog.gender == 'female' %}{% trans 'Suka' %}{% endif %}<br>
-                                        <strong>{% trans 'Data urodzenia:' %}</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                                        <strong>{% trans "Rasa:" %}</strong> {{ dog.breed }}<br>
+                                        <strong>{% trans "Płeć:" %}</strong> {% if dog.gender == "male" %}Pies{% elif dog.gender == "female" %}{% trans "Suka" %}{% endif %}<br>
+                                        <strong>{% trans "Data urodzenia:" %}</strong> {{ dog.birth_date|date:"d.m.Y" }}
                                     </small>
                                 </div>
                                 <p class="card-text text-muted">{{ dog.description|truncatewords:15 }}</p>
-                                <span class="btn btn-primary btn-sm">{% trans 'Zobacz szczegóły' %}</span>
+                                <span class="btn btn-primary btn-sm">{% trans "Zobacz szczegóły" %}</span>
                             </div>
                         </div>
                     </a>
@@ -170,7 +170,7 @@
                 
                 <!-- Link do wszystkich psów -->
                 <div class="text-center mt-3">
-                    <a href="{% url 'dogs' %}" class="btn btn-outline-primary">{% trans 'Zobacz wszystkie nasze psy' %}</a>
+                    <a href="{% url 'dogs' %}" class="btn btn-outline-primary">{% trans "Zobacz wszystkie nasze psy" %}</a>
                 </div>
             {% else %}
                     <!-- Fallback gdy nie ma psów -->
@@ -186,7 +186,7 @@
 <!-- Sekcja dostępnych szczeniąt -->
 {% if available_puppies %}
 <div class="container my-5">
-    <h2 class="text-center mb-4">{% trans 'Dostępne szczenięta' %}</h2>
+    <h2 class="text-center mb-4">{% trans "Dostępne szczenięta" %}</h2>
     
     <!-- Dodaj style dla paska miotu -->
     <style>
