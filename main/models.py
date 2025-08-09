@@ -9,7 +9,9 @@ from django.utils.translation import gettext_lazy as _
 class BlogSection(models.Model):
     blog_post = models.ForeignKey('BlogPost', on_delete=models.CASCADE, related_name='sections', verbose_name='Wpis na blogu')
     title = models.CharField("Tytuł sekcji", max_length=200, blank=True)
+    title_en = models.CharField("Tytuł sekcji (EN)", max_length=200, blank=True)
     content = models.TextField("Treść sekcji")
+    content_en = models.TextField("Treść sekcji (EN)", blank=True)
     order = models.PositiveIntegerField("Kolejność", default=0)
     
     class Meta:
@@ -22,8 +24,11 @@ class BlogSection(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200, verbose_name='Tytuł')
+    title_en = models.CharField(max_length=200, verbose_name='Tytuł (EN)', blank=True)
     slug = models.SlugField(unique=True, verbose_name='URL (slug)')
+    slug_en = models.SlugField(unique=True, verbose_name='URL (slug) (EN)', blank=True)
     excerpt = models.TextField(max_length=300, blank=True, verbose_name='Krótki opis')
+    excerpt_en = models.TextField(max_length=300, blank=True, verbose_name='Krótki opis (EN)')
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -45,6 +50,18 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
     
+    def get_title(self, language='pl'):
+        """Zwraca tytuł w odpowiednim języku"""
+        if language == 'en' and self.title_en:
+            return self.title_en
+        return self.title
+    
+    def get_excerpt(self, language='pl'):
+        """Zwraca excerpt w odpowiednim języku"""
+        if language == 'en' and self.excerpt_en:
+            return self.excerpt_en
+        return self.excerpt
+    
     @property
     def main_photo(self):
         """Pierwsze zdjęcie z galerii jako główne"""
@@ -60,12 +77,14 @@ class BlogPost(models.Model):
             else section.content 
             for section in self.sections.all()
         ])
+
 class Dog(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     breed = models.CharField(max_length=100, verbose_name='Rasa')
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(verbose_name='Opis')
+    description_en = models.TextField(verbose_name='Opis (EN)', blank=True)
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -91,6 +110,12 @@ class Dog(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_description(self, language='pl'):
+        """Zwraca opis w odpowiednim języku"""
+        if language == 'en' and self.description_en:
+            return self.description_en
+        return self.description
     
     @property
     def main_photo(self):
@@ -133,6 +158,7 @@ class Puppy(models.Model):
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
     description = models.TextField(blank=True, verbose_name='Opis')
+    description_en = models.TextField(blank=True, verbose_name='Opis (EN)')
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -174,6 +200,12 @@ class Puppy(models.Model):
                 color_info += f"/{self.color2}"
         
         return f"{self.litter}-{self.name} - {self.get_gender_display()}{color_info}{parent_info}"
+    
+    def get_description(self, language='pl'):
+        """Zwraca opis w odpowiednim języku"""
+        if language == 'en' and self.description_en:
+            return self.description_en
+        return self.description
     
     @property
     def main_photo(self):
@@ -231,13 +263,14 @@ class ContactMessage(models.Model):
 
 class AboutPage(models.Model):
     main_title = models.CharField("Główny tytuł", max_length=200)
+    main_title_en = models.CharField("Główny tytuł (EN)", max_length=200, blank=True)
     quote_text = models.TextField("Tekst cytatu", blank=True)
+    quote_text_en = models.TextField("Tekst cytatu (EN)", blank=True)
     top_image = models.ImageField(
         "Zdjęcie główne", 
         upload_to='about/',
         blank=True
     )
-    # DODANE: Galeria certyfikatów
     certificates_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -254,6 +287,18 @@ class AboutPage(models.Model):
 
     def __str__(self):
         return "Strona 'O nas'"
+    
+    def get_main_title(self, language='pl'):
+        """Zwraca główny tytuł w odpowiednim języku"""
+        if language == 'en' and self.main_title_en:
+            return self.main_title_en
+        return self.main_title
+    
+    def get_quote_text(self, language='pl'):
+        """Zwraca tekst cytatu w odpowiednim języku"""
+        if language == 'en' and self.quote_text_en:
+            return self.quote_text_en
+        return self.quote_text
 
 class AboutSections(models.Model):
     about_page = models.ForeignKey(
@@ -262,7 +307,9 @@ class AboutSections(models.Model):
         related_name='sections'
     )
     title = models.CharField("Nagłówek H3", max_length=200, blank=True)
+    title_en = models.CharField("Nagłówek H3 (EN)", max_length=200, blank=True)
     content = models.TextField("Treść paragrafu")
+    content_en = models.TextField("Treść paragrafu (EN)", blank=True)
     order = models.PositiveIntegerField("Kolejność", default=0)
 
     class Meta:
@@ -272,19 +319,15 @@ class AboutSections(models.Model):
 
     def __str__(self):
         return f"Sekcja {self.order}"
-    about_page = models.ForeignKey(
-        AboutPage,
-        on_delete=models.CASCADE,
-        related_name='sections'
-    )
-    title = models.CharField("Nagłówek H3", max_length=200, blank=True)
-    content = models.TextField("Treść paragrafu")
-    order = models.PositiveIntegerField("Kolejność", default=0)
-
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Sekcja"
-        verbose_name_plural = "Sekcje"
-
-    def __str__(self):
-        return f"Sekcja {self.order}"
+    
+    def get_title(self, language='pl'):
+        """Zwraca tytuł w odpowiednim języku"""
+        if language == 'en' and self.title_en:
+            return self.title_en
+        return self.title
+    
+    def get_content(self, language='pl'):
+        """Zwraca treść w odpowiednim języku"""
+        if language == 'en' and self.content_en:
+            return self.content_en
+        return self.content

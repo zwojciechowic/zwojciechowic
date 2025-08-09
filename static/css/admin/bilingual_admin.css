@@ -1,0 +1,129 @@
+
+/* Stylowanie dwujęzycznych pól w panelu administracyjnym */
+
+.bilingual-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.bilingual-field-wrapper {
+    flex: 1;
+    min-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fafafa;
+}
+
+.bilingual-field-wrapper:first-child {
+    background: #f0f8ff;
+    border-color: #4a90e2;
+}
+
+.bilingual-field-wrapper:last-child {
+    background: #f8f0f0;
+    border-color: #e24a4a;
+}
+
+.bilingual-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.bilingual-field-pl,
+.bilingual-field-en {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.bilingual-field-pl:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+.bilingual-field-en:focus {
+    border-color: #e24a4a;
+    outline: none;
+    box-shadow: 0 0 5px rgba(226, 74, 74, 0.3);
+}
+
+/* Responsywność */
+@media (max-width: 800px) {
+    .bilingual-container {
+        flex-direction: column;
+    }
+    
+    .bilingual-field-wrapper {
+        min-width: 100%;
+    }
+}
+
+/* Stylowanie dla inline formularzy */
+.tabular .bilingual-container {
+    gap: 10px;
+}
+
+.tabular .bilingual-field-wrapper {
+    min-width: 200px;
+    padding: 5px;
+}
+
+.tabular .bilingual-label {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+/* Dodatkowe stylowanie dla fieldsetów */
+.fieldset .bilingual-field-wrapper h3 {
+    margin-top: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Oznaczenia języków */
+.language-indicator {
+    position: relative;
+}
+
+.language-indicator:before {
+    content: attr(data-lang);
+    position: absolute;
+    top: -15px;
+    right: 5px;
+    font-size: 10px;
+    background: #666;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.language-indicator[data-lang="PL"]:before {
+    background: #4a90e2;
+}
+
+.language-indicator[data-lang="EN"]:before {
+    background: #e24a4a;
+}
+
+/* Ukrywanie pól angielskich domyślnie */
+.collapse .bilingual-field-wrapper:last-child {
+    opacity: 0.7;
+}
+
+/* Hover effects */
+.bilingual-field-wrapper:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s ease;
+}
