@@ -140,128 +140,128 @@
 </div>
 
 <style>
-/* OVERLAY NAVIGATION - NAŁOŻONE STRZAŁKI */
-.hero-section {
-    position: relative;
-}
+    /* OVERLAY NAVIGATION - NAŁOŻONE STRZAŁKI */
+    .hero-section {
+        position: relative;
+    }
 
-.carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    text-decoration: none;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.carousel-nav:hover {
-    background: rgba(0, 123, 255, 0.9);
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
-    text-decoration: none;
-}
-
-.carousel-nav-prev {
-    left: 20px;
-}
-
-.carousel-nav-next {
-    right: 20px;
-}
-
-.carousel-nav i {
-    font-size: 18px;
-}
-
-/* Animacja pojawiania się */
-.carousel-nav {
-    opacity: 0.7;
-}
-
-.carousel-nav:hover {
-    opacity: 1;
-}
-
-/* Style dla sekcji wpisu */
-.blog-section {
-    margin-bottom: 2rem;
-}
-
-.section-title {
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #3498db;
-}
-
-.section-content {
-    line-height: 1.8;
-    text-align: justify;
-}
-
-.section-divider {
-    border: none;
-    border-top: 1px dashed #ddd;
-    margin: 2rem 0;
-}
-
-.navigation-preview {
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-/* Responsywność */
-@media (max-width: 768px) {
     .carousel-nav {
-        width: 45px;
-        height: 45px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        text-decoration: none;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
-    
+
+    .carousel-nav:hover {
+        background: rgba(0, 123, 255, 0.9);
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
+        text-decoration: none;
+    }
+
     .carousel-nav-prev {
-        left: 10px;
+        left: 20px;
     }
-    
+
     .carousel-nav-next {
-        right: 10px;
+        right: 20px;
     }
-    
+
     .carousel-nav i {
-        font-size: 14px;
+        font-size: 18px;
     }
-}
 
-/* Efekt fade in dla całej hero sekcji */
-.hero-section {
-    animation: fadeIn 0.5s ease-in;
-}
+    /* Animacja pojawiania się */
+    .carousel-nav {
+        opacity: 0.7;
+    }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    .carousel-nav:hover {
+        opacity: 1;
+    }
 
-/* Dodatkowy efekt - pulsowanie gdy mouse over na hero */
-.hero-section:hover .carousel-nav {
-    animation: pulse 2s infinite;
-}
+    /* Style dla sekcji wpisu */
+    .blog-section {
+        margin-bottom: 2rem;
+    }
 
-@keyframes pulse {
-    0% { opacity: 0.7; }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
-}
+    .section-title {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #3498db;
+    }
+
+    .section-content {
+        line-height: 1.8;
+        text-align: justify;
+    }
+
+    .section-divider {
+        border: none;
+        border-top: 1px dashed #ddd;
+        margin: 2rem 0;
+    }
+
+    .navigation-preview {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    /* Responsywność */
+    @media (max-width: 768px) {
+        .carousel-nav {
+            width: 45px;
+            height: 45px;
+        }
+        
+        .carousel-nav-prev {
+            left: 10px;
+        }
+        
+        .carousel-nav-next {
+            right: 10px;
+        }
+        
+        .carousel-nav i {
+            font-size: 14px;
+        }
+    }
+
+    /* Efekt fade in dla całej hero sekcji */
+    .hero-section {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Dodatkowy efekt - pulsowanie gdy mouse over na hero */
+    .hero-section:hover .carousel-nav {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
+    }
 </style>
 {% endblock %}
 

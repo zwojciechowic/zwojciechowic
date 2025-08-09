@@ -62,3 +62,7 @@ body::after {
 #changelist .actions .button {
     height: 2.5rem  !important;
 }
+
+.inline-group .tabular td.original p {
+    padding: 20px 9px;
+}
