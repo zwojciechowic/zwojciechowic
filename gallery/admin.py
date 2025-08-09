@@ -5,7 +5,7 @@ from .models import Gallery, Photo
 class PhotoInline(admin.TabularInline):
     model = Photo
     fields = ['image', 'order']
-    extra = 1
+    # extra = 1
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
