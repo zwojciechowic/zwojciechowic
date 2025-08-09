@@ -52,7 +52,7 @@ msgstr "English"
 
 
 ### STRONA GLOWNA
-msgid "Hodowla Owczarków - Nasza Wiejska Pasja"
+msgid "Hodowla Owczarków – Nasza Wiejska Pasja"
 msgstr "Shepherd Breeding – Our Rural Passion"
 
 msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
@@ -101,3 +101,21 @@ msgstr "All rights reserved."
 
 
 ### 404
+msgid "Strona nie znaleziona"
+msgstr "Page not found"
+
+msgid "Ups… Nie znaleziono strony, której szukasz."
+msgstr "Oops... The page you are looking for couldn't be found."
+
+msgid "Możliwe, że adres został błędnie wpisany lub strona została przeniesiona."
+msgstr "The address may have been mistyped or the page has been moved."
+
+
+
+
+### 500
+msgid "Ups… Coś poszło nie tak!"
+msgstr "Oops... Something went wrong!"
+
+msgid "Spróbuj ponownien później albo skontaktuj się z nami."
+msgstr "Please try again later or contact us."

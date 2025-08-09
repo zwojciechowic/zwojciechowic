@@ -52,8 +52,8 @@ msgstr "Angielski"
 
 
 ### STRONA GLOWNA
-msgid "Hodowla Owczarków - Nasza Wiejska Pasja"
-msgstr "Hodowla Owczarków - Nasza Wiejska Pasja"
+msgid "Hodowla Owczarków – Nasza Wiejska Pasja"
+msgstr "Hodowla Owczarków – Nasza Wiejska Pasja"
 
 msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
 msgstr "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
@@ -101,3 +101,23 @@ msgstr "Szybkie linki"
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "Wszystkie prawa zastrzeżone."
 
+
+
+### 404
+msgid "Strona nie znaleziona"
+msgstr "Strona nie znaleziona"
+
+msgid "Ups… Nie znaleziono strony, której szukasz."
+msgstr "Ups… Nie znaleziono strony, której szukasz."
+
+msgid "Możliwe, że adres został błędnie wpisany lub strona została przeniesiona."
+msgstr "Możliwe, że adres został błędnie wpisany lub strona została przeniesiona."
+
+
+
+### 500
+msgid "Ups… Coś poszło nie tak!"
+msgstr "Ups… Coś poszło nie tak!"
+
+msgid "Spróbuj ponownien później albo skontaktuj się z nami."
+msgstr "Spróbuj ponownien później albo skontaktuj się z nami."
