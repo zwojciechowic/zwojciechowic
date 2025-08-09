@@ -33,6 +33,18 @@
             margin-top: 0.3rem;
             font-size: 0.8rem;
         }
+
+        /* Nowe style dla wyrównania prawej kolumny */
+        .right-column-content {
+            margin-top: 80px; /* Dostosuj tę wartość według potrzeb */
+        }
+
+        /* Responsive - na mniejszych ekranach usuń margines */
+        @media (max-width: 991px) {
+            .right-column-content {
+                margin-top: 20px;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -60,51 +72,53 @@
         </div>
         
         <div class="col-lg-4">
-            <!-- Pasek miotu z kolorami szczeniaka -->
-            <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
-                 {% if puppy.color1 and puppy.color2 %}
-                 style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
-                 {% elif puppy.color1 %}
-                 style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color1 }} 100%);"
-                 {% endif %}>
-                <h6>Miot {{ puppy.litter }}</h6>
-                <div class="litter-info-small">
-                    <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
-                    &#9792; {{ puppy.mother_name }} | 
-                    &#9794; {{ puppy.father_name }}
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Informacje o szczenięciu</h5>
-                    <p class="card-text">
-                        <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
-                        <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                        <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                        {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                        {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
-                        <strong>Cena:</strong> {{ puppy.price }} PLN
-                    </p>
-                    
-                    {# Opisy #}
-                    <div class="content">
-                        {{ puppy.description|linebreaks }}
+            <!-- Wrapper z marginesem dla wyrównania -->
+            <div class="right-column-content">
+                <!-- Pasek miotu z kolorami szczeniaka -->
+                <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
+                     {% if puppy.color1 and puppy.color2 %}
+                     style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
+                     {% elif puppy.color1 %}
+                     style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color1 }} 100%);"
+                     {% endif %}>
+                    <h6>Miot {{ puppy.litter }}</h6>
+                    <div class="litter-info-small">
+                        <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
+                        &#9792; {{ puppy.mother_name }} | 
+                        &#9794; {{ puppy.father_name }}
                     </div>
-                    
-                    {% if puppy.certificates_gallery %}
-                        <div class="alert alert-success">
-                            <i class="fas fa-certificate"></i>
-                            Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Informacje o szczenięciu</h5>
+                        <p class="card-text">
+                            <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
+                            <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                            <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
+                            {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
+                            {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                            <strong>Cena:</strong> {{ puppy.price }} PLN
+                        </p>
+                        
+                        {# Opisy #}
+                        <div class="content">
+                            {{ puppy.description|linebreaks }}
                         </div>
-                        {% show_gallery puppy.certificates_gallery.id "mt-3" %}
-                    {% endif %}
-                    
-                    
+                        
+                        {% if puppy.certificates_gallery %}
+                            <div class="alert alert-success">
+                                <i class="fas fa-certificate"></i>
+                                Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                            </div>
+                            {% show_gallery puppy.certificates_gallery.id "mt-3" %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
     {% if puppy.is_available %}
     <div class="reservation-form-section mt-4 p-4 border rounded bg-light">
         <h4 class="text-success mb-3">
