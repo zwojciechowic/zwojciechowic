@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load gallery_tags i18n static %}
 
-{% block title %}{{ puppy.name }} - Hodowla z Wojciechowic{% endblock %}
+{% block title %}{{ puppy.name }} - {% trans "Hodowla z Wojciechowic" %}{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
     
-    <!-- Style dla paska miotu -->
     <style>
         .litter-bar {
             color: white;
@@ -55,33 +54,30 @@
             <h1 class="display-4">{{ puppy.name|default:"Szczeniak bez imienia" }}</h1>
             <p class="text-muted">{{ puppy.get_gender_display }} | ur. {{ puppy.birth_date|date:"d.m.Y" }}</p>
             
-            {# Galeria zdjęć używając naszego widgetu #}
             {% if puppy.photo_gallery %}
                 {% show_gallery puppy.photo_gallery.id %}
             {% elif puppy.main_photo %}
                 <img src="{{ puppy.main_photo.image.url }}" alt="{{ puppy.name }}" class="img-fluid mb-4 rounded">
             {% else %}
-                <div class="alert alert-info">Brak zdjęć dla tego szczeniaka</div>
+                <div class="alert alert-info">{%trans "Brak zdjęć dla tego szczeniaka"%}</div>
             {% endif %}
             
             <div class="mt-4">
                 <a href="{% url 'puppies' %}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Powrót do listy szczeniąt
+                    <i class="fas fa-arrow-left"></i> {% trans "Powrót do listy szczeniąt"%}
                 </a>
             </div>
         </div>
         
         <div class="col-lg-4">
-            <!-- Wrapper z marginesem dla wyrównania -->
             <div class="right-column-content">
-                <!-- Pasek miotu z kolorami szczeniaka -->
                 <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
                      {% if puppy.color1 and puppy.color2 %}
                      style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
                      {% elif puppy.color1 %}
                      style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color1 }} 100%);"
                      {% endif %}>
-                    <h6>Miot {{ puppy.litter }}</h6>
+                    <h6>{%trans "Miot"%} {{ puppy.litter }}</h6>
                     <div class="litter-info-small">
                         <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
                         &#9792; {{ puppy.mother_name }} | 
@@ -91,14 +87,14 @@
                 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Informacje o szczenięciu</h5>
+                        <h5 class="card-title">{% trans "Informacje o szczenięciu" %}</h5>
                         <p class="card-text">
-                            <strong>Płeć:</strong> {{ puppy.get_gender_display }}<br>
-                            <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                            <strong>Wiek:</strong> {{ puppy.birth_date|timesince }}<br>
-                            {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                            {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
-                            <strong>Cena:</strong> {{ puppy.price }} PLN
+                            <strong>{% trans "Płeć:"%}</strong> {{ puppy.get_gender_display }}<br>
+                            <strong>{% trans "Data urodzenia:"%}</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                            <strong>{% trans "Wiek:"%}</strong> {{ puppy.birth_date|timesince }}<br>
+                            {% if puppy.mother_name %}<strong>{% trans "Matka:"%}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
+                            {% if puppy.father_name %}<strong>{% trans "Ojciec:"%}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                            <strong>{%trans "Cena:"%}</strong> {{ puppy.price }} {%trans "PLN"%}
                         </p>
                         
                         {# Opisy #}
@@ -109,7 +105,7 @@
                         {% if puppy.certificates_gallery %}
                             <div class="alert alert-success">
                                 <i class="fas fa-certificate"></i>
-                                Szczenię posiada {{ puppy.certificates_gallery.photos.count }} certyfikat{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                                {% trans "Szczenię posiada"%} {{ puppy.certificates_gallery.photos.count }} {% trans "certyfikat"%}{{ puppy.certificates_gallery.photos.count|pluralize:"y,ów" }}
                             </div>
                             {% show_gallery puppy.certificates_gallery.id "mt-3" %}
                         {% endif %}
@@ -122,7 +118,7 @@
     {% if puppy.is_available %}
     <div class="reservation-form-section mt-4 p-4 border rounded bg-light">
         <h4 class="text-success mb-3">
-            <i class="fas fa-heart"></i> Szczeniak dostępny do rezerwacji
+            <i class="fas fa-heart"></i> {% trans "Szczeniak dostępny do rezerwacji" %}
         </h4>
         
         <div class="row">
@@ -171,7 +167,7 @@
                         
                         <div class="col-md-4 mb-3 d-flex align-items-end">
                             <button type="submit" class="btn btn-success btn-lg w-100">
-                                <i class="fas fa-paw"></i> Zarezerwuj
+                                <i class="fas fa-paw"></i> {% trans "Zarezerwuj" %}
                             </button>
                         </div>
                     </div>
@@ -179,15 +175,15 @@
                 
                 <small class="text-muted">
                     <i class="fas fa-info-circle"></i>
-                    Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów.
+                    {% trans "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów" .%}
                 </small>
             </div>
             
             <div class="col-md-4">
                 <div class="price-info text-center p-3 bg-white rounded border">
-                    <h5 class="text-primary mb-2">Cena</h5>
+                    <h5 class="text-primary mb-2">{% trans "Cena" %}</h5>
                     <div class="price-amount h3 text-success mb-0">
-                        {{ puppy.price }} zł
+                        {{ puppy.price }} {% trans "PLN" %}
                     </div>
                 </div>
             </div>
@@ -196,53 +192,49 @@
     
 {% else %}
     <div class="alert alert-warning mt-4">
-        <h5><i class="fas fa-exclamation-triangle"></i> Szczeniak niedostępny</h5>
-        <p class="mb-0">Ten szczeniak został już zarezerwowany lub sprzedany.</p>
+        <h5><i class="fas fa-exclamation-triangle"></i> {% trans "Szczeniak niedostępny"%}</h5>
+        <p class="mb-0">{% trans "Ten szczeniak został już zarezerwowany lub sprzedany"%}</p>
     </div>
 {% endif %}
 
 <style>
-.reservation-form-section {
-    border: 2px solid #28a745;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
+    .reservation-form-section {
+        border: 2px solid #28a745;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
 
-.reservation-form .form-control {
-    border: 2px solid #dee2e6;
-    transition: all 0.3s ease;
-}
+    .reservation-form .form-control {
+        border: 2px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
 
-.reservation-form .form-control:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-}
+    .reservation-form .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
 
-.btn-success {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-    border: none;
-    transition: all 0.3s ease;
-}
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        transition: all 0.3s ease;
+    }
 
-.btn-success:hover {
-    background: linear-gradient(135deg, #218838 0%, #1ea88c 100%);
-    transform: translateY(-1px);
-}
+    .btn-success:hover {
+        background: linear-gradient(135deg, #218838 0%, #1ea88c 100%);
+        transform: translateY(-1px);
+    }
 
-.price-info {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+    .price-info {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 </style>
 </div>
 
-<!-- Sekcja rezerwacji (jeśli dostępny) -->
 {% if puppy.is_available %}
 <div class="container my-5">
-    {# ... Twoja sekcja rezerwacji bez zmian ... #}
 </div>
 {% endif %}
-
 {% endblock %}
-
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}

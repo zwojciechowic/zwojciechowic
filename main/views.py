@@ -10,6 +10,7 @@ from django.db.models import Count
 from collections import OrderedDict
 from collections import defaultdict
 from django.db.models import Count, Q
+import json
 
 def home(request):
     """Strona główna z najnowszymi wpisami, psami i szczeniakami"""
@@ -282,37 +283,6 @@ def admin_dashboard_context(request):
 def hotel(request):
     """Strona hotelu - już wkrótce"""
     return render(request, 'hotel.html')
-
-def handle_additional_photos_upload(request, instance):
-    """
-    Obsługuje upload dodatkowych zdjęć z formularza administracyjnego
-    """
-    uploaded_files = request.FILES.getlist('additional_photos_files')
-    additional_photos_data = request.POST.get('additional_photos_data', '[]')
-    
-    try:
-        photos_data = json.loads(additional_photos_data)
-    except (json.JSONDecodeError, TypeError):
-        photos_data = []
-    
-    # Obsługa nowych plików
-    for file in uploaded_files:
-        if file.content_type.startswith('image/'):
-            # Zapisz plik
-            filename = f"additional_photos/{instance._meta.model_name}_{instance.pk}_{file.name}"
-            saved_file = default_storage.save(filename, ContentFile(file.read()))
-            
-            # Dodaj do danych
-            photos_data.append({
-                'url': default_storage.url(saved_file),
-                'order': len(photos_data) + 1,
-                'filename': saved_file
-            })
-    
-    # Sortuj według kolejności
-    photos_data.sort(key=lambda x: x.get('order', 0))
-    
-    return photos_data
 
 def save_model(self, request, obj, form, change):
     # Najpierw zapisz obiekt
