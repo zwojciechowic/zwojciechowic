@@ -175,3 +175,64 @@ msgstr[0] "Hodowla posiada %(count)s certyfikat"
 msgstr[1] "Hodowla posiada %(count)s certyfikaty"
 msgstr[2] "Hodowla posiada %(count)s certyfikatów"
 
+
+
+
+### PUPPY DETAIL
+msgid "Brak zdjęć dla tego szczeniaka"
+msgstr "Brak zdjęć dla tego szczeniaka"
+
+msgid "Powrót do listy szczeniąt"
+msgstr "Powrót do listy szczeniąt"
+
+msgid "Szczenię posiada"
+msgstr "Szczenię posiada"
+
+msgid "certyfikat"
+msgstr "certyfikat"
+
+msgid "Szczeniak dostępny do rezerwacji"
+msgstr "Szczeniak dostępny do rezerwacji"
+
+msgid "Zarezerwuj"
+msgstr "Zarezerwuj"
+
+msgid "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów"
+msgstr "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów"
+
+msgid "Cena:"
+msgstr "Cena:"
+
+msgid "Szczeniak niedostępny"
+msgstr "Szczeniak niedostępny"
+
+msgid "PLN"
+msgid "zł"
+
+msgid "Ten szczeniak został już zarezerwowany lub sprzedany"
+msgstr "Ten szczeniak został już zarezerwowany lub sprzedany"
+
+
+
+
+msgid "Miot"
+msgid "Miot"
+
+msgid "Płeć:"
+msgstr "Płeć:"
+
+msgid "Data urodzenia:"
+msgstr "Data urodzenia:"
+
+msgid "Wiek:"
+msgstr "Wiek:"
+
+msgid "Matka:"
+msgstr "Matka:"
+
+msgid "Ojciec:"
+msgstr "Ojciec:"
+
+msgid "Cena:"
+msgstr "Cena:"
+

@@ -169,3 +169,31 @@ msgid "Hodowla posiada %(count)s certyfikat"
 msgid_plural "Hodowla posiada %(count)s certyfikaty"
 msgstr[0] "The kennel has %(count)s certificate"
 msgstr[1] "The kennel has %(count)s certificates"
+
+### PUPPY DETAIL
+msgid "Szczenię posiada"
+msgstr "The puppy has"
+
+msgid "certyfikat"
+msgstr "certificate"
+
+msgid "Szczeniak dostępny do rezerwacji"
+msgstr "Puppy available for reservation"
+
+msgid "Zarezerwuj"
+msgstr "Reserve"
+
+msgid "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów"
+msgstr "Reservations are non-binding. We will contact you to confirm details."
+
+msgid "Cena:"
+msgstr "Price:"
+
+msgid "Szczeniak niedostępny"
+msgstr "The puppies aren't available"
+
+msgid "PLN"
+msgid "PLN"
+
+msgid "Ten szczeniak został już zarezerwowany lub sprzedany"
+msgstr "This puppy has already been resolved or sold"
