@@ -168,16 +168,6 @@ msgstr "Autor"
 
 
 
-### about
-msgid "Hodowla posiada %(count)s certyfikat"
-msgid_plural "Hodowla posiada %(count)s certyfikaty"
-msgstr[0] "Hodowla posiada %(count)s certyfikat"
-msgstr[1] "Hodowla posiada %(count)s certyfikaty"
-msgstr[2] "Hodowla posiada %(count)s certyfikatów"
-
-
-
-
 ### PUPPY DETAIL
 msgid "Brak zdjęć dla tego szczeniaka"
 msgstr "Brak zdjęć dla tego szczeniaka"
@@ -207,7 +197,7 @@ msgid "Szczeniak niedostępny"
 msgstr "Szczeniak niedostępny"
 
 msgid "PLN"
-msgid "zł"
+msgstr "zł"
 
 msgid "Ten szczeniak został już zarezerwowany lub sprzedany"
 msgstr "Ten szczeniak został już zarezerwowany lub sprzedany"
@@ -216,7 +206,7 @@ msgstr "Ten szczeniak został już zarezerwowany lub sprzedany"
 
 
 msgid "Miot"
-msgid "Miot"
+msgstr "Miot"
 
 msgid "Płeć:"
 msgstr "Płeć:"
@@ -233,6 +223,14 @@ msgstr "Matka:"
 msgid "Ojciec:"
 msgstr "Ojciec:"
 
-msgid "Cena:"
-msgstr "Cena:"
 
+
+
+
+
+### about
+msgid "Hodowla posiada %(count)s certyfikat"
+msgid_plural "Hodowla posiada %(count)s certyfikaty"
+msgstr[0] "Hodowla posiada %(count)s certyfikat"
+msgstr[1] "Hodowla posiada %(count)s certyfikaty"
+msgstr[2] "Hodowla posiada %(count)s certyfikatów"
