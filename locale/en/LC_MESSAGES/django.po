@@ -164,11 +164,6 @@ msgstr "Author"
 
 
 
-### About
-msgid "Hodowla posiada %(count)s certyfikat"
-msgid_plural "Hodowla posiada %(count)s certyfikaty"
-msgstr[0] "The kennel has %(count)s certificate"
-msgstr[1] "The kennel has %(count)s certificates"
 
 ### PUPPY DETAIL
 msgid "Szczenię posiada"
@@ -193,7 +188,36 @@ msgid "Szczeniak niedostępny"
 msgstr "The puppies aren't available"
 
 msgid "PLN"
-msgid "PLN"
+msgstr "PLN"
 
 msgid "Ten szczeniak został już zarezerwowany lub sprzedany"
 msgstr "This puppy has already been resolved or sold"
+
+
+
+
+msgid "Miot"
+msgstr "Litter"
+
+msgid "Płeć:"
+msgstr "Gender:"
+
+msgid "Data urodzenia:"
+msgstr "Date birth:"
+
+msgid "Wiek:"
+msgstr "Age:"
+
+msgid "Matka:"
+msgstr "Mum:"
+
+msgid "Ojciec:"
+msgstr "Dad:"
+
+
+
+### About
+msgid "Hodowla posiada %(count)s certyfikat"
+msgid_plural "Hodowla posiada %(count)s certyfikaty"
+msgstr[0] "The kennel has %(count)s certificate"
+msgstr[1] "The kennel has %(count)s certificates"
