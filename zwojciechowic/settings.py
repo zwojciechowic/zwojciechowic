@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import dj_database_url
 from pathlib import Path
+from decouple import config
 
 load_dotenv()
 
@@ -15,48 +16,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 PORT = int(os.environ.get('PORT', 8000))
 
-ALLOWED_HOSTS = [
-    'localhost', 
-    '127.0.0.1', 
-    'zwojciechowic.pl',
-    'www.zwojciechowic.pl', 
-    'zwojciechowic.onrailway.app',
-    'zwojciechowic-production.up.railway.app',
-    '.railway.app']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+INSTALLED_APPS = config('INSTALLED_APPS').split(',')
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
+MIDDLEWARE = config('MIDDLEWARE').split(',')
 
-INSTALLED_APPS = [
-    'cloudinary',
-    'cloudinary_storage',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'main.apps.MainConfig',
-    'gallery',
-    'colorfield',
-]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://zwojciechowic.pl',
-    'https://www.zwojciechowic.pl',
-]
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
 ROOT_URLCONF = 'zwojciechowic.urls'
 
