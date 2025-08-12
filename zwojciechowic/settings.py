@@ -4,8 +4,6 @@ import dj_database_url
 from pathlib import Path
 from decouple import config
 
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -20,9 +18,6 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 INSTALLED_APPS = config('INSTALLED_APPS').split(',')
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
 MIDDLEWARE = config('MIDDLEWARE').split(',')
-INSTALLED_APPS = config('INSTALLED_APPS').split(',')
-INSTALLED_APPS = config('INSTALLED_APPS').split(',')
-INSTALLED_APPS = config('INSTALLED_APPS').split(',')
 
 
 CSRF_COOKIE_SECURE = True
