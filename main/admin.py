@@ -33,16 +33,7 @@ class DogAdmin(TranslatableAdmin):
     list_filter = ['gender', 'is_breeding', 'birth_date']
     search_fields = ['translations__name', 'translations__breed', 'translations__description']
     list_editable = ['is_breeding']
-    
-    fieldsets = (
-        ('Podstawowe informacje', {
-            'fields': ('gender', 'birth_date', 'is_breeding')
-        }),
-        ('Media', {
-            'fields': ('photo_gallery', 'certificates_gallery'),
-        }),
-    )
-    
+
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo
         if main_photo_obj and main_photo_obj.image:
