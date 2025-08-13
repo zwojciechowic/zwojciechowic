@@ -85,6 +85,46 @@ msgstr "SEE AVALIABLE PUPPIES"
 msgid "Zobacz wszystkie nasze psy"
 msgstr "See all dogs"
 
+msgid "Dostępne szczenięta"
+msgstr "available puppies"
+
+
+msgid "Miot"
+msgstr "Litter"
+
+
+msgid "Płeć:"
+msgstr "Sex:"
+
+msgid "Rasa:"
+msgstr "Breed:"
+
+msgid "Data urodzenia:"
+msgstr "Date of birth:"
+
+msgid "Cena:"
+msgstr "Price:"
+
+msgid "Zarezeruj:"
+msgstr "Reserved:"
+
+msgid "Zobacz wszystkie szczenięta"
+msgstr "See all puppies"
+
+msgid "Aktualnie nie mamy dostępnych szczeniąt!"
+msgstr "Currently, we have no puppies available!"
+
+msgid "Skontaktuj się z nami"
+msgstr "Contact us"
+
+msgid "aby dowiedzieć się o planowanych miotach."
+msgstr "to find out more about comming Litters."
+
+msgid "Najnowsze wpisy"
+msgstr "Newest posts"
+
+
+
 
 
 
@@ -200,14 +240,3 @@ msgstr "Other dogs"
 
 
 
-
-### CARD
-
-msgid "Rasa:"
-msgstr "Rasa:"
-
-msgid "Płeć:"
-msgstr "Płeć:"
-
-msgid "Data urodzenia:"
-msgstr "Data urodzenia:"

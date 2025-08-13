@@ -82,6 +82,44 @@ msgstr "Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych waru
 msgid "Zobacz dostępne szczenięta"
 msgstr "Zobacz dostępne szczenięta"
 
+msgid "Zobacz wszystkie nasze psy"
+msgstr "Zobacz wszystkie nasze psy"
+
+msgid "Dostępne szczenięta"
+msgstr "Dostępne szczenięta"
+
+msgid "Miot"
+msgstr "Miot"
+
+msgid "Płeć:"
+msgstr "Płeć:"
+
+msgid "Rasa:"
+msgstr "Rasa:"
+
+msgid "Data urodzenia:"
+msgstr "Data urodzenia:"
+
+msgid "Cena:"
+msgstr "Cena:"
+
+msgid "Zarezeruj:"
+msgstr "Zarezerwuj:"
+
+msgid "Zobacz wszystkie szczenięta"
+msgstr "Zobacz wszystkie szczenięta"
+
+msgid "Aktualnie nie mamy dostępnych szczeniąt!"
+msgstr "Aktualnie nie mamy dostępnych szczeniąt!"
+
+msgid "Skontaktuj się z nami"
+msgstr "Skontaktuj się z nami"
+
+msgid "aby dowiedzieć się o planowanych miotach."
+msgstr "aby dowiedzieć się o planowanych miotach."
+
+msgid "Najnowsze wpisy"
+msgstr "Najnowsze wpisy"
 
 
 
@@ -100,6 +138,8 @@ msgstr "Szybkie linki"
 
 msgid "Wszystkie prawa zastrzeżone."
 msgstr "Wszystkie prawa zastrzeżone."
+
+
 
 
 
@@ -154,9 +194,6 @@ msgstr "Spróbuj ponownien później albo skontaktuj się z nami."
     msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
     msgstr "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
 
-    msgid "Zobacz wszystkie nasze psy"
-    msgstr "Zobacz wszystkie nasze psy"
-
 
 
 
@@ -207,14 +244,3 @@ msgstr "Autor"
     msgstr "Inne psy"
 
 
-
-### CARD
-
-    msgid "Rasa:"
-    msgstr "Breed:"
-
-    msgid "Płeć:"
-    msgstr "Sex:"
-
-    msgid "Data urodzenia:"
-    msgstr "Date of birth:"
