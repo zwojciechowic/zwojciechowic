@@ -103,46 +103,52 @@ class Dog(TranslatableModel):
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
-class Puppy(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Imię')
-    litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')
+
+class Puppy(TranslatableModel):
+    translations = TranslatedFields(
+        description = models.TextField(blank=True, verbose_name=_('Opis'))
+    )
     
-    # Pola kolorów - hex values dla color pickera
+    name = models.CharField(max_length=100, verbose_name=_('Imię'))
+    litter = models.CharField(max_length=1, verbose_name=_('Miot'), default='A', help_text=_('Jedna litera oznaczająca miot (A, B, C...)'))
+    
     color1 = ColorField(
         default='#FFFFFF',
-        verbose_name='Kolor 1',
-        help_text='Pierwszy kolor'
+        verbose_name=_('Kolor 1'),
+        help_text=_('Pierwszy kolor')
     )
     color2 = ColorField(
         default='#FFFFFF',
-        verbose_name='Kolor 2',
+        verbose_name=_('Kolor 2'),
         blank=True,
-        help_text='Drugi kolor (opcjonalny)'
+        help_text=_('Drugi kolor (opcjonalny)')
     )
     
-    # Pola mother i father jako zwykłe pola tekstowe zamiast ForeignKey
     mother_name = models.CharField(
         max_length=100, 
-        verbose_name='Matka', 
+        verbose_name=_('Matka'), 
         blank=True,
-        help_text='Imię matki - tylko do wyświetlania'
+        help_text=_('Imię matki - tylko do wyświetlania')
     )
     father_name = models.CharField(
         max_length=100, 
-        verbose_name='Ojciec', 
+        verbose_name=_('Ojciec'), 
         blank=True,
-        help_text='Imię ojca - tylko do wyświetlania'
+        help_text=_('Imię ojca - tylko do wyświetlania')
     )
     
-    birth_date = models.DateField(verbose_name='Data urodzenia')
-    gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
-    description = models.TextField(blank=True, verbose_name='Opis')
+    birth_date = models.DateField(verbose_name=_('Data urodzenia'))
+    gender = models.CharField(
+        max_length=10, 
+        choices=[('male', _('Pies')), ('female', _('Suka'))], 
+        verbose_name=_('Płeć')
+    )
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria zdjęć',
+        verbose_name=_('Galeria zdjęć'),
         related_name='puppy_photos'
     )
     certificates_gallery = models.ForeignKey(
@@ -150,16 +156,16 @@ class Puppy(models.Model):
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria certyfikatów',
+        verbose_name=_('Galeria certyfikatów'),
         related_name='puppy_certificates'
     )
-    is_available = models.BooleanField(default=True, verbose_name='Dostępne')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cena')
+    is_available = models.BooleanField(default=True, verbose_name=_('Dostępne'))
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Cena'))
     
     class Meta:
         ordering = ['litter', 'name']
-        verbose_name = 'Szczeniak'
-        verbose_name_plural = 'Szczeniaki'
+        verbose_name = _('Szczeniak')
+        verbose_name_plural = _('Szczeniaki')
     
     def __str__(self):
         parent_info = ""
@@ -170,7 +176,6 @@ class Puppy(models.Model):
         elif self.father_name:
             parent_info = f" (ojciec: {self.father_name})"
         
-        # Dodanie informacji o kolorach do wyświetlania
         color_info = ""
         if self.color1:
             color_info = f" - {self.color1}"
@@ -181,14 +186,12 @@ class Puppy(models.Model):
     
     @property
     def main_photo(self):
-        """Pierwsze zdjęcie z galerii jako główne"""
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
     
     @property
     def color_display(self):
-        """Wyświetlanie kolorów w czytelnej formie"""
         if self.color1 and self.color2:
             return f"{self.color1}/{self.color2}"
         elif self.color1:
