@@ -247,3 +247,55 @@ msgstr "Autor"
     msgstr "Inne psy"
 
 
+
+### contact
+    msgid "Proszę poprawić następujące błędy:"
+    msgstr "Proszę poprawić następujące błędy:"
+
+    msgid "Imię i nazwisko"
+    msgstr "Imię i nazwisko"
+
+    msgid "Email"
+    msgstr "Email"
+
+    msgid "Telefon (opcjonalnie)"
+    msgstr "Telefon (opcjonalnie)"
+
+    msgid "Temat"
+    msgstr "Temat"
+
+    msgid "Wiadomość"
+    msgstr "Wiadomość"
+
+    msgid "Wyślij wiadomość"
+    msgstr "Wyślij wiadomość"
+
+    msgid "Dane kontaktowe"
+    msgstr "Dane kontaktowe"
+
+    msgid "Adres:"
+    msgstr "Adres:"
+
+    msgid "Telefon:"
+    msgstr "Telefon:"
+
+    msgid "Email:"
+    msgstr "Email:"
+
+    msgid "Godziny dostępności"
+    msgstr "Godziny dostępności"
+
+    msgid "Poniedziałek - Piątek:"
+    msgstr "Poniedziałek - Piątek:"
+
+    msgid "Po wcześniejszym umówieniu"
+    msgstr "Po wcześniejszym umówieniu"
+
+    msgid "Sobota:"
+    msgstr "Sobota:"
+
+    msgid "Niedziela:"
+    msgstr "Niedziela:"
+
+    msgid "Lokalizacja"
+    msgstr "Lokalizacja"

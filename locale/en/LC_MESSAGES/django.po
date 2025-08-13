@@ -240,3 +240,51 @@ msgstr "Other dogs"
 
 
 
+
+    msgid "Proszę poprawić następujące błędy:"
+    msgstr "Please correct the errors:"
+
+    msgid "Imię i nazwisko"
+    msgstr "Name and surname"
+
+    msgid "Telefon (opcjonalnie)"
+    msgstr "Phone (optional)"
+
+    msgid "Temat"
+    msgstr "Subject"
+
+    msgid "Wiadomość"
+    msgstr "Message"
+
+    msgid "Wyślij wiadomość"
+    msgstr "Send message"
+
+    msgid "Dane kontaktowe"
+    msgstr "Contact details"
+
+    msgid "Adres:"
+    msgstr "Adres:"
+
+    msgid "Telefon:"
+    msgstr "Phone:"
+
+    msgid "Email:"
+    msgstr "Email:"
+
+    msgid "Godziny dostępności"
+    msgstr "Availability"
+
+    msgid "Poniedziałek - Piątek:"
+    msgstr "Monday - Friday:"
+
+    msgid "Po wcześniejszym umówieniu"
+    msgstr "By appointment only"
+
+    msgid "Sobota:"
+    msgstr "Saturday:"
+
+    msgid "Niedziela:"
+    msgstr "Sunday:"
+
+    msgid "Lokalizacja"
+    msgstr "Localization"

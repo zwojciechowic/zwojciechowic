@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1>Kontakt</h1>
+    <h1>{% trans "Kontakt"%}</h1>
     
     <!-- Komunikaty o sukcesie lub błędzie -->
     {% if messages %}
@@ -24,7 +24,7 @@
                 
                 {% if form.errors %}
                     <div class="alert alert-danger">
-                        <h5>Proszę poprawić następujące błędy:</h5>
+                        <h5>{% trans "Proszę poprawić następujące błędy:"%}</h5>
                         {% for field, errors in form.errors.items %}
                             {% for error in errors %}
                                 <p>{{ error }}</p>
@@ -34,38 +34,38 @@
                 {% endif %}
                 
                 <div class="mb-3">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">Imię i nazwisko</label>
+                    <label for="{{ form.name.id_for_label }}" class="form-label">{% trans "Imię i nazwisko"%}</label>
                     {{ form.name }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                    <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Email"%}</label>
                     {{ form.email }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.phone.id_for_label }}" class="form-label">Telefon (opcjonalnie)</label>
+                    <label for="{{ form.phone.id_for_label }}" class="form-label">{% trans "Telefon (opcjonalnie)"%}</label>
                     {{ form.phone }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.subject.id_for_label }}" class="form-label">Temat</label>
+                    <label for="{{ form.subject.id_for_label }}" class="form-label">{% trans "Temat"%}</label>
                     {{ form.subject }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.message.id_for_label }}" class="form-label">Wiadomość</label>
+                    <label for="{{ form.message.id_for_label }}" class="form-label">{% trans "Wiadomość"%}</label>
                     {{ form.message }}
                 </div>
-                <button type="submit" class="btn btn-primary">Wyślij wiadomość</button>
+                <button type="submit" class="btn btn-primary">{% trans "Wyślij wiadomość"%}</button>
             </form>
         </div>
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Dane kontaktowe</h5>
+                    <h5 class="card-title">{% trans "   "%}</h5>
                     <p class="card-text">
-                        <strong>Adres:</strong><br>
+                        <strong>{% trans "Adres:"%}</strong><br>
                         Wojciechowice<br><br>
-                        <strong>Telefon:</strong><br>
+                        <strong>{% trans "Telefon:"%}</strong><br>
                         +48 533 498 384<br><br>
-                        <strong>Email:</strong><br>
+                        <strong>{% trans "Email:"%}</strong><br>
                         zwojciechowic@gmail.com
                     </p>
                 </div>
@@ -73,13 +73,13 @@
             
             <div class="card mt-4">
                 <div class="card-body">
-                    <h5 class="card-title">Godziny dostępności</h5>
+                    <h5 class="card-title">{% trans "Godziny dostępności"%}</h5>
                     <p class="card-text">
-                        <strong>Poniedziałek - Piątek:</strong><br>
-                        Po wcześniejszym umówieniu<br><br>
-                        <strong>Sobota:</strong><br>
+                        <strong>{% trans "Poniedziałek - Piątek:"%}</strong><br>
+                        {% trans "Po wcześniejszym umówieniu"%}<br><br>
+                        <strong>{% trans "Sobota:"%}</strong><br>
                         07:00 - 21:00<br><br>
-                        <strong>Niedziela:</strong><br>
+                        <strong>{% trans "Niedziela:"%}</strong><br>
                         07:00 - 18:00
                     </p>
                 </div>
@@ -91,7 +91,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Lokalizacja</h5>
+                    <h5 class="card-title">{% trans "Lokalizacja"%}</h5>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d604.0279313690488!2d19.400614423589403!3d52.19958699779339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTLCsDExJzU4LjUiTiAxOcKwMjQnMDQuOCJF!5e1!3m2!1spl!2spl!4v1752439291804!5m2!1spl!2spl" 
                            width="100%" 
                            height="300" 
