@@ -96,7 +96,7 @@ class Dog(TranslatableModel):
         verbose_name_plural = _('Psy')
     
     def __str__(self):
-        return self.safe_translation_getter('name', default=f"Pies (ID: {self.pk})")
+        return self.name
     
     @property
     def main_photo(self):
