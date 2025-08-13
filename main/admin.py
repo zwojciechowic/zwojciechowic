@@ -86,28 +86,19 @@ class PuppyAdminForm(forms.ModelForm):
         }
 
 @admin.register(Puppy)
-class PuppyAdmin(admin.ModelAdmin):
+class PuppyAdmin(TranslatableAdmin):
     form = PuppyAdminForm
     list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother_name', 'father_name']
     search_fields = ['name', 'litter', 'mother_name', 'father_name']
     list_editable = ['is_available', 'price']
     
-    # Grupowanie po miocie w liście
-    def get_queryset(self, request):
-        return super().get_queryset(request).order_by('litter', 'name')
-    
     fieldsets = (
         ('Podstawowe informacje', {
-            'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
+            'fields': ('litter', 'birth_date', 'gender')
         }),
         ('Kolory', {
             'fields': ('color1', 'color2'),
-            'description': 'Wybierz kolory szczeniaka'
-        }),
-        ('Rodzice', {
-            'fields': ('mother_name', 'father_name'),
-            'description': 'Wpisz imiona rodziców - nie będą tworzone nowe rekordy psów w bazie danych'
         }),
         ('Dostępność', {
             'fields': ('is_available', 'price')
@@ -116,6 +107,15 @@ class PuppyAdmin(admin.ModelAdmin):
             'fields': ('photo_gallery', 'certificates_gallery')
         }),
     )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).order_by('litter', 'name')
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['color1'].widget = ColorWidget()
+        form.base_fields['color2'].widget = ColorWidget()
+        return form
     
     def color_display_admin(self, obj):
         """Wyświetlanie kolorów w panelu admina z preview"""
