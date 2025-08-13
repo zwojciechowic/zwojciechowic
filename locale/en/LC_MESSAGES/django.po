@@ -82,6 +82,9 @@ msgstr "If you're looking for a dog with passion, raised with love in a natural 
 msgid "Zobacz dostępne szczenięta"
 msgstr "SEE AVALIABLE PUPPIES"
 
+msgid "Zobacz wszystkie nasze psy"
+msgstr "See all dogs"
+
 
 
 
@@ -194,3 +197,17 @@ msgstr "SEE DETAILS"
 
 msgid "Inne psy"
 msgstr "Other dogs"
+
+
+
+
+### CARD
+
+msgid "Rasa:"
+msgstr "Rasa:"
+
+msgid "Płeć:"
+msgstr "Płeć:"
+
+msgid "Data urodzenia:"
+msgstr "Data urodzenia:"

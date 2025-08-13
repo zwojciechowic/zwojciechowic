@@ -126,33 +126,36 @@ msgstr "Spróbuj ponownien później albo skontaktuj się z nami."
 
 
 
-### BASE
-msgid "Profesjonalna hodowla psów z pasją i doświadczeniem"
-msgstr "Profesjonalna hodowla psów z pasją i doświadczeniem"
+### MAIN PAGE
+    msgid "Profesjonalna hodowla psów z pasją i doświadczeniem"
+    msgstr "Profesjonalna hodowla psów z pasją i doświadczeniem"
 
-msgid "Poznaj nasze szczeniaki"
-msgstr "Poznaj nasze szczeniaki"
+    msgid "Poznaj nasze szczeniaki"
+    msgstr "Poznaj nasze szczeniaki"
 
-msgid "Doświadczenie"
-msgstr "Doświadczenie"
+    msgid "Doświadczenie"
+    msgstr "Doświadczenie"
 
-msgid "Ponad 15 lat doświadczenia w hodowli psów rasowych"
-msgstr "Ponad 15 lat doświadczenia w hodowli psów rasowych"
+    msgid "Ponad 15 lat doświadczenia w hodowli psów rasowych"
+    msgstr "Ponad 15 lat doświadczenia w hodowli psów rasowych"
 
-msgid "Pasja"
-msgstr "Pasja"
+    msgid "Pasja"
+    msgstr "Pasja"
 
-msgid "Hodowla z miłości do psów i troski o ich dobrostan"
-msgstr "Hodowla z miłości do psów i troski o ich dobrostan"
+    msgid "Hodowla z miłości do psów i troski o ich dobrostan"
+    msgstr "Hodowla z miłości do psów i troski o ich dobrostan"
 
-msgid "Jakość"
-msgstr "Jakość"
+    msgid "Jakość"
+    msgstr "Jakość"
 
-msgid "Wszystkie nasze psy posiadają rodowody FCI"
-msgstr "Wszystkie nasze psy posiadają rodowody FCI"
+    msgid "Wszystkie nasze psy posiadają rodowody FCI"
+    msgstr "Wszystkie nasze psy posiadają rodowody FCI"
 
-msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
-msgstr "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+    msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+    msgstr "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+
+    msgid "Zobacz wszystkie nasze psy"
+    msgstr "Zobacz wszystkie nasze psy"
 
 
 
@@ -169,11 +172,11 @@ msgstr "Autor"
 
 
 ### about
-msgid "Hodowla posiada %(count)s certyfikat"
-msgid_plural "Hodowla posiada %(count)s certyfikaty"
-msgstr[0] "Hodowla posiada %(count)s certyfikat"
-msgstr[1] "Hodowla posiada %(count)s certyfikaty"
-msgstr[2] "Hodowla posiada %(count)s certyfikatów"
+    msgid "Hodowla posiada %(count)s certyfikat"
+    msgid_plural "Hodowla posiada %(count)s certyfikaty"
+    msgstr[0] "Hodowla posiada %(count)s certyfikat"
+    msgstr[1] "Hodowla posiada %(count)s certyfikaty"
+    msgstr[2] "Hodowla posiada %(count)s certyfikatów"
 
 
 
@@ -181,24 +184,37 @@ msgstr[2] "Hodowla posiada %(count)s certyfikatów"
 
 
 ### PYTHON>MODELS
-msgid "Pies"
-msgstr "Pies"
-msgid "Suka"
-msgstr "Suka"
-msgid "Psy"
-msgstr "Psy"
+    msgid "Pies"
+    msgstr "Pies"
+    msgid "Suka"
+    msgstr "Suka"
+    msgid "Psy"
+    msgstr "Psy"
 
 
 
 ### dogs
-msgid "Psy rasowe"
-msgstr "Psy rasowe"
+    msgid "Psy rasowe"
+    msgstr "Psy rasowe"
 
-msgid "Certyfikowany"
-msgstr "Certyfikowany"
+    msgid "Certyfikowany"
+    msgstr "Certyfikowany"
 
-msgid "ZOBACZ WIĘCEJ"
-msgstr "ZOBACZ WIĘCEJ"
+    msgid "ZOBACZ WIĘCEJ"
+    msgstr "ZOBACZ WIĘCEJ"
 
-msgid "Inne psy"
-msgstr "Inne psy"
+    msgid "Inne psy"
+    msgstr "Inne psy"
+
+
+
+### CARD
+
+    msgid "Rasa:"
+    msgstr "Breed:"
+
+    msgid "Płeć:"
+    msgstr "Sex:"
+
+    msgid "Data urodzenia:"
+    msgstr "Date of birth:"
