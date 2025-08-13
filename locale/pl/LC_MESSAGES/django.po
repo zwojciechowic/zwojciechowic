@@ -228,6 +228,9 @@ msgstr "Autor"
     msgid "Psy"
     msgstr "Psy"
 
+    msgid "Imię"
+    msgstr "Imię"
+
 
 
 ### dogs

@@ -415,5 +415,23 @@ class HodowlaAdminSite(AdminSite):
        
        return super().index(request, extra_context)
 
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('puppy', 'customer_name', 'customer_email', 'status', 'created_at')
+    list_filter = ('status', 'created_at')
+    search_fields = ('customer_name', 'customer_email', 'puppy__name')
+    readonly_fields = ('created_at',)
+    list_editable = ('status',)
+    date_hierarchy = 'created_at'
+
+    fieldsets = (
+        ('Dane rezerwacji', {
+            'fields': ('puppy', 'status', 'created_at')
+        }),
+        ('Dane klienta', {
+            'fields': ('customer_name', 'customer_email', 'customer_phone', 'message')
+        }),
+    )
+
 # Zastąp ostatnią linię Twojego pliku admin.py:
 admin.site.__class__ = HodowlaAdminSite
