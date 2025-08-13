@@ -34,22 +34,24 @@ class DogAdmin(TranslatableAdmin):
     search_fields = ['translations__name', 'translations__breed', 'translations__description']
     list_editable = ['is_breeding']
 
-    def get_fieldsets(self, request, obj=None):
-        language = request.GET.get('language')
-        fieldsets = (
-            ('Podstawowe informacje', {
-                'fields': ('name', 'birth_date', 'is_breeding')
-            }),
-            ('Media', {
-                'fields': ('photo_gallery', 'certificates_gallery'),
-            }),
-        )
-        if language != 'en':
-            basic_info_fields = list(fieldsets[0][1]['fields'])
-            basic_info_fields.insert(1, 'gender')
-            fieldsets[0][1]['fields'] = tuple(basic_info_fields)
-            
-        return fieldsets
+    def get_form(self, request, obj=None, **kwargs):
+        # 1. Pobierz domyślny formularz, który Django i Parler chcą zbudować.
+        form = super().get_form(request, obj, **kwargs)
+
+        # 2. Sprawdź, czy jesteśmy w kontekście języka angielskiego.
+        if request.GET.get('language') == 'en':
+            # 3. Jeśli tak, usuń z formularza pola, których nie chcemy widzieć.
+            #    Używamy pętli i 'try...except', aby uniknąć błędów, jeśli pole już nie istnieje.
+            fields_to_hide = ['name', 'gender', 'birth_date', 'is_breeding', 'photo_gallery', 'certificates_gallery']
+            for field_name in fields_to_hide:
+                try:
+                    del form.base_fields[field_name]
+                except KeyError:
+                    # To normalne, jeśli pole już zostało usunięte lub nie istnieje. Po prostu kontynuuj.
+                    pass
+        
+        # 4. Zwróć zmodyfikowany formularz.
+        return form
 
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo

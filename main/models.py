@@ -62,20 +62,17 @@ class BlogPost(models.Model):
         ])
 class Dog(TranslatableModel):
     translations = TranslatedFields(
-        name = models.CharField(max_length=100, verbose_name='Imię'),
-        breed = models.CharField(max_length=100, verbose_name='Rasa'),
-        description = models.TextField(verbose_name='Opis')
+        breed = models.CharField(max_length=100, verbose_name=_('Rasa')),
+        description = models.TextField(verbose_name=_('Opis'))
     )
-
-    birth_date = models.DateField(verbose_name='Data urodzenia')
+    name = models.CharField(max_length=100, verbose_name=_('Imię'))
     gender = models.CharField(
         max_length=10, 
-        choices=[
-            ('male', _('Pies')),    # <--- O TUTAJ
-            ('female', _('Suka'))   # <--- I TUTAJ
-        ], 
+        choices=[('male', _('Pies')), ('female', _('Suka'))], 
         verbose_name=_('Płeć')
     )
+    birth_date = models.DateField(verbose_name=_('Data urodzenia'))
+    is_breeding = models.BooleanField(default=False, verbose_name=_('Pies hodowlany'))
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -92,12 +89,11 @@ class Dog(TranslatableModel):
         verbose_name='Galeria certyfikatów',
         related_name='dog_certificates'
     )
-    is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
     
     class Meta:
-        ordering = ['translations__name']
-        verbose_name = 'Pies'
-        verbose_name_plural = 'Psy'
+        ordering = ['name']
+        verbose_name = _('Pies')
+        verbose_name_plural = _('Psy')
     
     def __str__(self):
         return self.safe_translation_getter('name', default=f"Pies (ID: {self.pk})")
