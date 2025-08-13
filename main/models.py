@@ -1,10 +1,10 @@
 # models.py
 from django.db import models
-from django.utils.html import format_html
 from django.utils import timezone
 from django.contrib.auth.models import User
 from colorfield.fields import ColorField
 from django.utils.translation import gettext_lazy as _
+from parler.models import TranslatableModel, TranslatedFields
 
 class BlogSection(models.Model):
     blog_post = models.ForeignKey('BlogPost', on_delete=models.CASCADE, related_name='sections', verbose_name='Wpis na blogu')
@@ -60,12 +60,15 @@ class BlogPost(models.Model):
             else section.content 
             for section in self.sections.all()
         ])
-class Dog(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Imię')
-    breed = models.CharField(max_length=100, verbose_name='Rasa')
+class Dog(TranslatableModel):
+    translations = TranslatedFields(
+        name = models.CharField(max_length=100, verbose_name='Imię'),
+        breed = models.CharField(max_length=100, verbose_name='Rasa'),
+        description = models.TextField(verbose_name='Opis')
+    )
+
     birth_date = models.DateField(verbose_name='Data urodzenia')
     gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
-    description = models.TextField(verbose_name='Opis')
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -85,20 +88,18 @@ class Dog(models.Model):
     is_breeding = models.BooleanField(default=False, verbose_name='Pies hodowlany')
     
     class Meta:
-        ordering = ['name']
+        ordering = ['translations__name']
         verbose_name = 'Pies'
         verbose_name_plural = 'Psy'
     
     def __str__(self):
-        return self.name
+        return self.safe_translation_getter('name', default=f"Pies (ID: {self.pk})")
     
     @property
     def main_photo(self):
-        """Pierwsze zdjęcie z galerii jako główne"""
         if self.photo_gallery:
             return self.photo_gallery.photos.first()
         return None
-
 class Puppy(models.Model):
     name = models.CharField(max_length=100, verbose_name='Imię')
     litter = models.CharField(max_length=1, verbose_name='Miot', default='A', help_text='Jedna litera oznaczająca miot (A, B, C...)')

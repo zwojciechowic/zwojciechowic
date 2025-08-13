@@ -72,21 +72,32 @@ def about(request):
     return render(request, 'about.html')
 
 def dogs(request):
-    """Strona nasze psy"""
-    breeding_dogs = Dog.objects.filter(is_breeding=True)
-    other_dogs = Dog.objects.filter(is_breeding=False)
+    breeding_dogs = Dog.objects.filter(is_breeding=True).order_by('translations__name')
+    other_dogs = Dog.objects.filter(is_breeding=False).order_by('translations__name')
     return render(request, 'dogs.html', {
         'breeding_dogs': breeding_dogs,
         'other_dogs': other_dogs
     })
 
 def dog_detail(request, pk):
-    """Szczegółowa strona psa"""
     dog = get_object_or_404(Dog, pk=pk)
     return render(request, 'dog_detail.html', {
         'dog': dog
     })
 
+def home(request):
+    latest_posts = BlogPost.objects.filter(is_published=True)[:3]
+    featured_dogs = Dog.objects.filter(is_breeding=True).order_by('translations__name')[:2]
+    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')[:3]
+    
+    context = {
+        'latest_posts': latest_posts,
+        'featured_dogs': featured_dogs,
+        'available_puppies': available_puppies,
+        'page_obj': latest_posts,
+    }
+    
+    return render(request, 'index.html', context)
 def puppies(request):
     """Strona szczeniaki z grupowaniem po miotach"""
     all_puppies = Puppy.objects.all().order_by('litter', 'name')

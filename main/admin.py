@@ -4,10 +4,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
 from django.contrib.admin import AdminSite
-import json
-import uuid
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+from parler.admin import TranslatableAdmin
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -31,19 +28,18 @@ class BlogPostAdminForm(forms.ModelForm):
         js = ('js/admin_image_preview.js',)
 
 @admin.register(Dog)
-class DogAdmin(admin.ModelAdmin):
+class DogAdmin(TranslatableAdmin):
     list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding', 'main_photo_preview', 'photos_count', 'certificates_count']
-    list_filter = ['breed', 'gender', 'is_breeding', 'birth_date']
-    search_fields = ['name', 'breed', 'description']
+    list_filter = ['gender', 'is_breeding', 'birth_date']
+    search_fields = ['translations__name', 'translations__breed', 'translations__description']
     list_editable = ['is_breeding']
     
     fieldsets = (
         ('Podstawowe informacje', {
-            'fields': ('name', 'breed', 'gender', 'birth_date', 'is_breeding', 'description')
+            'fields': ('gender', 'birth_date', 'is_breeding')
         }),
         ('Media', {
             'fields': ('photo_gallery', 'certificates_gallery'),
-            'description': 'Wybierz istniejące galerie lub stwórz nowe w sekcji "Zbiory zdjęć"'
         }),
     )
     
@@ -66,7 +62,6 @@ class DogAdmin(admin.ModelAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
 
 class ColorWidget(forms.TextInput):
     """Custom widget dla color pickera"""

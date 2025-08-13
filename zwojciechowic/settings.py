@@ -140,3 +140,13 @@ ADMIN_SITE_HEADER = "🏡 Hodowla z Wojciechowic"
 ADMIN_SITE_TITLE = "Hodowla Admin"
 ADMIN_INDEX_TITLE = "Panel Zarządzania"
 
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'pl',}, # Język domyślny
+        {'code': 'en',},
+    ),
+    'default': {
+        'fallback': 'pl',         # Język, na który wraca, gdy tłumaczenia brak
+        'hide_untranslated': False, # Pokazuje wartość fallback, zamiast ukrywać obiekt
+    }
+}
