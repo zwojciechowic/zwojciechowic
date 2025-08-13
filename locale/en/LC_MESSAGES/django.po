@@ -179,3 +179,15 @@ msgid "Suka"
 msgstr "Bitch"
 msgid "Psy"
 msgstr "Dog's"
+
+
+
+### dogs
+msgid "Psy rasowe"
+msgstr "Pedigree dogs"
+
+msgid "certyfikowany"
+msgstr "certified"
+
+msgid "zobacz szczegóły"
+msgstr "SEE DETAILS"

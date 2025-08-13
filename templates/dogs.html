@@ -111,7 +111,7 @@
     {% if breeding_dogs %}
     <div class="row mb-5">
         <div class="col-12">
-            <h2 class="mb-4">Psy hodowlane</h2>
+            <h2 class="mb-4">{% trans "Psy rasowe"%}</h2>
         </div>
     </div>
     
@@ -129,7 +129,7 @@
 
                         {% if dog.certificates_gallery %}
                         <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
-                            <span class="badge bg-success"><i class="fas fa-certificate"></i> Certyfikowany</span>
+                            <span class="badge bg-success"><i class="fas fa-certificate"></i> {%trans"Certyfikowany"%}</span>
                         </div>
                         {% endif %}
                     </div>
@@ -138,14 +138,14 @@
                     <h5 class="card-title">{{ dog.name }}</h5>
                     <div class="card-details mb-3">
                         <small class="text-muted">
-                            <strong>Rasa:</strong> {{ dog.breed }}<br>
-                            <strong>Płeć:</strong> {{ dog.get_gender_display }}<br>
-                            <strong>Data urodzenia:</strong> {{ dog.birth_date|date:"d.m.Y" }}
+                            <strong>{%trans"Rasa:"%}</strong> {{ dog.breed }}<br>
+                            <strong>{%trans"Płeć:"%}</strong> {{ dog.get_gender_display }}<br>
+                            <strong>{%trans"Data urodzenia:"%}</strong> {{ dog.birth_date|date:"d.m.Y" }}
                         </small>
                     </div>
                     <p class="card-text flex-grow-1">{{ dog.description|truncatewords:20 }}</p>
                     <div class="mt-auto">
-                        <a href="{% url 'dog_detail' dog.pk %}" class="btn btn-primary btn-sm">Zobacz szczegóły</a>
+                        <a href="{% url 'dog_detail' dog.pk %}" class="btn btn-primary btn-sm">{%trans"Zobacz szczegóły"%}</a>
                     </div>
                 </div>
             </div>

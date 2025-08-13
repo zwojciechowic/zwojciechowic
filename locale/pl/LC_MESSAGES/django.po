@@ -184,6 +184,18 @@ msgstr[2] "Hodowla posiada %(count)s certyfikatów"
 msgid "Pies"
 msgstr "Pies"
 msgid "Suka"
-msgatr "Suka"
+msgstr "Suka"
 msgid "Psy"
 msgstr "Psy"
+
+
+
+### dogs
+msgid "Psy rasowe"
+msgstr "Psy rasowe"
+
+msgid "certyfikowany"
+msgstr "certyfikowany"
+
+msgid "zobacz szczegóły"
+msgstr "zobacz szczegóły"
