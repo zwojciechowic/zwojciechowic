@@ -169,3 +169,11 @@ msgid "Hodowla posiada %(count)s certyfikat"
 msgid_plural "Hodowla posiada %(count)s certyfikaty"
 msgstr[0] "The kennel has %(count)s certificate"
 msgstr[1] "The kennel has %(count)s certificates"
+
+
+
+### PYTHON>MODELS
+msgid "Pies"
+msgstr "Dog"
+msgid "Suka"
+msgstr "Bitch"

@@ -68,7 +68,14 @@ class Dog(TranslatableModel):
     )
 
     birth_date = models.DateField(verbose_name='Data urodzenia')
-    gender = models.CharField(max_length=10, choices=[('male', 'Pies'), ('female', 'Suka')], verbose_name='Płeć')
+    gender = models.CharField(
+        max_length=10, 
+        choices=[
+            ('male', _('Pies')),    # <--- O TUTAJ
+            ('female', _('Suka'))   # <--- I TUTAJ
+        ], 
+        verbose_name=_('Płeć')
+    )
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 

@@ -34,6 +34,23 @@ class DogAdmin(TranslatableAdmin):
     search_fields = ['translations__name', 'translations__breed', 'translations__description']
     list_editable = ['is_breeding']
 
+    def get_fieldsets(self, request, obj=None):
+        language = request.GET.get('language')
+        fieldsets = (
+            ('Podstawowe informacje', {
+                'fields': ('name', 'birth_date', 'is_breeding')
+            }),
+            ('Media', {
+                'fields': ('photo_gallery', 'certificates_gallery'),
+            }),
+        )
+        if language != 'en':
+            basic_info_fields = list(fieldsets[0][1]['fields'])
+            basic_info_fields.insert(1, 'gender')
+            fieldsets[0][1]['fields'] = tuple(basic_info_fields)
+            
+        return fieldsets
+
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo
         if main_photo_obj and main_photo_obj.image:
