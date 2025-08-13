@@ -72,8 +72,8 @@ def about(request):
     return render(request, 'about.html')
 
 def dogs(request):
-    breeding_dogs = Dog.objects.filter(is_breeding=True).order_by('translations__name')
-    other_dogs = Dog.objects.filter(is_breeding=False).order_by('translations__name')
+    breeding_dogs = Dog.objects.filter(is_breeding=True).order_by('name')
+    other_dogs = Dog.objects.filter(is_breeding=False).order_by('name')
     return render(request, 'dogs.html', {
         'breeding_dogs': breeding_dogs,
         'other_dogs': other_dogs
@@ -87,7 +87,7 @@ def dog_detail(request, pk):
 
 def home(request):
     latest_posts = BlogPost.objects.filter(is_published=True)[:3]
-    featured_dogs = Dog.objects.filter(is_breeding=True).order_by('translations__name')[:2]
+    featured_dogs = Dog.objects.filter(is_breeding=True).order_by('name')[:2]
     available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')[:3]
     
     context = {
