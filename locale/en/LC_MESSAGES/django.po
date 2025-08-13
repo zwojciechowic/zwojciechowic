@@ -52,76 +52,76 @@ msgstr "English"
 
 
 ### STRONA GLOWNA
-msgid "Hodowla Owczarków – Nasza Wiejska Pasja"
-msgstr "Shepherd Breeding – Our Rural Passion"
+    msgid "Hodowla Owczarków – Nasza Wiejska Pasja"
+    msgstr "Shepherd Breeding – Our Rural Passion"
 
-msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
-msgstr "In the heart of a picturesque village, amidst green meadows and the murmur of trees and the river, we breed German Shepherds and Old German Shepherds with true love and devotion. Our dogs are not just pets – they are family members, raised in an atmosphere of trust, care, and respect."
+    msgid "W sercu malowniczej wsi, wśród zielonych łąk i szumu drzew oraz rzeki, prowadzimy hodowlę owczarków niemieckich i staroniemieckich z prawdziwą miłością i oddaniem. Nasze psy to nie tylko zwierzęta – to członkowie rodziny, wychowywani w atmosferze zaufania, troski i szacunku."
+    msgstr "In the heart of a picturesque village, amidst green meadows and the murmur of trees and the river, we breed German Shepherds and Old German Shepherds with true love and devotion. Our dogs are not just pets – they are family members, raised in an atmosphere of trust, care, and respect."
 
-msgid "Życie w harmonii i spokoju"
-msgstr "A Life in Harmony and Peace"
+    msgid "Życie w harmonii i spokoju"
+    msgstr "A Life in Harmony and Peace"
 
-msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
-msgstr "Our shepherds grow up in a rural home, where they have the freedom to run and play, while also learning obedience and cooperation with their humans. Daily walks through the fields and meadows make them not only athletic, but also balanced and happy."
+    msgid "Nasze owczarki dorastają w domu na wsi, gdzie mają swobodę biegania i zabawy, a jednocześnie uczą się posłuszeństwa i współpracy z człowiekiem. Codzienne spacery po polach i łąkach sprawiają, że są nie tylko wysportowane, ale też zrównoważone i szczęśliwe."
+    msgstr "Our shepherds grow up in a rural home, where they have the freedom to run and play, while also learning obedience and cooperation with their humans. Daily walks through the fields and meadows make them not only athletic, but also balanced and happy."
 
-msgid "❤️ Hodowla z sercem"
-msgstr "❤️ Breeding with Heart"
+    msgid "❤️ Hodowla z sercem"
+    msgstr "❤️ Breeding with Heart"
 
-msgid "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane."
-msgstr "This year, we begin our puppy adventure. Each puppy will be lovingly cared for – from the very first moments of life, we will ensure their health, socialization, and proper development. We work with veterinarians and experienced trainers to ensure that our dogs are not only beautiful but also intelligent and devoted."
+    msgid "W tym roku zaczynamy przygodę ze szczeniakami. Każdy szczeniak będzie u nas otoczony troskliwą opieką – od pierwszych chwil życia zadbamy o jego zdrowie, socjalizację i prawidłowy rozwój. Współpracujemy z weterynarzami i doświadczonymi trenerami, aby nasze psy były nie tylko piękne, ale też mądre i oddane."
+    msgstr "This year, we begin our puppy adventure. Each puppy will be lovingly cared for – from the very first moments of life, we will ensure their health, socialization, and proper development. We work with veterinarians and experienced trainers to ensure that our dogs are not only beautiful but also intelligent and devoted."
 
-msgid "Tradycja i nowoczesność"
-msgstr "Tradition and Modernity"
+    msgid "Tradycja i nowoczesność"
+    msgstr "Tradition and Modernity"
 
-msgid "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska."
-msgstr "We combine rural traditions with modern breeding knowledge. Our shepherd dogs have excellent genes, proven in work and at shows, while maintaining a loyal, gentle nature. These dogs are perfect both as family companions and as faithful guardians of the home."
+    msgid "Łączymy wiejskie tradycje z nowoczesną wiedzą hodowlaną. Nasze owczarki mają doskonałe geny, sprawdzone w pracy i na wystawach, a przy tym zachowują wierny, łagodny charakter. To psy, które doskonale sprawdzą się zarówno jako towarzysze rodziny, jak i wierni stróże domowego ogniska."
+    msgstr "We combine rural traditions with modern breeding knowledge. Our shepherd dogs have excellent genes, proven in work and at shows, while maintaining a loyal, gentle nature. These dogs are perfect both as family companions and as faithful guardians of the home."
 
-msgid "Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕"
-msgstr "If you're looking for a dog with passion, raised with love in a natural environment, we invite you to join us! 🌟🐕"
+    msgid "Jeśli szukasz psa z pasją, hodowanego z miłością w naturalnych warunkach – zapraszamy do nas! 🌟🐕"
+    msgstr "If you're looking for a dog with passion, raised with love in a natural environment, we invite you to join us! 🌟🐕"
 
-msgid "Zobacz dostępne szczenięta"
-msgstr "SEE AVALIABLE PUPPIES"
+    msgid "Zobacz dostępne szczenięta"
+    msgstr "SEE AVALIABLE PUPPIES"
 
-msgid "Zobacz wszystkie nasze psy"
-msgstr "See all dogs"
+    msgid "Zobacz wszystkie nasze psy"
+    msgstr "See all dogs"
 
-msgid "Dostępne szczenięta"
-msgstr "available puppies"
-
-
-msgid "Miot"
-msgstr "Litter"
+    msgid "Dostępne szczenięta"
+    msgstr "available puppies"
 
 
-msgid "Płeć:"
-msgstr "Sex:"
+    msgid "Miot"
+    msgstr "Litter"
 
-msgid "Rasa:"
-msgstr "Breed:"
 
-msgid "Data urodzenia:"
-msgstr "Date of birth:"
+    msgid "Płeć:"
+    msgstr "Sex:"
 
-msgid "Cena:"
-msgstr "Price:"
+    msgid "Rasa:"
+    msgstr "Breed:"
 
-msgid "Zarezeruj:"
-msgstr "Reserved:"
+    msgid "Data urodzenia:"
+    msgstr "Date of birth:"
 
-msgid "Zobacz wszystkie szczenięta"
-msgstr "See all puppies"
+    msgid "Cena:"
+    msgstr "Price:"
 
-msgid "Aktualnie nie mamy dostępnych szczeniąt!"
-msgstr "Currently, we have no puppies available!"
+    msgid "Zarezeruj:"
+    msgstr "Reserved:"
 
-msgid "Skontaktuj się z nami"
-msgstr "Contact us"
+    msgid "Zobacz wszystkie szczenięta"
+    msgstr "See all puppies"
 
-msgid "aby dowiedzieć się o planowanych miotach."
-msgstr "to find out more about comming Litters."
+    msgid "Aktualnie nie mamy dostępnych szczeniąt!"
+    msgstr "Currently, we have no puppies available!"
 
-msgid "Najnowsze wpisy"
-msgstr "Newest posts"
+    msgid "Skontaktuj się z nami"
+    msgstr "Contact us"
+
+    msgid "aby dowiedzieć się o planowanych miotach."
+    msgstr "to find out more about comming Litters."
+
+    msgid "Najnowsze wpisy"
+    msgstr "Newest posts"
 
 
 
@@ -129,71 +129,71 @@ msgstr "Newest posts"
 
 
 ### FOOTER
-msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
-msgstr "Professional dog breeding with passion and experience."
+    msgid "Profesjonalna hodowla psów z pasją i doświadczeniem."
+    msgstr "Professional dog breeding with passion and experience."
 
-msgid "Telefon"
-msgstr "Phone"
+    msgid "Telefon"
+    msgstr "Phone"
 
-msgid "Szybkie linki"
-msgstr "Quick links"
+    msgid "Szybkie linki"
+    msgstr "Quick links"
 
-msgid "Wszystkie prawa zastrzeżone."
-msgstr "All rights reserved."
+    msgid "Wszystkie prawa zastrzeżone."
+    msgstr "All rights reserved."
 
 
 
 ### 404
-msgid "Strona nie znaleziona"
-msgstr "Page not found"
+    msgid "Strona nie znaleziona"
+    msgstr "Page not found"
 
-msgid "Ups… Nie znaleziono strony, której szukasz."
-msgstr "Oops... The page you are looking for couldn't be found."
+    msgid "Ups… Nie znaleziono strony, której szukasz."
+    msgstr "Oops... The page you are looking for couldn't be found."
 
-msgid "Możliwe, że adres został błędnie wpisany lub strona została przeniesiona."
-msgstr "The address may have been mistyped or the page has been moved."
+    msgid "Możliwe, że adres został błędnie wpisany lub strona została przeniesiona."
+    msgstr "The address may have been mistyped or the page has been moved."
 
 
 
 ### 500
-msgid "Ups… Coś poszło nie tak!"
-msgstr "Oops... Something went wrong!"
+    msgid "Ups… Coś poszło nie tak!"
+    msgstr "Oops... Something went wrong!"
 
-msgid "Spróbuj ponownien później albo skontaktuj się z nami."
-msgstr "Please try again later or contact us."
+    msgid "Spróbuj ponownien później albo skontaktuj się z nami."
+    msgstr "Please try again later or contact us."
 
 
 
 
 
 ### BASE
-msgid "Profesjonalna hodowla psów z pasją i doświadczeniem"
-msgstr "Professional dog breeding with passion and experience."
+    msgid "Profesjonalna hodowla psów z pasją i doświadczeniem"
+    msgstr "Professional dog breeding with passion and experience."
 
-msgid "Poznaj nasze szczeniaki"
-msgstr "Meet our puppies"
+    msgid "Poznaj nasze szczeniaki"
+    msgstr "Meet our puppies"
 
-msgid "Doświadczenie"
-msgstr "Experience"
+    msgid "Doświadczenie"
+    msgstr "Experience"
 
-msgid "Ponad 15 lat doświadczenia w hodowli psów rasowych"
-msgstr "Over 15 years of experience in breeding purebred dogs"
+    msgid "Ponad 15 lat doświadczenia w hodowli psów rasowych"
+    msgstr "Over 15 years of experience in breeding purebred dogs"
 
-msgid "Pasja"
-msgstr "Passion"
+    msgid "Pasja"
+    msgstr "Passion"
 
-msgid "Hodowla z miłości do psów i troski o ich dobrostan"
-msgstr "Breeding with love for dogs and concern for their well-being"
+    msgid "Hodowla z miłości do psów i troski o ich dobrostan"
+    msgstr "Breeding with love for dogs and concern for their well-being"
 
-msgid "Jakość"
-msgstr "Quality"
+    msgid "Jakość"
+    msgstr "Quality"
 
-msgid "Wszystkie nasze psy posiadają rodowody FCI"
-msgstr "All our dogs have FCI pedigrees"
+    msgid "Wszystkie nasze psy posiadają rodowody FCI"
+    msgstr "All our dogs have FCI pedigrees"
 
-msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
-msgstr "Note!"
-"A new litter of puppies will be available soon. Leave your contact details to be notified!"
+    msgid "Nowy miot szczeniaków będzie dostępny już wkrótce. Zostaw swoje dane kontaktowe aby otrzymać powiadomienie!"
+    msgstr "Note!"
+    "A new litter of puppies will be available soon. Leave your contact details to be notified!"
 
 
 
@@ -208,39 +208,52 @@ msgstr "Author"
 
 
 ### About
-msgid "Hodowla posiada %(count)s certyfikat"
-msgid_plural "Hodowla posiada %(count)s certyfikaty"
-msgstr[0] "The kennel has %(count)s certificate"
-msgstr[1] "The kennel has %(count)s certificates"
+    msgid "Hodowla posiada %(count)s certyfikat"
+    msgid_plural "Hodowla posiada %(count)s certyfikaty"
+    msgstr[0] "The kennel has %(count)s certificate"
+    msgstr[1] "The kennel has %(count)s certificates"
 
 
 
 ### PYTHON>MODELS
-msgid "Pies"
-msgstr "Dog"
-msgid "Suka"
-msgstr "Bitch"
-msgid "Psy"
-msgstr "Dog's"
+    msgid "Pies"
+    msgstr "Dog"
+    msgid "Suka"
+    msgstr "Bitch"
+    msgid "Psy"
+    msgstr "Dog's"
 
 
 
 ### dogs
-msgid "Psy rasowe"
-msgstr "Pedigree dogs"
+    msgid "Psy rasowe"
+    msgstr "Pedigree dogs"
 
-msgid "Certyfikowany"
-msgstr "Certified"
+    msgid "Certyfikowany"
+    msgstr "Certified"
 
-msgid "ZOBACZ WIĘCEJ"
-msgstr "SEE DETAILS"
+    msgid "ZOBACZ WIĘCEJ"
+    msgstr "SEE DETAILS"
 
-msgid "Inne psy"
-msgstr "Other dogs"
-
-
+    msgid "Inne psy"
+    msgstr "Other dogs"
 
 
+### Hotel
+    msgid "🏨 Już wkrótce"
+    msgstr "🏨 Coming soon"
+
+    msgid "Hotel dla psów będzie dostępny wkrótce. Przygotowujemy dla Państwa najlepsze warunki pobytu dla Waszych czworonożnych przyjaciół."
+    msgstr "The dog hotel will be available soon. We are preparing the best conditions for the stay of your four-legged friends."
+
+    msgid "Powrót"
+    msgstr "Back"
+
+
+
+
+
+### contact
     msgid "Proszę poprawić następujące błędy:"
     msgstr "Please correct the errors:"
 
@@ -263,7 +276,7 @@ msgstr "Other dogs"
     msgstr "Contact details"
 
     msgid "Adres:"
-    msgstr "Adres:"
+    msgstr "Adress:"
 
     msgid "Telefon:"
     msgstr "Phone:"
@@ -288,3 +301,22 @@ msgstr "Other dogs"
 
     msgid "Lokalizacja"
     msgstr "Localization"
+
+
+
+### python>forms
+
+    msgid "Wpisz swoje imię i nazwisko"
+    msgstr "Enter your full name"
+
+    msgid "Wpisz swój adres e-mail"
+    msgstr "Enter your email address"
+
+    msgid "Wpisz swój numer telefonu"
+    msgstr "Enter your phone number"
+
+    msgid "Wpisz temat wiadomości"
+    msgstr "Enter the subject of your message"
+
+    msgid "Wpisz swoją wiadomość"
+    msgstr "Enter your message"

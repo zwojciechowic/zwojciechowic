@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import Reservation, ContactMessage
 
 class PuppyReservationForm(forms.ModelForm):
@@ -8,17 +9,17 @@ class PuppyReservationForm(forms.ModelForm):
         widgets = {
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Wpisz swoje imię i nazwisko',
+                'placeholder': _('Wpisz swoje imię i nazwisko'),
                 'required': True
             }),
             'customer_email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Wpisz swój adres e-mail',
+                'placeholder': _('Wpisz swój adres e-mail'),
                 'required': True
             }),
             'customer_phone': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Wpisz swój numer telefonu',
+                'placeholder': _('Wpisz swój numer telefonu'),
                 'required': True
             }),
         }
@@ -45,13 +46,13 @@ class ContactForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz swoje imię i nazwisko'
+            'placeholder': _('Wpisz swoje imię i nazwisko')
         })
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz swój email'
+            'placeholder': _('Wpisz swój adres email')
         })
     )
     phone = forms.CharField(
@@ -59,20 +60,20 @@ class ContactForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz swój numer telefonu'
+            'placeholder': _('Wpisz swój numer telefonu')
         })
     )
     subject = forms.CharField(
         max_length=200,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz temat wiadomości'
+            'placeholder': _('Wpisz temat wiadomości')
         })
     )
     message = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'rows': 5,
-            'placeholder': 'Wpisz swoją wiadomość'
+            'placeholder': _('Wpisz swoją wiadomość')
         })
     )

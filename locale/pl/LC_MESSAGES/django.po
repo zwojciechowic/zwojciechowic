@@ -247,6 +247,18 @@ msgstr "Autor"
     msgstr "Inne psy"
 
 
+### Hotel
+
+    msgid "🏨 Już wkrótce"
+    msgstr "🏨 Już wkrótce"
+
+    msgid "Hotel dla psów będzie dostępny wkrótce. Przygotowujemy dla Państwa najlepsze warunki pobytu dla Waszych czworonożnych przyjaciół."
+    msgstr "Hotel dla psów będzie dostępny wkrótce. Przygotowujemy dla Państwa najlepsze warunki pobytu dla Waszych czworonożnych przyjaciół."
+
+    msgid "Powrót"
+    msgstr "Powrót"
+
+
 
 ### contact
     msgid "Proszę poprawić następujące błędy:"
@@ -299,3 +311,23 @@ msgstr "Autor"
 
     msgid "Lokalizacja"
     msgstr "Lokalizacja"
+
+
+
+
+### python>forms
+
+    msgid "Wpisz swoje imię i nazwisko"
+    msgstr "Wpisz swoje imię i nazwisko"
+
+    msgid "Wpisz swój adres e-mail"
+    msgstr "Wpisz swój adres e-mail"
+
+    msgid "Wpisz swój numer telefonu"
+    msgstr "Wpisz swój numer telefonu"
+
+    msgid "Wpisz temat wiadomości"
+    msgstr "Wpisz temat wiadomości"
+
+    msgid "Wpisz swoją wiadomość"
+    msgstr "Wpisz swoją wiadomość"
