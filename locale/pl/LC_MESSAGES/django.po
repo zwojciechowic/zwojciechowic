@@ -194,8 +194,11 @@ msgstr "Psy"
 msgid "Psy rasowe"
 msgstr "Psy rasowe"
 
-msgid "certyfikowany"
-msgstr "certyfikowany"
+msgid "Certyfikowany"
+msgstr "Certyfikowany"
 
-msgid "zobacz szczegóły"
-msgstr "zobacz szczegóły"
+msgid "ZOBACZ WIĘCEJ"
+msgstr "ZOBACZ WIĘCEJ"
+
+msgid "Inne psy"
+msgstr "Inne psy"

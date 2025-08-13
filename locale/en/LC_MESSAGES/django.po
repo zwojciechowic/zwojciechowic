@@ -186,8 +186,11 @@ msgstr "Dog's"
 msgid "Psy rasowe"
 msgstr "Pedigree dogs"
 
-msgid "certyfikowany"
-msgstr "certified"
+msgid "Certyfikowany"
+msgstr "Certified"
 
-msgid "zobacz szczegóły"
+msgid "ZOBACZ WIĘCEJ"
 msgstr "SEE DETAILS"
+
+msgid "Inne psy"
+msgstr "Other dogs"
