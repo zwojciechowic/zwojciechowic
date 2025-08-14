@@ -89,14 +89,14 @@ class PuppyAdminForm(forms.ModelForm):
 class PuppyAdmin(TranslatableAdmin):
     list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
     list_filter = ['litter', 'gender', 'is_available', 'birth_date']
-    search_fields = ['litter', 'translations__name', 'translations__mother_name', 'translations__father_name', 'translations__description']
+    search_fields = ['name', 'litter', 'mother_name', 'father_name', 'translations__breed', 'translations__description']
     list_editable = ['is_available', 'price']
     
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         
         if request.GET.get('language') == 'en':
-            fields_to_hide = ['litter', 'color1', 'color2', 'birth_date', 'gender', 'is_available', 'price', 'photo_gallery', 'certificates_gallery']
+            fields_to_hide = ['name', 'mother_name', 'father_name', 'litter', 'color1', 'color2', 'birth_date', 'gender', 'is_available', 'price', 'photo_gallery', 'certificates_gallery']
             for field_name in fields_to_hide:
                 try:
                     del form.base_fields[field_name]
@@ -105,28 +105,36 @@ class PuppyAdmin(TranslatableAdmin):
         
         return form
     
+    def get_fieldsets(self, request, obj=None):
+        if request.GET.get('language') == 'en':
+            return (
+                ('Tłumaczenie', {
+                    'fields': ('breed', 'description')
+                }),
+            )
+        else:
+            return (
+                ('Podstawowe informacje', {
+                    'fields': ('litter', 'name', 'breed', 'birth_date', 'gender', 'description')
+                }),
+                ('Kolory', {
+                    'fields': ('color1', 'color2'),
+                    'description': 'Wybierz kolory szczeniaka'
+                }),
+                ('Rodzice', {
+                    'fields': ('mother_name', 'father_name'),
+                    'description': 'Wpisz imiona rodziców'
+                }),
+                ('Dostępność', {
+                    'fields': ('is_available', 'price')
+                }),
+                ('Media', {
+                    'fields': ('photo_gallery', 'certificates_gallery')
+                }),
+            )
+    
     def get_queryset(self, request):
         return super().get_queryset(request).order_by('litter')
-    
-    fieldsets = (
-        ('Podstawowe informacje', {
-            'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
-        }),
-        ('Kolory', {
-            'fields': ('color1', 'color2'),
-            'description': 'Wybierz kolory szczeniaka'
-        }),
-        ('Rodzice', {
-            'fields': ('mother_name', 'father_name'),
-            'description': 'Wpisz imiona rodziców'
-        }),
-        ('Dostępność', {
-            'fields': ('is_available', 'price')
-        }),
-        ('Media', {
-            'fields': ('photo_gallery', 'certificates_gallery')
-        }),
-    )
     
     def color_display_admin(self, obj):
         colors_html = ""
