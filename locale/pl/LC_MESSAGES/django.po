@@ -247,6 +247,46 @@ msgstr "Autor"
     msgstr "Inne psy"
 
 
+### puppies 
+    msgid "Posiada certyfikat"
+    msgstr "Posiada certyfikat"
+
+    msgid "Niedostępne"
+    msgstr "Niedostępne"
+
+    msgid "Brak dostępnych szczeniąt"
+    msgstr "Brak dostępnych szczeniąt"
+
+    msgid "Aktualnie nie mamy dostępnych szczeniąt."
+    msgstr "Aktualnie nie mamy dostępnych szczeniąt."
+
+
+    msgid ", aby dowiedzieć się o planowanych miotach."
+    msgstr ", aby dowiedzieć się o planowanych miotach."
+
+
+### puppy_detail
+    msgid "Brak zdjęć dla tego szczeniaka"
+    msgstr "Brak zdjęć dla tego szczeniaka"
+
+    msgid "Powrót do listy szczeniąt"
+    msgstr "Powrót do listy szczeniąt"
+
+    msgid "Informacje o szczenięciu"
+    msgstr "Informacje o szczenięciu"
+
+    msgid "Szczeniak dostępny do rezerwacji"
+    msgstr "Szczeniak dostępny do rezerwacji"
+
+    msgid "Szczenię posiada"
+    msgstr "Szczenię posiada"
+
+    msgid "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów."
+    msgstr "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów."
+
+    msgid "Szczeniak niedostępny"
+    msgstr "Szczeniak niedostępny"
+
 ### Hotel
 
     msgid "🏨 Już wkrótce"

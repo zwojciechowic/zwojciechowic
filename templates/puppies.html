@@ -145,7 +145,7 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="text-center mb-5">Dostępne szczenięta</h1>
+    <h1 class="text-center mb-5">{% trans "Dostępne szczenięta"%}</h1>
     
     {% if puppies_by_litter %}
         {% for litter, litter_data in puppies_by_litter.items %}
@@ -158,7 +158,7 @@
                  {% endif %}>
                 <h6>Miot {{ litter }}</h6>
                 <div class="litter-info">
-                    <i class="fas fa-calendar-alt"></i> Data urodzenia: {{ first_puppy.birth_date|date:"d.m.Y" }}
+                    <i class="fas fa-calendar-alt"></i> {% trans "Data urodzenia:"%} {{ first_puppy.birth_date|date:"d.m.Y" }}
                     &#9792; {{ first_puppy.mother_name }} | 
                     &#9794; {{ first_puppy.father_name }}
                 </div>
@@ -188,7 +188,7 @@
                                 {% if puppy.certificates_gallery %}
                                 <div class="position-absolute top-0 end-0 m-2" style="z-index: 15;">
                                     <span class="badge bg-success">
-                                        <i class="fas fa-certificate"></i> Certyfikowany
+                                        <i class="fas fa-certificate"></i> {% trans "Certyfikowany"%}
                                     </span>
                                 </div>
                                 {% endif %}
@@ -196,7 +196,7 @@
                                 {% if not puppy.is_available %}
                                 <div class="position-absolute top-0 start-0 m-2" style="z-index: 15;">
                                     <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i> Niedostępne
+                                        <i class="fas fa-times"></i> {% trans "Niedostępne"%}
                                     </span>
                                 </div>
                                 {% endif %}
@@ -211,16 +211,16 @@
                             <div class="card-details mb-3">
                                 <small class="text-muted">
                                     <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                    {% if puppy.mother_name %}<strong>Matka:</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                                    {% if puppy.father_name %}<strong>Ojciec:</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
-                                    <strong>Cena:</strong> {{ puppy.price }} PLN
+                                    {% if puppy.mother_name %}<strong>{% trans "Matka:"%}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
+                                    {% if puppy.father_name %}<strong>{% trans "Ojciec:"%}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                                    <strong>{% trans "Cena:"%}</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>
                             
                             {% if puppy.certificates_gallery %}
                             <div class="mb-2">
                                 <small class="text-success">
-                                    <i class="fas fa-certificate"></i> Posiada certyfikat
+                                    <i class="fas fa-certificate"></i> {% trans "Posiada certyfikat"%}
                                 </small>
                             </div>
                             {% endif %}
@@ -228,9 +228,9 @@
                             <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
                             <div class="mt-auto">
                                 {% if puppy.is_available %}
-                                    <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">Zarezerwuj</a>
+                                    <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">{% trans "Zarezerwuj:"%}</a>
                                 {% else %}
-                                    <button class="btn btn-secondary btn-sm" disabled>Niedostępne</button>
+                                    <button class="btn btn-secondary btn-sm" disabled>{% trans "Niedostępne"%}</button>
                                 {% endif %}
                             </div>
                         </div>
@@ -241,8 +241,8 @@
         {% endfor %}
     {% else %}
         <div class="puppy-alert">
-            <h3>Brak dostępnych szczeniąt</h3>
-            <p>Aktualnie nie mamy dostępnych szczeniąt. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
+            <h3>{% trans "Brak dostępnych szczeniąt"%}</h3>
+            <p>{% trans "Aktualnie nie mamy dostępnych szczeniąt."%} <a href="{% url 'contact' %}">{% trans "Skontaktuj się z nami"%}</a>{% trans ", aby dowiedzieć się o planowanych miotach."%}</p>
         </div>
     {% endif %}
 </div>

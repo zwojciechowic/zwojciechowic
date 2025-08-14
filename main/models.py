@@ -106,10 +106,22 @@ class Dog(TranslatableModel):
 
 class Puppy(TranslatableModel):
     translations = TranslatedFields(
-        description = models.TextField(blank=True, verbose_name=_('Opis'))
+        name = models.CharField(max_length=100, verbose_name=_('Imię')),
+        description = models.TextField(blank=True, verbose_name=_('Opis')),
+        mother_name = models.CharField(
+            max_length=100, 
+            verbose_name=_('Matka'), 
+            blank=True,
+            help_text=_('Imię matki - tylko do wyświetlania')
+        ),
+        father_name = models.CharField(
+            max_length=100, 
+            verbose_name=_('Ojciec'), 
+            blank=True,
+            help_text=_('Imię ojca - tylko do wyświetlania')
+        )
     )
     
-    name = models.CharField(max_length=100, verbose_name=_('Imię'))
     litter = models.CharField(max_length=1, verbose_name=_('Miot'), default='A', help_text=_('Jedna litera oznaczająca miot (A, B, C...)'))
     
     color1 = ColorField(
@@ -122,19 +134,6 @@ class Puppy(TranslatableModel):
         verbose_name=_('Kolor 2'),
         blank=True,
         help_text=_('Drugi kolor (opcjonalny)')
-    )
-    
-    mother_name = models.CharField(
-        max_length=100, 
-        verbose_name=_('Matka'), 
-        blank=True,
-        help_text=_('Imię matki - tylko do wyświetlania')
-    )
-    father_name = models.CharField(
-        max_length=100, 
-        verbose_name=_('Ojciec'), 
-        blank=True,
-        help_text=_('Imię ojca - tylko do wyświetlania')
     )
     
     birth_date = models.DateField(verbose_name=_('Data urodzenia'))
@@ -163,18 +162,22 @@ class Puppy(TranslatableModel):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Cena'))
     
     class Meta:
-        ordering = ['litter', 'name']
+        ordering = ['litter']
         verbose_name = _('Szczeniak')
         verbose_name_plural = _('Szczeniaki')
     
     def __str__(self):
+        name = getattr(self, 'name', '') or self.safe_translation_getter('name', any_language=True) or 'Bez nazwy'
+        mother_name = getattr(self, 'mother_name', '') or self.safe_translation_getter('mother_name', any_language=True) or ''
+        father_name = getattr(self, 'father_name', '') or self.safe_translation_getter('father_name', any_language=True) or ''
+        
         parent_info = ""
-        if self.mother_name and self.father_name:
-            parent_info = f" ({self.mother_name} x {self.father_name})"
-        elif self.mother_name:
-            parent_info = f" (matka: {self.mother_name})"
-        elif self.father_name:
-            parent_info = f" (ojciec: {self.father_name})"
+        if mother_name and father_name:
+            parent_info = f" ({mother_name} x {father_name})"
+        elif mother_name:
+            parent_info = f" (matka: {mother_name})"
+        elif father_name:
+            parent_info = f" (ojciec: {father_name})"
         
         color_info = ""
         if self.color1:
@@ -182,7 +185,7 @@ class Puppy(TranslatableModel):
             if self.color2:
                 color_info += f"/{self.color2}"
         
-        return f"{self.litter}-{self.name} - {self.get_gender_display()}{color_info}{parent_info}"
+        return f"{self.litter}-{name} - {self.get_gender_display()}{color_info}{parent_info}"
     
     @property
     def main_photo(self):
@@ -197,7 +200,6 @@ class Puppy(TranslatableModel):
         elif self.color1:
             return self.color1
         return "Nie określono"
-
 class Reservation(models.Model):
     puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
     customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')

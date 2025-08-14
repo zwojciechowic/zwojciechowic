@@ -87,18 +87,38 @@ class PuppyAdminForm(forms.ModelForm):
 
 @admin.register(Puppy)
 class PuppyAdmin(TranslatableAdmin):
-    form = PuppyAdminForm
     list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
-    list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother_name', 'father_name']
-    search_fields = ['name', 'litter', 'mother_name', 'father_name']
+    list_filter = ['litter', 'gender', 'is_available', 'birth_date']
+    search_fields = ['litter', 'translations__name', 'translations__mother_name', 'translations__father_name', 'translations__description']
     list_editable = ['is_available', 'price']
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        
+        if request.GET.get('language') == 'en':
+            fields_to_hide = ['litter', 'color1', 'color2', 'birth_date', 'gender', 'is_available', 'price', 'photo_gallery', 'certificates_gallery']
+            for field_name in fields_to_hide:
+                try:
+                    del form.base_fields[field_name]
+                except KeyError:
+                    pass
+        
+        return form
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).order_by('litter')
     
     fieldsets = (
         ('Podstawowe informacje', {
-            'fields': ('litter', 'birth_date', 'gender')
+            'fields': ('litter', 'name', 'birth_date', 'gender', 'description')
         }),
         ('Kolory', {
             'fields': ('color1', 'color2'),
+            'description': 'Wybierz kolory szczeniaka'
+        }),
+        ('Rodzice', {
+            'fields': ('mother_name', 'father_name'),
+            'description': 'Wpisz imiona rodziców'
         }),
         ('Dostępność', {
             'fields': ('is_available', 'price')
@@ -108,17 +128,7 @@ class PuppyAdmin(TranslatableAdmin):
         }),
     )
     
-    def get_queryset(self, request):
-        return super().get_queryset(request).order_by('litter', 'name')
-    
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        form.base_fields['color1'].widget = ColorWidget()
-        form.base_fields['color2'].widget = ColorWidget()
-        return form
-    
     def color_display_admin(self, obj):
-        """Wyświetlanie kolorów w panelu admina z preview"""
         colors_html = ""
         if obj.color1:
             colors_html += f'<span style="background-color: {obj.color1}; width: 20px; height: 20px; display: inline-block; border: 1px solid #ccc; margin-right: 5px; vertical-align: middle;"></span>'
@@ -149,7 +159,6 @@ class PuppyAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
 @admin.register(BlogSection)
 class BlogSectionAdmin(admin.ModelAdmin):
     list_display = ('blog_post', 'title', 'order')
