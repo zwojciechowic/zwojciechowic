@@ -116,18 +116,13 @@ class PuppyAdmin(TranslatableAdmin):
         else:
             return (
                 ('Podstawowe informacje', {
-                    'fields': ('litter', 'name', 'breed', 'description', 'birth_date', 'gender')
+                    'fields': ('litter', 'name', 'breed', 'description', 'birth_date', 'gender', 'is_available', 'price')
                 }),
-                ('Kolory', {
+                ('Kolory szczeniaka', {
                     'fields': ('color1', 'color2'),
-                    'description': 'Wybierz kolory szczeniaka'
                 }),
-                ('Rodzice', {
+                ('Psi rodzice', {
                     'fields': ('mother_name', 'father_name'),
-                    'description': 'Wpisz imiona rodziców'
-                }),
-                ('Dostępność', {
-                    'fields': ('is_available', 'price')
                 }),
                 ('Media', {
                     'fields': ('photo_gallery', 'certificates_gallery')
@@ -270,12 +265,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 class CustomAdminSite(admin.AdminSite):
     def get_app_list(self, request):
-        """
-        Sortuje aplikacje i modele w panelu administracyjnym
-        """
         app_list = super().get_app_list(request)
         
-        # Sortowanie modeli w aplikacji main
         for app in app_list:
             if app['app_label'] == 'main':
                 app['models'].sort(key=lambda x: {

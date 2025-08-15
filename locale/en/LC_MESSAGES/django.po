@@ -93,9 +93,6 @@ msgstr "English"
     msgstr "Litter"
 
 
-    msgid "Płeć:"
-    msgstr "Sex:"
-
     msgid "Rasa:"
     msgstr "Breed:"
 
@@ -105,9 +102,6 @@ msgstr "English"
 
     msgid "Opis"
     msgstr "Description"
-
-    msgid "Data urodzenia:"
-    msgstr "Date of birth:"
 
     msgid "Cena:"
     msgstr "Price:"
@@ -226,6 +220,28 @@ msgstr "Author"
     msgstr "Bitch"
     msgid "Psy"
     msgstr "Dog's"
+
+    msgid "Imię"
+    msgstr "Name"
+    msgid "Imię:"
+    msgstr "Name:"
+    msgid "Data urodzenia:"
+    msgstr "Date of birth:"
+    msgid "Płeć:"
+    msgstr "Sex:"
+    msgid "Kolor 1:"
+    msgstr "Color 1:"
+    msgid "Kolor 2:"
+    msgstr "Color 2:"
+    msgid "Pierwszy kolor"
+    msgstr "First color"
+    msgid "Drugi kolor (opcjonalny)"
+    msgstr "Second color (optional)"
+
+    msgid "Galeria zdjęć:"
+    msgstr "Gallery:"
+    msgid "Galeria certyfikatów:"
+    msgstr "Certificates gallery:"
 
 
 
