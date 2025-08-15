@@ -245,7 +245,6 @@ class AboutPage(models.Model):
         upload_to='about/',
         blank=True
     )
-    # DODANE: Galeria certyfikatów
     certificates_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
