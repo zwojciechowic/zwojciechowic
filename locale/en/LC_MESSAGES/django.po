@@ -243,6 +243,11 @@ msgstr "Author"
     msgid "Galeria certyfikatów:"
     msgstr "Certificates gallery:"
 
+    msgid "Kolory szczeniaka"
+    msgstr "colors of puppy"
+    msgid "Psi rodzice"
+    msgstr "parents of puppy"
+
 
 
 ### dogs

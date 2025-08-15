@@ -250,6 +250,11 @@ msgstr "Autor"
     msgid "Galeria certyfikatów:"
     msgstr "Galeria certyfikatów:"
 
+    msgid "Kolory szczeniaka"
+    msgstr "Kolory szczeniaka"
+    msgid "Psi rodzice"
+    msgstr "Psi rodzice"
+
 
 
 
