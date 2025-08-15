@@ -406,3 +406,30 @@ msgstr "Autor"
 
     msgid "Wpisz swoją wiadomość"
     msgstr "Wpisz swoją wiadomość"
+
+
+    msgid "Wiek:"
+    msgstr "Wiek:"
+
+    msgid "Matka:"
+    msgstr "Matka:"
+
+    msgid "Ojciec:"
+    msgstr "Ojciec:"
+
+    msgid "Cena"
+    msgstr "Cena"
+
+    msgid "ur."
+    msgstr "ur."
+
+    msgid "• Rezerwacja jest bezpłatna"
+    msgstr "• Rezerwacja jest bezpłatna"
+
+    msgid "• Skontaktujemy się z Tobą w ciągu 24 godzin"
+    msgstr "• Skontaktujemy się z Tobą w ciągu 24 godzin"
+
+    
+
+    msgid "• Wszystkie szczenięta są zaszczepione i zdrowe"
+    msgstr "• Wszystkie szczenięta są zaszczepione i zdrowe"

@@ -399,3 +399,19 @@ msgstr "Author"
 
     msgid "Wpisz swoją wiadomość"
     msgstr "Enter your message"
+
+
+    msgid "Wiek:"
+    msgstr "Age:"
+
+    msgid "Matka:"
+    msgstr "Mother:"
+
+    msgid "Ojciec:"
+    msgstr "Father:"
+
+    msgid "Cena"
+    msgstr "Price"
+
+    msgid "ur."
+    msgstr "b."

@@ -13,11 +13,11 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="{{ form.puppy.id_for_label }}" class="form-label">Wybierz szczenię</label>
+                    <label for="{{ form.puppy.id_for_label }}" class="form-label">{% trans "Wybierz szczenię"%}</label>
                     {{ form.puppy }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.customer_name.id_for_label }}" class="form-label">Imię i nazwisko</label>
+                    <label for="{{ form.customer_name.id_for_label }}" class="form-label">{% trans "Imię i nazwisko"%}</label>
                     {{ form.customer_name }}
                 </div>
                 <div class="mb-3">
@@ -25,31 +25,31 @@
                     {{ form.customer_email }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.customer_phone.id_for_label }}" class="form-label">Telefon</label>
+                    <label for="{{ form.customer_phone.id_for_label }}" class="form-label">{% trans "Telefon"%}</label>
                     {{ form.customer_phone }}
                 </div>
                 <div class="mb-3">
-                    <label for="{{ form.message.id_for_label }}" class="form-label">Dodatkowa wiadomość</label>
+                    <label for="{{ form.message.id_for_label }}" class="form-label">{% trans "Dodatkowa wiadomość"%}</label>
                     {{ form.message }}
                 </div>
-                <button type="submit" class="btn btn-primary">Wyślij rezerwację</button>
+                <button type="submit" class="btn btn-primary">{% trans "Wyślij rezerwację"%}</button>
             </form>
             {% else %}
             <div class="puppy-alert">
-                <h3>Brak dostępnych szczeniąt</h3>
-                <p>Aktualnie nie mamy dostępnych szczeniąt do rezerwacji. <a href="{% url 'contact' %}">Skontaktuj się z nami</a>, aby dowiedzieć się o planowanych miotach.</p>
+                <h3>{% trans "Brak dostępnych szczeniąt"%}</h3>
+                <p>{% trans "Aktualnie nie mamy dostępnych szczeniąt do rezerwacji."%} <a href="{% url 'contact' %}">{% trans "Skontaktuj się z nami"%}</a>{% trans ", aby dowiedzieć się o planowanych miotach."%}</p>
             </div>
             {% endif %}
         </div>
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Informacje o rezerwacji</h5>
+                    <h5 class="card-title">{% trans "Informacje o rezerwacji"%}</h5>
                     <p class="card-text">
-                        • Rezerwacja jest bezpłatna<br>
-                        • Skontaktujemy się z Tobą w ciągu 24 godzin<br>
-                        • Możesz umówić się na wizytę<br>
-                        • Wszystkie szczenięta są zaszczepione i zdrowe
+                        {% trans "• Rezerwacja jest bezpłatna"%}<br>
+                        {% trans "• Skontaktujemy się z Tobą w ciągu 24 godzin"%}<br>
+                        {% trans "• Możesz umówić się na wizytę"%}<br>
+                        {% trans "• Wszystkie szczenięta są zaszczepione i zdrowe"%}
                     </p>
                 </div>
             </div>
