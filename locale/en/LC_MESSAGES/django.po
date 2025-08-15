@@ -99,6 +99,13 @@ msgstr "English"
     msgid "Rasa:"
     msgstr "Breed:"
 
+    msgid "Rasa"
+    msgstr "Breed"
+
+
+    msgid "Opis"
+    msgstr "Description"
+
     msgid "Data urodzenia:"
     msgstr "Date of birth:"
 
@@ -113,9 +120,6 @@ msgstr "English"
 
     msgid "Aktualnie nie mamy dostępnych szczeniąt!"
     msgstr "Currently, we have no puppies available!"
-
-    msgid "Skontaktuj się z nami"
-    msgstr "Contact us"
 
     msgid "aby dowiedzieć się o planowanych miotach."
     msgstr "to find out more about comming Litters."

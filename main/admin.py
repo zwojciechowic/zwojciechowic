@@ -5,6 +5,7 @@ from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
 from django.contrib.admin import AdminSite
 from parler.admin import TranslatableAdmin
+from django.utils.translation import gettext_lazy as _
 
 # Konfiguracja panelu administracyjnego
 admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
@@ -108,14 +109,14 @@ class PuppyAdmin(TranslatableAdmin):
     def get_fieldsets(self, request, obj=None):
         if request.GET.get('language') == 'en':
             return (
-                ('Tłumaczenie', {
+                ('Basic information', {
                     'fields': ('breed', 'description')
                 }),
             )
         else:
             return (
                 ('Podstawowe informacje', {
-                    'fields': ('litter', 'name', 'breed', 'birth_date', 'gender', 'description')
+                    'fields': ('litter', 'name', 'breed', 'description', 'birth_date', 'gender')
                 }),
                 ('Kolory', {
                     'fields': ('color1', 'color2'),

@@ -97,6 +97,12 @@ msgstr "Płeć:"
 msgid "Rasa:"
 msgstr "Rasa:"
 
+msgid "Rasa"
+msgstr "Rasa"
+
+msgid "Opis"
+msgstr "Opis"
+
 msgid "Data urodzenia:"
 msgstr "Data urodzenia:"
 
