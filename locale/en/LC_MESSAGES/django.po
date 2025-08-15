@@ -248,6 +248,14 @@ msgstr "Author"
     msgid "Psi rodzice"
     msgstr "parents of puppy"
 
+    msgid "Imię matki - tylko do wyświetlania"
+    msgstr "Mother's name - only to view"
+    msgid "Imię ojca - tylko do wyświetlania"
+    msgstr "Father's name - only to view"
+
+    msgid "Podstawowe informacje"
+    msgstr "Basic information"
+
 
 
 ### dogs

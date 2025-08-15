@@ -255,6 +255,14 @@ msgstr "Autor"
     msgid "Psi rodzice"
     msgstr "Psi rodzice"
 
+    msgid "Imię matki - tylko do wyświetlania"
+    msgstr "Imię matki - tylko do wyświetlania"
+    msgid "Imię ojca - tylko do wyświetlania"
+    msgstr "Imię ojca - tylko do wyświetlania"
+
+    msgid "Podstawowe informacje"
+    msgstr "Podstawowe informacje"
+
 
 
 

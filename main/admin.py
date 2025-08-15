@@ -109,19 +109,19 @@ class PuppyAdmin(TranslatableAdmin):
     def get_fieldsets(self, request, obj=None):
         if request.GET.get('language') == 'en':
             return (
-                ('Basic information', {
+                (_('Podstawowe informacje'), {
                     'fields': ('breed', 'description')
                 }),
             )
         else:
             return (
-                ('Podstawowe informacje', {
+                (_('Podstawowe informacje'), {
                     'fields': ('litter', 'name', 'breed', 'description', 'birth_date', 'gender', 'is_available', 'price')
                 }),
-                ('Kolory szczeniaka', {
+                (_('Kolory szczeniaka'), {
                     'fields': ('color1', 'color2'),
                 }),
-                ('Psi rodzice', {
+                (_('Psi rodzice'), {
                     'fields': ('mother_name', 'father_name'),
                 }),
                 ('Media', {
