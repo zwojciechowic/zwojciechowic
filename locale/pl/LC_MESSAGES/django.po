@@ -103,8 +103,11 @@ msgstr "Opis"
 msgid "Cena:"
 msgstr "Cena:"
 
-msgid "Zarezeruj:"
+msgid "Zarezerwuj:"
 msgstr "Zarezerwuj:"
+
+msgid "Zarezerwuj"
+msgstr "Zarezerwuj"
 
 msgid "Zobacz wszystkie szczenięta"
 msgstr "Zobacz wszystkie szczenięta"
@@ -429,7 +432,7 @@ msgstr "Autor"
     msgid "• Skontaktujemy się z Tobą w ciągu 24 godzin"
     msgstr "• Skontaktujemy się z Tobą w ciągu 24 godzin"
 
-    
+
 
     msgid "• Wszystkie szczenięta są zaszczepione i zdrowe"
     msgstr "• Wszystkie szczenięta są zaszczepione i zdrowe"

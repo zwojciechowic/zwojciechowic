@@ -106,8 +106,11 @@ msgstr "English"
     msgid "Cena:"
     msgstr "Price:"
 
-    msgid "Zarezeruj:"
+    msgid "Zarezerwuj:"
     msgstr "Reserved:"
+
+    msgid "Zarezerwuj"
+    msgstr "Reserved"
 
     msgid "Zobacz wszystkie szczenięta"
     msgstr "See all puppies"

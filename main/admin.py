@@ -48,6 +48,9 @@ class DogAdmin(TranslatableAdmin):
         
         return form
 
+    def get_fieldsets(self, request, obj = ...):
+        return super().get_fieldsets(request, obj)
+
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo
         if main_photo_obj and main_photo_obj.image:
@@ -442,5 +445,4 @@ class ReservationAdmin(admin.ModelAdmin):
         }),
     )
 
-# Zastąp ostatnią linię Twojego pliku admin.py:
 admin.site.__class__ = HodowlaAdminSite

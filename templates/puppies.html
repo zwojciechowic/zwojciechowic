@@ -210,7 +210,7 @@
                             </h5>
                             <div class="card-details mb-3">
                                 <small class="text-muted">
-                                    <strong>Data urodzenia:</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
+                                    <strong>{% trans "Data urodzenia:"%}</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
                                     {% if puppy.mother_name %}<strong>{% trans "Matka:"%}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
                                     {% if puppy.father_name %}<strong>{% trans "Ojciec:"%}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
                                     <strong>{% trans "Cena:"%}</strong> {{ puppy.price }} PLN
@@ -250,11 +250,8 @@
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
-    
-    <!-- Dodatkowy skrypt dla rozwiązania problemu z klikaniem -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Zapobiegnij propagacji kliknięcia na przyciskach galerii
             document.querySelectorAll('.gallery-btn').forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
