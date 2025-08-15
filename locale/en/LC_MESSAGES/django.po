@@ -418,3 +418,6 @@ msgstr "Author"
 
     msgid "ur."
     msgstr "b."
+
+    msgid "No photo"
+    msgstr "Brak zdjęcia"

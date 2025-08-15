@@ -436,3 +436,6 @@ msgstr "Autor"
 
     msgid "• Wszystkie szczenięta są zaszczepione i zdrowe"
     msgstr "• Wszystkie szczenięta są zaszczepione i zdrowe"
+
+msgid "Brak zdjęcia"
+msgstr "Brak zdjęcia"

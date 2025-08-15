@@ -78,7 +78,7 @@ class Dog(TranslatableModel):
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria zdjęć',
+        verbose_name=_('Galeria zdjęć'),
         related_name='dog_photos'
     )
     certificates_gallery = models.ForeignKey(
@@ -86,7 +86,7 @@ class Dog(TranslatableModel):
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria certyfikatów',
+        verbose_name=_('Galeria certyfikatów'),
         related_name='dog_certificates'
     )
     
@@ -200,34 +200,34 @@ class Puppy(TranslatableModel):
         return "Nie określono"
 
 class Reservation(models.Model):
-    puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name='Szczeniak')
-    customer_name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')
+    puppy = models.ForeignKey(Puppy, on_delete=models.CASCADE, verbose_name=_('Szczeniak'))
+    customer_name = models.CharField(max_length=100, verbose_name=_('Imię i nazwisko'))
     customer_email = models.EmailField(verbose_name='Email')
-    customer_phone = models.CharField(max_length=20, verbose_name='Telefon')
-    message = models.TextField(blank=True, verbose_name='Wiadomość')
-    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data zgłoszenia')
+    customer_phone = models.CharField(max_length=20, verbose_name=_('Telefon'))
+    message = models.TextField(blank=True, verbose_name=_('Wiadomość'))
+    created_at = models.DateTimeField(default=timezone.now, verbose_name=_('Data zgłoszenia'))
     status = models.CharField(max_length=20, choices=[
-        ('pending', 'Oczekuje'),
-        ('confirmed', 'Potwierdzone'),
-        ('cancelled', 'Anulowane')
+        ('pending', _('Oczekuje')),
+        ('confirmed', _('Potwierdzone')),
+        ('cancelled', _('Anulowane'))
     ], default='pending', verbose_name='Status')
     
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'Rezerwacja'
-        verbose_name_plural = 'Rezerwacje'
+        verbose_name = _('Rezerwacja')
+        verbose_name_plural = _('Rezerwacje')
     
     def __str__(self):
         return f"Rezerwacja: {self.puppy.name} - {self.customer_name}"
 
 class ContactMessage(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Imię i nazwisko')
+    name = models.CharField(max_length=100, verbose_name=_('Imię i nazwisko'))
     email = models.EmailField(verbose_name='Email')
-    phone = models.CharField(max_length=20, blank=True, verbose_name='Telefon')
-    subject = models.CharField(max_length=200, verbose_name='Temat')
-    message = models.TextField(verbose_name='Wiadomość')
-    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data wysłania')
-    is_read = models.BooleanField(default=False, verbose_name='Przeczytane')
+    phone = models.CharField(max_length=20, blank=True, verbose_name=_('Telefon'))
+    subject = models.CharField(max_length=200, verbose_name=_('Temat'))
+    message = models.TextField(verbose_name=_('Wiadomość'))
+    created_at = models.DateTimeField(default=timezone.now, verbose_name=_('Data wysłania'))
+    is_read = models.BooleanField(default=False, verbose_name=_('Przeczytane'))
     
     class Meta:
         ordering = ['-created_at']
