@@ -124,7 +124,7 @@
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
                             {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="{% trans "Brak zdjęcia"%}">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
@@ -171,7 +171,7 @@
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
                             {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="Brak zdjęcia">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="{% trans "Brak zdjęcia"%}">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
