@@ -322,7 +322,7 @@
                         {% endif %}
                         
                         <!-- Spis treści sekcji -->
-                        {% if post.sections.all %}
+                        {% comment %} {% if post.sections.all %}
                             <hr>
                             <div class="sections-preview">
                                 <h6 class="text-muted small mb-2">
@@ -352,7 +352,7 @@
                                     {% endif %}
                                 </ul>
                             </div>
-                        {% endif %}
+                        {% endif %} {% endcomment %}
                         
                         <!-- Data i przycisk -->
                         <div class="mt-auto">
