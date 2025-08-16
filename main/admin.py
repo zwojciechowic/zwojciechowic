@@ -19,7 +19,6 @@ class DogAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
-
 class BlogPostAdminForm(forms.ModelForm):
     class Meta:
         model = BlogPost
@@ -27,7 +26,6 @@ class BlogPostAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
-
 @admin.register(Dog)
 class DogAdmin(TranslatableAdmin):
     list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding']
@@ -70,7 +68,6 @@ class DogAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
 class ColorWidget(forms.TextInput):
     """Custom widget dla color pickera"""
     def __init__(self, *args, **kwargs):
@@ -79,7 +76,6 @@ class ColorWidget(forms.TextInput):
             'type': 'color',
             'style': 'width: 60px; height: 40px; border: none; cursor: pointer;'
         })
-
 class PuppyAdminForm(forms.ModelForm):
     class Meta:
         model = Puppy
@@ -88,7 +84,6 @@ class PuppyAdminForm(forms.ModelForm):
             'color1': ColorWidget(),
             'color2': ColorWidget(),
         }
-
 @admin.register(Puppy)
 class PuppyAdmin(TranslatableAdmin):
     list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
@@ -166,15 +161,12 @@ class PuppyAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
-
 class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
     classes = ['collapse']
-
 @admin.register(BlogSection)
 class BlogSectionAdmin(TranslatableAdmin):
     list_display = ('blog_post_title', 'title', 'order')
@@ -188,7 +180,6 @@ class BlogSectionAdmin(TranslatableAdmin):
         except:
             return f"Post #{obj.blog_post.pk}"
     blog_post_title.short_description = _("Wpis na blogu")
-
 @admin.register(BlogPost)
 class BlogPostAdmin(TranslatableAdmin):
     list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
@@ -314,7 +305,6 @@ class BlogPostAdmin(TranslatableAdmin):
         """Optymalizacja zapytań"""
         qs = super().get_queryset(request)
         return qs.select_related('author', 'photo_gallery').prefetch_related('sections')
-
 class HodowlaAdminSite(admin.AdminSite):
     site_header = _("Panel administracyjny Hodowli")
     site_title = _("Hodowla Admin")
@@ -351,42 +341,6 @@ class HodowlaAdminSite(admin.AdminSite):
                 app['models'].sort(key=lambda x: model_order.get(x['object_name'], 99))
         
         return app_list
-
-
-@admin.register(ContactMessage)
-class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'subject', 'created_at', 'is_read']
-    list_filter = ['is_read', 'created_at']
-    search_fields = ['name', 'email', 'subject', 'message']
-    list_editable = ['is_read']
-    readonly_fields = ['created_at']
-    date_hierarchy = 'created_at'
-    
-    fieldsets = (
-        ('Dane nadawcy', {
-            'fields': ('name', 'email', 'phone', 'created_at')
-        }),
-        ('Wiadomość', {
-            'fields': ('subject', 'message', 'is_read')
-        }),
-    )
-    class Media:
-        css = {
-            'all': ('css/admin/admin_custom.css',)
-        }
-        js = ('js/admin_image_preview.js',)
-    actions = ['mark_as_read', 'mark_as_unread']
-    
-    def mark_as_read(self, request, queryset):
-        queryset.update(is_read=True)
-        self.message_user(request, f"Oznaczono {queryset.count()} wiadomości jako przeczytane.")
-    mark_as_read.short_description = "Oznacz jako przeczytane"
-    
-    def mark_as_unread(self, request, queryset):
-        queryset.update(is_read=False)
-        self.message_user(request, f"Oznaczono {queryset.count()} wiadomości jako nieprzeczytane.")
-    mark_as_unread.short_description = "Oznacz jako nieprzeczytane"
-
 class CustomAdminSite(admin.AdminSite):
     def get_app_list(self, request):
         app_list = super().get_app_list(request)
@@ -402,19 +356,16 @@ class CustomAdminSite(admin.AdminSite):
                 }.get(x['object_name'], 99))
         
         return app_list
-
 class AboutSectionInline(TranslatableTabularInline):
     model = AboutSections
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
-
 @admin.register(AboutSections)
 class AboutSectionAdmin(TranslatableAdmin):
     list_display = ('title', 'order', 'about_page')
     list_editable = ('order',)
     ordering = ('about_page', 'order')
-
 @admin.register(AboutPage)
 class AboutPageAdmin(TranslatableAdmin):
     inlines = [AboutSectionInline]
@@ -445,22 +396,130 @@ class AboutPageAdmin(TranslatableAdmin):
         return _("✓ Skonfigurowana")
     created_info.short_description = _("Status")
 
+@admin.register(ContactMessage)
+class ContactMessageAdmin(TranslatableAdmin):
+    list_display = ['name', 'email', 'subject_display', 'created_at', 'is_read']
+    list_filter = ['is_read', 'created_at']
+    search_fields = ['name', 'email', 'translations__subject', 'translations__message']
+    list_editable = ['is_read']
+    readonly_fields = ['created_at']
+    date_hierarchy = 'created_at'
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        
+        if request.GET.get('language') == 'en':
+            fields_to_hide = ['name', 'email', 'phone', 'created_at', 'is_read']
+            for field_name in fields_to_hide:
+                try:
+                    del form.base_fields[field_name]
+                except KeyError:
+                    pass
+        
+        return form
+    
+    def get_fieldsets(self, request, obj=None):
+        """Różne zestawy pól dla głównego języka i tłumaczeń"""
+        current_language = request.GET.get('language')
+        
+        # Sprawdź czy to jest tryb tłumaczenia na inny język niż główny
+        if current_language and obj:
+            available_languages = [lang[0] for lang in settings.LANGUAGES]
+            main_language = available_languages[0] if available_languages else 'pl'
+            if current_language != main_language:
+                return (
+                    (_('Tłumaczenie na język: {}').format(current_language.upper()), {
+                        'fields': ('subject', 'message'),
+                        'description': _('Przetłumacz temat i treść wiadomości na wybrany język')
+                    }),
+                )
+        
+        # Standardowe pola dla głównego języka lub nowej wiadomości
+        return (
+            (_('Dane nadawcy'), {
+                'fields': ('name', 'email', 'phone', 'created_at')
+            }),
+            (_('Wiadomość'), {
+                'fields': ('subject', 'message', 'is_read')
+            }),
+        )
+    
+    def subject_display(self, obj):
+        """Wyświetlenie tematu z obsługą tłumaczeń"""
+        try:
+            subject = obj.safe_translation_getter('subject', any_language=True)
+            if subject:
+                return str(subject)
+        except:
+            pass
+        return _("Brak tematu")
+    subject_display.short_description = _('Temat')
+    
+    class Media:
+        css = {
+            'all': ('css/admin/admin_custom.css',)
+        }
+        js = ('js/admin_image_preview.js',)
+    
+    actions = ['mark_as_read', 'mark_as_unread']
+    
+    def mark_as_read(self, request, queryset):
+        queryset.update(is_read=True)
+        self.message_user(request, _("Oznaczono %(count)d wiadomości jako przeczytane.") % {'count': queryset.count()})
+    mark_as_read.short_description = _("Oznacz jako przeczytane")
+    
+    def mark_as_unread(self, request, queryset):
+        queryset.update(is_read=False)
+        self.message_user(request, _("Oznaczono %(count)d wiadomości jako nieprzeczytane.") % {'count': queryset.count()})
+    mark_as_unread.short_description = _("Oznacz jako nieprzeczytane")
+
+
 @admin.register(Reservation)
-class ReservationAdmin(admin.ModelAdmin):
+class ReservationAdmin(TranslatableAdmin):
     list_display = ('puppy', 'customer_name', 'customer_email', 'status', 'created_at')
     list_filter = ('status', 'created_at')
-    search_fields = ('customer_name', 'customer_email', 'puppy__name')
+    search_fields = ('customer_name', 'customer_email', 'puppy__name', 'translations__message')
     readonly_fields = ('created_at',)
     list_editable = ('status',)
     date_hierarchy = 'created_at'
-
-    fieldsets = (
-        ('Dane rezerwacji', {
-            'fields': ('puppy', 'status', 'created_at')
-        }),
-        ('Dane klienta', {
-            'fields': ('customer_name', 'customer_email', 'customer_phone', 'message')
-        }),
-    )
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        
+        if request.GET.get('language') == 'en':
+            fields_to_hide = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'status']
+            for field_name in fields_to_hide:
+                try:
+                    del form.base_fields[field_name]
+                except KeyError:
+                    pass
+        
+        return form
+    
+    def get_fieldsets(self, request, obj=None):
+        """Różne zestawy pól dla głównego języka i tłumaczeń"""
+        current_language = request.GET.get('language')
+        
+        # Sprawdź czy to jest tryb tłumaczenia na inny język niż główny
+        if current_language and obj:
+            available_languages = [lang[0] for lang in settings.LANGUAGES]
+            main_language = available_languages[0] if available_languages else 'pl'
+            if current_language != main_language:
+                return (
+                    (_('Tłumaczenie na język: {}').format(current_language.upper()), {
+                        'fields': ('message',),
+                        'description': _('Przetłumacz wiadomość klienta na wybrany język')
+                    }),
+                )
+        
+        # Standardowe pola dla głównego języka lub nowej rezerwacji
+        return (
+            (_('Dane rezerwacji'), {
+                'fields': ('puppy', 'status', 'created_at')
+            }),
+            (_('Dane klienta'), {
+                'fields': ('customer_name', 'customer_email', 'customer_phone', 'message')
+            }),
+        )
 
 admin.site.__class__ = HodowlaAdminSite
