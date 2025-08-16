@@ -735,3 +735,6 @@ msgstr "Powiązany pies"
 
 msgid "Data publikacji:"
 msgstr "Data publikacji:"
+
+msgid "Pies hodowlany"
+msgstr "Pies hodowlany"

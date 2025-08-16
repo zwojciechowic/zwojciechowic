@@ -715,3 +715,6 @@ msgstr "Related dog"
 
 msgid "Data publikacji:"
 msgstr "Date of publication:"
+
+msgid "Pies hodowlany"
+msgstr "Kennel dog"
