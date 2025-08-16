@@ -663,3 +663,32 @@ msgstr "Wpis na blogu #{{ pk }}"
 
 msgid "Media"
 msgstr "Media"
+
+
+msgid "Zarządzaj psami w hodowli"
+msgstr "Zarządzaj psami w hodowli"
+
+msgid "psów w hodowli"
+msgstr "psów w hodowli"
+
+msgid "Zarządzaj szczeniętami"
+msgstr "Zarządzaj szczeniętami"
+
+msgid "dostępnych szczeniąt"
+msgstr "dostępnych szczeniąt"
+
+
+msgid "Zarządzaj rezerwacjami"
+msgstr "Manage reservations"
+
+msgid "aktywnych rezerwacji"
+msgstr "aktywnych rezerwacji"
+
+msgid "Zarządzaj wpisami na blogu"
+msgstr "Zarządzaj wpisami na blogu"
+
+msgid "opublikowanych postów"
+msgstr "opublikowanych postów"
+
+msgid "Wiadomości"
+msgstr "Wiadomości"

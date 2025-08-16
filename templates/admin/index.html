@@ -23,12 +23,12 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_dog_changelist' %}" class="card-link">
-                <h3>Nasze Psy</h3>
-                <p>Zarządzaj psami w hodowli</p>
+                <h3>{% trans "Nasze Psy"%}</h3>
+                <p>{% trans "Zarządzaj psami w hodowli"%}</p>
             </a>
             <div class="card-stats">
                 <span class="stat-number">{{ dogs_count|default:"0" }}</span>
-                <span class="stat-label">psów w hodowli</span>
+                <span class="stat-label">{% trans "psów w hodowli"%}</span>
             </div>
         </div>
     </div>
@@ -43,12 +43,12 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_puppy_changelist' %}" class="card-link">
-                <h3>Szczenięta</h3>
-                <p>Zarządzaj szczeniętami</p>
+                <h3>{% trans "Szczenięta"%}</h3>
+                <p>{% trans "Zarządzaj szczeniętami"%}</p>
             </a>
             <div class="card-stats">
                 <span class="stat-number">{{ puppies_count|default:"0" }}</span>
-                <span class="stat-label">dostępnych szczeniąt</span>
+                <span class="stat-label">{% trans "dostępnych szczeniąt"%}</span>
             </div>
         </div>
     </div>
@@ -60,12 +60,12 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_reservation_changelist' %}" class="card-link">
-                <h3>Rezerwacje</h3>
-                <p>Zarządzaj rezerwacjami</p>
+                <h3>{% trans "Rezerwacje"%}</h3>
+                <p>{% trans "Zarządzaj rezerwacjami"%}</p>
             </a>
             <div class="card-stats">
                 <span class="stat-number">{{ reservations_count|default:"0" }}</span>
-                <span class="stat-label">aktywnych rezerwacji</span>
+                <span class="stat-label">{% trans "aktywnych rezerwacji"%}</span>
             </div>
         </div>
     </div>
@@ -81,11 +81,11 @@
         <div class="card-content">
             <a href="{% url 'admin:main_blogpost_changelist' %}" class="card-link">
                 <h3>Blog</h3>
-                <p>Zarządzaj wpisami na blogu</p>
+                <p>{% trans "Zarządzaj wpisami na blogu"%}</p>
             </a>
             <div class="card-stats">
                 <span class="stat-number">{{ posts_count|default:"0" }}</span>
-                <span class="stat-label">opublikowanych postów</span>
+                <span class="stat-label">{% trans "opublikowanych postów"%}</span>
             </div>
         </div>
     </div>
@@ -97,8 +97,8 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_contactmessage_changelist' %}" class="card-link">
-                <h3>Wiadomości</h3>
-                <p>Wiadomości kontaktowe</p>
+                <h3>{% trans "Wiadomości"%}</h3>
+                <p>{% trans "Wiadomości kontaktowe"%}</p>
             </a>
             <div class="card-stats">
                 <span class="stat-number {% if unread_messages > 0 %}warning{% endif %}">{{ messages_count|default:"0" }}</span>
@@ -125,7 +125,7 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_aboutpage_changelist' %}" class="card-link">
-                <h3>Strona O Nas</h3>
+                <h3>{% trans "Strona O Nas"%}</h3>
                 <p>
                     {% if about_exists %}
                         Edytuj informacje o hodowli
