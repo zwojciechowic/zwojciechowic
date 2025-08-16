@@ -59,7 +59,7 @@
                         <div class="admin-nav-item">
                             <a href="#" class="admin-nav-link" title="Panel główny">
                                 <span class="admin-nav-icon">⚙️</span>
-                                <span class="admin-nav-text">Panel główny</span>
+                                <span class="admin-nav-text">{% trans "Panel główny"%}</span>
                             </a>
                             {% if app.models %}
                                 <div class="admin-nav-dropdown">
@@ -99,10 +99,10 @@
                 </a>
                 <div class="admin-nav-dropdown">
                     <a href="{% url 'admin:password_change' %}" class="admin-dropdown-link">
-                        🔒 Zmień hasło
+                        🔒 {% trans "Zmień hasło"%}
                     </a>
                     <a href="{% url 'admin:logout' %}" class="admin-dropdown-link">
-                        🚪 Wyloguj
+                        🚪 {% trans "Wyloguj"%}
                     </a>
                     {% for app in available_apps %}
                         {% if app.name == "Authentication and Authorization" or app.name == "Uwierzytelnienie i autoryzacja" %}
@@ -154,64 +154,84 @@
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/dog/" class="admin-mobile-nav-link">
-                    🐕 Psy
+                    🐕 {% trans "Psy"%}
                 </a>
                 <a href="/admin/main/dog/add/" class="admin-mobile-add-btn" title="Dodaj psa">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/reservation/" class="admin-mobile-nav-link">
-                    📅 Rezerwacje
+                    📅 {% trans "Rezerwacje"%}
                 </a>
                 <a href="/admin/main/reservation/add/" class="admin-mobile-add-btn" title="Dodaj rezerwację">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/aboutsections/" class="admin-mobile-nav-link">
-                    📄 Sekcje O Nas
+                    📄 {% trans "Sekcje O Nas"%}
                 </a>
                 <a href="/admin/main/aboutsections/add/" class="admin-mobile-add-btn" title="Dodaj sekcję">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/puppy/" class="admin-mobile-nav-link">
-                    🐶 Szczenięta
+                    🐶 {% trans "Szczenięta"%}
                 </a>
                 <a href="/admin/main/puppy/add/" class="admin-mobile-add-btn" title="Dodaj szczenię">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/contactmessage/" class="admin-mobile-nav-link">
-                    📧 Wiadomości kontaktowe
+                    📧 {% trans "Wiadomości kontaktowe"%}
                 </a>
                 <a href="/admin/main/contactmessage/add/" class="admin-mobile-add-btn" title="Dodaj wiadomość">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/main/blogpost/" class="admin-mobile-nav-link">
-                    📝 Wpisy na blogu
+                    📝 {% trans "Wpisy na blogu"%}
                 </a>
                 <a href="/admin/main/blogpost/add/" class="admin-mobile-add-btn" title="Dodaj wpis">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/auth/user/" class="admin-mobile-nav-link">
-                    👥 Użytkownicy
+                    👥 {% trans "Użytkownicy"%}
                 </a>
                 <a href="/admin/auth/user/add/" class="admin-mobile-add-btn" title="Dodaj użytkownika">+</a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/password_change/" class="admin-mobile-nav-link">
-                    🔒 Zmień hasło
+                    🔒 {% trans "Zmień hasło"%}
                 </a>
             </div>
             
             <div class="admin-mobile-nav-item">
                 <a href="/admin/logout/" class="admin-mobile-nav-link">
-                    🚪 Wyloguj
+                    🚪 {% trans "Wyloguj"%}
                 </a>
             </div>
+        </div>
+    </div>
+    <div class="language-switcher-modern" style="margin-right: 20px;">
+        <button class="language-btn">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
+        </button>
+        <div class="language-dropdown">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <input type="hidden" name="language" value="pl">
+                <button type="submit">🇵🇱 {% trans "Polski" %}</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <input type="hidden" name="language" value="en">
+                <button type="submit">🇬🇧 {% trans "English" %}</button>
+            </form>
         </div>
     </div>
 </div>
@@ -242,8 +262,8 @@
               font-size: 14px; 
               color: #888;
               text-shadow: 0 1px 2px rgba(255,255,255,0.8);">
-        💙 Panel Administracyjny - Hodowla z Wojciechowic 
-        <span style="opacity: 0.7;">| Zarządzaj z pasją</span>
+        {% trans "💙 Panel Administracyjny - Hodowla z Wojciechowic "%}
+        <span style="opacity: 0.7;">| {% trans "Zarządzaj z pasją"%}</span>
     </p>
 </div>
 {% endblock %}

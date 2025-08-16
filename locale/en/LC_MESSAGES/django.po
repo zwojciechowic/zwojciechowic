@@ -421,3 +421,27 @@ msgstr "Author"
 
     msgid "No photo"
     msgstr "Brak zdjęcia"
+
+    msgid "Panel główny"
+    msgstr "Main menu"
+
+    msgid "Szczenięta"
+    msgstr "Puppies"
+
+    msgid "Rezerwacje"
+    msgstr "Reservations"
+
+    msgid "Sekcje O Nas"
+    msgstr "About us page"
+
+    msgid "Wiadomości kontaktowe"
+    msgstr "Contact messages"
+
+    msgid "Wpisy na blogu"
+    msgstr "Blog posts"
+
+    msgid "Użytkownicy"
+    msgstr Users"
+
+    msgid "Zmień hasło"
+    msgstr "Change password"

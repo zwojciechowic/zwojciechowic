@@ -437,5 +437,29 @@ msgstr "Autor"
     msgid "• Wszystkie szczenięta są zaszczepione i zdrowe"
     msgstr "• Wszystkie szczenięta są zaszczepione i zdrowe"
 
-msgid "Brak zdjęcia"
-msgstr "Brak zdjęcia"
+    msgid "Brak zdjęcia"
+    msgstr "Brak zdjęcia"
+
+    msgid "Panel główny"
+    msgstr "Panel główny"
+
+    msgid "Szczenięta"
+    msgstr "Szczenięta"
+
+    msgid "Rezerwacje"
+    msgstr "Rezerwacje"
+
+    msgid "Sekcje O Nas"
+    msgstr "Sekcje O Nas"
+
+    msgid "Wiadomości kontaktowe"
+    msgstr "Wiadomości kontaktowe"
+
+    msgid "Wpisy na blogu"
+    msgstr "Wpisy na blogu"
+
+    msgid "Użytkownicy"
+    msgstr "Użytkownicy"
+
+    msgid "Zmień hasło"
+    msgstr "Zmień hasło"
