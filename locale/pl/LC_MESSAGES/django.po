@@ -544,3 +544,6 @@ msgstr "Wojciechowice Duże 11"
 
 msgid "Certyfikaty hodowli"
 msgstr "Certyfikaty hodowli"
+
+msgid "Certyfikaty"
+msgstr "Certyfikaty"
