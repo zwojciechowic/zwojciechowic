@@ -718,14 +718,11 @@ msgstr "Brak zdjęć dla tego psa"
 msgid "Pies posiada"
 msgstr "Pies posiada"
 
-msgid "certyfikat"
-msgstr "certyfikat"
-
 msgid "Powrót do innych psów"
 msgstr "Powrót do innych psów"
 
 
-msgid "The puppy has %(counter)s certificate"
-msgid_plural "The puppy has %(counter)s certificates"
-msgstr[0] "Szczenię posiada %(counter)s certyfikat"
-msgstr[1] "Szczenię posiada %(counter)s certyfikat"
+msgid "certyfikat"
+msgid_plural "certyfikaty"
+msgstr[0] "certyfikat"
+msgstr[1] "certyfikaty"

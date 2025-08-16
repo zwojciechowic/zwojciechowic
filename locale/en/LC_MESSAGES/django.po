@@ -696,15 +696,12 @@ msgstr "No photos of dog"
 msgid "Pies posiada"
 msgstr "Dog has"
 
-msgid "certyfikat"
-msgstr "certificate"
 
 msgid "Powrót do innych psów"
 msgstr "Back to other dog's"
 
 
-
-msgid "The puppy has %(counter)s certificate"
-msgid_plural "The puppy has %(counter)s certificates"
-msgstr[0] "The puppy has %(counter)s certificate"
-msgstr[1] "The puppy has %(counter)s certificates"
+msgid "certyfikat"
+msgid_plural "certyfikaty"
+msgstr[0] "certificate"
+msgstr[1] "certificates"
