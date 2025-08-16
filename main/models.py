@@ -1,6 +1,7 @@
 # models.py
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 from django.contrib.auth.models import User
 from colorfield.fields import ColorField
 from django.utils.text import slugify
@@ -12,7 +13,7 @@ class BlogPost(TranslatableModel):
         title=models.CharField(
             max_length=200, 
             verbose_name=_('Tytuł'),
-            blank=True,  # Dodano blank=True
+            blank=True,
             help_text=_('Tytuł wpisu na blogu')
         ),
         excerpt=models.TextField(
@@ -71,11 +72,12 @@ class BlogPost(TranslatableModel):
     def clean(self):
         """Walidacja modelu"""
         from django.core.exceptions import ValidationError
+        from django.conf import settings
         
         # Sprawdź czy istnieje tytuł w jakimkolwiek języku
         if self.pk:  # Tylko dla istniejących obiektów
             has_title = False
-            for lang_code, lang_name in self._parler_meta.root.get_language_choices():
+            for lang_code, lang_name in settings.LANGUAGES:
                 try:
                     translation = self.get_translation(lang_code)
                     if translation.title and translation.title.strip():
@@ -86,7 +88,7 @@ class BlogPost(TranslatableModel):
             
             if not has_title:
                 raise ValidationError(_('Wpis musi mieć tytuł w przynajmniej jednym języku'))
-    
+        
     def save(self, *args, **kwargs):
         # Auto-generate slug from title if not provided
         if not self.slug:
