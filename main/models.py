@@ -487,14 +487,17 @@ class Reservation(TranslatableModel):
     )
     customer_name = models.CharField(
         max_length=100, 
-        verbose_name=_('Imię i nazwisko')
+        verbose_name=_('Imię i nazwisko'),
+        blank=True  # Dodaj to jeśli chcesz opcjonalne imię
     )
     customer_email = models.EmailField(
-        verbose_name=_('Email')
+        verbose_name=_('Email'),
+        blank=True  # Dodaj to jeśli chcesz opcjonalny email
     )
     customer_phone = models.CharField(
         max_length=20, 
-        verbose_name=_('Telefon')
+        verbose_name=_('Telefon'),
+        blank=True  # Dodaj to jeśli chcesz opcjonalny telefon
     )
     created_at = models.DateTimeField(
         default=timezone.now, 
@@ -517,7 +520,21 @@ class Reservation(TranslatableModel):
         verbose_name_plural = _('Rezerwacje')
     
     def __str__(self):
-        return f"{_('Rezerwacja')}: {self.puppy.name} - {self.customer_name}"
+        """Zwraca ładny tytuł: Imię psa - Imię klienta (lub numer rezerwacji)"""
+        # Pobierz imię szczenięcia
+        puppy_name = self.puppy.name if self.puppy else _("Nieznane szczenię")
+        
+        # Sprawdź dane klienta w kolejności priorytetów
+        if self.customer_name and self.customer_name.strip():
+            client_info = self.customer_name.strip()
+        elif self.customer_email and self.customer_email.strip():
+            client_info = self.customer_email.strip()
+        elif self.customer_phone and self.customer_phone.strip():
+            client_info = self.customer_phone.strip()
+        else:
+            client_info = f"#{self.id}" if self.id else _("Nowa rezerwacja")
+        
+        return f"{puppy_name} - {client_info}"
 class ContactMessage(TranslatableModel):
     translations = TranslatedFields(
         subject=models.CharField(
