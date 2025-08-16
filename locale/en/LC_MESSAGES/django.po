@@ -421,7 +421,7 @@ msgstr "Author"
 
     msgid "No photo"
     msgstr "Brak zdjęcia"
-    
+
     msgid "Szczenięta"
     msgstr "Puppies"
 
@@ -453,3 +453,10 @@ msgstr "Author"
 
     msgid "Panel główny"  
     msgstr "Dashboard"  
+
+    msgid "Wyloguj"
+    msgstr "Log out"
+
+    msgid "Panel Hodowli"
+    msgstr "Breeding panel"
+

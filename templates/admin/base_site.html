@@ -54,42 +54,47 @@
         
         <div class="admin-nav-items">
             {% if available_apps %}
-                {% for app in available_apps %}
-                    {% if app.name == "Main" or app.name == "Panel główny" %}
-                        <div class="admin-nav-item">
-                            <a href="#" class="admin-nav-link" title="{% trans 'Panel główny'%}">
-                                <span class="admin-nav-icon">⚙️</span>
-                                <span class="admin-nav-text">{% trans "Panel główny"%}</span>
-                            </a>
-                            {% if app.models %}
-                                <div class="admin-nav-dropdown">
-                                    {% for model in app.models %}
-                                        {% if model.admin_url %}
-                                            <div class="admin-dropdown-item-wrapper">
-                                                <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
-                                                    {% if model.name == "Dogs" or model.name == "Psy" %}🐕
-                                                    {% elif model.name == "Puppies" or model.name == "Szczenięta" %}🐶
-                                                    {% elif model.name == "Reservations" or model.name == "Rezerwacje" %}📅
-                                                    {% elif model.name == "Strona O nas" %}📄
-                                                    {% elif model.name == "Wiadomości kontaktowe" %}💌
-                                                    {% elif model.name == "Wpisy na blogu" %}📝
-                                                    {% else %}📄
-                                                    {% endif %}
-                                                    {{ model.name }}
-                                                </a>
-                                                {% if model.add_url %}
-                                                    <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="Dodaj {{ model.name }}">
-                                                        +
-                                                    </a>
+            {% for app in available_apps %}
+                        
+                {# === POPRAWKA 1: Sprawdzaj po app_label === #}
+                {% if app.app_label == 'main' %}
+                    <div class="admin-nav-item">
+                        <a href="#" class="admin-nav-link" title="{% trans "Panel główny" %}">
+                            <span class="admin-nav-icon">⚙️</span>
+                            <span class="admin-nav-text">{% trans "Panel główny" %}</span>
+                        </a>
+                        {% if app.models %}
+                            <div class="admin-nav-dropdown">
+                                {% for model in app.models %}
+                                    {% if model.admin_url %}
+                                        <div class="admin-dropdown-item-wrapper">
+                                            <a href="{{ model.admin_url }}" class="admin-dropdown-link admin-dropdown-main">
+                                                
+                                                {# === POPRAWKA 2: Użyj object_name dla ikon === #}
+                                                {% if model.object_name == "Dog" %}🐕
+                                                {% elif model.object_name == "Puppy" %}🐶
+                                                {% elif model.object_name == "Reservation" %}📅
+                                                {% elif model.object_name == "AboutPage" %}📄
+                                                {% elif model.object_name == "ContactMessage" %}💌
+                                                {% elif model.object_name == "BlogPost" %}📝
+                                                {% else %}📄
                                                 {% endif %}
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                                                
+                                                {{ model.name }}
+                                            </a>
+                                            {% if model.add_url %}
+                                                <a href="{{ model.add_url }}" class="admin-dropdown-add-btn" title="{% trans 'Dodaj' %} {{ model.name }}">
+                                                    +
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
             {% endif %}
 
             <!-- User Menu with Users model -->
