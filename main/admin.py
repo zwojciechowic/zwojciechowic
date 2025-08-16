@@ -585,8 +585,8 @@ class ContactMessageAdmin(TranslatableAdmin):
 
 @admin.register(Reservation)
 class ReservationAdmin(TranslatableAdmin):
-    # ZMIEŃ TĘ LINIĘ:
-    list_display = ('reservation_display', 'customer_name', 'customer_email', 'status', 'created_at')
+    # ZMIENIONA LISTA KOLUMN
+    list_display = ('puppy_name_display', 'contact_display', 'status', 'created_at_display')
     
     list_filter = ('status', 'created_at')
     search_fields = ('customer_name', 'customer_email', 'puppy__name', 'translations__message')
@@ -594,12 +594,49 @@ class ReservationAdmin(TranslatableAdmin):
     list_editable = ('status',)
     date_hierarchy = 'created_at'
     
-    # DODAJ TĘ METODĘ:
-    def reservation_display(self, obj):
-        """Wyświetla imię szczeniaka + imię klienta"""
-        return obj.__str__()  # Użyj metody __str__ z modelu Reservation
-    reservation_display.short_description = "SZCZENIAK"
-    reservation_display.admin_order_field = 'puppy__name'
+    # NOWE METODY WYŚWIETLANIA
+    def puppy_name_display(self, obj):
+        """Wyświetla tylko imię szczeniaka"""
+        if obj.puppy and hasattr(obj.puppy, 'name'):
+            return obj.puppy.name
+        return "Nieznane"
+    puppy_name_display.short_description = "Imię"
+    puppy_name_display.admin_order_field = 'puppy__name'
+    
+    def contact_display(self, obj):
+        """Wyświetla email i/lub telefon"""
+        contact_info = []
+        
+        if obj.customer_email and obj.customer_email.strip():
+            contact_info.append(obj.customer_email.strip())
+        
+        if obj.customer_phone and obj.customer_phone.strip():
+            contact_info.append(obj.customer_phone.strip())
+        
+        if contact_info:
+            return '<br>'.join(contact_info)
+        
+        # Jeśli brak kontaktu, pokaż imię
+        if obj.customer_name and obj.customer_name.strip():
+            return obj.customer_name.strip()
+        
+        return "Brak kontaktu"
+    contact_display.short_description = "Kontakt"
+    contact_display.allow_tags = True  # Pozwala na HTML (dla <br>)
+    
+    def created_at_display(self, obj):
+        """Formatuje datę zgłoszenia"""
+        if obj.created_at:
+            return obj.created_at.strftime('%d.%m.%Y, %H:%M')
+        return "-"
+    created_at_display.short_description = "Z kiedy"
+    created_at_display.admin_order_field = 'created_at'
+    
+    # CSS DO WĘŻSZYCH KOLUMN
+    class Media:
+        css = {
+            'all': ('admin/css/custom_reservation_admin.css',)
+        }
     
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
