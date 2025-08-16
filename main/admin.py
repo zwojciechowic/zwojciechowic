@@ -585,12 +585,21 @@ class ContactMessageAdmin(TranslatableAdmin):
 
 @admin.register(Reservation)
 class ReservationAdmin(TranslatableAdmin):
-    list_display = ('puppy', 'customer_name', 'customer_email', 'status', 'created_at')
+    # ZMIEŃ TĘ LINIĘ:
+    list_display = ('reservation_display', 'customer_name', 'customer_email', 'status', 'created_at')
+    
     list_filter = ('status', 'created_at')
     search_fields = ('customer_name', 'customer_email', 'puppy__name', 'translations__message')
     readonly_fields = ('created_at',)
     list_editable = ('status',)
     date_hierarchy = 'created_at'
+    
+    # DODAJ TĘ METODĘ:
+    def reservation_display(self, obj):
+        """Wyświetla imię szczeniaka + imię klienta"""
+        return obj.__str__()  # Użyj metody __str__ z modelu Reservation
+    reservation_display.short_description = "SZCZENIAK"
+    reservation_display.admin_order_field = 'puppy__name'
     
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
