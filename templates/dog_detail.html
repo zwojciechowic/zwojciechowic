@@ -22,12 +22,12 @@
             {% elif dog.main_photo %}
                 <img src="{{ dog.main_photo.image.url }}" alt="{{ dog.name }}" class="img-fluid mb-4 rounded">
             {% else %}
-                <div class="alert alert-info">Brak zdjęć dla tego psa</div>
+                <div class="alert alert-info">{% trans "Brak zdjęć dla tego psa"%}</div>
             {% endif %}
             
             <div class="mt-4">
                 <a href="{% url 'dogs' %}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Powrót do listy psów
+                    <i class="fas fa-arrow-left"></i> {% trans "Powrót do innych psów"%}
                 </a>
             </div>
         </div>
@@ -43,7 +43,7 @@
                     {% if dog.certificates_gallery %}
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
-                            Pies posiada {{ dog.certificates_gallery.photos.count }} certyfikat{{ dog.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                            {% trans "Pies posiada"%} {{ dog.certificates_gallery.photos.count }} {% trans "certyfikat"%}{{ dog.certificates_gallery.photos.count|pluralize:"y,ów" }}
                         </div>
                         {% show_gallery dog.certificates_gallery.id "mt-3" %}
                     {% endif %}

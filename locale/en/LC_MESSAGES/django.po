@@ -688,3 +688,16 @@ msgstr "configured"
 
 msgid "Do utworzenia"
 msgstr "To create"
+
+
+msgid "Brak zdjęć dla tego psa"
+msgstr "No photos of dog"
+
+msgid "Pies posiada"
+msgstr "Dog has"
+
+msgid "certyfikat"
+msgstr "certificate"
+
+msgid "Powrót do innych psów"
+msgstr "Back to other dog's"

@@ -710,3 +710,16 @@ msgstr "skonfigurowana"
 
 msgid "Do utworzenia"
 msgstr "Do utworzenia"
+
+
+msgid "Brak zdjęć dla tego psa"
+msgstr "Brak zdjęć dla tego psa"
+
+msgid "Pies posiada"
+msgstr "Pies posiada"
+
+msgid "certyfikat"
+msgstr "certyfikat"
+
+msgid "Powrót do innych psów"
+msgstr "Powrót do innych psów"
