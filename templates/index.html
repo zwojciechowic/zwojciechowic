@@ -103,6 +103,38 @@
         .featured-dog-card .card-img-container {
             height: 300px !important;
         }
+
+        .related-animal-info {
+            background-color: rgba(255, 255, 0, 0.1) !important; /* Żółte tło dla debugu */
+            border: 2px solid orange !important; /* Pomarańczowa ramka */
+            margin: 5px 0 !important;
+            padding: 5px !important;
+        }
+        
+        .related-animal-info a {
+            background-color: rgba(0, 255, 0, 0.1) !important; /* Zielone tło linku */
+            border: 1px solid green !important; /* Zielona ramka linku */
+            padding: 10px !important;
+            display: block !important;
+            border-radius: 5px !important;
+        }
+        
+        .related-animal-info:hover a {
+            background-color: rgba(0, 0, 255, 0.1) !important; /* Niebieskie tło przy hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .related-animal-info a.clicked,
+        .related-animal-info a:active {
+            background-color: rgba(255, 0, 0, 0.2) !important; /* Czerwone tło przy kliknięciu */
+            color: #ff6666 !important;
+        }
+        
+        .related-animal-info a.clicked *,
+        .related-animal-info a:active * {
+            color: #ff6666 !important;
+        }
     </style>
 {% endblock %}
 
