@@ -439,12 +439,10 @@
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
-    <script src="{% static 'js/related_animal_click.js'%}"
+    <script src="{% static 'js/related-animal-click.js' %}"></script>
     
-    <!-- Dodatkowy skrypt dla rozwiązania problemu z klikaniem -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Zapobiegnij propagacji kliknięcia na przyciskach galerii
             document.querySelectorAll('.gallery-btn').forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
