@@ -11,7 +11,7 @@ class PuppyReservationForm(forms.ModelForm):
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swoje imię i nazwisko'),
-                'required': True
+                'required': False
             }),
             'customer_email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -21,7 +21,7 @@ class PuppyReservationForm(forms.ModelForm):
             'customer_phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu'),
-                'required': True
+                'required': False
             }),
         }
         labels = {
@@ -69,7 +69,8 @@ class ContactForm(TranslatableModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': _('Wpisz swoje imię i nazwisko')
+                'placeholder': _('Wpisz swoje imię i nazwisko'),
+                'required': False
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -77,11 +78,13 @@ class ContactForm(TranslatableModelForm):
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': _('Wpisz swój numer telefonu')
+                'placeholder': _('Wpisz swój numer telefonu'),
+                'required': False
             }),
             'subject': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': _('Wpisz temat wiadomości')
+                'placeholder': _('Wpisz temat wiadomości'),
+                'required': False
             }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control',
