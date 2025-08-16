@@ -264,8 +264,29 @@ class AboutPage(TranslatableModel):
     def __str__(self):
         return _("Strona 'O nas'")
 
-
 class AboutSections(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True),
+        content = models.TextField(_("Treść paragrafu")),
+    )
+    
+    about_page = models.ForeignKey(
+        AboutPage,
+        on_delete=models.CASCADE,
+        related_name='sections'
+    )
+    order = models.PositiveIntegerField(_("Kolejność"), default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = _("Sekcja")
+        verbose_name_plural = _("Sekcje")
+
+    def __str__(self):
+        title = self.safe_translation_getter('title', any_language=True)
+        if title:
+            return f"{title} (#{self.order})"
+        return f"Sekcja {self.order}"
     translations = TranslatedFields(
         title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True),
         content = models.TextField(_("Treść paragrafu")),
