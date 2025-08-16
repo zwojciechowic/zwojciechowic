@@ -236,6 +236,8 @@ class ContactMessage(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.subject}"
+# W models.py - zamień obie klasy AboutPage i AboutSections
+
 class AboutPage(TranslatableModel):
     translations = TranslatedFields(
         main_title = models.CharField(_("Główny tytuł"), max_length=200),
@@ -262,9 +264,46 @@ class AboutPage(TranslatableModel):
         verbose_name_plural = _("Strona O nas")
 
     def __str__(self):
-        return _("Strona 'O nas'")
+        # Próbuj pobrać przetłumaczony tytuł
+        try:
+            title = self.safe_translation_getter('main_title', any_language=True)
+            if title:
+                return str(title)
+        except:
+            pass
+        
+        # Fallback do zwykłego stringa
+        return "Strona O nas"
+
 
 class AboutSections(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True),
+        content = models.TextField(_("Treść paragrafu")),
+    )
+    
+    about_page = models.ForeignKey(
+        AboutPage,
+        on_delete=models.CASCADE,
+        related_name='sections'
+    )
+    order = models.PositiveIntegerField(_("Kolejność"), default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = _("Sekcja")
+        verbose_name_plural = _("Sekcje")
+
+    def __str__(self):
+        try:
+            title = self.safe_translation_getter('title', any_language=True)
+            if title:
+                return f"{str(title)} (#{self.order})"
+        except:
+            pass
+        
+        # Fallback do zwykłego stringa
+        return f"Sekcja {self.order}"
     translations = TranslatedFields(
         title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True),
         content = models.TextField(_("Treść paragrafu")),
