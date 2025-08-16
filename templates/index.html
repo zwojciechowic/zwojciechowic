@@ -4,6 +4,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+    <link rel="stylesheet" href="{% static 'css/related-animal-hover.css' %}">
     
     {# Style dla miniaturek galerii w kartach #}
     <style>
@@ -325,27 +326,31 @@
                         {% if post.get_related_animal %}
                             <div class="related-animal-info mb-2">
                                 {% if post.get_related_animal_type == 'dog' %}
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-dog text-primary me-2"></i>
-                                        <small class="text-muted">
-                                            {% trans 'Dotyczy:' %} 
-                                            <strong class="text-dark">{{ post.related_dog.name }}</strong>
-                                            {% if post.related_dog.breed %}
-                                                ({{ post.related_dog.breed }})
-                                            {% endif %}
-                                        </small>
-                                    </div>
+                                    <a href="{% url 'dog_detail' post.related_dog.pk %}" class="text-decoration-none">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-dog text-primary me-2"></i>
+                                            <small class="text-muted">
+                                                {% trans 'Dotyczy:' %} 
+                                                <strong class="text-dark">{{ post.related_dog.name }}</strong>
+                                                {% if post.related_dog.breed %}
+                                                    ({{ post.related_dog.breed }})
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </a>
                                 {% elif post.get_related_animal_type == 'puppy' %}
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-heart text-danger me-2"></i>
-                                        <small class="text-muted">
-                                            {% trans 'Dotyczy szczeniaka:' %} 
-                                            <strong class="text-dark">{{ post.related_puppy.name }}</strong>
-                                            {% if post.related_puppy.litter %}
-                                                ({% trans 'Miot' %} {{ post.related_puppy.litter }})
-                                            {% endif %}
-                                        </small>
-                                    </div>
+                                    <a href="{% url 'puppy_detail' post.related_puppy.pk %}" class="text-decoration-none">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-heart text-danger me-2"></i>
+                                            <small class="text-muted">
+                                                {% trans 'Dotyczy szczeniaka:' %} 
+                                                <strong class="text-dark">{{ post.related_puppy.name }}</strong>
+                                                {% if post.related_puppy.litter %}
+                                                    ({% trans 'Miot' %} {{ post.related_puppy.litter }})
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </a>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -434,6 +439,7 @@
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
+    <script src="{% static 'js/related_animal_click.js'%}"
     
     <!-- Dodatkowy skrypt dla rozwiązania problemu z klikaniem -->
     <script>

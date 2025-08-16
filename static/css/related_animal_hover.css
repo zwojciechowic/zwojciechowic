@@ -1,0 +1,47 @@
+/* related-animal-hover.css */
+.related-animal-info {
+    transition: all 0.3s ease;
+}
+
+.related-animal-info .text-muted {
+    transition: all 0.7s ease;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Hover effect - unoszenie cienia z opóźnieniem */
+.related-animal-info:hover {
+    transform: translateY(-1px);
+    transition-delay: 0.7s;
+}
+
+.related-animal-info:hover .text-muted {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition-delay: 0.7s;
+}
+
+/* Click effect - zmiana koloru na blady czerwień */
+.related-animal-info .text-muted:active,
+.related-animal-info .text-muted.clicked {
+    color: #ff9999 !important;
+    transition: color 0.7s ease;
+}
+
+/* Dodatkowy efekt dla lepszego wyglądu */
+.related-animal-info .text-muted:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Ikona też reaguje */
+.related-animal-info i {
+    transition: all 0.3s ease;
+}
+
+.related-animal-info:hover i {
+    transform: scale(1.1);
+    transition-delay: 0.7s;
+}
