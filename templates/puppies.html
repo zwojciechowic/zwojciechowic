@@ -140,6 +140,45 @@
         .puppy-color-bar.default-color {
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         }
+
+        /* NOWE STYLE dla rodziców - identyczne jak w index.html */
+        .parent-info {
+            margin: 0.25rem 0;
+        }
+        
+        .parent-info .parent-link {
+            color: #007cba;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: rgba(0, 124, 186, 0.1);
+        }
+        
+        .parent-info .parent-link:hover {
+            background-color: rgba(0, 124, 186, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 124, 186, 0.3);
+            color: #005a8b;
+        }
+        
+        .parent-info .parent-link:active {
+            background-color: rgba(255, 153, 153, 0.2);
+            color: #ff6666;
+        }
+        
+        .parent-info .parent-name-only {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .parent-info .parent-icon {
+            margin-right: 4px;
+            width: 14px;
+            text-align: center;
+        }
     </style>
 {% endblock %}
 
@@ -159,8 +198,20 @@
                 <h6>Miot {{ litter }}</h6>
                 <div class="litter-info">
                     <i class="fas fa-calendar-alt"></i> {% trans "Data urodzenia:"%} {{ first_puppy.birth_date|date:"d.m.Y" }}
-                    &#9792; {{ first_puppy.mother_name }} | 
-                    &#9794; {{ first_puppy.father_name }}
+                    
+                    <!-- ZMIANA: dodanie linków w nagłówku miotu też -->
+                    {% with mother_data=first_puppy.get_mother_link_data father_data=first_puppy.get_father_link_data %}
+                        {% if mother_data or father_data %}
+                            |
+                            {% if mother_data %}
+                                &#9792; {{ mother_data.name }}
+                            {% endif %}
+                            {% if mother_data and father_data %} | {% endif %}
+                            {% if father_data %}
+                                &#9794; {{ father_data.name }}
+                            {% endif %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
             {% endwith %}
@@ -211,8 +262,44 @@
                             <div class="card-details mb-3">
                                 <small class="text-muted">
                                     <strong>{% trans "Data urodzenia:"%}</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                    {% if puppy.mother_name %}<strong>{% trans "Matka:"%}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                                    {% if puppy.father_name %}<strong>{% trans "Ojciec:"%}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                                    
+                                    <!-- NOWA SEKCJA - rodzice z linkami identycznie jak w index.html -->
+                                    {% with mother_data=puppy.get_mother_link_data %}
+                                        {% if mother_data %}
+                                            <div class="parent-info">
+                                                <strong>{% trans 'Matka:' %}</strong> 
+                                                {% if mother_data.has_link %}
+                                                    <a href="{% url 'dog_detail' mother_data.dog_id %}" class="parent-link" onclick="event.stopPropagation();">
+                                                        <i class="fas fa-heart parent-icon"></i>{{ mother_data.name }}
+                                                        {% if mother_data.breed %}<small> ({{ mother_data.breed }})</small>{% endif %}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="parent-name-only">
+                                                        <i class="fas fa-heart parent-icon"></i>{{ mother_data.name }}
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                    
+                                    {% with father_data=puppy.get_father_link_data %}
+                                        {% if father_data %}
+                                            <div class="parent-info">
+                                                <strong>{% trans 'Ojciec:' %}</strong> 
+                                                {% if father_data.has_link %}
+                                                    <a href="{% url 'dog_detail' father_data.dog_id %}" class="parent-link" onclick="event.stopPropagation();">
+                                                        <i class="fas fa-paw parent-icon"></i>{{ father_data.name }}
+                                                        {% if father_data.breed %}<small> ({{ father_data.breed }})</small>{% endif %}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="parent-name-only">
+                                                        <i class="fas fa-paw parent-icon"></i>{{ father_data.name }}
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                    
                                     <strong>{% trans "Cena:"%}</strong> {{ puppy.price }} PLN
                                 </small>
                             </div>

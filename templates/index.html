@@ -441,18 +441,15 @@
                         <!-- Powiązane zwierzę - tak prosto jak w szczeniaku -->
                         <div class="card-details mb-2">
                             <small class="text-muted">
-                                <strong>{% trans "Płeć:" %}</strong> {{ post.get_gender_display }}<br>
                                 <strong>{% trans "Data publikacji:" %}</strong> {{ post.created_at|date:"d.m.Y" }}<br>
                                 
                                 <!-- Powiązane zwierzę - identycznie jak rodzice w szczeniaku -->
                                 {% if post.get_related_animal_type == 'dog' %}
-                                    <strong>{% trans 'Dotyczy psa:' %}</strong> 
                                     <a href="{% url 'dog_detail' post.related_dog.pk %}" class="related-animal-link" onclick="event.stopPropagation();">
                                         <i class="fas fa-dog related-animal-icon"></i>{{ post.related_dog.name }}
                                         {% if post.related_dog.breed %}<small> ({{ post.related_dog.breed }})</small>{% endif %}
                                     </a><br>
                                 {% elif post.get_related_animal_type == 'puppy' %}
-                                    <strong>{% trans 'Dotyczy szczeniaka:' %}</strong> 
                                     <a href="{% url 'puppy_detail' post.related_puppy.pk %}" class="related-animal-link" onclick="event.stopPropagation();">
                                         <i class="fas fa-heart related-animal-icon"></i>{{ post.related_puppy.name }}
                                         {% if post.related_puppy.litter %}<small> ({% trans 'Miot' %} {{ post.related_puppy.litter }})</small>{% endif %}

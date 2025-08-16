@@ -712,3 +712,6 @@ msgstr "Certified dog"
 
 msgid "Powiązany pies"
 msgstr "Related dog"
+
+msgid "Data publikacji:"
+msgstr "Date of publication:"
