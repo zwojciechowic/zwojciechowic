@@ -1,45 +1,50 @@
-// static/js/admin_image_preview.js
+// related-animal-click.js - Wersja z debugiem
 document.addEventListener('DOMContentLoaded', function() {
-    // Funkcja dodawania podglądu zdjęcia
-    function addImagePreview(inputField) {
-        const previewId = inputField.id + '_preview';
+    console.log('🐕 Related animal script loaded');
+    
+    const relatedAnimalLinks = document.querySelectorAll('.related-animal-info a');
+    console.log('🔍 Found related animal links:', relatedAnimalLinks.length);
+    
+    relatedAnimalLinks.forEach((link, index) => {
+        console.log(`🔗 Setting up link ${index + 1}:`, link.href);
         
-        // Usuń istniejący podgląd jeśli istnieje
-        const existingPreview = document.getElementById(previewId);
-        if (existingPreview) {
-            existingPreview.remove();
-        }
-        
-        // Dodaj kontener na podgląd
-        const previewDiv = document.createElement('div');
-        previewDiv.id = previewId;
-        previewDiv.style.marginTop = '10px';
-        inputField.parentNode.insertBefore(previewDiv, inputField.nextSibling);
-        
-        // Obsługa zmiany pliku
-        inputField.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const previewContainer = document.getElementById(previewId);
+        link.addEventListener('click', function(e) {
+            console.log('🖱️ Link clicked!', this.href);
             
-            previewContainer.innerHTML = '';
+            // Zapobiegnij natychmiastowemu przejściu
+            e.preventDefault();
+            e.stopPropagation();
             
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    previewContainer.innerHTML =
-                        '<img src="' + e.target.result + '" ' +
-                             'style="max-width: 400px; max-height: 400px; object-fit: cover; border-radius: 4px; display: block;" />';
-                };
-                
-                reader.readAsDataURL(file);
-            }
+            // Dodaj klasę clicked do linku
+            this.classList.add('clicked');
+            console.log('✅ Added clicked class');
+            
+            // Zapisz docelowy URL
+            const targetUrl = this.href;
+            
+            // Wizualny feedback w konsoli
+            console.log('⏱️ Waiting 700ms before redirect...');
+            
+            // Po opóźnieniu przejdź do linku
+            setTimeout(() => {
+                console.log('🚀 Redirecting to:', targetUrl);
+                window.location.href = targetUrl;
+            }, 700);
+            
+            // Usuń klasę po czasie (dla bezpieczeństwa)
+            setTimeout(() => {
+                this.classList.remove('clicked');
+                console.log('🧹 Removed clicked class');
+            }, 1400);
         });
-    }
-
-    // Zastosuj podgląd do wszystkich pól zdjęć
-    const imageInputs = document.querySelectorAll('input[type="file"][name$="photo"], input[type="file"][name$="featured_image"], input[type="file"][name$="certificate"]');
-    imageInputs.forEach(function(input) {
-        addImagePreview(input);
+        
+        // Dodaj hover listener dla debugowania
+        link.addEventListener('mouseenter', function() {
+            console.log('👆 Mouse entered link');
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            console.log('👋 Mouse left link');
+        });
     });
 });

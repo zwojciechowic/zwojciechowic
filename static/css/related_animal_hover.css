@@ -1,47 +1,104 @@
-/* related-animal-hover.css */
+/* related-animal-hover.css - Wzmocniona wersja */
+
+/* Kontener z efektami */
 .related-animal-info {
-    transition: all 0.3s ease;
+    position: relative !important;
+    transition: all 0.3s ease !important;
 }
 
-.related-animal-info .text-muted {
-    transition: all 0.7s ease;
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 6px;
+/* Style dla linku - bardzo specyficzne selektory */
+.card .related-animal-info a,
+.related-animal-info > a {
+    transition: all 0.7s ease !important;
+    cursor: pointer !important;
+    display: block !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    position: relative !important;
 }
 
-/* Hover effect - unoszenie cienia z opóźnieniem */
+/* Hover effect - unoszenie z cieniem */
+.card .related-animal-info:hover,
 .related-animal-info:hover {
-    transform: translateY(-1px);
-    transition-delay: 0.7s;
+    transform: translateY(-2px) !important;
+    transition: transform 0.7s ease !important;
+    z-index: 10 !important;
 }
 
-.related-animal-info:hover .text-muted {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-    transition-delay: 0.7s;
+.card .related-animal-info:hover a,
+.related-animal-info:hover > a {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    background-color: rgba(108, 117, 125, 0.1) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.7s ease !important;
 }
 
 /* Click effect - zmiana koloru na blady czerwień */
-.related-animal-info .text-muted:active,
-.related-animal-info .text-muted.clicked {
+.card .related-animal-info a:active,
+.card .related-animal-info a.clicked,
+.related-animal-info > a:active,
+.related-animal-info > a.clicked {
+    background-color: rgba(255, 153, 153, 0.2) !important;
+    transition: all 0.7s ease !important;
+}
+
+/* Wszystkie teksty w klikniętym linku */
+.card .related-animal-info a:active *,
+.card .related-animal-info a.clicked *,
+.related-animal-info > a:active *,
+.related-animal-info > a.clicked * {
+    color: #ff6666 !important;
+    transition: color 0.7s ease !important;
+}
+
+/* Specyficzne style dla small i strong */
+.card .related-animal-info a:active small,
+.card .related-animal-info a.clicked small {
     color: #ff9999 !important;
-    transition: color 0.7s ease;
 }
 
-/* Dodatkowy efekt dla lepszego wyglądu */
-.related-animal-info .text-muted:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+.card .related-animal-info a:active strong,
+.card .related-animal-info a.clicked strong {
+    color: #ff4444 !important;
 }
 
-/* Ikona też reaguje */
+/* Efekty dla ikony */
 .related-animal-info i {
-    transition: all 0.3s ease;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
 }
 
 .related-animal-info:hover i {
-    transform: scale(1.1);
-    transition-delay: 0.7s;
+    transform: scale(1.15) !important;
+    transition: transform 0.7s ease !important;
 }
+
+/* Hover na tekstach */
+.related-animal-info:hover small.text-muted {
+    color: #495057 !important;
+}
+
+.related-animal-info:hover strong {
+    color: #212529 !important;
+}
+
+/* Dodatkowy efekt pulsowania przy kliknięciu */
+@keyframes clickPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.related-animal-info a.clicked {
+    animation: clickPulse 0.3s ease-out !important;
+}
+
+/* Debug - widoczne bordery (usuń po testach)
+.related-animal-info {
+    /* border: 1px solid red !important; */
+/* } 
+
+/* .related-animal-info a { */
+    /* border: 1px solid blue !important; */
+/*
