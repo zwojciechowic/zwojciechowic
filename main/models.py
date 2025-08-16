@@ -3,47 +3,57 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from colorfield.fields import ColorField
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 
-class BlogSection(models.Model):
-    blog_post = models.ForeignKey('BlogPost', on_delete=models.CASCADE, related_name='sections', verbose_name='Wpis na blogu')
-    title = models.CharField("Tytuł sekcji", max_length=200, blank=True)
-    content = models.TextField("Treść sekcji")
-    order = models.PositiveIntegerField("Kolejność", default=0)
+class BlogPost(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(max_length=200, verbose_name=_('Tytuł')),
+        excerpt = models.TextField(max_length=300, blank=True, verbose_name=_('Krótki opis')),
+    )
     
-    class Meta:
-        ordering = ('order',)
-        verbose_name = "Sekcja wpisu"
-        verbose_name_plural = "Sekcje wpisu"
-    
-    def __str__(self):
-        return f"{self.blog_post.title} - {self.title or 'Sekcja ' + str(self.order)}"
-
-class BlogPost(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Tytuł')
-    slug = models.SlugField(unique=True, verbose_name='URL (slug)')
-    excerpt = models.TextField(max_length=300, blank=True, verbose_name='Krótki opis')
+    slug = models.SlugField(unique=True, verbose_name=_('URL (slug)'))
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria zdjęć',
+        verbose_name=_('Galeria zdjęć'),
         related_name='blog_posts'
     )
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Autor')
-    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data utworzenia')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Data aktualizacji')
-    is_published = models.BooleanField(default=True, verbose_name='Opublikowane')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Autor'))
+    created_at = models.DateTimeField(default=timezone.now, verbose_name=_('Data utworzenia'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Data aktualizacji'))
+    is_published = models.BooleanField(default=True, verbose_name=_('Opublikowane'))
     
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'Wpis na blogu'
-        verbose_name_plural = 'Wpisy na blogu'
+        verbose_name = _('Wpis na blogu')
+        verbose_name_plural = _('Wpisy na blogu')
     
     def __str__(self):
-        return self.title
+        try:
+            title = self.safe_translation_getter('title', any_language=True)
+            if title:
+                return str(title)
+        except:
+            pass
+        return f"Blog Post #{self.pk}"
+    
+    def save(self, *args, **kwargs):
+        # Auto-generate slug from title if not provided
+        if not self.slug:
+            title = self.safe_translation_getter('title', any_language=True)
+            if title:
+                base_slug = slugify(title)
+                slug = base_slug
+                counter = 1
+                while BlogPost.objects.filter(slug=slug).exists():
+                    slug = f"{base_slug}-{counter}"
+                    counter += 1
+                self.slug = slug
+        super().save(*args, **kwargs)
     
     @property
     def main_photo(self):
@@ -56,10 +66,45 @@ class BlogPost(models.Model):
     def content(self):
         """Złączenie wszystkich sekcji w jedną treść dla kompatybilności wstecznej"""
         return "\n\n".join([
-            f"<h3>{section.title}</h3>\n{section.content}" if section.title 
-            else section.content 
+            f"<h3>{section.safe_translation_getter('title', any_language=True) or ''}</h3>\n{section.safe_translation_getter('content', any_language=True) or ''}" 
+            if section.safe_translation_getter('title', any_language=True)
+            else section.safe_translation_getter('content', any_language=True) or ''
             for section in self.sections.all()
         ])
+
+class BlogSection(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(_("Tytuł sekcji"), max_length=200, blank=True),
+        content = models.TextField(_("Treść sekcji")),
+    )
+    
+    blog_post = models.ForeignKey(
+        BlogPost, 
+        on_delete=models.CASCADE, 
+        related_name='sections', 
+        verbose_name=_('Wpis na blogu')
+    )
+    order = models.PositiveIntegerField(_("Kolejność"), default=0)
+    
+    class Meta:
+        ordering = ('order',)
+        verbose_name = _("Sekcja wpisu")
+        verbose_name_plural = _("Sekcje wpisu")
+    
+    def __str__(self):
+        try:
+            blog_title = self.blog_post.safe_translation_getter('title', any_language=True)
+            section_title = self.safe_translation_getter('title', any_language=True)
+            
+            if blog_title and section_title:
+                return f"{blog_title} - {section_title}"
+            elif blog_title:
+                return f"{blog_title} - Sekcja {self.order}"
+        except:
+            pass
+        
+        return f"Sekcja #{self.order}"
+    
 class Dog(TranslatableModel):
     translations = TranslatedFields(
         breed = models.CharField(max_length=100, verbose_name=_('Rasa')),
@@ -236,7 +281,6 @@ class ContactMessage(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.subject}"
-# W models.py - zamień obie klasy AboutPage i AboutSections
 
 class AboutPage(TranslatableModel):
     translations = TranslatedFields(

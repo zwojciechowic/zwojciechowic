@@ -37,7 +37,7 @@
                 <div class="alert alert-info">{% trans "Brak zdjęć dla tego wpisu" %}</div>
             {% endif %}
             
-            {# Wyświetlanie sekcji treści #}
+            {# Wyświetlanie sekcji treści z obsługą tłumaczeń #}
             <div class="content mt-4">
                 {% if post.sections.all %}
                     {% for section in post.sections.all %}
@@ -56,14 +56,14 @@
                 {% else %}
                     <div class="alert alert-warning">
                         <i class="fas fa-exclamation-triangle"></i>
-                        Ten wpis nie ma jeszcze treści.
+                        {% trans "Ten wpis nie ma jeszcze treści." %}
                     </div>
                 {% endif %}
             </div>
             
             <div class="mt-4">
                 <a href="{% url 'home' %}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Powrót do strony głównej
+                    <i class="fas fa-arrow-left"></i> {% trans "Powrót do strony głównej" %}
                 </a>
             </div>
         </div>
@@ -71,11 +71,11 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Informacje o wpisie</h5>
+                    <h5 class="card-title">{% trans "Informacje o wpisie" %}</h5>
                     <p class="card-text">
-                        <strong>Data publikacji:</strong> {{ post.created_at|date:"d.m.Y" }}<br>
-                        <strong>Autor:</strong> {{ post.author.get_full_name|default:post.author.username }}<br>
-                        <strong>Ostatnia aktualizacja:</strong> {{ post.updated_at|date:"d.m.Y" }}
+                        <strong>{% trans "Data publikacji" %}:</strong> {{ post.created_at|date:"d.m.Y" }}<br>
+                        <strong>{% trans "Autor" %}:</strong> {{ post.author.get_full_name|default:post.author.username }}<br>
+                        <strong>{% trans "Ostatnia aktualizacja" %}:</strong> {{ post.updated_at|date:"d.m.Y" }}
                     </p>
                     
                     {% if post.excerpt %}
@@ -87,13 +87,17 @@
                         <hr>
                         <div class="alert alert-info small">
                             <i class="fas fa-images"></i>
-                            Post zawiera {{ post.photo_gallery.photos.count }} zdjęć{{ post.photo_gallery.photos.count|pluralize:"e,a,ć" }}
+                            {% blocktrans count counter=post.photo_gallery.photos.count %}
+                                Post zawiera {{ counter }} zdjęcie
+                            {% plural %}
+                                Post zawiera {{ counter }} zdjęć
+                            {% endblocktrans %}
                         </div>
                     {% endif %}
                     
                     {% if post.sections.all %}
                         <hr>
-                        <h5 class="card-title text-dark">Spis treści</h5>
+                        <h5 class="card-title text-dark">{% trans "Spis treści" %}</h5>
                         <ul class="list-unstyled small">
                             {% for section in post.sections.all %}
                                 <li class="mb-1">
@@ -101,7 +105,7 @@
                                     {% if section.title %}
                                         {{ section.title }}
                                     {% else %}
-                                        Sekcja {{ forloop.counter }}
+                                        {% trans "Sekcja" %} {{ forloop.counter }}
                                     {% endif %}
                                 </li>
                             {% endfor %}
@@ -111,7 +115,7 @@
                     <!-- Nawigacyjny podgląd -->
                     <hr>
                     <div class="navigation-preview">
-                        <h6 class="text-muted">Nawigacja</h6>
+                        <h6 class="text-muted">{% trans "Nawigacja" %}</h6>
                         <div class="row text-center small">
                             <div class="col-6">
                                 {% if previous_post %}
@@ -119,7 +123,7 @@
                                     <div class="text-truncate">{{ previous_post.title|truncatechars:20 }}</div>
                                 {% else %}
                                     <i class="fas fa-arrow-left text-muted"></i>
-                                    <div class="text-muted">Brak poprzedniego</div>
+                                    <div class="text-muted">{% trans "Brak poprzedniego" %}</div>
                                 {% endif %}
                             </div>
                             <div class="col-6">
@@ -128,7 +132,7 @@
                                     <div class="text-truncate">{{ next_post.title|truncatechars:20 }}</div>
                                 {% else %}
                                     <i class="fas fa-arrow-right text-muted"></i>
-                                    <div class="text-muted">Brak następnego</div>
+                                    <div class="text-muted">{% trans "Brak następnego" %}</div>
                                 {% endif %}
                             </div>
                         </div>

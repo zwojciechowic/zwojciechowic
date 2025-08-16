@@ -524,3 +524,122 @@ msgstr "Breeding Certificates"
 
 msgid "Certyfikaty"
 msgstr "Certificates"
+
+
+
+
+
+
+### BLOG - MODELS.PY
+msgid "Tytuł"
+msgstr "Title"
+
+msgid "URL (slug)"
+msgstr "URL (slug)"
+
+msgid "Krótki opis"
+msgstr "Short description"
+
+msgid "Data utworzenia"
+msgstr "Creation date"
+
+msgid "Data aktualizacji" 
+msgstr "Update date"
+
+msgid "Opublikowane"
+msgstr "Published"
+
+msgid "Wpis na blogu"
+msgstr "Blog post"
+
+msgid "Tytuł sekcji"
+msgstr "Section title"
+
+msgid "Treść sekcji"
+msgstr "Section content"
+
+msgid "Sekcja wpisu"
+msgstr "Post section"
+
+msgid "Sekcje wpisu"
+msgstr "Post sections"
+
+### BLOG - ADMIN.PY
+msgid "Tłumaczenia"
+msgstr "Translations"
+
+msgid "Krótki opis wpisu wyświetlany na liście i w kartach"
+msgstr "Short description displayed in lists and cards"
+
+msgid "Wybierz istniejącą galerię lub stwórz nową w sekcji \"Galerie\""
+msgstr "Select existing gallery or create new one in \"Galleries\" section"
+
+msgid "Daty"
+msgstr "Dates"
+
+msgid "Brak"
+msgstr "None"
+
+msgid "Główne zdjęcie"
+msgstr "Main photo"
+
+msgid "Zdjęcia"
+msgstr "Photos"
+
+msgid "Brak zdjęć dla tego wpisu"
+msgstr "No photos for this post"
+
+msgid "Ten wpis nie ma jeszcze treści."
+msgstr "This post has no content yet."
+
+msgid "Powrót do strony głównej"
+msgstr "Back to main page"
+
+msgid "Informacje o wpisie"
+msgstr "Post information"
+
+msgid "Data publikacji"
+msgstr "Publication date"
+
+msgid "Ostatnia aktualizacja"
+msgstr "Last update"
+
+msgid "Spis treści"
+msgstr "Table of contents"
+
+msgid "Nawigacja"
+msgstr "Navigation"
+
+msgid "Brak poprzedniego"
+msgstr "No previous"
+
+msgid "Brak następnego"
+msgstr "No next"
+
+msgid "i {{ counter }} więcej"
+msgid_plural "i {{ counter }} więcej"
+msgstr[0] "and {{ counter }} more"
+msgstr[1] "and {{ counter }} more"
+
+msgid "Czytaj więcej"
+msgstr "Read more"
+
+msgid "Paginacja"
+msgstr "Pagination"
+
+msgid "Poprzednia"
+msgstr "Previous"
+
+msgid "Następna"
+msgstr "Next"
+
+msgid "Post zawiera {{ counter }} zdjęcie"
+msgid_plural "Post zawiera {{ counter }} zdjęć"
+msgstr[0] "Post contains {{ counter }} photo"
+msgstr[1] "Post contains {{ counter }} photos"
+
+msgid "Blog Post #{{ pk }}"
+msgstr "Blog Post #{{ pk }}"
+
+msgid "Media"
+msgstr "Media"

@@ -166,72 +166,130 @@ class PuppyAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-@admin.register(BlogSection)
-class BlogSectionAdmin(admin.ModelAdmin):
-    list_display = ('blog_post', 'title', 'order')
-    list_editable = ('order',)
-    list_filter = ('blog_post',)
-    ordering = ('blog_post', 'order')
 
-class BlogSectionInline(admin.TabularInline):
+class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
 
+@admin.register(BlogSection)
+class BlogSectionAdmin(TranslatableAdmin):
+    list_display = ('blog_post_title', 'title', 'order')
+    list_editable = ('order',)
+    list_filter = ('blog_post',)
+    ordering = ('blog_post', 'order')
+    
+    def blog_post_title(self, obj):
+        try:
+            return obj.blog_post.safe_translation_getter('title', any_language=True) or f"Post #{obj.blog_post.pk}"
+        except:
+            return f"Post #{obj.blog_post.pk}"
+    blog_post_title.short_description = _("Wpis na blogu")
+
 @admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
+class BlogPostAdmin(TranslatableAdmin):
     list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
     list_filter = ['is_published', 'created_at', 'author']
-    search_fields = ['title', 'excerpt', 'sections__content', 'sections__title']
-    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ['translations__title', 'translations__excerpt', 'sections__translations__content', 'sections__translations__title']
+    # Usunięte prepopulated_fields - nie działa z TranslatableModel
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'updated_at']
-    form = BlogPostAdminForm
     inlines = [BlogSectionInline]
     
-    fieldsets = (
-        ('Podstawowe informacje', {
-            'fields': ('title', 'slug', 'author', 'is_published')
-        }),
-        ('Opis', {
-            'fields': ('excerpt',),
-            'description': 'Krótki opis wpisu wyświetlany na liście i w kartach'
-        }),
-        ('Media', {
-            'fields': ('photo_gallery',),
-            'description': 'Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"'
-        }),
-        ('Daty', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-        # Sekcje treści będą dodawane przez inline poniżej
-    )
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        
+        if request.GET.get('language') == 'en':
+            # W trybie tłumaczenia ukrywamy pola nietłumaczalne
+            fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at']
+            for field_name in fields_to_hide:
+                try:
+                    del form.base_fields[field_name]
+                except KeyError:
+                    pass
+        
+        return form
+    
+    def get_fieldsets(self, request, obj=None):
+        if request.GET.get('language') == 'en':
+            return (
+                (_('Tłumaczenia'), {
+                    'fields': ('title', 'excerpt')
+                }),
+            )
+        else:
+            return (
+                (_('Podstawowe informacje'), {
+                    'fields': ('title', 'slug', 'author', 'is_published'),
+                    'description': _('Slug zostanie wygenerowany automatycznie z tytułu jeśli pozostanie pusty')
+                }),
+                (_('Opis'), {
+                    'fields': ('excerpt',),
+                    'description': _('Krótki opis wpisu wyświetlany na liście i w kartach')
+                }),
+                (_('Media'), {
+                    'fields': ('photo_gallery',),
+                    'description': _('Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"')
+                }),
+                (_('Daty'), {
+                    'fields': ('created_at', 'updated_at'),
+                    'classes': ('collapse',)
+                }),
+            )
     
     def main_photo_preview(self, obj):
         main_photo_obj = obj.main_photo
         if main_photo_obj and main_photo_obj.image:
             return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
                              main_photo_obj.image.url)
-        return "Brak"
-    main_photo_preview.short_description = "Główne zdjęcie"
+        return _("Brak")
+    main_photo_preview.short_description = _("Główne zdjęcie")
     
     def photos_count(self, obj):
         if obj.photo_gallery:
             return obj.photo_gallery.photos.count()
         return 0
-    photos_count.short_description = "Zdjęcia"
+    photos_count.short_description = _("Zdjęcia")
     
     def sections_count(self, obj):
         return obj.sections.count()
-    sections_count.short_description = "Sekcje"
+    sections_count.short_description = _("Sekcje")
     
     def save_model(self, request, obj, form, change):
         if not change:  # Jeśli to nowy wpis
             obj.author = request.user
         super().save_model(request, obj, form, change)
+
+class HodowlaAdminSite(AdminSite):
+    def get_app_list(self, request, app_label=None):
+        app_list = super().get_app_list(request)
+        
+        hidden_models = [
+            'BlogSection', 'Blog sections', 'Sekcje wpisu',
+            'AboutSections', 'About sections', 'Sekcje'
+        ]
+        
+        for app in app_list:
+            if app['app_label'] == 'main':
+                app['models'] = [
+                    model for model in app['models'] 
+                    if model['object_name'] not in hidden_models and 
+                        model['name'] not in hidden_models
+                ]
+                
+                app['models'].sort(key=lambda x: {
+                    'BlogPost': 1,
+                    'Dog': 2,
+                    'Puppy': 3,
+                    'Reservation': 4,
+                    'ContactMessage': 5,
+                    'AboutPage': 6
+                }.get(x['object_name'], 99))
+        
+        return app_list
+
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'subject', 'created_at', 'is_read']
@@ -288,13 +346,11 @@ class AboutSectionInline(TranslatableTabularInline):
     fields = ('order', 'title', 'content')
     ordering = ('order',)
 
-
 @admin.register(AboutSections)
 class AboutSectionAdmin(TranslatableAdmin):
     list_display = ('title', 'order', 'about_page')
     list_editable = ('order',)
     ordering = ('about_page', 'order')
-
 
 @admin.register(AboutPage)
 class AboutPageAdmin(TranslatableAdmin):
@@ -325,118 +381,6 @@ class AboutPageAdmin(TranslatableAdmin):
         """Informacja o istnieniu strony"""
         return _("✓ Skonfigurowana")
     created_info.short_description = _("Status")
-class HodowlaAdminSite(AdminSite):
-    def get_app_list(self, request, app_label=None):
-        app_list = super().get_app_list(request)
-        
-        hidden_models = [
-            'BlogSection', 'Blog sections', 'Sekcje wpisu',
-            'AboutSections', 'About sections', 'Sekcje'
-        ]
-        
-        for app in app_list:
-            if app['app_label'] == 'main':
-                app['models'] = [
-                    model for model in app['models'] 
-                    if model['object_name'] not in hidden_models and 
-                        model['name'] not in hidden_models
-                ]
-                
-                app['models'].sort(key=lambda x: {
-                    'BlogPost': 1,
-                    'Dog': 2,
-                    'Puppy': 3,
-                    'Reservation': 4,
-                    'ContactMessage': 5,
-                    'AboutPage': 6
-                }.get(x['object_name'], 99))
-        
-        return app_list
-
-    def index(self, request, extra_context=None):
-        extra_context = extra_context or {}
-        
-        try:
-            dogs_count = Dog.objects.count()
-            puppies_count = Puppy.objects.filter(is_available=True).count()
-            posts_count = BlogPost.objects.filter(is_published=True).count()
-            about_exists = AboutPage.objects.exists()
-            
-            pending_reservations = Reservation.objects.filter(status='pending').count()
-            confirmed_reservations = Reservation.objects.filter(status='confirmed').count()
-            total_reservations = pending_reservations + confirmed_reservations
-            
-            total_messages = ContactMessage.objects.count()
-            unread_messages = ContactMessage.objects.filter(is_read=False).count()
-            
-            total_puppies = Puppy.objects.count()
-            sold_puppies = total_puppies - puppies_count
-            draft_posts = BlogPost.objects.filter(is_published=False).count()
-            breeding_dogs = Dog.objects.filter(is_breeding=True).count()
-
-            quick_links_title = _('Podgląd strony publicznej:')
-            main_page = _('Strona główna')
-            our_dogs = _('Nasze psy')
-            puppies = _('Szczenieta')
-            about = _('O nas')
-            contact = _('Kontakt')
-           
-            quick_links = format_html(
-                '''
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                    <h3>🌐 {quick_links_title}</h3>
-                    <a href="/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🏠 {main_page}</a>
-                    <a href="/nasze-psy/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐕 {our_dogs}</a>
-                    <a href="/szczeniaki/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐶 {puppies}</a>
-                    <a href="/o-nas/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">👥 {about}</a>
-                    <a href="/kontakt/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">📞 {contact}</a>
-                    <a href="/hotel/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🏨 Hotel</a>
-                </div>
-                ''',
-                quick_links_title=quick_links_title,
-                main_page=main_page,
-                our_dogs=our_dogs,
-                puppies=puppies,
-                about=about,
-                contact=contact
-            )
-
-           
-            extra_context.update({
-                'dogs_count': dogs_count,
-                'puppies_count': puppies_count,
-                'posts_count': posts_count,
-                'reservations_count': total_reservations,
-                'about_exists': about_exists,
-                'messages_count': total_messages,
-                'unread_messages': unread_messages,
-                'pending_reservations': pending_reservations,
-                'confirmed_reservations': confirmed_reservations,
-                'sold_puppies': sold_puppies,
-                'draft_posts': draft_posts,
-                'breeding_dogs': breeding_dogs,
-                'quick_links': quick_links,
-            })
-            
-        except Exception as e:
-            print(f"Błąd w dashboard: {e}")
-            extra_context.update({
-                'dogs_count': 0,
-                'puppies_count': 0,
-                'posts_count': 0,
-                'reservations_count': 0,
-                'about_exists': False,
-                'messages_count': 0,
-                'unread_messages': 0,
-                'pending_reservations': 0,
-                'confirmed_reservations': 0,
-                'sold_puppies': 0,
-                'draft_posts': 0,
-                'breeding_dogs': 0,
-                'quick_links': '',
-            })
-        
-        return super().index(request, extra_context)
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):

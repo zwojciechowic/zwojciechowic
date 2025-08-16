@@ -512,9 +512,6 @@ msgstr "Treść paragrafu"
 msgid "Kolejność"
 msgstr "Kolejność"
 
-msgid "Sekcja"
-msgstr "Sekcja"
-
 msgid "Sekcje"
 msgstr "Sekcje"
 
@@ -547,3 +544,122 @@ msgstr "Certyfikaty hodowli"
 
 msgid "Certyfikaty"
 msgstr "Certyfikaty"
+
+
+
+
+
+msgid "Tytuł"
+msgstr "Tytuł"
+
+msgid "URL (slug)"
+msgstr "URL (slug)"
+
+msgid "Krótki opis"
+msgstr "Krótki opis"
+
+msgid "Data utworzenia"
+msgstr "Data utworzenia"
+
+msgid "Data aktualizacji"
+msgstr "Data aktualizacji"
+
+msgid "Opublikowane"
+msgstr "Opublikowane"
+
+msgid "Wpis na blogu"
+msgstr "Wpis na blogu"
+
+msgid "Tytuł sekcji"
+msgstr "Tytuł sekcji"
+
+msgid "Treść sekcji"
+msgstr "Treść sekcji"
+
+msgid "Sekcja wpisu"
+msgstr "Sekcja wpisu"
+
+msgid "Sekcje wpisu"
+msgstr "Sekcje wpisu"
+
+msgid "Tłumaczenia"
+msgstr "Tłumaczenia"
+
+msgid "Krótki opis wpisu wyświetlany na liście i w kartach"
+msgstr "Krótki opis wpisu wyświetlany na liście i w kartach"
+
+msgid "Wybierz istniejącą galerię lub stwórz nową w sekcji 'Galerie'"
+msgstr "Wybierz istniejącą galerię lub stwórz nową w sekcji 'Galerie'"
+
+msgid "Daty"
+msgstr "Daty"
+
+msgid "Brak"
+msgstr "Brak"
+
+msgid "Główne zdjęcie"
+msgstr "Główne zdjęcie"
+
+msgid "Zdjęcia"
+msgstr "Zdjęcia"
+
+msgid "Brak zdjęć dla tego wpisu"
+msgstr "Brak zdjęć dla tego wpisu"
+
+msgid "Ten wpis nie ma jeszcze treści."
+msgstr "Ten wpis nie ma jeszcze treści."
+
+msgid "Powrót do strony głównej"
+msgstr "Powrót do strony głównej"
+
+msgid "Informacje o wpisie"
+msgstr "Informacje o wpisie"
+
+msgid "Data publikacji"
+msgstr "Data publikacji"
+
+msgid "Ostatnia aktualizacja"
+msgstr "Ostatnia aktualizacja"
+
+msgid "Spis treści"
+msgstr "Spis treści"
+
+msgid "Nawigacja"
+msgstr "Nawigacja"
+
+msgid "Brak poprzedniego"
+msgstr "Brak poprzedniego"
+
+msgid "Brak następnego"
+msgstr "Brak następnego"
+
+msgid "Sekcja"
+msgstr "Sekcja"
+
+msgid "i {{ counter }} więcej"
+msgid_plural "i {{ counter }} więcej"
+msgstr[0] "i {{ counter }} więcej"
+msgstr[1] "i {{ counter }} więcej"
+
+msgid "Czytaj więcej"
+msgstr "Czytaj więcej"
+
+msgid "Paginacja"
+msgstr "Paginacja"
+
+msgid "Poprzednia"
+msgstr "Poprzednia"
+
+msgid "Następna"
+msgstr "Następna"
+
+msgid "Post zawiera {{ counter }} zdjęcie"
+msgid_plural "Post zawiera {{ counter }} zdjęć"
+msgstr[0] "Post zawiera {{ counter }} zdjęcie"
+msgstr[1] "Post zawiera {{ counter }} zdjęć"
+
+msgid "Blog Post #{{ pk }}"
+msgstr "Wpis na blogu #{{ pk }}"
+
+msgid "Media"
+msgstr "Media"
