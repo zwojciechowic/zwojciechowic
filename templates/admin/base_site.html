@@ -19,7 +19,7 @@
     {% if not is_popup %}
         {# Prostsza logika - sprawdź czy jesteś w admin panelu #}
         {% if request.resolver_match.namespace == 'admin' %}
-            <a href="{% url 'admin:index' %}">Panel główny</a>
+            <a href="{% url 'admin:index' %}">{% trans "Panel główny"%}</a>
             {% if title and title != "Panel główny" %} › {{ title }}{% endif %}
         {% else %}
             {# Fallback dla innych przypadków #}
@@ -57,7 +57,7 @@
                 {% for app in available_apps %}
                     {% if app.name == "Main" or app.name == "Panel główny" %}
                         <div class="admin-nav-item">
-                            <a href="#" class="admin-nav-link" title="Panel główny">
+                            <a href="#" class="admin-nav-link" title="{% trans 'Panel główny'%}">
                                 <span class="admin-nav-icon">⚙️</span>
                                 <span class="admin-nav-text">{% trans "Panel główny"%}</span>
                             </a>
@@ -91,28 +91,7 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link" title="{% trans 'Zmień język' %}">
-                    <span class="admin-nav-icon">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
-                    </span>
-                </a>
-                <div class="admin-nav-dropdown">
-                    <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                        <input type="hidden" name="language" value="pl">
-                        <button type="submit" class="admin-dropdown-link">🇵🇱 {% trans "Polski" %}</button>
-                    </form>
-                    <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                        <input type="hidden" name="language" value="en">
-                        <button type="submit" class="admin-dropdown-link">🇬🇧 {% trans "English" %}</button>
-                    </form>
-                </div>
-            </div>
+
             <!-- User Menu with Users model -->
             <div class="admin-nav-item">
                 <a href="#" class="admin-nav-link" title="{{ user.get_username }}">
@@ -143,6 +122,28 @@
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
+                </div>
+            </div>
+            <div class="admin-nav-item">
+                <a href="#" class="admin-nav-link" title="{% trans 'Zmień język' %}">
+                    <span class="admin-nav-icon">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
+                    </span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="language" value="pl">
+                        <button type="submit" class="admin-dropdown-link">🇵🇱 {% trans "Polski" %}</button>
+                    </form>
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="language" value="en">
+                        <button type="submit" class="admin-dropdown-link">🇬🇧 {% trans "English" %}</button>
+                    </form>
                 </div>
             </div>
         </div>

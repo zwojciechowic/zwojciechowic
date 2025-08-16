@@ -421,10 +421,7 @@ msgstr "Author"
 
     msgid "No photo"
     msgstr "Brak zdjęcia"
-
-    msgid "Panel główny"
-    msgstr "Main menu"
-
+    
     msgid "Szczenięta"
     msgstr "Puppies"
 
@@ -453,3 +450,6 @@ msgstr "Author"
 
     msgid "Szczenienieta"  
     msgstr "Puppies"  
+
+    msgid "Panel główny"  
+    msgstr "Dashboard"  

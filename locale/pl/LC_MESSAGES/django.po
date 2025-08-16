@@ -477,3 +477,6 @@ msgstr "Autor"
 
     msgid "Wyloguj"
     msgstr "Wyloguj"
+
+    msgid "Panel główny"  
+    msgstr "Panel główny"  
