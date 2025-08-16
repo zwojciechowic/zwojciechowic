@@ -670,3 +670,9 @@ msgstr "Posted blogs"
 
 msgid "Wiadomości"
 msgstr "Messages"
+
+msgid "Hodowla z Wojciechowic - Panel Administracyjny"
+msgstr "Wojciechowic Kennel - Admin Dashboard"
+
+msgid "Zarządzanie treścią"
+msgstr "Content manager"

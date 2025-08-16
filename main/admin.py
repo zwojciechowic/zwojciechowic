@@ -8,10 +8,9 @@ from django.contrib.admin import AdminSite
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from django.utils.translation import gettext_lazy as _
 
-# Konfiguracja panelu administracyjnego
-admin.site.site_header = "Hodowla z Wojciechowic - Panel Administracyjny"
-admin.site.site_title = "Hodowla z Wojciechowic"
-admin.site.index_title = "Zarządzanie treścią"
+admin.site.site_header = _("Hodowla z Wojciechowic - Panel Administracyjny")
+admin.site.site_title = _("Hodowla z Wojciechowic")
+admin.site.index_title = _("Zarządzanie treścią")
 
 class DogAdminForm(forms.ModelForm):
     class Meta:

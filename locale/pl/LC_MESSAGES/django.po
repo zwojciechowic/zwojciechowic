@@ -692,3 +692,9 @@ msgstr "opublikowanych postów"
 
 msgid "Wiadomości"
 msgstr "Wiadomości"
+
+msgid "Hodowla z Wojciechowic - Panel Administracyjny"
+msgstr "Hodowla z Wojciechowic - Panel Administracyjny"
+
+msgid "Zarządzanie treścią"
+msgstr "Zarządzanie treścią"
