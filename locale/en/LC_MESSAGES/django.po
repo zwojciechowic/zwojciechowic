@@ -651,13 +651,13 @@ msgid "psów w hodowli"
 msgstr "breeding dog's"
 
 msgid "Zarządzaj szczeniętami"
-msgstr "Manage the puppies"
+msgstr "Manage puppies"
 
 msgid "dostępnych szczeniąt"
 msgstr "avaliable puppies"
 
 msgid "Zarządzaj rezerwacjami"
-msgstr "Zarządzaj rezerwacjami"
+msgstr "Manage reservations"
 
 msgid "aktywnych rezerwacji"
 msgstr "Active reservations"
@@ -676,3 +676,15 @@ msgstr "Wojciechowic Kennel - Admin Dashboard"
 
 msgid "Zarządzanie treścią"
 msgstr "Content manager"
+
+msgid "Edytuj informacje o hodowli"
+msgstr "Edit info about Us"
+
+msgid "Utwórz stronę o hodowli"
+msgstr "Create About Us page"
+
+msgid "skonfigurowana"
+msgstr "configured"
+
+msgid "Do utworzenia"
+msgstr "To create"

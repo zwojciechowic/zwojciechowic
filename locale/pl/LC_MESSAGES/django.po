@@ -698,3 +698,15 @@ msgstr "Hodowla z Wojciechowic - Panel Administracyjny"
 
 msgid "Zarządzanie treścią"
 msgstr "Zarządzanie treścią"
+
+msgid "Edytuj informacje o hodowli"
+msgstr "Edytuj informacje o hodowli"
+
+msgid "Utwórz stronę o hodowli"
+msgstr "Utwórz stronę o hodowli"
+
+msgid "skonfigurowana"
+msgstr "skonfigurowana"
+
+msgid "Do utworzenia"
+msgstr "Do utworzenia"

@@ -23,7 +23,7 @@
         </div>
         <div class="card-content">
             <a href="{% url 'admin:main_dog_changelist' %}" class="card-link">
-                <h3>{% trans "Nasze Psy"%}</h3>
+                <h3>{% trans "Nasze psy"%}</h3>
                 <p>{% trans "Zarządzaj psami w hodowli"%}</p>
             </a>
             <div class="card-stats">
@@ -106,7 +106,7 @@
                     {% if unread_messages > 0 %}
                         ({{ unread_messages }} nowych)
                     {% else %}
-                        wiadomości
+                        {% trans "wiadomości"%}
                     {% endif %}
                 </span>
             </div>
@@ -128,9 +128,9 @@
                 <h3>{% trans "Strona O Nas"%}</h3>
                 <p>
                     {% if about_exists %}
-                        Edytuj informacje o hodowli
+                        {% trans "Edytuj informacje o hodowli"%}
                     {% else %}
-                        Utwórz stronę o hodowli
+                        {% trans "Utwórz stronę o hodowli"%}
                     {% endif %}
                 </p>
             </a>
@@ -140,9 +140,9 @@
                 </span>
                 <span class="stat-label">
                     {% if about_exists %}
-                        skonfigurowana
+                        {% trans "skonfigurowana"%}
                     {% else %}
-                        do utworzenia
+                        {% trans "do utworzenia"%}
                     {% endif %}
                 </span>
             </div>
