@@ -167,11 +167,13 @@ class PuppyAdmin(TranslatableAdmin):
         return 0
     certificates_count.short_description = "Certyfikaty"
 
+
 class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
+    classes = ['collapse']
 
 @admin.register(BlogSection)
 class BlogSectionAdmin(TranslatableAdmin):
@@ -192,79 +194,135 @@ class BlogPostAdmin(TranslatableAdmin):
     list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
     list_filter = ['is_published', 'created_at', 'author']
     search_fields = ['translations__title', 'translations__excerpt', 'sections__translations__content', 'sections__translations__title']
-    # Usunięte prepopulated_fields - nie działa z TranslatableModel
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'updated_at']
     inlines = [BlogSectionInline]
     
+    # Pola wymagane dla wszystkich języków
+    fields_basic = ['title', 'slug', 'author', 'is_published']
+    fields_content = ['excerpt']
+    fields_media = ['photo_gallery']
+    fields_meta = ['created_at', 'updated_at']
+    
     def get_form(self, request, obj=None, **kwargs):
+        """Customizacja formularza w zależności od trybu tłumaczenia"""
         form = super().get_form(request, obj, **kwargs)
         
-        if request.GET.get('language') == 'en':
-            # W trybie tłumaczenia ukrywamy pola nietłumaczalne
-            fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at']
-            for field_name in fields_to_hide:
-                try:
-                    del form.base_fields[field_name]
-                except KeyError:
-                    pass
+        # W trybie tłumaczenia pokazujemy tylko pola tłumaczalne
+        if request.GET.get('language'):
+            current_lang = request.GET.get('language')
+            if current_lang != self.get_language_tabs(request, obj)[0][0]:  # Jeśli nie jest to główny język
+                # Ukrywamy pola nietłumaczalne
+                fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at']
+                for field_name in fields_to_hide:
+                    try:
+                        del form.base_fields[field_name]
+                    except KeyError:
+                        pass
         
         return form
     
     def get_fieldsets(self, request, obj=None):
-        if request.GET.get('language') == 'en':
-            return (
-                (_('Tłumaczenia'), {
-                    'fields': ('title', 'excerpt')
-                }),
-            )
-        else:
-            return (
-                (_('Podstawowe informacje'), {
-                    'fields': ('title', 'slug', 'author', 'is_published'),
-                    'description': _('Slug zostanie wygenerowany automatycznie z tytułu jeśli pozostanie pusty')
-                }),
-                (_('Opis'), {
-                    'fields': ('excerpt',),
-                    'description': _('Krótki opis wpisu wyświetlany na liście i w kartach')
-                }),
-                (_('Media'), {
-                    'fields': ('photo_gallery',),
-                    'description': _('Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"')
-                }),
-                (_('Daty'), {
-                    'fields': ('created_at', 'updated_at'),
-                    'classes': ('collapse',)
-                }),
-            )
+        """Różne zestawy pól dla głównego języka i tłumaczeń"""
+        current_language = request.GET.get('language')
+        
+        # Sprawdź czy to jest tryb tłumaczenia na inny język niż główny
+        if current_language and obj:
+            main_language = self.get_language_tabs(request, obj)[0][0]
+            if current_language != main_language:
+                return (
+                    (_('Tłumaczenie na język: {}').format(current_language.upper()), {
+                        'fields': ('title', 'excerpt'),
+                        'description': _('Przetłumacz tytuł i opis na wybrany język')
+                    }),
+                )
+        
+        # Standardowe pola dla głównego języka lub nowego wpisu
+        return (
+            (_('Podstawowe informacje'), {
+                'fields': ('title', 'slug', 'author', 'is_published'),
+                'description': _('Slug zostanie wygenerowany automatycznie z tytułu jeśli pozostanie pusty')
+            }),
+            (_('Opis'), {
+                'fields': ('excerpt',),
+                'description': _('Krótki opis wpisu wyświetlany na liście i w kartach')
+            }),
+            (_('Media'), {
+                'fields': ('photo_gallery',),
+                'description': _('Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"')
+            }),
+            (_('Informacje systemowe'), {
+                'fields': ('created_at', 'updated_at'),
+                'classes': ('collapse',),
+                'description': _('Automatycznie generowane daty')
+            }),
+        )
     
     def main_photo_preview(self, obj):
+        """Podgląd głównego zdjęcia"""
         main_photo_obj = obj.main_photo
         if main_photo_obj and main_photo_obj.image:
-            return format_html('<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />', 
-                             main_photo_obj.image.url)
+            return format_html(
+                '<img src="{}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" alt="{}" />', 
+                main_photo_obj.image.url,
+                _("Podgląd zdjęcia")
+            )
         return _("Brak")
     main_photo_preview.short_description = _("Główne zdjęcie")
     
     def photos_count(self, obj):
+        """Liczba zdjęć w galerii"""
         if obj.photo_gallery:
             return obj.photo_gallery.photos.count()
         return 0
     photos_count.short_description = _("Zdjęcia")
     
     def sections_count(self, obj):
+        """Liczba sekcji wpisu"""
         return obj.sections.count()
     sections_count.short_description = _("Sekcje")
     
     def save_model(self, request, obj, form, change):
+        """Zapisywanie modelu z automatycznym przypisaniem autora"""
         if not change:  # Jeśli to nowy wpis
             obj.author = request.user
+        
+        # Upewnij się, że slug istnieje przed zapisaniem
+        if not obj.slug:
+            if hasattr(obj, '_current_language'):
+                # Jesteśmy w kontekście tłumaczenia
+                title = getattr(obj, 'title', None)
+                if title:
+                    from django.utils.text import slugify
+                    import uuid
+                    base_slug = slugify(title) or f"post-{str(uuid.uuid4())[:8]}"
+                    slug = base_slug
+                    counter = 1
+                    while BlogPost.objects.filter(slug=slug).exclude(pk=obj.pk).exists():
+                        slug = f"{base_slug}-{counter}"
+                        counter += 1
+                    obj.slug = slug
+            else:
+                # Fallback slug
+                import uuid
+                obj.slug = f"post-{str(uuid.uuid4())[:8]}"
+        
         super().save_model(request, obj, form, change)
+    
+    def get_queryset(self, request):
+        """Optymalizacja zapytań"""
+        qs = super().get_queryset(request)
+        return qs.select_related('author', 'photo_gallery').prefetch_related('sections')
 
-class HodowlaAdminSite(AdminSite):
+class HodowlaAdminSite(admin.AdminSite):
+    site_header = _("Panel administracyjny Hodowli")
+    site_title = _("Hodowla Admin")
+    index_title = _("Witaj w panelu administracyjnym")
+    
     def get_app_list(self, request, app_label=None):
-        app_list = super().get_app_list(request)
+        """Customizacja listy aplikacji i modeli"""
+        app_list = super().get_app_list(request, app_label)
         
         hidden_models = [
             'BlogSection', 'Blog sections', 'Sekcje wpisu',
@@ -273,22 +331,27 @@ class HodowlaAdminSite(AdminSite):
         
         for app in app_list:
             if app['app_label'] == 'main':
+                # Filtruj ukryte modele
                 app['models'] = [
                     model for model in app['models'] 
                     if model['object_name'] not in hidden_models and 
                         model['name'] not in hidden_models
                 ]
                 
-                app['models'].sort(key=lambda x: {
+                # Sortuj modele w określonej kolejności
+                model_order = {
                     'BlogPost': 1,
                     'Dog': 2,
                     'Puppy': 3,
                     'Reservation': 4,
                     'ContactMessage': 5,
                     'AboutPage': 6
-                }.get(x['object_name'], 99))
+                }
+                
+                app['models'].sort(key=lambda x: model_order.get(x['object_name'], 99))
         
         return app_list
+
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):

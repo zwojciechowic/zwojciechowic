@@ -9,11 +9,25 @@ from parler.models import TranslatableModel, TranslatedFields
 
 class BlogPost(TranslatableModel):
     translations = TranslatedFields(
-        title = models.CharField(max_length=200, verbose_name=_('Tytuł')),
-        excerpt = models.TextField(max_length=300, blank=True, verbose_name=_('Krótki opis')),
+        title=models.CharField(
+            max_length=200, 
+            verbose_name=_('Tytuł'),
+            blank=True,  # Dodano blank=True
+            help_text=_('Tytuł wpisu na blogu')
+        ),
+        excerpt=models.TextField(
+            max_length=300, 
+            blank=True, 
+            verbose_name=_('Krótki opis'),
+            help_text=_('Krótki opis wpisu wyświetlany na liście')
+        ),
     )
     
-    slug = models.SlugField(unique=True, verbose_name=_('URL (slug)'))
+    slug = models.SlugField(
+        unique=True, 
+        verbose_name=_('URL (slug)'),
+        help_text=_('URL przyjazny dla SEO (zostanie wygenerowany automatycznie jeśli pusty)')
+    )
     photo_gallery = models.ForeignKey(
         'gallery.Gallery', 
         on_delete=models.SET_NULL, 
@@ -22,10 +36,23 @@ class BlogPost(TranslatableModel):
         verbose_name=_('Galeria zdjęć'),
         related_name='blog_posts'
     )
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Autor'))
-    created_at = models.DateTimeField(default=timezone.now, verbose_name=_('Data utworzenia'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Data aktualizacji'))
-    is_published = models.BooleanField(default=True, verbose_name=_('Opublikowane'))
+    author = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        verbose_name=_('Autor')
+    )
+    created_at = models.DateTimeField(
+        default=timezone.now, 
+        verbose_name=_('Data utworzenia')
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, 
+        verbose_name=_('Data aktualizacji')
+    )
+    is_published = models.BooleanField(
+        default=True, 
+        verbose_name=_('Opublikowane')
+    )
     
     class Meta:
         ordering = ['-created_at']
@@ -39,20 +66,54 @@ class BlogPost(TranslatableModel):
                 return str(title)
         except:
             pass
-        return f"Blog Post #{self.pk}"
+        return f"Blog Post #{self.pk}" if self.pk else "Nowy wpis"
+    
+    def clean(self):
+        """Walidacja modelu"""
+        from django.core.exceptions import ValidationError
+        
+        # Sprawdź czy istnieje tytuł w jakimkolwiek języku
+        if self.pk:  # Tylko dla istniejących obiektów
+            has_title = False
+            for lang_code, lang_name in self._parler_meta.root.get_language_choices():
+                try:
+                    translation = self.get_translation(lang_code)
+                    if translation.title and translation.title.strip():
+                        has_title = True
+                        break
+                except:
+                    continue
+            
+            if not has_title:
+                raise ValidationError(_('Wpis musi mieć tytuł w przynajmniej jednym języku'))
     
     def save(self, *args, **kwargs):
         # Auto-generate slug from title if not provided
         if not self.slug:
-            title = self.safe_translation_getter('title', any_language=True)
-            if title:
+            title = None
+            try:
+                title = self.safe_translation_getter('title', any_language=True)
+            except:
+                pass
+            
+            if title and title.strip():
                 base_slug = slugify(title)
-                slug = base_slug
-                counter = 1
-                while BlogPost.objects.filter(slug=slug).exists():
-                    slug = f"{base_slug}-{counter}"
-                    counter += 1
-                self.slug = slug
+                if base_slug:  # Sprawdź czy slug nie jest pusty
+                    slug = base_slug
+                    counter = 1
+                    while BlogPost.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                        slug = f"{base_slug}-{counter}"
+                        counter += 1
+                    self.slug = slug
+                else:
+                    # Fallback slug jeśli title nie może być przekonwertowany na slug
+                    import uuid
+                    self.slug = f"post-{str(uuid.uuid4())[:8]}"
+            else:
+                # Fallback slug jeśli brak tytułu
+                import uuid
+                self.slug = f"post-{str(uuid.uuid4())[:8]}"
+        
         super().save(*args, **kwargs)
     
     @property
@@ -65,17 +126,31 @@ class BlogPost(TranslatableModel):
     @property
     def content(self):
         """Złączenie wszystkich sekcji w jedną treść dla kompatybilności wstecznej"""
-        return "\n\n".join([
-            f"<h3>{section.safe_translation_getter('title', any_language=True) or ''}</h3>\n{section.safe_translation_getter('content', any_language=True) or ''}" 
-            if section.safe_translation_getter('title', any_language=True)
-            else section.safe_translation_getter('content', any_language=True) or ''
-            for section in self.sections.all()
-        ])
+        sections = []
+        for section in self.sections.all():
+            section_title = section.safe_translation_getter('title', any_language=True)
+            section_content = section.safe_translation_getter('content', any_language=True)
+            
+            if section_title and section_content:
+                sections.append(f"<h3>{section_title}</h3>\n{section_content}")
+            elif section_content:
+                sections.append(section_content)
+        
+        return "\n\n".join(sections)
 
 class BlogSection(TranslatableModel):
     translations = TranslatedFields(
-        title = models.CharField(_("Tytuł sekcji"), max_length=200, blank=True),
-        content = models.TextField(_("Treść sekcji")),
+        title=models.CharField(
+            _("Tytuł sekcji"), 
+            max_length=200, 
+            blank=True,
+            help_text=_('Opcjonalny tytuł sekcji')
+        ),
+        content=models.TextField(
+            _("Treść sekcji"),
+            blank=True,  # Dodano blank=True dla większej elastyczności
+            help_text=_('Treść sekcji wpisu')
+        ),
     )
     
     blog_post = models.ForeignKey(
@@ -90,6 +165,7 @@ class BlogSection(TranslatableModel):
         ordering = ('order',)
         verbose_name = _("Sekcja wpisu")
         verbose_name_plural = _("Sekcje wpisu")
+        unique_together = ['blog_post', 'order']  # Zapobiega duplikatom kolejności
     
     def __str__(self):
         try:
@@ -99,12 +175,12 @@ class BlogSection(TranslatableModel):
             if blog_title and section_title:
                 return f"{blog_title} - {section_title}"
             elif blog_title:
-                return f"{blog_title} - Sekcja {self.order}"
+                return f"{blog_title} - Sekcja {self.order + 1}"
+            else:
+                return f"Sekcja {self.order + 1}"
         except:
-            pass
-        
-        return f"Sekcja #{self.order}"
-    
+            return f"Sekcja #{self.order + 1}"  
+
 class Dog(TranslatableModel):
     translations = TranslatedFields(
         breed = models.CharField(max_length=100, verbose_name=_('Rasa')),
