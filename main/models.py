@@ -237,11 +237,15 @@ class ContactMessage(models.Model):
     def __str__(self):
         return f"{self.name} - {self.subject}"
 
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
 class AboutPage(models.Model):
-    main_title = models.CharField("Główny tytuł", max_length=200)
-    quote_text = models.TextField("Tekst cytatu", blank=True)
+    main_title = models.CharField(_("Główny tytuł"), max_length=200)
+    quote_text = models.TextField(_("Tekst cytatu"), blank=True)
     top_image = models.ImageField(
-        "Zdjęcie główne", 
+        _("Zdjęcie główne"), 
         upload_to='about/',
         blank=True
     )
@@ -250,19 +254,36 @@ class AboutPage(models.Model):
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        verbose_name='Galeria certyfikatów',
+        verbose_name=_('Galeria certyfikatów'),
         related_name='about_certificates',
-        help_text='Certyfikaty hodowli, nagrody, dyplomy itp.'
+        help_text=_('Certyfikaty hodowli, nagrody, dyplomy itp.')
     )
 
     class Meta:
-        verbose_name = "Strona O nas"
-        verbose_name_plural = "Strona O nas"
+        verbose_name = _("Strona O nas")
+        verbose_name_plural = _("Strona O nas")
 
     def __str__(self):
-        return "Strona 'O nas'"
+        return _("Strona 'O nas'")
+
 
 class AboutSections(models.Model):
+    about_page = models.ForeignKey(
+        AboutPage,
+        on_delete=models.CASCADE,
+        related_name='sections'
+    )
+    title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True)
+    content = models.TextField(_("Treść paragrafu"))
+    order = models.PositiveIntegerField(_("Kolejność"), default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = _("Sekcja")
+        verbose_name_plural = _("Sekcje")
+
+    def __str__(self):
+        return _("Sekcja %(order)s") % {'order': self.order}
     about_page = models.ForeignKey(
         AboutPage,
         on_delete=models.CASCADE,

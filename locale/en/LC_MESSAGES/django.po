@@ -31,6 +31,9 @@ msgstr "Main Page"
 msgid "O nas"
 msgstr "About us"
 
+msgid "Strona O nas"
+msgstr "Page About us"
+
 msgid "Nasze psy"
 msgstr "Our dogs"
 
@@ -448,9 +451,6 @@ msgstr "Author"
     msgid "Strona główna"  
     msgstr "Main page"  
 
-    msgid "Szczenienieta"  
-    msgstr "Puppies"  
-
     msgid "Panel główny"  
     msgstr "Dashboard"  
 
@@ -460,3 +460,64 @@ msgstr "Author"
     msgid "Panel Hodowli"
     msgstr "Breeding panel"
 
+
+
+# Models
+msgid "Główny tytuł"
+msgstr "Main Title"
+
+msgid "Tekst cytatu"
+msgstr "Quote Text"
+
+msgid "Zdjęcie główne"
+msgstr "Main Photo"
+
+msgid "Certyfikaty hodowli, nagrody, dyplomy itp."
+msgstr "Breeding certificates, awards, diplomas, etc."
+
+msgid "Strona 'O nas'"
+msgstr "About Us Page"
+
+msgid "Nagłówek H3"
+msgstr "H3 Heading"
+
+msgid "Treść paragrafu"
+msgstr "Paragraph Content"
+
+msgid "Kolejność"
+msgstr "Order"
+
+msgid "Sekcja"
+msgstr "Section"
+
+msgid "Sekcje"
+msgstr "Sections"
+
+msgid "Sekcja %(order)s"
+msgstr "Section %(order)s"
+
+# Admin
+msgid "Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp."
+msgstr "Select gallery with breeding certificates, awards, diplomas, etc."
+
+msgid "✓ Skonfigurowana"
+msgstr "✓ Configured"
+
+msgid "Status"
+msgstr "Status"
+
+# Template
+msgid "Hodowla z Wojciechowic"
+msgstr "Wojciechowic Kennel"
+
+msgid "Witamy w naszej hodowli!"
+msgstr "Welcome to our kennel!"
+
+msgid "Informacje o nas będą wkrótce dostępne."
+msgstr "Information about us will be available soon."
+
+msgid "Wojciechowice Duże 11"
+msgstr "Wojciechowice Duże 11"
+
+msgid "Certyfikaty hodowli"
+msgstr "Breeding Certificates"

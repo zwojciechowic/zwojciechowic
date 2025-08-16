@@ -31,6 +31,9 @@ msgstr "Strona Główna"
 msgid "O nas"
 msgstr "O nas"
 
+msgid "Strona O nas"
+msgstr "Strona O nas"
+
 msgid "Nasze psy"
 msgstr "Nasze psy"
 
@@ -481,3 +484,63 @@ msgstr "Autor"
     msgid "Panel Hodowli"
     msgstr "Panel Hodowli"
 
+
+
+
+# Nowe wpisy dla About Page - Models
+msgid "Główny tytuł"
+msgstr "Główny tytuł"
+
+msgid "Tekst cytatu"
+msgstr "Tekst cytatu"
+
+msgid "Zdjęcie główne"
+msgstr "Zdjęcie główne"
+
+msgid "Certyfikaty hodowli, nagrody, dyplomy itp."
+msgstr "Certyfikaty hodowli, nagrody, dyplomy itp."
+
+msgid "Strona 'O nas'"
+msgstr "Strona 'O nas'"
+
+msgid "Nagłówek H3"
+msgstr "Nagłówek H3"
+
+msgid "Treść paragrafu"
+msgstr "Treść paragrafu"
+
+msgid "Kolejność"
+msgstr "Kolejność"
+
+msgid "Sekcja"
+msgstr "Sekcja"
+
+msgid "Sekcje"
+msgstr "Sekcje"
+
+msgid "Sekcja %(order)s"
+msgstr "Sekcja %(order)s"
+
+# Admin
+msgid "Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp."
+msgstr "Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp."
+
+msgid "✓ Skonfigurowana"
+msgstr "✓ Skonfigurowana"
+
+msgid "Status"
+msgstr "Status"
+
+# Template
+
+msgid "Witamy w naszej hodowli!"
+msgstr "Witamy w naszej hodowli!"
+
+msgid "Informacje o nas będą wkrótce dostępne."
+msgstr "Informacje o nas będą wkrótce dostępne."
+
+msgid "Wojciechowice Duże 11"
+msgstr "Wojciechowice Duże 11"
+
+msgid "Certyfikaty hodowli"
+msgstr "Certyfikaty hodowli"

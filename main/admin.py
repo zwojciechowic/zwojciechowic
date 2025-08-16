@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
 from django.contrib.admin import AdminSite
-from parler.admin import TranslatableAdmin
+from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from django.utils.translation import gettext_lazy as _
 
 # Konfiguracja panelu administracyjnego
@@ -282,30 +282,32 @@ class CustomAdminSite(admin.AdminSite):
         
         return app_list
 
-@admin.register(AboutSections)
-class AboutSectionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order', 'about_page')
-    list_editable = ('order',)
-    ordering = ('about_page', 'order')
-
-class AboutSectionInline(admin.TabularInline):
+class AboutSectionInline(TranslatableTabularInline):
     model = AboutSections
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
 
+
+@admin.register(AboutSections)
+class AboutSectionAdmin(TranslatableAdmin):
+    list_display = ('title', 'order', 'about_page')
+    list_editable = ('order',)
+    ordering = ('about_page', 'order')
+
+
 @admin.register(AboutPage)
-class AboutPageAdmin(admin.ModelAdmin):
+class AboutPageAdmin(TranslatableAdmin):
     inlines = [AboutSectionInline]
     list_display = ['main_title', 'certificates_count', 'created_info']
     
     fieldsets = (
-        ('Podstawowe informacje', {
+        (_('Podstawowe informacje'), {
             'fields': ('main_title', 'top_image', 'quote_text')
         }),
-        ('Certyfikaty', {
+        (_('Certyfikaty'), {
             'fields': ('certificates_gallery',),
-            'description': 'Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp.'
+            'description': _('Wybierz galerię z certyfikatami hodowli, nagrodami, dyplomami itp.')
         }),
     )
     
@@ -317,13 +319,12 @@ class AboutPageAdmin(admin.ModelAdmin):
         if obj.certificates_gallery:
             return obj.certificates_gallery.photos.count()
         return 0
-    certificates_count.short_description = "Certyfikaty"
+    certificates_count.short_description = _("Certyfikaty")
     
     def created_info(self, obj):
         """Informacja o istnieniu strony"""
-        return "✓ Skonfigurowana"
-    created_info.short_description = "Status"
-    
+        return _("✓ Skonfigurowana")
+    created_info.short_description = _("Status")
 class HodowlaAdminSite(AdminSite):
     def get_app_list(self, request, app_label=None):
         app_list = super().get_app_list(request)
@@ -343,17 +344,11 @@ class HodowlaAdminSite(AdminSite):
                 
                 app['models'].sort(key=lambda x: {
                     'BlogPost': 1,
-                    'Blog': 1,
                     'Dog': 2,
-                    'Nasze Psy': 2,
                     'Puppy': 3,
-                    'Szczenięta': 3,
                     'Reservation': 4,
-                    'Rezerwacje': 4,
                     'ContactMessage': 5,
-                    'Kontakt': 5,
-                    'AboutPage': 6,
-                    'Strona O nas': 6
+                    'AboutPage': 6
                 }.get(x['object_name'], 99))
         
         return app_list
@@ -382,7 +377,7 @@ class HodowlaAdminSite(AdminSite):
             quick_links_title = _('Podgląd strony publicznej:')
             main_page = _('Strona główna')
             our_dogs = _('Nasze psy')
-            puppies = _('Szczenienieta')
+            puppies = _('Szczenieta')
             about = _('O nas')
             contact = _('Kontakt')
            

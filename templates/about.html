@@ -1,63 +1,99 @@
 {% extends 'base.html' %}
 {% load gallery_tags i18n static %}
 
+{% block title %}{% trans "O nas" %} - {% endblock %}
+
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="hero-section">
-    <h1 class="display-4 mb-4">{% trans "O nas" %}</h1>
-    
-    <div class="row">
-        <div class="col-lg-8">
-            {% if about %}
-                <h2 class="mb-4">{{ about.main_title }}</h2>
-                
-                {% for section in about.sections.all %}
-                    {% if section.title %}<h3 class="mt-4">{{ section.title }}</h3>{% endif %}
-                    <p>{{ section.content|linebreaks }}</p>
-                {% endfor %}
-                
-                {% if about.quote_text %}
-                    <blockquote class="blockquote mt-4">
-                        <p class="mb-0">"{{ about.quote_text }}"</p>
-                    </blockquote>
-                {% endif %}
-            {% endif %}
-        </div>
+    <div class="container">
+        <h1 class="display-4 mb-4">{% trans "O nas" %}</h1>
         
-        <div class="col-lg-4">
-            {% if about.top_image %}
-                <img src="{{ about.top_image.url }}" 
-                     alt="{% trans "Hodowla z Wojciechowic" %}" 
-                     class="img-fluid rounded mb-4">
-            {% endif %}
+        <div class="row">
+            <div class="col-lg-8">
+                {% if about %}
+                    <h2 class="mb-4">{{ about.main_title }}</h2>
+                    
+                    {% for section in about.sections.all %}
+                        {% if section.title %}
+                            <h3 class="mt-4">{{ section.title }}</h3>
+                        {% endif %}
+                        <p>{{ section.content|linebreaks }}</p>
+                    {% endfor %}
+                    
+                    {% if about.quote_text %}
+                        <blockquote class="blockquote mt-4 p-4 bg-light rounded">
+                            <p class="mb-0 fst-italic">"{{ about.quote_text }}"</p>
+                        </blockquote>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-info">
+                        <h4>{% trans "Witamy w naszej hodowli!" %}</h4>
+                        <p>{% trans "Informacje o nas będą wkrótce dostępne." %}</p>
+                    </div>
+                {% endif %}
+            </div>
             
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{% trans "Kontakt" %}</h5>
-                    <div class="card-text">
-                        <p>Wojciechowice Duże 11</p>
-                        <p>+48 533 498 384</p>
-                        <p>zwojciechowic@gmail.com</p>
+            <div class="col-lg-4">
+                {% if about.top_image %}
+                    <div class="mb-4">
+                        <img src="{{ about.top_image.url }}" 
+                             alt="{% trans 'Hodowla z Wojciechowic' %}" 
+                             class="img-fluid rounded shadow">
+                    </div>
+                {% endif %}
+                
+                <!-- Karta kontaktowa -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-address-book me-2"></i>
+                            {% trans "Kontakt" %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="contact-info">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                                <span>{% trans "Wojciechowice Duże 11" %}</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-phone text-primary me-3"></i>
+                                <a href="tel:+48533498384" class="text-decoration-none">+48 533 498 384</a>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope text-primary me-3"></i>
+                                <a href="mailto:zwojciechowic@gmail.com" class="text-decoration-none">zwojciechowic@gmail.com</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                {% if about.certificates_gallery %}
-                <div class="card-body">
-                    <div class="alert alert-success">
-                        <i class="fas fa-certificate"></i>
-                        {% blocktrans count count=about.certificates_gallery.photos.count %}
-                        Hodowla posiada %(count)s certyfikat
-                        {% plural %}
-                        Hodowla posiada %(count)s certyfikaty
-                        {% endblocktrans %}
-                                              
+                <!-- Sekcja certyfikatów -->
+                {% if about.certificates_gallery and about.certificates_gallery.photos.all %}
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-certificate me-2"></i>
+                            {% trans "Certyfikaty hodowli" %}
+                        </h5>
                     </div>
-                    {% show_gallery about.certificates_gallery.id "mt-3" %}
+                    <div class="card-body">
+                        <div class="alert alert-success mb-3">
+                            <i class="fas fa-award me-2"></i>
+                            {% blocktrans count count=about.certificates_gallery.photos.count %}
+                                Hodowla posiada {{ count }} certyfikat
+                            {% plural %}
+                                Hodowla posiada {{ count }} certyfikaty
+                            {% endblocktrans %}
+                        </div>
+                        {% show_gallery about.certificates_gallery.id "certificates-gallery" %}
+                    </div>
                 </div>
-            {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
