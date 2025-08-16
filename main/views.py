@@ -203,7 +203,15 @@ def reservations(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Zapisz podstawowe dane z ModelForm
+            reservation = form.save()
+            
+            # Dodaj message jeśli zostało podane
+            message_text = form.cleaned_data.get('message', '').strip()
+            if message_text:
+                reservation.message = message_text
+                reservation.save()
+            
             messages.success(request, 'Rezerwacja została wysłana pomyślnie!')
             return redirect('reservations')
     else:
@@ -219,34 +227,38 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Pobierz dane z formularza
-            name = form.cleaned_data['name'].strip()
-            email = form.cleaned_data['email'].strip()
-            phone = form.cleaned_data['phone'].strip() if form.cleaned_data['phone'] else ''
-            subject = form.cleaned_data['subject'].strip()
-            message = form.cleaned_data['message'].strip()
+            # Zapisz podstawowe dane z ModelForm
+            contact_message = form.save()
             
-            # ZAPISZ WIADOMOŚĆ DO BAZY DANYCH
-            contact_message = ContactMessage.objects.create(
-                name=name,
-                email=email,
-                phone=phone,
-                subject=subject,
-                message=message,
-                is_read=False  # Domyślnie jako nieprzeczytana
-            )
+            # Dodaj subject i message z zwykłych pól formularza
+            subject_text = form.cleaned_data.get('subject', '').strip()
+            message_text = form.cleaned_data.get('message', '').strip()
+            
+            if subject_text:
+                contact_message.subject = subject_text
+            if message_text:
+                contact_message.message = message_text
+            
+            # Oznacz jako nieprzeczytaną
+            contact_message.is_read = False
+            contact_message.save()
+            
+            # Przygotuj dane dla e-maila
+            name = contact_message.name
+            email = contact_message.email
+            phone = contact_message.phone if contact_message.phone else 'Nie podano'
             
             # Przygotuj treść e-maila
-            email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject}"
+            email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject_text}"
             email_message = f"""Nowa wiadomość z formularza kontaktowego na stronie hodowli:
 
 Imię i nazwisko: {name}
 Email: {email}
-Telefon: {phone if phone else 'Nie podano'}
-Temat: {subject}
+Telefon: {phone}
+Temat: {subject_text}
 
 Wiadomość:
-{message}
+{message_text}
 
 ---
 Ta wiadomość została wysłana automatycznie z formularza kontaktowego.
@@ -274,6 +286,7 @@ ID wiadomości w systemie: {contact_message.id}
         form = ContactForm()
     
     return render(request, 'contact.html', {'form': form})
+
 def about(request):
     about_page = AboutPage.objects.first()
     return render(request, 'about.html', {'about': about_page})
