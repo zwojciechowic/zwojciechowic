@@ -1,6 +1,7 @@
 # admin.py
 from django import forms
 from django.contrib import admin
+from django.conf import settings
 from django.utils.html import format_html
 from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
 from django.contrib.admin import AdminSite
@@ -206,14 +207,13 @@ class BlogPostAdmin(TranslatableAdmin):
     fields_meta = ['created_at', 'updated_at']
     
     def get_form(self, request, obj=None, **kwargs):
-        """Customizacja formularza w zależności od trybu tłumaczenia"""
         form = super().get_form(request, obj, **kwargs)
         
-        # W trybie tłumaczenia pokazujemy tylko pola tłumaczalne
         if request.GET.get('language'):
             current_lang = request.GET.get('language')
-            if current_lang != self.get_language_tabs(request, obj)[0][0]:  # Jeśli nie jest to główny język
-                # Ukrywamy pola nietłumaczalne
+            available_languages = [lang[0] for lang in settings.LANGUAGES]
+            main_language = available_languages[0] if available_languages else 'pl'
+            if current_lang != main_language:
                 fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at']
                 for field_name in fields_to_hide:
                     try:
@@ -229,7 +229,8 @@ class BlogPostAdmin(TranslatableAdmin):
         
         # Sprawdź czy to jest tryb tłumaczenia na inny język niż główny
         if current_language and obj:
-            main_language = self.get_language_tabs(request, obj)[0][0]
+            available_languages = [lang[0] for lang in settings.LANGUAGES]
+            main_language = available_languages[0] if available_languages else 'pl'
             if current_language != main_language:
                 return (
                     (_('Tłumaczenie na język: {}').format(current_language.upper()), {
