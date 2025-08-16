@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from parler.forms import TranslatableModelForm
 from .models import Reservation, ContactMessage
 
 class PuppyReservationForm(forms.ModelForm):
@@ -29,20 +30,10 @@ class PuppyReservationForm(forms.ModelForm):
             'customer_phone': _('Telefon'),
         }
 
-class ReservationForm(forms.ModelForm):
-    message = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={
-            'class': 'form-control', 
-            'rows': 4,
-            'placeholder': _('Dodatkowa wiadomość (opcjonalnie)')
-        }),
-        label=_('Wiadomość')
-    )
-    
+class ReservationForm(TranslatableModelForm):
     class Meta:
         model = Reservation
-        fields = ['puppy', 'customer_name', 'customer_email', 'customer_phone']
+        fields = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'message']
         widgets = {
             'puppy': forms.Select(attrs={'class': 'form-control'}),
             'customer_name': forms.TextInput(attrs={
@@ -57,36 +48,24 @@ class ReservationForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu')
             }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4,
+                'placeholder': _('Dodatkowa wiadomość (opcjonalnie)')
+            }),
         }
         labels = {
             'puppy': _('Szczeniak'),
             'customer_name': _('Imię i nazwisko'),
             'customer_email': _('E-mail'),
             'customer_phone': _('Telefon'),
+            'message': _('Wiadomość'),
         }
 
-class ContactForm(forms.ModelForm):
-    subject = forms.CharField(
-        max_length=200,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': _('Wpisz temat wiadomości')
-        }),
-        label=_('Temat')
-    )
-    
-    message = forms.CharField(
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'rows': 5,
-            'placeholder': _('Wpisz swoją wiadomość')
-        }),
-        label=_('Wiadomość')
-    )
-    
+class ContactForm(TranslatableModelForm):
     class Meta:
         model = ContactMessage
-        fields = ['name', 'email', 'phone']
+        fields = ['name', 'email', 'phone', 'subject', 'message']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -100,9 +79,20 @@ class ContactForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu')
             }),
+            'subject': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': _('Wpisz temat wiadomości')
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': _('Wpisz swoją wiadomość')
+            }),
         }
         labels = {
             'name': _('Imię i nazwisko'),
             'email': _('E-mail'),
             'phone': _('Telefon'),
+            'subject': _('Temat'),
+            'message': _('Wiadomość'),
         }
