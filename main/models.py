@@ -236,14 +236,12 @@ class ContactMessage(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.subject}"
-
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-
-
-class AboutPage(models.Model):
-    main_title = models.CharField(_("Główny tytuł"), max_length=200)
-    quote_text = models.TextField(_("Tekst cytatu"), blank=True)
+class AboutPage(TranslatableModel):
+    translations = TranslatedFields(
+        main_title = models.CharField(_("Główny tytuł"), max_length=200),
+        quote_text = models.TextField(_("Tekst cytatu"), blank=True),
+    )
+    
     top_image = models.ImageField(
         _("Zdjęcie główne"), 
         upload_to='about/',
@@ -267,14 +265,17 @@ class AboutPage(models.Model):
         return _("Strona 'O nas'")
 
 
-class AboutSections(models.Model):
+class AboutSections(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True),
+        content = models.TextField(_("Treść paragrafu")),
+    )
+    
     about_page = models.ForeignKey(
         AboutPage,
         on_delete=models.CASCADE,
         related_name='sections'
     )
-    title = models.CharField(_("Nagłówek H3"), max_length=200, blank=True)
-    content = models.TextField(_("Treść paragrafu"))
     order = models.PositiveIntegerField(_("Kolejność"), default=0)
 
     class Meta:
@@ -284,35 +285,3 @@ class AboutSections(models.Model):
 
     def __str__(self):
         return _("Sekcja %(order)s") % {'order': self.order}
-    about_page = models.ForeignKey(
-        AboutPage,
-        on_delete=models.CASCADE,
-        related_name='sections'
-    )
-    title = models.CharField("Nagłówek H3", max_length=200, blank=True)
-    content = models.TextField("Treść paragrafu")
-    order = models.PositiveIntegerField("Kolejność", default=0)
-
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Sekcja"
-        verbose_name_plural = "Sekcje"
-
-    def __str__(self):
-        return f"Sekcja {self.order}"
-    about_page = models.ForeignKey(
-        AboutPage,
-        on_delete=models.CASCADE,
-        related_name='sections'
-    )
-    title = models.CharField("Nagłówek H3", max_length=200, blank=True)
-    content = models.TextField("Treść paragrafu")
-    order = models.PositiveIntegerField("Kolejność", default=0)
-
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Sekcja"
-        verbose_name_plural = "Sekcje"
-
-    def __str__(self):
-        return f"Sekcja {self.order}"
