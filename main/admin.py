@@ -325,7 +325,7 @@ class AboutPageAdmin(admin.ModelAdmin):
     created_info.short_description = "Status"
     
 class HodowlaAdminSite(AdminSite):
-   def get_app_list(self, request):
+   def get_app_list(self, request, app_label=None):
        app_list = super().get_app_list(request)
        
        hidden_models = [
