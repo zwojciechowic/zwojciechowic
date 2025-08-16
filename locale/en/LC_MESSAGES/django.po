@@ -701,3 +701,10 @@ msgstr "certificate"
 
 msgid "Powrót do innych psów"
 msgstr "Back to other dog's"
+
+
+
+msgid "The dog has %(counter)s certificate"
+msgid_plural "The dog has %(counter)s certificates"
+msgstr[0] "The dog has %(counter)s certificate"
+msgstr[1] "The dog has %(counter)s certificates"

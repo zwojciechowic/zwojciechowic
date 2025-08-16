@@ -1,7 +1,7 @@
 {# templates/dog_Detail.html #}
 
 {% extends 'base.html' %}
-{% load gallery_tags i18n static %}
+{% load gallery_tags pluralize_pl i18n static  %}
 
 {% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
 
@@ -43,7 +43,11 @@
                     {% if dog.certificates_gallery %}
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
-                            {% trans "Pies posiada"%} {{ dog.certificates_gallery.photos.count }} {% trans "certyfikat"%}{{ dog.certificates_gallery.photos.count|pluralize:"y,ów" }}
+                            {% blocktrans count counter=dog.certificates_gallery.photos.count %}
+                            The dog has {{ counter }} certificate
+                            {% plural %}
+                            The dog has {{ counter }} certificate{{ counter|plural_suffix_pl }}
+                            {% endblocktrans %}
                         </div>
                         {% show_gallery dog.certificates_gallery.id "mt-3" %}
                     {% endif %}
