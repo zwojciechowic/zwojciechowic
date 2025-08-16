@@ -726,3 +726,6 @@ msgid "certyfikat"
 msgid_plural "certyfikaty"
 msgstr[0] "certyfikat"
 msgstr[1] "certyfikaty"
+
+msgid "Pies certyfikowany"
+msgstr "Pies certyfikowany"
