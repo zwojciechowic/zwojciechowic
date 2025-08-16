@@ -428,9 +428,6 @@ msgstr "Author"
     msgid "Szczenięta"
     msgstr "Puppies"
 
-    msgid "Rezerwacje"
-    msgstr "Reservations"
-
     msgid "Sekcje O Nas"
     msgstr "About us page"
 
@@ -441,7 +438,18 @@ msgstr "Author"
     msgstr "Blog posts"
 
     msgid "Użytkownicy"
-    msgstr Users"
+    msgstr "Users"
 
     msgid "Zmień hasło"
     msgstr "Change password"
+
+
+
+    msgid "Podgląd strony publicznej:"  
+    msgstr "Public page preview:"  
+
+    msgid "Strona główna"  
+    msgstr "Main page"  
+
+    msgid "Szczenienieta"  
+    msgstr "Puppies"  

@@ -378,15 +378,22 @@ class HodowlaAdminSite(AdminSite):
            sold_puppies = total_puppies - puppies_count
            draft_posts = BlogPost.objects.filter(is_published=False).count()
            breeding_dogs = Dog.objects.filter(is_breeding=True).count()
+
+           quick_links_title = _('Podgląd strony publicznej:')
+           main_page = _('Strona główna')
+           our_dogs = _('Nasze psy')
+           puppies = _('Szczenienieta')
+           about = _('O nas')
+           contact = _('Kontakt')
            
            quick_links = format_html('''
            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
-               <h3>🌐 Podgląd strony publicznej:</h3>
-               <a href="/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🏠 Strona główna</a>
-               <a href="/nasze-psy/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐕 Nasze psy</a>
-               <a href="/szczeniaki/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐶 Szczeniaki</a>
-               <a href="/o-nas/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">👥 O nas</a>
-               <a href="/kontakt/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">📞 Kontakt</a>
+               <h3>🌐 {quick_links_title}</h3>
+               <a href="/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🏠 {main_page}</a>
+               <a href="/nasze-psy/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐕 {our_dogs}</a>
+               <a href="/szczeniaki/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🐶 {puppies}</a>
+               <a href="/o-nas/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">👥 {about}</a>
+               <a href="/kontakt/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">📞 {Kontakt}</a>
                <a href="/hotel/" target="_blank" style="margin: 5px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px;">🏨 Hotel</a>
            </div>
            ''')

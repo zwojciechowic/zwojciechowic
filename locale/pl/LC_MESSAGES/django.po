@@ -463,3 +463,14 @@ msgstr "Autor"
 
     msgid "Zmień hasło"
     msgstr "Zmień hasło"
+
+
+
+    msgid "Podgląd strony publicznej:"
+    msgstr "Podgląd strony publicznej:"
+
+    msgid "Strona główna"
+    msgstr "Strona główna"
+
+    msgid "Szczenienieta"
+    msgstr "Szczenienieta"
