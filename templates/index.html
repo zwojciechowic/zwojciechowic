@@ -438,35 +438,28 @@
                             <p class="card-text text-muted small">{{ post.excerpt|truncatechars:100 }}</p>
                         {% endif %}
                         
-                        <!-- Powiązane zwierzę -->
+                        <!-- ULEPSZONE powiązane zwierzę - podobnie jak rodzice szczeniąt -->
                         {% if post.get_related_animal %}
-                            <div class="related-animal-info mb-2">
-                                {% if post.get_related_animal_type == 'dog' %}
-                                    <a href="{% url 'dog_detail' post.related_dog.pk %}" class="text-decoration-none">
-                                        <div class="d-flex align-items-center">
-                                            <small class="text-muted">
-                                                {% trans 'Dotyczy:' %} 
-                                                <strong class="text-dark">{{ post.related_dog.name }}</strong>
-                                                {% if post.related_dog.breed %}
-                                                    ({{ post.related_dog.breed }})
-                                                {% endif %}
-                                            </small>
+                            <div class="card-details mb-2">
+                                <small class="text-muted">
+                                    {% if post.get_related_animal_type == 'dog' %}
+                                        <div class="related-animal-info">
+                                            <strong>{% trans 'Dotyczy psa:' %}</strong> 
+                                            <a href="{% url 'dog_detail' post.related_dog.pk %}" class="related-animal-link" onclick="event.stopPropagation();">
+                                                <i class="fas fa-dog related-animal-icon"></i>{{ post.related_dog.name }}
+                                                {% if post.related_dog.breed %}<small> ({{ post.related_dog.breed }})</small>{% endif %}
+                                            </a>
                                         </div>
-                                    </a>
-                                {% elif post.get_related_animal_type == 'puppy' %}
-                                    <a href="{% url 'puppy_detail' post.related_puppy.pk %}" class="text-decoration-none">
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-heart text-danger me-2"></i>
-                                            <small class="text-muted">
-                                                {% trans 'Dotyczy szczeniaka:' %} 
-                                                <strong class="text-dark">{{ post.related_puppy.name }}</strong>
-                                                {% if post.related_puppy.litter %}
-                                                    ({% trans 'Miot' %} {{ post.related_puppy.litter }})
-                                                {% endif %}
-                                            </small>
+                                    {% elif post.get_related_animal_type == 'puppy' %}
+                                        <div class="related-animal-info">
+                                            <strong>{% trans 'Dotyczy szczeniaka:' %}</strong> 
+                                            <a href="{% url 'puppy_detail' post.related_puppy.pk %}" class="related-animal-link" onclick="event.stopPropagation();">
+                                                <i class="fas fa-heart related-animal-icon"></i>{{ post.related_puppy.name }}
+                                                {% if post.related_puppy.litter %}<small> ({% trans 'Miot' %} {{ post.related_puppy.litter }})</small>{% endif %}
+                                            </a>
                                         </div>
-                                    </a>
-                                {% endif %}
+                                    {% endif %}
+                                </small>
                             </div>
                         {% endif %}
                         
@@ -490,7 +483,7 @@
         {% endfor %}
     </div>
     
-    <!-- Paginacja -->
+    <!-- Paginacja pozostaje bez zmian -->
     {% if page_obj.has_other_pages %}
     <nav aria-label="{% trans 'Paginacja' %}">
         <ul class="pagination justify-content-center">
@@ -528,7 +521,9 @@
     {% endif %}
 </div>
 
+<!-- DODANE STYLE dla powiązanych zwierząt w blogach -->
 <style>
+    /* Style dla galerii i kart pozostają bez zmian */
     .sections-preview {
         background-color: #f8f9fa;
         border-radius: 8px;
@@ -548,6 +543,63 @@
     .card-img-container {
         height: 200px;
         overflow: hidden;
+    }
+
+    /* NOWE STYLE dla powiązanych zwierząt w blogach - identyczne jak dla rodziców */
+    .related-animal-info {
+        margin: 0.25rem 0;
+    }
+    
+    .related-animal-info .related-animal-link {
+        color: #007cba;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background-color: rgba(0, 124, 186, 0.1);
+    }
+    
+    .related-animal-info .related-animal-link:hover {
+        background-color: rgba(0, 124, 186, 0.2);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 124, 186, 0.3);
+        color: #005a8b;
+    }
+    
+    .related-animal-info .related-animal-link:active {
+        background-color: rgba(255, 153, 153, 0.2);
+        color: #ff6666;
+    }
+    
+    .related-animal-info .related-animal-icon {
+        margin-right: 4px;
+        width: 14px;
+        text-align: center;
+    }
+    
+    /* Alternatywnie, jeśli chcesz inne kolory dla różnych typów zwierząt */
+    .related-animal-info .related-animal-link[href*="dog_detail"] {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+    
+    .related-animal-info .related-animal-link[href*="dog_detail"]:hover {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #1e7e34;
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    }
+    
+    .related-animal-info .related-animal-link[href*="puppy_detail"] {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+    
+    .related-animal-info .related-animal-link[href*="puppy_detail"]:hover {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #c82333;
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
     }
 </style>
 {% endblock %}

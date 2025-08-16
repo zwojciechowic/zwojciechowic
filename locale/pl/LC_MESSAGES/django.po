@@ -729,3 +729,6 @@ msgstr[1] "certyfikaty"
 
 msgid "Pies certyfikowany"
 msgstr "Pies certyfikowany"
+
+msgid "Powiązany pies"
+msgstr "Powiązany pies"

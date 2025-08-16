@@ -84,7 +84,7 @@ class PuppyAdminForm(forms.ModelForm):
             'color1': ColorWidget(),
             'color2': ColorWidget(),
         }
-        
+
 @admin.register(Puppy)
 class PuppyAdmin(TranslatableAdmin):
     list_display = ['litter', 'name', 'color_display_admin', 'get_mother_display', 'get_father_display', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
@@ -337,7 +337,7 @@ class BlogPostAdmin(TranslatableAdmin):
                 f"Miot {obj.related_puppy.litter}" if obj.related_puppy.litter else "Szczeniak"
             )
         return "-"
-    get_related_animal_display.short_description = _('Powiązane zwierzę')
+    get_related_animal_display.short_description = _('Powiązany pies')
     get_related_animal_display.admin_order_field = 'related_dog__name'
     
     def main_photo_preview(self, obj):
