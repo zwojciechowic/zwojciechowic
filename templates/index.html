@@ -221,7 +221,6 @@
 <div class="container my-5">
     <h2 class="text-center mb-4">{% trans "Dostępne szczenięta" %}</h2>
     
-    <!-- Dodaj style dla paska miotu -->
     <style>
         .litter-bar {
             color: white;
@@ -232,7 +231,6 @@
             position: relative;
         }
         
-        /* Domyślny gradient jeśli nie ma kolorów */
         .litter-bar.default-gradient {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -257,6 +255,45 @@
         .card-with-litter-bar .card-img-container {
             border-radius: 0;
         }
+
+        /* NOWE STYLE dla rodziców */
+        .parent-info {
+            margin: 0.25rem 0;
+        }
+        
+        .parent-info .parent-link {
+            color: #007cba;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: rgba(0, 124, 186, 0.1);
+        }
+        
+        .parent-info .parent-link:hover {
+            background-color: rgba(0, 124, 186, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 124, 186, 0.3);
+            color: #005a8b;
+        }
+        
+        .parent-info .parent-link:active {
+            background-color: rgba(255, 153, 153, 0.2);
+            color: #ff6666;
+        }
+        
+        .parent-info .parent-name-only {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .parent-info .parent-icon {
+            margin-right: 4px;
+            width: 14px;
+            text-align: center;
+        }
     </style>
     
     <div class="row">
@@ -264,8 +301,8 @@
         <div class="col-md-4 mb-4">
             <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
                 <div class="card card-hover h-100 card-with-litter-bar">
-                    <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradien
-                        {%endif%}"
+                    <!-- Pasek miotu - ZMODYFIKOWANY z nowymi danymi rodziców -->
+                    <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradient{% endif %}"
                          {% if puppy.color1 and puppy.color2 %}
                          style="background: linear-gradient(135deg, {{ puppy.color1 }} 0%, {{ puppy.color2 }} 100%);"
                          {% elif puppy.color1 %}
@@ -273,13 +310,23 @@
                          {% endif %}>
                          <h6>{% trans 'Miot' %} {{ puppy.litter }}</h6>
                          <div class="litter-info-small">
-                             <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }} | 
-                             &#9792; {{ puppy.mother_name }} | 
-                             &#9794; {{ puppy.father_name }}
+                             <i class="fas fa-calendar-alt"></i> {{ puppy.birth_date|date:"d.m.Y" }}
+                             {% with mother_data=puppy.get_mother_link_data father_data=puppy.get_father_link_data %}
+                                 {% if mother_data or father_data %}
+                                     |
+                                     {% if mother_data %}
+                                         &#9792; {{ mother_data.name }}
+                                     {% endif %}
+                                     {% if mother_data and father_data %} | {% endif %}
+                                     {% if father_data %}
+                                         &#9794; {{ father_data.name }}
+                                     {% endif %}
+                                 {% endif %}
+                             {% endwith %}
                          </div>
                     </div>
                     
-                    <!-- Zdjęcie z galerią -->
+                    <!-- Zdjęcie z galerią - bez zmian -->
                     <div class="card-img-container position-relative">
                         {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
                             {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
@@ -296,14 +343,50 @@
                         {% endif %}
                     </div>
                     
+                    <!-- Szczegóły karty - ZMODYFIKOWANE z nowymi linkame do rodziców -->
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-dark">{{ puppy.name }}</h5>
                         <div class="card-details mb-2">
                             <small class="text-muted">
                                 <strong>{% trans 'Płeć:' %}</strong> {{ puppy.get_gender_display }}<br>
                                 <strong>{% trans 'Data urodzenia:' %}</strong> {{ puppy.birth_date|date:"d.m.Y" }}<br>
-                                {% if puppy.mother_name %}<strong>{% trans 'Matka:' %}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
-                                {% if puppy.father_name %}<strong>{% trans 'Ojciec:' %}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}<br>{% endif %}
+                                
+                                <!-- NOWA SEKCJA - rodzice z linkami -->
+                                {% with mother_data=puppy.get_mother_link_data %}
+                                    {% if mother_data %}
+                                        <div class="parent-info">
+                                            <strong>{% trans 'Matka:' %}</strong> 
+                                            {% if mother_data.has_link %}
+                                                <a href="{% url 'dog_detail' mother_data.dog_id %}" class="parent-link" onclick="event.stopPropagation();">
+                                                    <i class="fas fa-heart parent-icon"></i>{{ mother_data.name }}
+                                                    {% if mother_data.breed %}<small> ({{ mother_data.breed }})</small>{% endif %}
+                                                </a>
+                                            {% else %}
+                                                <span class="parent-name-only">
+                                                    <i class="fas fa-heart parent-icon"></i>{{ mother_data.name }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                                
+                                {% with father_data=puppy.get_father_link_data %}
+                                    {% if father_data %}
+                                        <div class="parent-info">
+                                            <strong>{% trans 'Ojciec:' %}</strong> 
+                                            {% if father_data.has_link %}
+                                                <a href="{% url 'dog_detail' father_data.dog_id %}" class="parent-link" onclick="event.stopPropagation();">
+                                                    <i class="fas fa-paw parent-icon"></i>{{ father_data.name }}
+                                                    {% if father_data.breed %}<small> ({{ father_data.breed }})</small>{% endif %}
+                                                </a>
+                                            {% else %}
+                                                <span class="parent-name-only">
+                                                    <i class="fas fa-paw parent-icon"></i>{{ father_data.name }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
                             </small>
                         </div>
                         <p class="card-text text-muted flex-grow-1">{{ puppy.description|truncatewords:10 }}</p>
@@ -320,9 +403,10 @@
     </div>
 </div>
 {% else %}
+<!-- Fallback gdy nie ma szczeniąt - bez zmian -->
 <div class="container my-5">
     <div class="puppy-alert">
-        <h3>{% trans 'Dostępne szczenięta' %}
+        <h3>{% trans 'Dostępne szczenięta' %}</h3>
         <p>{% trans 'Aktualnie nie mamy dostępnych szczeniąt!' %} <a href="{% url 'contact' %}">{% trans 'Skontaktuj się z nami' %}</a>, {% trans 'aby dowiedzieć się o planowanych miotach.' %}</p>
     </div>
 </div>

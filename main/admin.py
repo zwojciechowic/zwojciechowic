@@ -84,18 +84,19 @@ class PuppyAdminForm(forms.ModelForm):
             'color1': ColorWidget(),
             'color2': ColorWidget(),
         }
+        
 @admin.register(Puppy)
 class PuppyAdmin(TranslatableAdmin):
-    list_display = ['litter', 'name', 'color_display_admin', 'mother_name', 'father_name', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
-    list_filter = ['litter', 'gender', 'is_available', 'birth_date']
-    search_fields = ['name', 'litter', 'mother_name', 'father_name', 'translations__breed', 'translations__description']
+    list_display = ['litter', 'name', 'color_display_admin', 'get_mother_display', 'get_father_display', 'birth_date', 'gender', 'is_available', 'price', 'main_photo_preview', 'photos_count', 'certificates_count']
+    list_filter = ['litter', 'gender', 'is_available', 'birth_date', 'mother', 'father']
+    search_fields = ['name', 'litter', 'mother_name_custom', 'father_name_custom', 'mother__name', 'father__name', 'translations__breed', 'translations__description']
     list_editable = ['is_available', 'price']
     
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         
         if request.GET.get('language') == 'en':
-            fields_to_hide = ['name', 'mother_name', 'father_name', 'litter', 'color1', 'color2', 'birth_date', 'gender', 'is_available', 'price', 'photo_gallery', 'certificates_gallery']
+            fields_to_hide = ['name', 'mother', 'mother_name_custom', 'father', 'father_name_custom', 'litter', 'color1', 'color2', 'birth_date', 'gender', 'is_available', 'price', 'photo_gallery', 'certificates_gallery']
             for field_name in fields_to_hide:
                 try:
                     del form.base_fields[field_name]
@@ -119,8 +120,16 @@ class PuppyAdmin(TranslatableAdmin):
                 (_('Kolory szczeniaka'), {
                     'fields': ('color1', 'color2'),
                 }),
-                (_('Psi rodzice'), {
-                    'fields': ('mother_name', 'father_name'),
+                (_('Rodzice szczeniaka'), {
+                    'fields': (
+                        ('mother', 'mother_name_custom'),
+                        ('father', 'father_name_custom')
+                    ),
+                    'description': _(
+                        'Możesz wybrać rodzica z bazy psów LUB wpisać imię psa spoza bazy. '
+                        'Nie można jednocześnie wybrać psa z bazy i wpisać imienia własnego. '
+                        'Jeśli wybierzesz psa z bazy, na stronie pojawi się link do jego profilu.'
+                    )
                 }),
                 ('Media', {
                     'fields': ('photo_gallery', 'certificates_gallery')
@@ -128,7 +137,45 @@ class PuppyAdmin(TranslatableAdmin):
             )
     
     def get_queryset(self, request):
-        return super().get_queryset(request).order_by('litter')
+        return super().get_queryset(request).select_related('mother', 'father').order_by('litter')
+    
+    def get_mother_display(self, obj):
+        """Wyświetlanie matki w liście adminów"""
+        mother_data = obj.get_mother_link_data()
+        if mother_data:
+            if mother_data['has_link']:
+                return format_html(
+                    '<a href="/admin/main/dog/{}/change/" title="Przejdź do profilu" style="color: #007cba; text-decoration: none;">🔗 {}</a>',
+                    mother_data['dog_id'],
+                    mother_data['name']
+                )
+            else:
+                return format_html(
+                    '<span style="color: #666;" title="Pies spoza bazy">📝 {}</span>',
+                    mother_data['name']
+                )
+        return "-"
+    get_mother_display.short_description = _("Matka")
+    get_mother_display.admin_order_field = 'mother__name'
+    
+    def get_father_display(self, obj):
+        """Wyświetlanie ojca w liście adminów"""
+        father_data = obj.get_father_link_data()
+        if father_data:
+            if father_data['has_link']:
+                return format_html(
+                    '<a href="/admin/main/dog/{}/change/" title="Przejdź do profilu" style="color: #007cba; text-decoration: none;">🔗 {}</a>',
+                    father_data['dog_id'],
+                    father_data['name']
+                )
+            else:
+                return format_html(
+                    '<span style="color: #666;" title="Pies spoza bazy">📝 {}</span>',
+                    father_data['name']
+                )
+        return "-"
+    get_father_display.short_description = _("Ojciec")
+    get_father_display.admin_order_field = 'father__name'
     
     def color_display_admin(self, obj):
         colors_html = ""
@@ -161,7 +208,25 @@ class PuppyAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
-
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Dostosowanie wyboru psów dla rodziców"""
+        if db_field.name == "mother":
+            kwargs["queryset"] = Dog.objects.filter(gender='female').select_related().order_by('name')
+            kwargs["empty_label"] = _("-- Wybierz matkę z bazy --")
+        elif db_field.name == "father":
+            kwargs["queryset"] = Dog.objects.filter(gender='male').select_related().order_by('name')
+            kwargs["empty_label"] = _("-- Wybierz ojca z bazy --")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
+    class Media:
+        css = {
+            'all': ('admin/css/widgets.css',)
+        }
+        js = [
+            'admin/js/jquery.init.js',
+            'admin/js/core.js',
+        ]
 class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1

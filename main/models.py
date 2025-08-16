@@ -279,17 +279,38 @@ class Puppy(TranslatableModel):
     )
     
     name = models.CharField(max_length=100, verbose_name=_('Imię'))
-    mother_name = models.CharField(
-        max_length=100, 
-        verbose_name=_('Matka'), 
+    
+    # ZMODYFIKOWANE POLA - relacje z psami + tekstowe alternatywy
+    mother = models.ForeignKey(
+        'Dog',
+        on_delete=models.SET_NULL,
+        null=True,
         blank=True,
-        help_text=_('Imię matki - tylko do wyświetlania')
+        verbose_name=_('Matka (z bazy)'),
+        help_text=_('Wybierz matkę z istniejących psów w bazie'),
+        related_name='puppy_children_as_mother'
     )
-    father_name = models.CharField(
+    mother_name_custom = models.CharField(
         max_length=100, 
-        verbose_name=_('Ojciec'), 
+        verbose_name=_('Matka (imię własne)'), 
         blank=True,
-        help_text=_('Imię ojca - tylko do wyświetlania')
+        help_text=_('Imię matki - jeśli nie ma jej w bazie psów')
+    )
+    
+    father = models.ForeignKey(
+        'Dog',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('Ojciec (z bazy)'),
+        help_text=_('Wybierz ojca z istniejących psów w bazie'),
+        related_name='puppy_children_as_father'
+    )
+    father_name_custom = models.CharField(
+        max_length=100, 
+        verbose_name=_('Ojciec (imię własne)'), 
+        blank=True,
+        help_text=_('Imię ojca - jeśli nie ma go w bazie psów')
     )
     
     litter = models.CharField(max_length=1, verbose_name=_('Miot'), default='A', help_text=_('Jedna litera oznaczająca miot (A, B, C...)'))
@@ -336,14 +357,33 @@ class Puppy(TranslatableModel):
         verbose_name = _('Szczeniak')
         verbose_name_plural = _('Szczeniaki')
     
+    def clean(self):
+        """Walidacja modelu"""
+        from django.core.exceptions import ValidationError
+        
+        # Sprawdź czy nie wybrano jednocześnie psa z bazy i wpisano imię własne dla matki
+        if self.mother and self.mother_name_custom:
+            raise ValidationError({
+                'mother_name_custom': _('Nie można jednocześnie wybrać matki z bazy i wpisać własnego imienia. Wybierz tylko jedną opcję.')
+            })
+        
+        # Sprawdź czy nie wybrano jednocześnie psa z bazy i wpisano imię własne dla ojca
+        if self.father and self.father_name_custom:
+            raise ValidationError({
+                'father_name_custom': _('Nie można jednocześnie wybrać ojca z bazy i wpisać własnego imienia. Wybierz tylko jedną opcję.')
+            })
+    
     def __str__(self):
         parent_info = ""
-        if self.mother_name and self.father_name:
-            parent_info = f" ({self.mother_name} x {self.father_name})"
-        elif self.mother_name:
-            parent_info = f" (matka: {self.mother_name})"
-        elif self.father_name:
-            parent_info = f" (ojciec: {self.father_name})"
+        mother_display = self.get_mother_display()
+        father_display = self.get_father_display()
+        
+        if mother_display and father_display:
+            parent_info = f" ({mother_display} x {father_display})"
+        elif mother_display:
+            parent_info = f" (matka: {mother_display})"
+        elif father_display:
+            parent_info = f" (ojciec: {father_display})"
         
         color_info = ""
         if self.color1:
@@ -352,6 +392,59 @@ class Puppy(TranslatableModel):
                 color_info += f"/{self.color2}"
         
         return f"{self.litter}-{self.name} - {self.get_gender_display()}{color_info}{parent_info}"
+    
+    # NOWE WŁAŚCIWOŚCI I METODY
+    def get_mother_display(self):
+        """Zwraca wyświetlaną nazwę matki (z bazy lub własną)"""
+        if self.mother:
+            return self.mother.name
+        elif self.mother_name_custom:
+            return self.mother_name_custom
+        return ""
+    
+    def get_father_display(self):
+        """Zwraca wyświetlaną nazwę ojca (z bazy lub własną)"""
+        if self.father:
+            return self.father.name
+        elif self.father_name_custom:
+            return self.father_name_custom
+        return ""
+    
+    def get_mother_link_data(self):
+        """Zwraca dane do generowania linku dla matki"""
+        if self.mother:
+            return {
+                'name': self.mother.name,
+                'has_link': True,
+                'dog_id': self.mother.pk,
+                'breed': self.mother.breed if hasattr(self.mother, 'breed') else ''
+            }
+        elif self.mother_name_custom:
+            return {
+                'name': self.mother_name_custom,
+                'has_link': False,
+                'dog_id': None,
+                'breed': ''
+            }
+        return None
+    
+    def get_father_link_data(self):
+        """Zwraca dane do generowania linku dla ojca"""
+        if self.father:
+            return {
+                'name': self.father.name,
+                'has_link': True,
+                'dog_id': self.father.pk,
+                'breed': self.father.breed if hasattr(self.father, 'breed') else ''
+            }
+        elif self.father_name_custom:
+            return {
+                'name': self.father_name_custom,
+                'has_link': False,
+                'dog_id': None,
+                'breed': ''
+            }
+        return None
     
     @property
     def main_photo(self):
@@ -366,7 +459,17 @@ class Puppy(TranslatableModel):
         elif self.color1:
             return self.color1
         return "Nie określono"
-
+    
+    # DEPRECATED PROPERTIES - dla kompatybilności wstecznej
+    @property
+    def mother_name(self):
+        """Kompatybilność wsteczna - zwraca wyświetlaną nazwę matki"""
+        return self.get_mother_display()
+    
+    @property
+    def father_name(self):
+        """Kompatybilność wsteczna - zwraca wyświetlaną nazwę ojca"""
+        return self.get_father_display()
 
 class Reservation(TranslatableModel):
     translations = TranslatedFields(
