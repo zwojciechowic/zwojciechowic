@@ -474,3 +474,6 @@ msgstr "Autor"
 
     msgid "Szczenienieta"
     msgstr "Szczenienieta"
+
+    msgid "Wyloguj"
+    msgstr "Wyloguj"

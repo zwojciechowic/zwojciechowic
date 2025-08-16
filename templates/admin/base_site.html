@@ -41,26 +41,6 @@
         </a>
     </h1>
 </div>
-<div class="language-switcher-modern" style="margin-right: 20px;">
-    <button class="language-btn">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
-    </button>
-    <div class="language-dropdown">
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-            <input type="hidden" name="language" value="pl">
-            <button type="submit">🇵🇱 {% trans "Polski" %}</button>
-        </form>
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-            <input type="hidden" name="language" value="en">
-            <button type="submit">🇬🇧 {% trans "English" %}</button>
-        </form>
-    </div>
-</div>
 {% endblock %}
 
 {% block nav-sidebar %}
@@ -111,7 +91,28 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            
+            <div class="admin-nav-item">
+                <a href="#" class="admin-nav-link" title="{% trans 'Zmień język' %}">
+                    <span class="admin-nav-icon">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% if LANGUAGE_CODE == 'pl' %}🇵🇱{% else %}🇬🇧{% endif %}
+                    </span>
+                </a>
+                <div class="admin-nav-dropdown">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="language" value="pl">
+                        <button type="submit" class="admin-dropdown-link">🇵🇱 {% trans "Polski" %}</button>
+                    </form>
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="language" value="en">
+                        <button type="submit" class="admin-dropdown-link">🇬🇧 {% trans "English" %}</button>
+                    </form>
+                </div>
+            </div>
             <!-- User Menu with Users model -->
             <div class="admin-nav-item">
                 <a href="#" class="admin-nav-link" title="{{ user.get_username }}">
