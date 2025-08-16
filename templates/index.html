@@ -231,7 +231,6 @@
         <div class="col-md-4 mb-4">
             <a href="{% url 'puppy_detail' puppy.pk %}" class="card-link text-decoration-none">
                 <div class="card card-hover h-100 card-with-litter-bar">
-                    <!-- Pasek z informacjami o miocie - z kolorami szczeniaka -->
                     <div class="litter-bar {% if not puppy.color1 or not puppy.color2 %}default-gradien
                         {%endif%}"
                          {% if puppy.color1 and puppy.color2 %}
@@ -252,7 +251,7 @@
                         {% if puppy.photo_gallery and puppy.photo_gallery.photos.all %}
                             {% show_gallery puppy.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="{% trans 'Brak zdjęcia'%}">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="logo/puppies-logo.png">
                         {% endif %}
                         
                         {% if puppy.certificates_gallery %}
@@ -310,7 +309,7 @@
                         {% elif post.main_photo %}
                             <img src="{{ post.main_photo.image.url }}" alt="{{ post.title }}" style="height: 100%; width: 100%; object-fit: cover;">
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="{% trans 'Brak zdjęcia'%}">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="logo/image-logo.png">
                         {% endif %}
                     </div>
                     
