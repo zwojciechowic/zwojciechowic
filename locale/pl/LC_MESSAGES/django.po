@@ -725,7 +725,7 @@ msgid "Powrót do innych psów"
 msgstr "Powrót do innych psów"
 
 
-msgid "Pies posiada %(counter)s certyfikat"
-msgid_plural "Pies posiada %(counter)s certyfikat%(plural_suffix)s"
-msgstr[0] "Pies posiada %(counter)s certyfikat"
-msgstr[1] "Pies posiada %(counter)s certyfikat%(plural_suffix)s"
+msgid "The puppy has %(counter)s certificate"
+msgid_plural "The puppy has %(counter)s certificates"
+msgstr[0] "Szczenię posiada %(counter)s certyfikat"
+msgstr[1] "Szczenię posiada %(counter)s certyfikat"
