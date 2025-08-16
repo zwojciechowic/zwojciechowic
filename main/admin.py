@@ -161,12 +161,14 @@ class PuppyAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
+
 class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
     classes = ['collapse']
+
 @admin.register(BlogSection)
 class BlogSectionAdmin(TranslatableAdmin):
     list_display = ('blog_post_title', 'title', 'order')
@@ -180,11 +182,12 @@ class BlogSectionAdmin(TranslatableAdmin):
         except:
             return f"Post #{obj.blog_post.pk}"
     blog_post_title.short_description = _("Wpis na blogu")
+
 @admin.register(BlogPost)
 class BlogPostAdmin(TranslatableAdmin):
-    list_display = ['title', 'author', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
-    list_filter = ['is_published', 'created_at', 'author']
-    search_fields = ['translations__title', 'translations__excerpt', 'sections__translations__content', 'sections__translations__title']
+    list_display = ['title', 'author', 'get_related_animal_display', 'created_at', 'is_published', 'main_photo_preview', 'photos_count', 'sections_count']
+    list_filter = ['is_published', 'created_at', 'author', 'related_dog', 'related_puppy']
+    search_fields = ['translations__title', 'translations__excerpt', 'sections__translations__content', 'sections__translations__title', 'related_dog__name', 'related_puppy__name']
     list_editable = ['is_published']
     date_hierarchy = 'created_at'
     readonly_fields = ['created_at', 'updated_at']
@@ -194,6 +197,7 @@ class BlogPostAdmin(TranslatableAdmin):
     fields_basic = ['title', 'slug', 'author', 'is_published']
     fields_content = ['excerpt']
     fields_media = ['photo_gallery']
+    fields_relations = ['related_dog', 'related_puppy']
     fields_meta = ['created_at', 'updated_at']
     
     def get_form(self, request, obj=None, **kwargs):
@@ -204,7 +208,7 @@ class BlogPostAdmin(TranslatableAdmin):
             available_languages = [lang[0] for lang in settings.LANGUAGES]
             main_language = available_languages[0] if available_languages else 'pl'
             if current_lang != main_language:
-                fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at']
+                fields_to_hide = ['slug', 'photo_gallery', 'author', 'is_published', 'created_at', 'updated_at', 'related_dog', 'related_puppy']
                 for field_name in fields_to_hide:
                     try:
                         del form.base_fields[field_name]
@@ -239,6 +243,10 @@ class BlogPostAdmin(TranslatableAdmin):
                 'fields': ('excerpt',),
                 'description': _('Krótki opis wpisu wyświetlany na liście i w kartach')
             }),
+            (_('Powiązania'), {
+                'fields': ('related_dog', 'related_puppy'),
+                'description': _('Wybierz psa LUB szczeniaka (nie oba jednocześnie). Zostanie wyświetlony link w karcie wpisu.')
+            }),
             (_('Media'), {
                 'fields': ('photo_gallery',),
                 'description': _('Wybierz istniejącą galerię lub stwórz nową w sekcji "Galerie"')
@@ -249,6 +257,23 @@ class BlogPostAdmin(TranslatableAdmin):
                 'description': _('Automatycznie generowane daty')
             }),
         )
+    
+    def get_related_animal_display(self, obj):
+        """Wyświetla powiązane zwierzę w liście adminów"""
+        if obj.related_dog:
+            return format_html(
+                '<span style="color: #2196F3;"><i class="fas fa-dog"></i> {}</span>',
+                obj.related_dog.name
+            )
+        elif obj.related_puppy:
+            return format_html(
+                '<span style="color: #FF6B6B;"><i class="fas fa-heart"></i> {} ({})</span>',
+                obj.related_puppy.name,
+                f"Miot {obj.related_puppy.litter}" if obj.related_puppy.litter else "Szczeniak"
+            )
+        return "-"
+    get_related_animal_display.short_description = _('Powiązane zwierzę')
+    get_related_animal_display.admin_order_field = 'related_dog__name'
     
     def main_photo_preview(self, obj):
         """Podgląd głównego zdjęcia"""
@@ -273,6 +298,16 @@ class BlogPostAdmin(TranslatableAdmin):
         """Liczba sekcji wpisu"""
         return obj.sections.count()
     sections_count.short_description = _("Sekcje")
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Popraw wyświetlanie w selectach dla powiązanych zwierząt"""
+        if db_field.name == "related_dog":
+            kwargs["queryset"] = Dog.objects.select_related().order_by('name')
+            kwargs["empty_label"] = _("Brak powiązania z psem")
+        elif db_field.name == "related_puppy":
+            kwargs["queryset"] = Puppy.objects.select_related().order_by('litter', 'name')
+            kwargs["empty_label"] = _("Brak powiązania ze szczeniakiem")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
     def save_model(self, request, obj, form, change):
         """Zapisywanie modelu z automatycznym przypisaniem autora"""
@@ -304,7 +339,16 @@ class BlogPostAdmin(TranslatableAdmin):
     def get_queryset(self, request):
         """Optymalizacja zapytań"""
         qs = super().get_queryset(request)
-        return qs.select_related('author', 'photo_gallery').prefetch_related('sections')
+        return qs.select_related('author', 'photo_gallery', 'related_dog', 'related_puppy').prefetch_related('sections')
+    
+    class Media:
+        css = {
+            'all': ('admin/css/widgets.css',)
+        }
+        js = [
+            'admin/js/jquery.init.js',
+            'admin/js/core.js',
+        ]
 class HodowlaAdminSite(admin.AdminSite):
     site_header = _("Panel administracyjny Hodowli")
     site_title = _("Hodowla Admin")

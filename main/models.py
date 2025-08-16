@@ -37,6 +37,29 @@ class BlogPost(TranslatableModel):
         verbose_name=_('Galeria zdjęć'),
         related_name='blog_posts'
     )
+    
+    # NOWE POLE - powiązanie z psem
+    related_dog = models.ForeignKey(
+        'Dog',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('Powiązany pies'),
+        help_text=_('Wybierz psa, którego dotyczy ten wpis'),
+        related_name='blog_posts'
+    )
+    
+    # NOWE POLE - powiązanie ze szczeniakiem
+    related_puppy = models.ForeignKey(
+        'Puppy',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('Powiązany szczeniak'),
+        help_text=_('Wybierz szczeniaka, którego dotyczy ten wpis'),
+        related_name='blog_posts'
+    )
+    
     author = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
@@ -74,6 +97,10 @@ class BlogPost(TranslatableModel):
         from django.core.exceptions import ValidationError
         from django.conf import settings
         
+        # Sprawdź czy nie wybrano jednocześnie psa i szczeniaka
+        if self.related_dog and self.related_puppy:
+            raise ValidationError(_('Nie możesz wybrać jednocześnie psa i szczeniaka. Wybierz tylko jeden.'))
+        
         # Sprawdź czy istnieje tytuł w jakimkolwiek języku
         if self.pk:  # Tylko dla istniejących obiektów
             has_title = False
@@ -88,7 +115,7 @@ class BlogPost(TranslatableModel):
             
             if not has_title:
                 raise ValidationError(_('Wpis musi mieć tytuł w przynajmniej jednym języku'))
-        
+    
     def save(self, *args, **kwargs):
         # Auto-generate slug from title if not provided
         if not self.slug:
@@ -139,7 +166,25 @@ class BlogPost(TranslatableModel):
                 sections.append(section_content)
         
         return "\n\n".join(sections)
-
+    
+    @property
+    def get_related_animal(self):
+        """Zwraca powiązanego psa lub szczeniaka"""
+        if self.related_dog:
+            return self.related_dog
+        elif self.related_puppy:
+            return self.related_puppy
+        return None
+    
+    @property
+    def get_related_animal_type(self):
+        """Zwraca typ powiązanego zwierzęcia"""
+        if self.related_dog:
+            return 'dog'
+        elif self.related_puppy:
+            return 'puppy'
+        return None
+    
 class BlogSection(TranslatableModel):
     translations = TranslatedFields(
         title=models.CharField(
