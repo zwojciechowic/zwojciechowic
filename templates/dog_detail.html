@@ -44,9 +44,9 @@
                         <div class="alert alert-success">
                             <i class="fas fa-certificate"></i>
                             {% blocktrans count counter=dog.certificates_gallery.photos.count %}
-                            The dog has {{ counter }} certificate
+                            Pies posiada {{ counter }} certyfikat
                             {% plural %}
-                            The dog has {{ counter }} certificate{{ counter|plural_suffix_pl }}
+                            Pies posiada {{ counter }} certyfikat{{ counter|plural_suffix_pl }}
                             {% endblocktrans %}
                         </div>
                         {% show_gallery dog.certificates_gallery.id "mt-3" %}

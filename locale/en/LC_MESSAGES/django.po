@@ -704,7 +704,7 @@ msgstr "Back to other dog's"
 
 
 
-msgid "The dog has %(counter)s certificate"
-msgid_plural "The dog has %(counter)s certificates"
+msgid "Pies posiada %(counter)s certyfikat"
+msgid_plural "Pies posiada %(counter)s certyfikat%(plural_suffix)s"
 msgstr[0] "The dog has %(counter)s certificate"
 msgstr[1] "The dog has %(counter)s certificates"
