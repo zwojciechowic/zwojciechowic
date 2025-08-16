@@ -11,24 +11,28 @@ class PuppyReservationForm(forms.ModelForm):
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swoje imię i nazwisko'),
-                'required': False
             }),
             'customer_email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój adres e-mail'),
-                'required': True
             }),
             'customer_phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu'),
-                'required': False
             }),
         }
         labels = {
             'customer_name': _('Imię i nazwisko'),
             'customer_email': _('E-mail'),
-            'customer_phone': _('Telefon'),
+            'customer_phone': _('Telefon (opcjonalnie)'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ustaw które pola są wymagane
+        self.fields['customer_email'].required = True  # E-mail wymagany
+        self.fields['customer_name'].required = False  # Imię opcjonalne
+        self.fields['customer_phone'].required = False  # Telefon opcjonalny
 
 class ReservationForm(TranslatableModelForm):
     class Meta:
@@ -58,9 +62,18 @@ class ReservationForm(TranslatableModelForm):
             'puppy': _('Szczeniak'),
             'customer_name': _('Imię i nazwisko'),
             'customer_email': _('E-mail'),
-            'customer_phone': _('Telefon'),
-            'message': _('Wiadomość'),
+            'customer_phone': _('Telefon (opcjonalnie)'),
+            'message': _('Wiadomość (opcjonalnie)'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ustaw które pola są wymagane
+        self.fields['puppy'].required = True  # Szczeniak wymagany
+        self.fields['customer_email'].required = True  # E-mail wymagany
+        self.fields['customer_name'].required = False  # Imię opcjonalne
+        self.fields['customer_phone'].required = False  # Telefon opcjonalny
+        self.fields['message'].required = False  # Wiadomość opcjonalna
 
 class ContactForm(TranslatableModelForm):
     class Meta:
@@ -70,7 +83,6 @@ class ContactForm(TranslatableModelForm):
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swoje imię i nazwisko'),
-                'required': False
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -79,12 +91,10 @@ class ContactForm(TranslatableModelForm):
             'phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu'),
-                'required': False
             }),
             'subject': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Wpisz temat wiadomości'),
-                'required': False
             }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -93,9 +103,18 @@ class ContactForm(TranslatableModelForm):
             }),
         }
         labels = {
-            'name': _('Imię i nazwisko'),
+            'name': _('Imię i nazwisko (opcjonalnie)'),
             'email': _('E-mail'),
-            'phone': _('Telefon'),
-            'subject': _('Temat'),
+            'phone': _('Telefon (opcjonalnie)'),
+            'subject': _('Temat (opcjonalnie)'),
             'message': _('Wiadomość'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ustaw które pola są wymagane
+        self.fields['email'].required = True  # E-mail wymagany
+        self.fields['message'].required = True  # Wiadomość wymagana
+        self.fields['name'].required = False  # Imię opcjonalne
+        self.fields['phone'].required = False  # Telefon opcjonalny
+        self.fields['subject'].required = False  # Temat opcjonalny
