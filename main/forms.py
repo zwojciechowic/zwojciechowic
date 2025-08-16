@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 from parler.forms import TranslatableModelForm
 from .models import Reservation, ContactMessage
 
@@ -23,16 +24,35 @@ class PuppyReservationForm(forms.ModelForm):
         }
         labels = {
             'customer_name': _('Imię i nazwisko'),
-            'customer_email': _('E-mail'),
-            'customer_phone': _('Telefon (opcjonalnie)'),
+            'customer_email': _('E-mail*'),
+            'customer_phone': _('Telefon*'),
+        }
+        help_texts = {
+            'customer_email': _('* Wymagany email lub telefon'),
+            'customer_phone': _('* Wymagany email lub telefon'),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Ustaw które pola są wymagane
-        self.fields['customer_email'].required = True  # E-mail wymagany
-        self.fields['customer_name'].required = False  # Imię opcjonalne
-        self.fields['customer_phone'].required = False  # Telefon opcjonalny
+        # Wszystkie pola opcjonalne na poziomie pola
+        self.fields['customer_name'].required = False
+        self.fields['customer_email'].required = False
+        self.fields['customer_phone'].required = False
+
+    def clean(self):
+        """Niestandardowa walidacja - wymagany email LUB telefon"""
+        cleaned_data = super().clean()
+        email = cleaned_data.get('customer_email')
+        phone = cleaned_data.get('customer_phone')
+
+        # Sprawdź czy przynajmniej jedno pole kontaktowe jest wypełnione
+        if not email and not phone:
+            raise ValidationError(
+                _('Musisz podać przynajmniej adres e-mail lub numer telefonu.'),
+                code='missing_contact'
+            )
+
+        return cleaned_data
 
 class ReservationForm(TranslatableModelForm):
     class Meta:
@@ -61,19 +81,38 @@ class ReservationForm(TranslatableModelForm):
         labels = {
             'puppy': _('Szczeniak'),
             'customer_name': _('Imię i nazwisko'),
-            'customer_email': _('E-mail'),
-            'customer_phone': _('Telefon (opcjonalnie)'),
+            'customer_email': _('E-mail*'),
+            'customer_phone': _('Telefon*'),
             'message': _('Wiadomość (opcjonalnie)'),
+        }
+        help_texts = {
+            'customer_email': _('* Wymagany email lub telefon'),
+            'customer_phone': _('* Wymagany email lub telefon'),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Ustaw które pola są wymagane
-        self.fields['puppy'].required = True  # Szczeniak wymagany
-        self.fields['customer_email'].required = True  # E-mail wymagany
-        self.fields['customer_name'].required = False  # Imię opcjonalne
-        self.fields['customer_phone'].required = False  # Telefon opcjonalny
-        self.fields['message'].required = False  # Wiadomość opcjonalna
+        # Szczeniak wymagany, reszta opcjonalna na poziomie pola
+        self.fields['puppy'].required = True
+        self.fields['customer_name'].required = False
+        self.fields['customer_email'].required = False
+        self.fields['customer_phone'].required = False
+        self.fields['message'].required = False
+
+    def clean(self):
+        """Niestandardowa walidacja - wymagany email LUB telefon"""
+        cleaned_data = super().clean()
+        email = cleaned_data.get('customer_email')
+        phone = cleaned_data.get('customer_phone')
+
+        # Sprawdź czy przynajmniej jedno pole kontaktowe jest wypełnione
+        if not email and not phone:
+            raise ValidationError(
+                _('Musisz podać przynajmniej adres e-mail lub numer telefonu.'),
+                code='missing_contact'
+            )
+
+        return cleaned_data
 
 class ContactForm(TranslatableModelForm):
     class Meta:
@@ -104,17 +143,36 @@ class ContactForm(TranslatableModelForm):
         }
         labels = {
             'name': _('Imię i nazwisko (opcjonalnie)'),
-            'email': _('E-mail'),
-            'phone': _('Telefon (opcjonalnie)'),
+            'email': _('E-mail*'),
+            'phone': _('Telefon*'),
             'subject': _('Temat (opcjonalnie)'),
             'message': _('Wiadomość'),
+        }
+        help_texts = {
+            'email': _('* Wymagany email lub telefon'),
+            'phone': _('* Wymagany email lub telefon'),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Ustaw które pola są wymagane
-        self.fields['email'].required = True  # E-mail wymagany
-        self.fields['message'].required = True  # Wiadomość wymagana
-        self.fields['name'].required = False  # Imię opcjonalne
-        self.fields['phone'].required = False  # Telefon opcjonalny
-        self.fields['subject'].required = False  # Temat opcjonalny
+        # Wiadomość wymagana, reszta opcjonalna na poziomie pola
+        self.fields['name'].required = False
+        self.fields['email'].required = False
+        self.fields['phone'].required = False
+        self.fields['subject'].required = False
+        self.fields['message'].required = True
+
+    def clean(self):
+        """Niestandardowa walidacja - wymagany email LUB telefon"""
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        phone = cleaned_data.get('phone')
+
+        # Sprawdź czy przynajmniej jedno pole kontaktowe jest wypełnione
+        if not email and not phone:
+            raise ValidationError(
+                _('Musisz podać przynajmniej adres e-mail lub numer telefonu.'),
+                code='missing_contact'
+            )
+
+        return cleaned_data
