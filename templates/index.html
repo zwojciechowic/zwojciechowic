@@ -360,7 +360,6 @@
                                 {% if post.get_related_animal_type == 'dog' %}
                                     <a href="{% url 'dog_detail' post.related_dog.pk %}" class="text-decoration-none">
                                         <div class="d-flex align-items-center">
-                                            <i class="fas fa-dog text-primary me-2"></i>
                                             <small class="text-muted">
                                                 {% trans 'Dotyczy:' %} 
                                                 <strong class="text-dark">{{ post.related_dog.name }}</strong>
