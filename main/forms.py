@@ -125,7 +125,7 @@ class ContactForm(TranslatableModelForm):
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': _('Wpisz swój adres email')
+                'placeholder': _('Wpisz swój adres e-mail')
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'form-control',
