@@ -47,7 +47,7 @@ body {
     background: var(--white);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
-    margin: var(--spacing-lg) auto var(--spacing-xl);
+    margin: var(--spacing-lg) auto var(--spacing-lg);
     max-width: 1200px;
     text-align: center;
     box-shadow: var(--shadow-sm);

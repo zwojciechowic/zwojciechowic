@@ -19,7 +19,7 @@ INSTALLED_APPS = config('INSTALLED_APPS').split(',')
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
 MIDDLEWARE = config('MIDDLEWARE').split(',')
 
-DEBUG = False
+DEBUG = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
