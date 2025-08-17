@@ -19,6 +19,7 @@ class DogAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
+
 class BlogPostAdminForm(forms.ModelForm):
     class Meta:
         model = BlogPost
@@ -26,6 +27,7 @@ class BlogPostAdminForm(forms.ModelForm):
     
     class Media:
         js = ('js/admin_image_preview.js',)
+
 @admin.register(Dog)
 class DogAdmin(TranslatableAdmin):
     list_display = ['name', 'breed', 'gender', 'birth_date', 'is_breeding']
@@ -46,7 +48,7 @@ class DogAdmin(TranslatableAdmin):
         
         return form
 
-    def get_fieldsets(self, request, obj = ...):
+    def get_fieldsets(self, request, obj=None):
         return super().get_fieldsets(request, obj)
 
     def main_photo_preview(self, obj):
@@ -68,6 +70,7 @@ class DogAdmin(TranslatableAdmin):
             return obj.certificates_gallery.photos.count()
         return 0
     certificates_count.short_description = "Certyfikaty"
+
 class ColorWidget(forms.TextInput):
     """Custom widget dla color pickera"""
     def __init__(self, *args, **kwargs):
@@ -76,6 +79,7 @@ class ColorWidget(forms.TextInput):
             'type': 'color',
             'style': 'width: 60px; height: 40px; border: none; cursor: pointer;'
         })
+
 class PuppyAdminForm(forms.ModelForm):
     class Meta:
         model = Puppy
@@ -227,6 +231,7 @@ class PuppyAdmin(TranslatableAdmin):
             'admin/js/jquery.init.js',
             'admin/js/core.js',
         ]
+
 class BlogSectionInline(TranslatableTabularInline):
     model = BlogSection
     extra = 1
@@ -414,67 +419,19 @@ class BlogPostAdmin(TranslatableAdmin):
             'admin/js/jquery.init.js',
             'admin/js/core.js',
         ]
-class HodowlaAdminSite(admin.AdminSite):
-    site_header = _("Panel administracyjny Hodowli")
-    site_title = _("Hodowla Admin")
-    index_title = _("Witaj w panelu administracyjnym")
-    
-    def get_app_list(self, request, app_label=None):
-        """Customizacja listy aplikacji i modeli"""
-        app_list = super().get_app_list(request, app_label)
-        
-        hidden_models = [
-            'BlogSection', 'Blog sections', 'Sekcje wpisu',
-            'AboutSections', 'About sections', 'Sekcje'
-        ]
-        
-        for app in app_list:
-            if app['app_label'] == 'main':
-                # Filtruj ukryte modele
-                app['models'] = [
-                    model for model in app['models'] 
-                    if model['object_name'] not in hidden_models and 
-                        model['name'] not in hidden_models
-                ]
-                
-                # Sortuj modele w określonej kolejności
-                model_order = {
-                    'BlogPost': 1,
-                    'Dog': 2,
-                    'Puppy': 3,
-                    'Reservation': 4,
-                    'ContactMessage': 5,
-                    'AboutPage': 6
-                }
-                
-                app['models'].sort(key=lambda x: model_order.get(x['object_name'], 99))
-        
-        return app_list
-class CustomAdminSite(admin.AdminSite):
-    def get_app_list(self, request):
-        app_list = super().get_app_list(request)
-        
-        for app in app_list:
-            if app['app_label'] == 'main':
-                app['models'].sort(key=lambda x: {
-                    'BlogPost': 1,
-                    'Dog': 2,
-                    'Puppy': 3,
-                    'Reservation': 4,
-                    'ContactMessage': 5
-                }.get(x['object_name'], 99))
-        
-        return app_list
+
 class AboutSectionInline(TranslatableTabularInline):
     model = AboutSections
     extra = 1
     fields = ('order', 'title', 'content')
     ordering = ('order',)
+
 @admin.register(AboutSections)
 class AboutSectionAdmin(TranslatableAdmin):
     list_display = ('title', 'order', 'about_page')
     list_editable = ('order',)
     ordering = ('about_page', 'order')
+
 @admin.register(AboutPage)
 class AboutPageAdmin(TranslatableAdmin):
     inlines = [AboutSectionInline]
@@ -582,7 +539,6 @@ class ContactMessageAdmin(TranslatableAdmin):
         self.message_user(request, _("Oznaczono %(count)d wiadomości jako nieprzeczytane.") % {'count': queryset.count()})
     mark_as_unread.short_description = _("Oznacz jako nieprzeczytane")
 
-
 @admin.register(Reservation)
 class ReservationAdmin(TranslatableAdmin):
     # ZMIENIONA LISTA KOLUMN
@@ -677,4 +633,65 @@ class ReservationAdmin(TranslatableAdmin):
             }),
         )
 
-admin.site.__class__ = HodowlaAdminSite
+# CUSTOM ADMIN SITE Z DASHBOARD CONTEXT
+class CustomAdminSite(admin.AdminSite):
+    site_header = _("Panel administracyjny Hodowli")
+    site_title = _("Hodowla Admin")
+    index_title = _("Panel Hodowli z Wojciechowic")
+    
+    def index(self, request, extra_context=None):
+        """
+        Nadpisuje domyślny widok dashboard z danymi kontekstowymi
+        """
+        # Importuj modele lokalnie żeby uniknąć circular imports
+        from .models import Dog, Puppy, Reservation, BlogPost, ContactMessage, AboutPage
+        
+        extra_context = extra_context or {}
+        
+        # Dodaj wszystkie dane potrzebne w template
+        extra_context.update({
+            'dogs_count': Dog.objects.count(),
+            'puppies_count': Puppy.objects.filter(is_available=True).count(),
+            'reservations_count': Reservation.objects.filter(status='pending').count(),
+            'posts_count': BlogPost.objects.filter(is_published=True).count(),
+            'messages_count': ContactMessage.objects.count(),
+            'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
+            'about_exists': AboutPage.objects.exists(),
+        })
+        
+        return super().index(request, extra_context)
+    
+    def get_app_list(self, request, app_label=None):
+        """Customizacja listy aplikacji i modeli"""
+        app_list = super().get_app_list(request, app_label)
+        
+        hidden_models = [
+            'BlogSection', 'Blog sections', 'Sekcje wpisu',
+            'AboutSections', 'About sections', 'Sekcje'
+        ]
+        
+        for app in app_list:
+            if app['app_label'] == 'main':
+                # Filtruj ukryte modele
+                app['models'] = [
+                    model for model in app['models'] 
+                    if model['object_name'] not in hidden_models and 
+                        model['name'] not in hidden_models
+                ]
+                
+                # Sortuj modele w określonej kolejności
+                model_order = {
+                    'BlogPost': 1,
+                    'Dog': 2,
+                    'Puppy': 3,
+                    'Reservation': 4,
+                    'ContactMessage': 5,
+                    'AboutPage': 6
+                }
+                
+                app['models'].sort(key=lambda x: model_order.get(x['object_name'], 99))
+        
+        return app_list
+
+# Zastąp domyślny admin site naszym custom site
+admin.site.__class__ = CustomAdminSite
