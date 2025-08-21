@@ -315,7 +315,7 @@
                             <p class="card-text flex-grow-1">{{ puppy.description|truncatewords:15 }}</p>
                             <div class="mt-auto">
                                 {% if puppy.is_available %}
-                                    <a href="{% url 'puppy_detail' puppy.pk %}" class="btn btn-primary btn-sm">{% trans "Zarezerwuj:"%}</a>
+                                <a href="{% url 'puppy_detail' puppy.pk %}?scroll=bottom" class="btn btn-primary btn-sm">{% trans "Zarezerwuj:"%}</a>
                                 {% else %}
                                     <button class="btn btn-secondary btn-sm" disabled>{% trans "Niedostępne"%}</button>
                                 {% endif %}

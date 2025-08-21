@@ -245,4 +245,11 @@
 
 {% block extra_js %}
     <script src="{% static 'gallery/js/gallery.js' %}"></script>
+
+    {% if request.GET.scroll == 'bottom' %}
+    <script>
+    window.addEventListener('load', () => window.scrollTo(0, document.body.scrollHeight));
+    </script>
+    {% endif %}
 {% endblock %}
+
