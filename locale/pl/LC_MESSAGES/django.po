@@ -742,3 +742,6 @@ msgstr "Pies hodowlany"
 
 msgid "Nasze psy"
 msgstr "Nasze psy"
+
+msgid "Email (opcjonalnie)"
+msgstr "Email (opcjonalnie)"

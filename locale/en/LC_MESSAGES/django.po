@@ -722,3 +722,7 @@ msgstr "Kennel dog"
 
 msgid "Nasze psy"
 msgstr "Our dogs"
+
+
+msgid "Email (opcjonalnie)"
+msgstr "Email (optional)"
