@@ -738,3 +738,7 @@ msgstr "Data publikacji:"
 
 msgid "Pies hodowlany"
 msgstr "Pies hodowlany"
+
+
+msgid "Nasze psy"
+msgstr "Nasze psy"

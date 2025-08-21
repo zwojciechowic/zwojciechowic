@@ -718,3 +718,7 @@ msgstr "Date of publication:"
 
 msgid "Pies hodowlany"
 msgstr "Kennel dog"
+
+
+msgid "Nasze psy"
+msgstr "Our dogs"
