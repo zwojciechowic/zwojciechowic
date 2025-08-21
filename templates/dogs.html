@@ -122,9 +122,9 @@
                 <a href="{% url 'dog_detail' dog.pk %}" class="card-img-link">
                     <div class="card-img-container position-relative">
                         {% if dog.photo_gallery and dog.photo_gallery.photos.all %}
-                            {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
+                        {% show_gallery dog.photo_gallery.id "miniature-gallery" %}
                         {% else %}
-                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: cover;" alt="logo/pack-logo.png">
+                            <img src="{% static 'img/pack-logo.png' %}" class="img-fluid" style="height: 100%; width: 100%; object-fit: contain;" alt="logo/pack-logo.png">
                         {% endif %}
 
                         {% if dog.certificates_gallery %}
