@@ -71,144 +71,190 @@ body::after {
 
 /* static/admin/css/admin_calendar_fix.css */
 
-/* Fix dla zbyt dużego kalendarza w Django admin */
-.calendar {
-    max-width: 300px !important;
+/* BARDZO WAŻNE - użyj !important i bardziej specyficznych selektorów */
+
+/* Główny kontener kalendarza */
+.calendarbox,
+.calendarnav,
+div.calendarbox,
+div.calendarnav {
+    width: 280px !important;
+    max-width: 280px !important;
+    min-width: 280px !important;
     font-size: 12px !important;
 }
 
-.calendar table {
-    width: 100% !important;
+/* Tabela kalendarza */
+.calendarbox table,
+.calendarnav table,
+.calendar table,
+div.calendarbox table {
+    width: 280px !important;
     max-width: 280px !important;
+    table-layout: fixed !important;
 }
 
-.calendar th, 
+/* Wszystkie komórki tabeli */
+.calendarbox table th,
+.calendarbox table td,
+.calendarnav table th,
+.calendarnav table td,
+.calendar th,
 .calendar td {
-    padding: 4px 6px !important;
+    width: 40px !important;
+    max-width: 40px !important;
+    min-width: 35px !important;
+    padding: 3px 2px !important;
     font-size: 11px !important;
     text-align: center !important;
+    overflow: hidden !important;
 }
 
-.calendar .month {
+/* Nagłówek miesiąca */
+.calendarbox .month,
+.calendar .month,
+.calendarnav .month {
+    font-size: 13px !important;
+    padding: 6px !important;
+    height: auto !important;
     background: #417690 !important;
     color: white !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
-    padding: 8px !important;
 }
 
-.calendar .month a {
+/* Linki w nagłówku miesiąca */
+.calendarbox .month a,
+.calendar .month a,
+.calendarnav .month a {
     color: white !important;
-    text-decoration: none !important;
-}
-
-.calendar .month a:hover {
-    color: #ffc !important;
+    font-size: 12px !important;
 }
 
 /* Nagłówki dni tygodnia */
+.calendarbox .month + tr th,
 .calendar .month + tr th {
     background: #f8f8f8 !important;
     color: #666 !important;
-    font-weight: normal !important;
     font-size: 10px !important;
-    padding: 3px !important;
+    font-weight: normal !important;
+    padding: 2px !important;
+    height: 20px !important;
 }
 
-/* Komórki z datami */
-.calendar td a {
+/* Komórki z datami - linki */
+.calendarbox td a,
+.calendar td a,
+.calendarnav td a {
     display: block !important;
-    padding: 4px !important;
+    width: 100% !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 11px !important;
     text-decoration: none !important;
     color: #333 !important;
     border-radius: 2px !important;
 }
 
+/* Hover dla dat */
+.calendarbox td a:hover,
 .calendar td a:hover {
     background: #417690 !important;
     color: white !important;
 }
 
 /* Dzisiejsza data */
+.calendarbox .today a,
 .calendar .today a {
     background: #ffc !important;
     color: #333 !important;
     font-weight: bold !important;
 }
 
-/* Dni z innych miesięcy */
-.calendar .nonday {
-    color: #ccc !important;
+/* Przyciski nawigacji */
+.calendarnav,
+.calendar-shortcuts,
+.calendarbox .calendar-shortcuts {
+    padding: 4px !important;
+    font-size: 11px !important;
+    text-align: center !important;
+    border-top: 1px solid #eee !important;
 }
 
-/* Responsywność kalendarza */
-@media (max-width: 768px) {
-    .calendar {
+/* Przycisk Cancel */
+.calendar-cancel,
+.calendarbox .calendar-cancel {
+    text-align: center !important;
+    padding: 4px !important;
+    font-size: 10px !important;
+}
+
+/* Fix dla całego popup */
+.ui-datepicker,
+.ui-datepicker-div,
+#calendarbox0,
+#calendarbox1 {
+    width: 280px !important;
+    max-width: 280px !important;
+}
+
+/* BARDZO AGRESYWNE NADPISANIE dla wszystkich możliwych selektorów */
+div[class*="calendar"] {
+    max-width: 300px !important;
+}
+
+div[class*="calendar"] table {
+    width: 100% !important;
+    max-width: 280px !important;
+}
+
+div[class*="calendar"] td,
+div[class*="calendar"] th {
+    width: 35px !important;
+    max-width: 40px !important;
+    padding: 2px !important;
+    font-size: 11px !important;
+}
+
+/* Jeśli używasz nowszej wersji Django z innymi klasami */
+.DateTimeShortcuts,
+.datetimeshortcuts {
+    font-size: 11px !important;
+}
+
+/* Fix dla inputa z datą */
+input.vDateField {
+    width: 100px !important;
+}
+
+/* EMERGENCY FIX - jeśli nic nie działa, to na pewno zadziała */
+* [class*="calendar"] {
+    max-width: 300px !important;
+    font-size: 12px !important;
+}
+
+/* Responsive fix */
+@media screen and (max-width: 768px) {
+    .calendarbox,
+    .calendarnav,
+    div.calendarbox {
+        width: 250px !important;
         max-width: 250px !important;
-        font-size: 11px !important;
     }
     
-    .calendar th, 
-    .calendar td {
-        padding: 2px 4px !important;
-        font-size: 10px !important;
+    .calendarbox table,
+    .calendar table {
+        width: 250px !important;
+        max-width: 250px !important;
     }
-}
-
-/* Fix dla pozycjonowania kalendarza */
-.calendarbox {
-    position: absolute !important;
-    z-index: 1000 !important;
-    background: white !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-    padding: 0 !important;
-}
-
-/* Fix dla przycisku "Today" i nawigacji */
-.calendar-shortcuts {
-    padding: 8px !important;
-    border-top: 1px solid #eee !important;
-    background: #f8f8f8 !important;
-    font-size: 11px !important;
-}
-
-.calendar-shortcuts a {
-    color: #417690 !important;
-    text-decoration: none !important;
-    margin-right: 10px !important;
-}
-
-.calendar-shortcuts a:hover {
-    text-decoration: underline !important;
-}
-
-/* Fix dla input z datą */
-.vDateField {
-    width: 120px !important;
-}
-
-/* Dodatkowe style dla lepszego wyglądu */
-.calendar-navigation {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-}
-
-.calendar-cancel {
-    text-align: center !important;
-    padding: 6px !important;
-    background: #f0f0f0 !important;
-    border-top: 1px solid #ddd !important;
-}
-
-.calendar-cancel a {
-    color: #999 !important;
-    font-size: 11px !important;
-    text-decoration: none !important;
-}
-
-.calendar-cancel a:hover {
-    color: #666 !important;
+    
+    .calendarbox td,
+    .calendarbox th,
+    .calendar td,
+    .calendar th {
+        width: 30px !important;
+        max-width: 35px !important;
+        font-size: 10px !important;
+        padding: 1px !important;
+    }
 }
