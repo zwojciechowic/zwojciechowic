@@ -149,3 +149,23 @@ PARLER_LANGUAGES = {
         'hide_untranslated': False, # Pokazuje wartość fallback, zamiast ukrywać obiekt
     }
 }
+
+# Maksymalny rozmiar pliku (np. 100MB)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024
+
+# Dozwolone typy MIME
+ALLOWED_VIDEO_TYPES = [
+    'video/mp4',
+    'video/avi', 
+    'video/quicktime',
+    'video/x-msvideo',
+    'video/webm',
+]
+
+ALLOWED_IMAGE_TYPES = [
+    'image/jpeg',
+    'image/png', 
+    'image/gif',
+    'image/bmp',
+    'image/webp',
+]

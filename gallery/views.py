@@ -1,26 +1,27 @@
-# gallery/views.py
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Gallery
 
 def gallery_widget(request, gallery_id):
-    """Widok do wyświetlania galerii jako widget (jeśli potrzebny)"""
-    gallery = get_object_or_404(Gallery, id=gallery_id, is_active=True)
-    photos = gallery.photos.all()
+    """Widok do wyświetlania galerii jako widget"""
+    gallery = get_object_or_404(Gallery, id=gallery_id)
+    media_files = gallery.media_files.all()
     
     context = {
         'gallery': gallery,
-        'photos': photos,
+        'media_files': media_files,
     }
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
-            'photos': [
+            'media_files': [
                 {
-                    'id': photo.id,
-                    'url': photo.image.url,
-                    'order': photo.order
-                } for photo in photos
+                    'id': media.id,
+                    'url': media.file.url,
+                    'media_type': media.media_type,
+                    'order': media.order,
+                    'thumbnail_url': media.thumbnail.url if media.thumbnail else None,
+                } for media in media_files
             ]
         })
     
