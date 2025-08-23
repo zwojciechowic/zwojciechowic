@@ -3,25 +3,24 @@ from django.http import JsonResponse
 from .models import Gallery
 
 def gallery_widget(request, gallery_id):
-    """Widok do wyświetlania galerii jako widget"""
+    """Widok do wyświetlania galerii jako widget (jeśli potrzebny)"""
     gallery = get_object_or_404(Gallery, id=gallery_id)
-    media_files = gallery.media_files.all()
+    photos = gallery.photos.all()
     
     context = {
         'gallery': gallery,
-        'media_files': media_files,
+        'photos': photos,
     }
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
-            'media_files': [
+            'photos': [
                 {
-                    'id': media.id,
-                    'url': media.file.url,
-                    'media_type': media.media_type,
-                    'order': media.order,
-                    'thumbnail_url': media.thumbnail.url if media.thumbnail else None,
-                } for media in media_files
+                    'id': photo.id,
+                    'url': photo.image.url,
+                    'media_type': photo.media_type,
+                    'order': photo.order
+                } for photo in photos
             ]
         })
     

@@ -21,22 +21,21 @@ class Gallery(models.Model):
         verbose_name = "Galeria"
         verbose_name_plural = "Galerie"
 
-class Media(models.Model):
+class Photo(models.Model):
     MEDIA_TYPES = (
         ('image', 'Zdjęcie'),
         ('video', 'Wideo'),
     )
     
-    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='media_files')
-    file = models.FileField(upload_to='gallery/')  # Zmiana z ImageField na FileField
-    media_type = models.CharField(max_length=5, choices=MEDIA_TYPES, editable=False)
+    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='photos')
+    image = models.FileField(upload_to='gallery/')  # Zmiana z ImageField na FileField
+    media_type = models.CharField(max_length=5, choices=MEDIA_TYPES, default='image')
     order = models.PositiveIntegerField(default=1)
-    thumbnail = models.ImageField(upload_to='gallery/thumbnails/', blank=True, null=True)
     
     def save(self, *args, **kwargs):
         # Automatyczne określanie typu na podstawie rozszerzenia
-        if self.file:
-            file_extension = os.path.splitext(self.file.name)[1].lower()
+        if self.image:
+            file_extension = os.path.splitext(self.image.name)[1].lower()
             
             image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp']
             video_extensions = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv', '.m4v']
@@ -45,8 +44,6 @@ class Media(models.Model):
                 self.media_type = 'image'
             elif file_extension in video_extensions:
                 self.media_type = 'video'
-            else:
-                raise ValueError(f"Nieobsługiwany format pliku: {file_extension}")
         
         super().save(*args, **kwargs)
     
@@ -58,13 +55,5 @@ class Media(models.Model):
     def is_video(self):
         return self.media_type == 'video'
     
-    def __str__(self):
-        return f"{self.gallery.title} - {self.get_media_type_display()}"
-    
     class Meta:
         ordering = ['order']
-        verbose_name = "Plik multimedialny"
-        verbose_name_plural = "Pliki multimedialne"
-
-# Zachowaj kompatybilność z poprzednim kodem
-Photo = Media
