@@ -1,3 +1,4 @@
+{% load i18n static %}
 <!-- templates/gallery/gallery.html -->
 {% if photos %}
 <div class="gallery {{extra_classes}}" data-gallery>
@@ -22,5 +23,5 @@
     {% endif %}
 </div>
 {% else %}
-    <div class="alert alert-info">Brak zdjęć w tej galerii.</div>
+    <div class="alert alert-info">{% trans "Brak zdjęć w tej galerii."%}</div>
 {% endif %}
