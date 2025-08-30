@@ -32,14 +32,22 @@
                     <label for="{{ form.message.id_for_label }}" class="form-label">{% trans "Dodatkowa wiadomość"%}</label>
                     {{ form.message }}
                 </div>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="{{ form.proposed_price.id_for_label }}" class="form-label">
-                        {% trans "Twoja propozycja ceny" %}
+                        <i class="fas fa-tag text-primary"></i> {% trans "Twoja propozycja ceny (opcjonalnie)" %}
                     </label>
                     {{ form.proposed_price }}
+                    {% if form.proposed_price.errors %}
+                        <div class="text-danger small">{{ form.proposed_price.errors.0 }}</div>
+                    {% endif %}
+                    <div class="form-text">
+                        {% trans "Możesz zaproponować swoją cenę za szczenię. Skontaktujemy się z Tobą w celu omówienia szczegółów."%}
+                    </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">{% trans "Wyślij rezerwację"%}</button>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-paw"></i> {% trans "Wyślij rezerwację"%}
+                </button>
             </form>
             {% else %}
             <div class="puppy-alert">
@@ -51,12 +59,27 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{% trans "Informacje o rezerwacji"%}</h5>
+                    <h5 class="card-title">
+                        <i class="fas fa-info-circle text-primary"></i> {% trans "Informacje o rezerwacji"%}
+                    </h5>
                     <p class="card-text">
-                        {% trans "• Rezerwacja jest bezpłatna"%}<br>
-                        {% trans "• Skontaktujemy się z Tobą w ciągu 24 godzin"%}<br>
-                        {% trans "• Możesz umówić się na wizytę"%}<br>
-                        {% trans "• Wszystkie szczenięta są zaszczepione i zdrowe"%}
+                        <i class="fas fa-check text-success"></i> {% trans "Rezerwacja jest bezpłatna"%}<br>
+                        <i class="fas fa-clock text-primary"></i> {% trans "Skontaktujemy się z Tobą w ciągu 24 godzin"%}<br>
+                        <i class="fas fa-calendar text-info"></i> {% trans "Możesz umówić się na wizytę"%}<br>
+                        <i class="fas fa-shield-alt text-success"></i> {% trans "Wszystkie szczenięta są zaszczepione i zdrowe"%}<br>
+                        <i class="fas fa-handshake text-warning"></i> {% trans "Cena do uzgodnienia podczas kontaktu"%}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dodatkowa informacja o cenie -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-tag text-primary"></i> {% trans "Propozycja ceny"%}
+                    </h5>
+                    <p class="card-text small text-muted">
+                        {% trans "Możesz zaproponować swoją cenę za szczenię. Nie jest to pole obowiązkowe - cenę możemy omówić podczas rozmowy telefonicznej lub mailowej. Twoja propozycja pomoże nam lepiej przygotować się do rozmowy."%}
                     </p>
                 </div>
             </div>

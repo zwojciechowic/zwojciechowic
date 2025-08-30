@@ -172,21 +172,29 @@
                     
                     <small class="text-muted">
                         <i class="fas fa-info-circle"></i>
-                        {% trans "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów."%}
+                        {% trans "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów i omówienia ceny."%}
                     </small>
                 </div>
                 
-                <!-- Prawa kolumna z polem na cenę -->
+                <!-- Prawa kolumna z polem na propozycję ceny -->
                 <div class="col-md-4">
                     <div class="price-info text-center p-3 bg-white rounded border">
-                        <h5 class="text-primary mb-2">{% trans "Twoja propozycja ceny"%}</h5>
-                        <div class="mb-2 text-muted">
-                            {% trans "Cena wyjściowa:" %} {{ puppy.price }} PLN
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-tag"></i> {% trans "Twoja propozycja ceny"%}
+                        </h5>
+                        <div class="mb-3">
+                            <label for="{{ form.proposed_price.id_for_label }}" class="form-label text-muted small">
+                                {% trans "Zaproponuj cenę (opcjonalnie)"%}
+                            </label>
+                            {{ form.proposed_price }}
+                            {% if form.proposed_price.errors %}
+                                <div class="text-danger small mt-1">{{ form.proposed_price.errors.0 }}</div>
+                            {% endif %}
                         </div>
-                        {{ form.proposed_price }}
-                        {% if form.proposed_price.errors %}
-                            <div class="text-danger small">{{ form.proposed_price.errors.0 }}</div>
-                        {% endif %}
+                        <small class="text-muted">
+                            <i class="fas fa-handshake"></i><br>
+                            {% trans "Cenę możemy omówić podczas kontaktu"%}
+                        </small>
                     </div>
                 </div>
             </div>
