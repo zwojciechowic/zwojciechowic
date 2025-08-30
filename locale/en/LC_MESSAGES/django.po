@@ -728,3 +728,16 @@ msgstr "Back to main page"
 
 msgid "Może Cię zainteresuje:"
 msgstr "You may also like:"
+
+
+msgid "Zaproponuj cenę (opcjonalnie)"
+msgstr "Suggest a price (optional)"
+
+msgid "Cenę możemy omówić podczas kontaktu"
+msgstr "We can discuss the price during contact"
+
+msgid "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów i omówienia ceny."
+msgstr "The reservation is not binding. We will contact you to confirm the details and discuss the price."
+
+msgid "Telefon*"
+msgstr "Phone*"

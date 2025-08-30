@@ -747,3 +747,15 @@ msgstr "Wróć na stronę główną"
 
 msgid "Może Cię zainteresuje:"
 msgstr "Może Cię zainteresuje:"
+
+msgid "Zaproponuj cenę (opcjonalnie)"
+msgstr "Zaproponuj cenę (opcjonalnie)"
+
+msgid "Cenę możemy omówić podczas kontaktu"
+msgstr "Cenę możemy omówić podczas kontaktu"
+
+msgid "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów i omówienia ceny."
+msgstr "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwierdzenia szczegółów i omówienia ceny."
+
+msgid "Telefon*"
+msgstr "Telefon*"

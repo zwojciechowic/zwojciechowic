@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from parler.forms import TranslatableModelForm
 from .models import Reservation, ContactMessage
 
-class PuppyReservationForm(forms.ModelForm):
+class PuppyReservationForm(TranslatableModelForm):
     proposed_price = forms.DecimalField(
         label=_('Twoja propozycja ceny (PLN)'),
         max_digits=10,
