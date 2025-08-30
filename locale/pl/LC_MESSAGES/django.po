@@ -761,3 +761,6 @@ msgid "Telefon*"
 msgstr "Telefon*"
 msgid "Brak zdjęć w tej galerii."
 msgstr "Brak zdjęć w tej galerii."
+
+msgid "Wpisz swoją propozycję ceny w PLN"
+msgstr "Wpisz swoją propozycję ceny w PLN"
