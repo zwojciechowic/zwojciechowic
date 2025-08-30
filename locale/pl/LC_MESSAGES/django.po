@@ -759,3 +759,5 @@ msgstr "Rezerwacja nie jest wiążąca. Skontaktujemy się z Tobą w celu potwie
 
 msgid "Telefon*"
 msgstr "Telefon*"
+msgid "Brak zdjęć w tej galerii."
+msgstr "Brak zdjęć w tej galerii."

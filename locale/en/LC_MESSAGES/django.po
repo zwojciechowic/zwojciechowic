@@ -741,3 +741,6 @@ msgstr "The reservation is not binding. We will contact you to confirm the detai
 
 msgid "Telefon*"
 msgstr "Phone*"
+
+msgid "Brak zdjęć w tej galerii."
+msgstr "No photos avaliable now"
