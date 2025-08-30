@@ -185,11 +185,18 @@
             
             <div class="col-md-4">
                 <div class="price-info text-center p-3 bg-white rounded border">
-                    <h5 class="text-primary mb-2">{% trans "Cena"%}</h5>
-                    <div class="price-amount h3 text-success mb-0">
-                        {{ puppy.price }} PLN
+                    <h5 class="text-primary mb-2">{% trans "Twoja propozycja ceny"%}</h5>
+                    <div class="mb-2 text-muted">
+                        {% trans "Cena wyjściowa:" %} {{ puppy.price }} PLN
                     </div>
+                    {{ form.proposed_price }}
+                    {% if form.proposed_price.errors %}
+                        <div class="text-danger small">
+                            {{ form.proposed_price.errors.0 }}
+                        </div>
+                    {% endif %}
                 </div>
+                
             </div>
         </div>
     </div>

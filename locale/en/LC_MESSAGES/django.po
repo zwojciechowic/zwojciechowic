@@ -720,9 +720,11 @@ msgid "Pies hodowlany"
 msgstr "Kennel dog"
 
 
-msgid "Nasze psy"
-msgstr "Our dogs"
-
-
 msgid "Email (opcjonalnie)"
 msgstr "Email (optional)"
+
+msgid "Wróć na stronę główną"
+msgstr "Back to main page"
+
+msgid "Może Cię zainteresuje:"
+msgstr "You may also like:"

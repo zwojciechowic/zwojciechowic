@@ -499,6 +499,14 @@ class Reservation(TranslatableModel):
         verbose_name=_('Telefon'),
         blank=True
     )
+    proposed_price = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2, 
+        null=True, 
+        blank=True,
+        verbose_name=_('Proponowana cena'),
+        help_text=_('Cena zaproponowana przez klienta (PLN)')
+    )
     created_at = models.DateTimeField(
         default=timezone.now, 
         verbose_name=_('Data zgłoszenia')
@@ -521,13 +529,11 @@ class Reservation(TranslatableModel):
     
     def __str__(self):
         """Zwraca: Imię_psa - Imię_klienta (lub numer rezerwacji)"""
-        # Pobierz proste imię szczenięcia (nie __str__ z Puppy!)
         if self.puppy and hasattr(self.puppy, 'name'):
             puppy_name = self.puppy.name
         else:
             puppy_name = "Nieznane"
         
-        # Sprawdź dane klienta
         if self.customer_name and self.customer_name.strip():
             client_info = self.customer_name.strip()
         elif self.customer_email and self.customer_email.strip():
@@ -538,6 +544,7 @@ class Reservation(TranslatableModel):
             client_info = f"#{self.id}" if self.id else "Nowa"
         
         return f"{puppy_name} - {client_info}"
+
 class ContactMessage(TranslatableModel):
     translations = TranslatedFields(
         subject=models.CharField(

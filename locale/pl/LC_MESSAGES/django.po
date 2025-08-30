@@ -739,9 +739,11 @@ msgstr "Data publikacji:"
 msgid "Pies hodowlany"
 msgstr "Pies hodowlany"
 
-
-msgid "Nasze psy"
-msgstr "Nasze psy"
-
 msgid "Email (opcjonalnie)"
 msgstr "Email (opcjonalnie)"
+
+msgid "Wróć na stronę główną"
+msgstr "Wróć na stronę główną"
+
+msgid "Może Cię zainteresuje:"
+msgstr "Może Cię zainteresuje:"

@@ -54,10 +54,14 @@ class PuppyReservationForm(forms.ModelForm):
 
         return cleaned_data
 
+# forms.py
 class ReservationForm(TranslatableModelForm):
     class Meta:
         model = Reservation
-        fields = ['puppy', 'customer_name', 'customer_email', 'customer_phone', 'message']
+        fields = [
+            'puppy', 'customer_name', 'customer_email',
+            'customer_phone', 'proposed_price', 'message'
+        ]
         widgets = {
             'puppy': forms.Select(attrs={'class': 'form-control'}),
             'customer_name': forms.TextInput(attrs={
@@ -72,6 +76,10 @@ class ReservationForm(TranslatableModelForm):
                 'class': 'form-control',
                 'placeholder': _('Wpisz swój numer telefonu')
             }),
+            'proposed_price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': _('Zaproponuj swoją cenę (PLN)')
+            }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control', 
                 'rows': 4,
@@ -83,6 +91,7 @@ class ReservationForm(TranslatableModelForm):
             'customer_name': _('Imię i nazwisko'),
             'customer_email': _('E-mail*'),
             'customer_phone': _('Telefon*'),
+            'proposed_price': _('Proponowana cena'),
             'message': _('Wiadomość (opcjonalnie)'),
         }
         help_texts = {
