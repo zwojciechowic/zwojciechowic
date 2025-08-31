@@ -1,5 +1,5 @@
 # main/urls.py
-from django.urls import path
+from django.urls import path, include
 from django.utils.translation import gettext_lazy as _
 from . import views
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path(_('szczeniaki/<int:pk>/'), views.puppy_detail, name='puppy_detail'),
     path(_('rezerwacje/'), views.reservations, name='reservations'),
     path(_('kontakt/'), views.contact_view, name='contact'),
-    path(_('hotel/'), views.hotel, name='hotel'),
+    # path(_('hotel/'), views.hotel, name='hotel'),
+    path(_('hotel/'), include('hotel.urls')),
 ]
