@@ -304,8 +304,9 @@ def admin_dashboard_context(request):
     return {}
 
 def hotel(request):
-    """Strona hotelu - już wkrótce"""
-    return render(request, 'hotel.html')
+    """Strona hotelu"""
+    from hotel.views import hotel_home
+    return hotel_home(request)
 
 def handle_additional_photos_upload(request, instance):
     """
