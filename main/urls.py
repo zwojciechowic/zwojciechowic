@@ -2,6 +2,7 @@
 from django.urls import path, include
 from django.utils.translation import gettext_lazy as _
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -15,4 +16,5 @@ urlpatterns = [
     path(_('kontakt/'), views.contact_view, name='contact'),
     # path(_('hotel/'), views.hotel, name='hotel'),
     path(_('hotel/'), include('hotel.urls')),
+    path("privacy/", TemplateView.as_view(template_name="privacy.html"), name="privacy"),
 ]

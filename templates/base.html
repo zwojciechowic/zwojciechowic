@@ -258,8 +258,12 @@
             </div>
             <hr class="mt-4">
             <div class="text-center">
-                <p>© 2025 {% trans "Hodowla z Wojciechowic" %}. {% trans "Wszystkie prawa zastrzeżone." %}</p>
+                <p>
+                    © 2025 {% trans "Hodowla z Wojciechowic" %}. {% trans "Wszystkie prawa zastrzeżone." %} | 
+                    <a href="{% url 'privacy' %}" class="text-light">{% trans "Polityka prywatności" %}</a>
+                </p>
             </div>
+            
         </div>
     </footer>
 

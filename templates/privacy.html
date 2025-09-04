@@ -1,0 +1,94 @@
+
+{% extends 'base.html' %}
+{% load gallery_tags i18n static %}
+
+{% block title %}{{ dog.name }} - Hodowla z Wojciechowic{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+
+    <style>
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gallery {
+            position: relative;
+            height: 100%;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .hero-slide img, .hero-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .hero-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .hero-prev { left: 20px; }
+        .hero-next { right: 20px; }
+        
+        .booking-section {
+            min-height: 66vh;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .faq-accordion .accordion-button:not(.collapsed) {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1>{% trans "Polityka prywatności" %}</h1>
+  <p>{% trans "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych." %}</p>
+</div>
+{% endblock %}
