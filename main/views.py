@@ -291,17 +291,17 @@ def about(request):
     about_page = AboutPage.objects.first()
     return render(request, 'about.html', {'about': about_page})
 
-def admin_dashboard_context(request):
-    """Context processor dla dashboard admin"""
-    if request.path.startswith('/admin/'):
-        return {
-            'dogs_count': Dog.objects.count(),
-            'puppies_count': Puppy.objects.filter(is_available=True).count(),
-            'reservations_count': Reservation.objects.filter(status='pending').count(),
-            'posts_count': BlogPost.objects.filter(is_published=True).count(),
-            'about_exists': AboutPage.objects.exists(),
-        }
-    return {}
+# def admin_dashboard_context(request):
+#     """Context processor dla dashboard admin"""
+#     if request.path.startswith('/admin/'):
+#         return {
+#             'dogs_count': Dog.objects.count(),
+#             'puppies_count': Puppy.objects.filter(is_available=True).count(),
+#             'reservations_count': Reservation.objects.filter(status='pending').count(),
+#             'posts_count': BlogPost.objects.filter(is_published=True).count(),
+#             'about_exists': AboutPage.objects.exists(),
+#         }
+#     return {}
 
 def hotel(request):
     """Strona hotelu"""

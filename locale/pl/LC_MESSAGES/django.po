@@ -765,6 +765,9 @@ msgstr "Brak zdjęć w tej galerii."
 msgid "Wpisz swoją propozycję ceny w PLN"
 msgstr "Wpisz swoją propozycję ceny w PLN"
 
+msgid "Polityka prywatności"
+msgstr "Polityka prywatności"
+
 msgid "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."
 
 msgstr "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."

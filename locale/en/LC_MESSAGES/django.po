@@ -748,6 +748,9 @@ msgstr "No photos avaliable now"
 msgid "Wpisz swoją propozycję ceny w PLN"
 msgstr "Enter your proposed price in PLN"
 
+msgid "Polityka prywatności"
+msgstr "Privacy Policy"
+
 msgid "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."
 
 msgstr "As part of the operation of the website, technical data such as the user's IP address and the date and time of the visit are collected. These data are used solely for statistical purposes and website security. They are not shared with third parties. By using the website, the user agrees to the collection of these data."
