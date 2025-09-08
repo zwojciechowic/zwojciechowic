@@ -102,7 +102,8 @@
 
         /* Style dla nagłówków miotów */
         .litter-header {
-            color: white;
+            background: #f8f9fa !important;
+            color: #333;
             padding: 1rem 1.5rem;
             margin: 2rem 0 1.5rem 0;
             border-radius: 8px;
@@ -121,10 +122,32 @@
             font-weight: 600;
         }
 
+        .litter-header h6 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
         .litter-info {
             font-size: 0.9rem;
-            opacity: 0.9;
+            color: #666;
             margin-top: 0.5rem;
+        }
+        
+        .puppy-circles {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .puppy-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         /* Style dla kolorowych pasków w kartach szczeniąt */
@@ -183,6 +206,7 @@
             width: 14px;
             text-align: center;
         }
+
     </style>
 {% endblock %}
 
@@ -190,35 +214,42 @@
 <div class="container my-5">
     <h1 class="text-center mb-5">{% trans "Dostępne szczenięta"%}</h1>
     
-    {% if puppies_by_litter %}
-        {% for litter, litter_data in puppies_by_litter.items %}
-            {% with first_puppy=litter_data.puppies.0 %}
-            <div class="litter-header {% if not first_puppy.color1 or not first_puppy.color2 %}default-gradient{% endif %}"
-                 {% if first_puppy.color1 and first_puppy.color2 %}
-                 style="background: linear-gradient(135deg, {{ first_puppy.color1 }} 0%, {{ first_puppy.color2 }} 100%);"
-                 {% elif first_puppy.color1 %}
-                 style="background: linear-gradient(135deg, {{ first_puppy.color1 }} 0%, {{ first_puppy.color1 }} 100%);"
-                 {% endif %}>
-                <h6>Miot {{ litter }}</h6>
-                <div class="litter-info">
-                    <i class="fas fa-calendar-alt"></i> {% trans "Data urodzenia:"%} {{ first_puppy.birth_date|date:"d.m.Y" }}
-                    
-                    <!-- ZMIANA: dodanie linków w nagłówku miotu też -->
-                    {% with mother_data=first_puppy.get_mother_link_data father_data=first_puppy.get_father_link_data %}
-                        {% if mother_data or father_data %}
-                            |
-                            {% if mother_data %}
-                                &#9792; {{ mother_data.name }}
-                            {% endif %}
-                            {% if mother_data and father_data %} | {% endif %}
-                            {% if father_data %}
-                                &#9794; {{ father_data.name }}
-                            {% endif %}
-                        {% endif %}
-                    {% endwith %}
-                </div>
-            </div>
-            {% endwith %}
+{% if puppies_by_litter %}
+   {% for litter, litter_data in puppies_by_litter.items %}
+       {% with first_puppy=litter_data.puppies.0 %}
+       <div class="litter-header">
+           <h6>Miot {{ litter }}</h6>
+           <div class="litter-info">
+               <i class="fas fa-calendar-alt"></i> {% trans "Data urodzenia:"%} {{ first_puppy.birth_date|date:"d.m.Y" }}
+               
+               {% with mother_data=first_puppy.get_mother_link_data father_data=first_puppy.get_father_link_data %}
+                   {% if mother_data or father_data %}
+                       |
+                       {% if mother_data %}
+                           &#9792; {{ mother_data.name }}
+                       {% endif %}
+                       {% if mother_data and father_data %} | {% endif %}
+                       {% if father_data %}
+                           &#9794; {{ father_data.name }}
+                       {% endif %}
+                   {% endif %}
+               {% endwith %}
+           </div>
+           
+           <div class="puppy-circles">
+               {% for puppy in litter_data.puppies %}
+                   <div class="puppy-circle" 
+                        {% if puppy.color1 and puppy.color2 %}
+                        style="background: linear-gradient(45deg, {{ puppy.color1 }} 50%, {{ puppy.color2 }} 50%);"
+                        {% elif puppy.color1 %}
+                        style="background: {{ puppy.color1 }};"
+                        {% else %}
+                        style="background: #667eea;"
+                        {% endif %}></div>
+               {% endfor %}
+           </div>
+       </div>
+       {% endwith %}
             
             <div class="row mb-5">
                 {% for puppy in litter_data.puppies %}
