@@ -98,8 +98,8 @@
                             <strong>{% trans "Wiek:"%}</strong> {{ puppy.birth_date|timesince }}<br>
                             {% if puppy.mother_name %}<strong>{% trans "Matka:"%}</strong> <i class="fas fa-heart"></i> {{ puppy.mother_name }}<br>{% endif %}
                             {% if puppy.father_name %}<strong>{% trans "Ojciec:"%}</strong> <i class="fas fa-paw"></i> {{ puppy.father_name }}
-                            {% comment %} <br>{% endif %}
-                            <strong>{% trans "Cena:"%}</strong> {{ puppy.price }} PLN {% endcomment %}
+                            <br>{% endif %}
+                            {% comment %} <strong>{% trans "Cena:"%}</strong> {{ puppy.price }} PLN {% endcomment %}
                         </p>
                         
                         {# Opisy #}
