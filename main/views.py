@@ -1,4 +1,3 @@
-# main/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.mail import EmailMessage
@@ -10,53 +9,63 @@ from django.db.models import Count
 from collections import OrderedDict
 from collections import defaultdict
 from django.db.models import Count, Q
+import random
 
 def home(request):
-    """Strona główna z najnowszymi wpisami, psami i szczeniakami"""
-    # Pobierz najnowsze wpisy blogowe
     latest_posts = BlogPost.objects.filter(is_published=True)[:3]
+    featured_dogs = Dog.objects.filter(is_breeding=True).order_by('name')[:2]
     
-    # Pobierz wybrane psy hodowlane
-    featured_dogs = Dog.objects.filter(is_breeding=True)[:2]
-    
-    # Pobierz dostępne szczenięta (maksymalnie 3)
-    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')[:3]
+    puppies_by_litter = defaultdict(list)
+    available_puppies_all = Puppy.objects.filter(is_available=True).select_related('mother', 'father', 'photo_gallery')
+
+    for puppy in available_puppies_all:
+        puppies_by_litter[puppy.litter].append(puppy)
+
+    selected_puppies = []
+    litter_keys = list(puppies_by_litter.keys())
+    random.shuffle(litter_keys)
+
+    for litter in litter_keys[:3]:
+        puppies_in_litter = puppies_by_litter[litter]
+        selected_puppy = random.choice(puppies_in_litter)
+        selected_puppies.append(selected_puppy)
+
+    if len(selected_puppies) < 3:
+        remaining_puppies = [p for p in available_puppies_all if p not in selected_puppies]
+        additional_count = min(3 - len(selected_puppies), len(remaining_puppies))
+        if additional_count > 0:
+            additional_puppies = random.sample(remaining_puppies, additional_count)
+            selected_puppies.extend(additional_puppies)
     
     context = {
         'latest_posts': latest_posts,
         'featured_dogs': featured_dogs,
-        'available_puppies': available_puppies,
-        'page_obj': latest_posts,  # Dla kompatybilności z szablonem
+        'available_puppies': selected_puppies,
+        'page_obj': latest_posts,
     }
     
     return render(request, 'index.html', context)
+
 def blog_detail(request, slug):
-    """Szczegóły wpisu na blogu z nawigacją karuzeli (pętla)"""
     post = get_object_or_404(BlogPost, slug=slug, is_published=True)
     
-    # Pobierz wszystkie opublikowane wpisy w kolejności chronologicznej
     all_posts = BlogPost.objects.filter(is_published=True).order_by('-created_at')
     
-    # Znajdź indeks aktualnego wpisu
     current_index = None
     for i, p in enumerate(all_posts):
         if p.id == post.id:
             current_index = i
             break
     
-    # Logika karuzeli - jeśli jesteśmy na końcu, idź na początek i odwrotnie
     if current_index is not None:
         total_posts = len(all_posts)
         
-        # Poprzedni wpis (z pętlą)
         prev_index = (current_index - 1) % total_posts
         previous_post = all_posts[prev_index]
         
-        # Następny wpis (z pętlą) 
         next_index = (current_index + 1) % total_posts
         next_post = all_posts[next_index]
     else:
-        # Fallback gdyby coś poszło nie tak
         previous_post = None
         next_post = None
     
@@ -67,8 +76,8 @@ def blog_detail(request, slug):
     }
     
     return render(request, 'blog_detail.html', context)
+
 def about(request):
-    """Strona o nas"""
     return render(request, 'about.html')
 
 def dogs(request):
@@ -85,24 +94,9 @@ def dog_detail(request, pk):
         'dog': dog
     })
 
-def home(request):
-    latest_posts = BlogPost.objects.filter(is_published=True)[:3]
-    featured_dogs = Dog.objects.filter(is_breeding=True).order_by('name')[:2]
-    available_puppies = Puppy.objects.filter(is_available=True).order_by('litter', 'name')[:3]
-    
-    context = {
-        'latest_posts': latest_posts,
-        'featured_dogs': featured_dogs,
-        'available_puppies': available_puppies,
-        'page_obj': latest_posts,
-    }
-    
-    return render(request, 'index.html', context)
 def puppies(request):
-    """Strona szczeniaki z grupowaniem po miotach"""
     all_puppies = Puppy.objects.all().order_by('litter', 'name')
     
-    # Grupowanie szczeniąt po miotach
     puppies_by_litter = defaultdict(lambda: {
         'puppies': [],
         'total_count': 0,
@@ -115,7 +109,6 @@ def puppies(request):
         if puppy.is_available:
             puppies_by_litter[puppy.litter]['available_count'] += 1
     
-    # Sortowanie miotów alfabetycznie
     puppies_by_litter = dict(sorted(puppies_by_litter.items()))
     
     return render(request, 'puppies.html', {
@@ -123,11 +116,10 @@ def puppies(request):
         'favicon': 'logo/puppy-logo.ico',
         'favicon_png': 'logo/puppy-logo.png'
     })
+
 def puppy_detail(request, pk):
-    """Szczegółowa strona szczenięcia z formularzem rezerwacji"""
     puppy = get_object_or_404(Puppy, pk=pk)
     
-    # Pobierz innych szczeniąt z tego samego miotu
     litter_siblings = Puppy.objects.filter(
         litter=puppy.litter, 
         is_available=True
@@ -136,18 +128,15 @@ def puppy_detail(request, pk):
     if request.method == 'POST' and puppy.is_available:
         form = PuppyReservationForm(request.POST)
         if form.is_valid():
-            # Zapisz rezerwację do bazy danych
             reservation = form.save(commit=False)
             reservation.puppy = puppy
             reservation.message = f"Rezerwacja złożona przez formularz na stronie szczenięcia {puppy.name}"
             reservation.save()
             
-            # Przygotuj dane do e-maila
             customer_name = form.cleaned_data['customer_name']
             customer_email = form.cleaned_data['customer_email']
             customer_phone = form.cleaned_data['customer_phone']
             
-            # Wyślij e-mail z powiadomieniem o rezerwacji
             email_subject = f"Nowa rezerwacja szczenięcia: {puppy.name} z miotu {puppy.litter}"
             email_message = f"""Nowa rezerwacja szczenięcia została złożona:
 
@@ -198,15 +187,13 @@ Aby potwierdzić lub odrzucić rezerwację, zaloguj się do panelu administracyj
         'form': form,
         'litter_siblings': litter_siblings
     })
+
 def reservations(request):
-    """Strona rezerwacji"""
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
-            # Zapisz podstawowe dane z ModelForm
             reservation = form.save()
             
-            # Dodaj message jeśli zostało podane
             message_text = form.cleaned_data.get('message', '').strip()
             if message_text:
                 reservation.message = message_text
@@ -227,10 +214,8 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Zapisz podstawowe dane z ModelForm
             contact_message = form.save()
             
-            # Dodaj subject i message z zwykłych pól formularza
             subject_text = form.cleaned_data.get('subject', '').strip()
             message_text = form.cleaned_data.get('message', '').strip()
             
@@ -239,16 +224,13 @@ def contact_view(request):
             if message_text:
                 contact_message.message = message_text
             
-            # Oznacz jako nieprzeczytaną
             contact_message.is_read = False
             contact_message.save()
             
-            # Przygotuj dane dla e-maila
             name = contact_message.name
             email = contact_message.email
             phone = contact_message.phone if contact_message.phone else 'Nie podano'
             
-            # Przygotuj treść e-maila
             email_subject = f"Nowa wiadomość z formularza kontaktowego: {subject_text}"
             email_message = f"""Nowa wiadomość z formularza kontaktowego na stronie hodowli:
 
@@ -278,7 +260,6 @@ ID wiadomości w systemie: {contact_message.id}
                 return redirect('contact')
                 
             except Exception as e:
-                # Nawet jeśli wysyłka maila się nie powiedzie, wiadomość jest już zapisana w bazie
                 messages.warning(request, 'Wiadomość została zapisana, ale wystąpił problem z wysyłką e-maila. Skontaktujemy się z Tobą wkrótce.')
                 print(f"Błąd wysyłania e-maila: {e}")
                 return redirect('contact')
@@ -291,88 +272,6 @@ def about(request):
     about_page = AboutPage.objects.first()
     return render(request, 'about.html', {'about': about_page})
 
-# def admin_dashboard_context(request):
-#     """Context processor dla dashboard admin"""
-#     if request.path.startswith('/admin/'):
-#         return {
-#             'dogs_count': Dog.objects.count(),
-#             'puppies_count': Puppy.objects.filter(is_available=True).count(),
-#             'reservations_count': Reservation.objects.filter(status='pending').count(),
-#             'posts_count': BlogPost.objects.filter(is_published=True).count(),
-#             'about_exists': AboutPage.objects.exists(),
-#         }
-#     return {}
-
 def hotel(request):
-    """Strona hotelu"""
     from hotel.views import hotel_home
     return hotel_home(request)
-
-def handle_additional_photos_upload(request, instance):
-    """
-    Obsługuje upload dodatkowych zdjęć z formularza administracyjnego
-    """
-    uploaded_files = request.FILES.getlist('additional_photos_files')
-    additional_photos_data = request.POST.get('additional_photos_data', '[]')
-    
-    try:
-        photos_data = json.loads(additional_photos_data)
-    except (json.JSONDecodeError, TypeError):
-        photos_data = []
-    
-    # Obsługa nowych plików
-    for file in uploaded_files:
-        if file.content_type.startswith('image/'):
-            # Zapisz plik
-            filename = f"additional_photos/{instance._meta.model_name}_{instance.pk}_{file.name}"
-            saved_file = default_storage.save(filename, ContentFile(file.read()))
-            
-            # Dodaj do danych
-            photos_data.append({
-                'url': default_storage.url(saved_file),
-                'order': len(photos_data) + 1,
-                'filename': saved_file
-            })
-    
-    # Sortuj według kolejności
-    photos_data.sort(key=lambda x: x.get('order', 0))
-    
-    return photos_data
-
-def save_model(self, request, obj, form, change):
-    # Najpierw zapisz obiekt
-    super().save_model(request, obj, form, change)
-    
-    # Obsługa dodatkowych zdjęć
-    additional_photos_data = request.POST.get('additional_photos_data')
-    if additional_photos_data:
-        try:
-            import json
-            photos_data = json.loads(additional_photos_data)
-            
-            # Sprawdź czy są nowe pliki do uploadu
-            uploaded_files = request.FILES.getlist('additional_photos_files')
-            for file in uploaded_files:
-                if file.content_type.startswith('image/'):
-                    # Zapisz plik do odpowiedniego katalogu
-                    from django.core.files.storage import default_storage
-                    from django.core.files.base import ContentFile
-                    import uuid
-                    
-                    filename = f"additional_photos/{obj._meta.model_name}_{obj.pk}_{uuid.uuid4().hex[:8]}_{file.name}"
-                    saved_file = default_storage.save(filename, ContentFile(file.read()))
-                    
-                    # Dodaj do photos_data
-                    photos_data.append({
-                        'url': default_storage.url(saved_file),
-                        'order': len(photos_data) + 1,
-                        'filename': saved_file
-                    })
-            
-            # Sortuj i zapisz
-            photos_data.sort(key=lambda x: x.get('order', 0))
-            obj.additional_photos = photos_data
-            obj.save(update_fields=['additional_photos'])
-            
-        except (json.JSONDecodeError, TypeError):
-            pass
