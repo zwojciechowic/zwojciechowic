@@ -14,7 +14,7 @@ urlpatterns = [
     path(_('szczeniaki/<int:pk>/'), views.puppy_detail, name='puppy_detail'),
     path(_('rezerwacje/'), views.reservations, name='reservations'),
     path(_('kontakt/'), views.contact_view, name='contact'),
-    # path(_('hotel/'), views.hotel, name='hotel'),
-    path(_('hotel/'), include('hotel.urls')),
+    path(_('hotel/'), views.hotel, name='hotel'),
+    # path(_('hotel/'), include('hotel.urls')),
     path("privacy/", TemplateView.as_view(template_name="privacy.html"), name="privacy"),
 ]
