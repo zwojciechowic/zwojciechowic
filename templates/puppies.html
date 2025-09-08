@@ -237,17 +237,17 @@
            </div>
            
            <div class="puppy-circles">
-               {% for puppy in litter_data.puppies %}
-                   <div class="puppy-circle" 
-                        {% if puppy.color1 and puppy.color2 %}
-                        style="background: linear-gradient(45deg, {{ puppy.color1 }} 50%, {{ puppy.color2 }} 50%);"
-                        {% elif puppy.color1 %}
-                        style="background: {{ puppy.color1 }};"
-                        {% else %}
-                        style="background: #667eea;"
-                        {% endif %}></div>
-               {% endfor %}
-           </div>
+            {% for puppy in litter_data.puppies %}
+                <div class="puppy-circle {% if not puppy.is_available %}reserved{% endif %}" 
+                     {% if puppy.color1 and puppy.color2 %}
+                     style="background: linear-gradient(45deg, {{ puppy.color1 }} 50%, {{ puppy.color2 }} 50%);"
+                     {% elif puppy.color1 %}
+                     style="background: {{ puppy.color1 }};"
+                     {% else %}
+                     style="background: #667eea;"
+                     {% endif %}></div>
+            {% endfor %}
+        </div>
        </div>
        {% endwith %}
             
