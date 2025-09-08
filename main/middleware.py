@@ -3,6 +3,9 @@ from django.utils.deprecation import MiddlewareMixin
 
 class VisitorLoggingMiddleware(MiddlewareMixin):
     def process_request(self, request):
+        if request.path.startswith("/admin/"):
+            return
+
         ip = self.get_client_ip(request)
         user_agent = request.META.get("HTTP_USER_AGENT", "")
         if ip:
