@@ -406,7 +406,7 @@
                         </small>
                     </div>
                     <p class="card-text text-muted flex-grow-1">{{ puppy.description|truncatewords:10 }}</p>
-                    <p class="card-text"><strong>{% trans 'Cena:' %} {{ puppy.price }} {% trans "PLN"%}</strong></p>
+                    {% comment %} <p class="card-text"><strong>{% trans 'Cena:' %} {{ puppy.price }} {% trans "PLN"%}</strong></p> {% endcomment %}
                     <a href="{% url 'puppy_detail' puppy.pk %}?scroll=bottom" class="btn btn-primary mt-auto">{% trans 'Zarezerwuj' %}</a>
                 </div>
             </div>
