@@ -710,3 +710,14 @@ class AboutSections(TranslatableModel):
 
     def __str__(self):
         return _("Sekcja %(order)s") % {'order': self.order}
+    
+class VisitorLog(models.Model):
+    ip_address = models.GenericIPAddressField()
+    user_agent = models.TextField(blank=True, null=True)
+    visited_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-visited_at"]
+
+    def __str__(self):
+        return f"{self.ip_address} at {self.visited_at}"

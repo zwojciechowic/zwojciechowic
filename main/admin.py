@@ -3,7 +3,7 @@ from django import forms
 from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
-from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection
+from .models import BlogPost, Dog, Puppy, Reservation, ContactMessage, AboutPage, AboutSections, BlogSection, VisitorLog
 from django.contrib.admin import AdminSite
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from django.utils.translation import gettext_lazy as _
@@ -657,6 +657,9 @@ class CustomAdminSite(admin.AdminSite):
             'messages_count': ContactMessage.objects.count(),
             'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
             'about_exists': AboutPage.objects.exists(),
+            'unique_visitors': VisitorLog.objects.values("ip_address").distinct().count(),
+            'visits_total': VisitorLog.objects.count(),
+            'last_visit': VisitorLog.objects.order_by("-visited_at").first(),
         })
         
         return super().index(request, extra_context)
@@ -695,3 +698,9 @@ class CustomAdminSite(admin.AdminSite):
 
 # Zastąp domyślny admin site naszym custom site
 admin.site.__class__ = CustomAdminSite
+
+@admin.register(VisitorLog)
+class VisitorLogAdmin(admin.ModelAdmin):
+    list_display = ("ip_address", "visited_at", "user_agent")
+    list_filter = ("visited_at",)
+    search_fields = ("ip_address", "user_agent")

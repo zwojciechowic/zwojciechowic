@@ -148,6 +148,33 @@
             </div>
         </div>
     </div>
+
+    <div class="management-card">
+        <div class="card-header">
+            <div class="card-icon">👀</div>
+        </div>
+        <div class="card-content">
+            <a href="{% url 'admin:main_visitorlog_changelist' %}" class="card-link">
+                <h3>{% trans "Odwiedziny"%}</h3>
+                <p>{% trans "Statystyki odwiedzin strony"%}</p>
+            </a>
+            <div class="card-stats">
+                <span class="stat-number">{{ unique_visitors|default:"0" }}</span>
+                <span class="stat-label">{% trans "unikalnych IP"%}</span>
+            </div>
+            <div class="card-stats">
+                <span class="stat-number">{{ visits_total|default:"0" }}</span>
+                <span class="stat-label">{% trans "wszystkich wizyt"%}</span>
+            </div>
+            {% if last_visit %}
+            <div class="card-stats">
+                <span class="stat-number">{{ last_visit.visited_at|date:"Y-m-d H:i" }}</span>
+                <span class="stat-label">{% trans "ostatnia wizyta"%}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
 </div>
 
 <script>
