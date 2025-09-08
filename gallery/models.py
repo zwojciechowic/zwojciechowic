@@ -28,7 +28,7 @@ class Photo(models.Model):
     )
     
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='photos')
-    image = models.FileField(upload_to='gallery/')  # Zmiana z ImageField na FileField
+    image = models.ImageField(upload_to='gallery/')
     media_type = models.CharField(max_length=5, choices=MEDIA_TYPES, default='image')
     order = models.PositiveIntegerField(default=1)
     
