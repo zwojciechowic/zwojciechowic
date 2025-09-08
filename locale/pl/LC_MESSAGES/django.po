@@ -768,6 +768,102 @@ msgstr "Wpisz swoją propozycję ceny w PLN"
 msgid "Polityka prywatności"
 msgstr "Polityka prywatności"
 
-msgid "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."
 
-msgstr "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."
+
+
+
+
+
+
+msgid "Niniejsza Polityka Prywatności określa zasady, na jakich serwis zbiera, przetwarza i chroni dane osobowe oraz techniczne użytkowników. Celem niniejszego dokumentu jest zapewnienie pełnej przejrzystości w zakresie działań podejmowanych przez administratora serwisu oraz poinformowanie użytkowników o ich prawach i obowiązkach związanych z korzystaniem z serwisu."
+msgstr "Niniejsza Polityka Prywatności określa zasady, na jakich serwis zbiera, przetwarza i chroni dane osobowe oraz techniczne użytkowników. Celem niniejszego dokumentu jest zapewnienie pełnej przejrzystości w zakresie działań podejmowanych przez administratora serwisu oraz poinformowanie użytkowników o ich prawach i obowiązkach związanych z korzystaniem z serwisu."
+
+msgid "1. Definicje"
+msgstr "1. Definicje"
+
+msgid "Serwis – strona internetowa, do której użytkownik uzyskuje dostęp."
+msgstr "Serwis – strona internetowa, do której użytkownik uzyskuje dostęp."
+
+msgid "Administrator – podmiot odpowiedzialny za przetwarzanie danych, w tym zapewnienie bezpieczeństwa i poufności danych użytkowników."
+msgstr "Administrator – podmiot odpowiedzialny za przetwarzanie danych, w tym zapewnienie bezpieczeństwa i poufności danych użytkowników."
+
+msgid "Dane osobowe – wszelkie informacje pozwalające na identyfikację użytkownika."
+msgstr "Dane osobowe – wszelkie informacje pozwalające na identyfikację użytkownika."
+
+msgid "Dane techniczne – informacje zbierane automatycznie w celu poprawy funkcjonowania serwisu, w tym adres IP, informacje o przeglądarce i urządzeniu oraz czas wizyty."
+msgstr "Dane techniczne – informacje zbierane automatycznie w celu poprawy funkcjonowania serwisu, w tym adres IP, informacje o przeglądarce i urządzeniu oraz czas wizyty."
+
+msgid "2. Zakres zbieranych danych"
+msgstr "2. Zakres zbieranych danych"
+
+msgid "Serwis może zbierać i przetwarzać następujące dane użytkowników:"
+msgstr "Serwis może zbierać i przetwarzać następujące dane użytkowników:"
+
+msgid "Adres IP użytkownika"
+msgstr "Adres IP użytkownika"
+
+msgid "Data i godzina wizyty"
+msgstr "Data i godzina wizyty"
+
+msgid "Informacje o urządzeniu, w tym typ przeglądarki, system operacyjny i ustawienia językowe"
+msgstr "Informacje o urządzeniu, w tym typ przeglądarki, system operacyjny i ustawienia językowe"
+
+msgid "Dane podawane dobrowolnie przez użytkownika poprzez formularze kontaktowe lub inne mechanizmy interakcji z serwisem"
+msgstr "Dane podawane dobrowolnie przez użytkownika poprzez formularze kontaktowe lub inne mechanizmy interakcji z serwisem"
+
+msgid "3. Cele przetwarzania danych"
+msgstr "3. Cele przetwarzania danych"
+
+msgid "Analiza statystyczna ruchu w serwisie w celu optymalizacji jego funkcjonalności"
+msgstr "Analiza statystyczna ruchu w serwisie w celu optymalizacji jego funkcjonalności"
+
+msgid "Zapewnienie bezpieczeństwa serwisu, w tym wykrywanie i zapobieganie próbom nadużyć"
+msgstr "Zapewnienie bezpieczeństwa serwisu, w tym wykrywanie i zapobieganie próbom nadużyć"
+
+msgid "Umożliwienie kontaktu z użytkownikiem w przypadku pytań lub zgłoszeń przesłanych za pomocą formularza kontaktowego"
+msgstr "Umożliwienie kontaktu z użytkownikiem w przypadku pytań lub zgłoszeń przesłanych za pomocą formularza kontaktowego"
+
+msgid "Realizacja obowiązków prawnych administratora wynikających z przepisów obowiązującego prawa"
+msgstr "Realizacja obowiązków prawnych administratora wynikających z przepisów obowiązującego prawa"
+
+msgid "4. Udostępnianie danych osobom trzecim"
+msgstr "4. Udostępnianie danych osobom trzecim"
+
+msgid "Dane użytkowników nie są przekazywane osobom trzecim, z wyjątkiem sytuacji przewidzianych przepisami prawa lub w celu realizacji usług niezbędnych do funkcjonowania serwisu. W takich przypadkach administrator zapewnia, że odbiorcy danych stosują odpowiednie środki bezpieczeństwa i przetwarzają dane zgodnie z obowiązującymi przepisami."
+msgstr "Dane użytkowników nie są przekazywane osobom trzecim, z wyjątkiem sytuacji przewidzianych przepisami prawa lub w celu realizacji usług niezbędnych do funkcjonowania serwisu. W takich przypadkach administrator zapewnia, że odbiorcy danych stosują odpowiednie środki bezpieczeństwa i przetwarzają dane zgodnie z obowiązującymi przepisami."
+
+msgid "5. Bezpieczeństwo danych"
+msgstr "5. Bezpieczeństwo danych"
+
+msgid "Administrator stosuje wszelkie dostępne środki techniczne i organizacyjne w celu ochrony danych użytkowników przed nieuprawnionym dostępem, utratą lub ujawnieniem. Dane są przechowywane w sposób zabezpieczony, a dostęp do nich mają wyłącznie upoważnione osoby."
+msgstr "Administrator stosuje wszelkie dostępne środki techniczne i organizacyjne w celu ochrony danych użytkowników przed nieuprawnionym dostępem, utratą lub ujawnieniem. Dane są przechowywane w sposób zabezpieczony, a dostęp do nich mają wyłącznie upoważnione osoby."
+
+msgid "6. Prawa użytkowników"
+msgstr "6. Prawa użytkowników"
+
+msgid "Użytkownicy mają prawo do:"
+msgstr "Użytkownicy mają prawo do:"
+
+msgid "Żądania dostępu do swoich danych osobowych"
+msgstr "Żądania dostępu do swoich danych osobowych"
+
+msgid "Żądania poprawienia lub uzupełnienia swoich danych"
+msgstr "Żądania poprawienia lub uzupełnienia swoich danych"
+
+msgid "Żądania usunięcia danych lub ograniczenia ich przetwarzania"
+msgstr "Żądania usunięcia danych lub ograniczenia ich przetwarzania"
+
+msgid "Wycofania zgody na przetwarzanie danych w dowolnym momencie"
+msgstr "Wycofania zgody na przetwarzanie danych w dowolnym momencie"
+
+msgid "7. Zgoda na przetwarzanie danych"
+msgstr "7. Zgoda na przetwarzanie danych"
+
+msgid "Korzystanie z serwisu jest jednoznaczne z wyrażeniem zgody na przetwarzanie danych zgodnie z niniejszą polityką prywatności. Użytkownik ma prawo w każdej chwili cofnąć zgodę, co jednak nie wpływa na zgodność z prawem przetwarzania dokonanego na podstawie zgody przed jej cofnięciem."
+msgstr "Korzystanie z serwisu jest jednoznaczne z wyrażeniem zgody na przetwarzanie danych zgodnie z niniejszą polityką prywatności. Użytkownik ma prawo w każdej chwili cofnąć zgodę, co jednak nie wpływa na zgodność z prawem przetwarzania dokonanego na podstawie zgody przed jej cofnięciem."
+
+msgid "8. Kontakt w sprawie polityki prywatności"
+msgstr "8. Kontakt w sprawie polityki prywatności"
+
+msgid "W przypadku pytań lub wątpliwości dotyczących niniejszej polityki prywatności prosimy o kontakt za pośrednictwem formularza kontaktowego dostępnego na stronie serwisu."
+msgstr "W przypadku pytań lub wątpliwości dotyczących niniejszej polityki prywatności prosimy o kontakt za pośrednictwem formularza kontaktowego dostępnego na stronie serwisu."

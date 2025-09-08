@@ -89,6 +89,53 @@
 {% block content %}
 <div class="container py-5">
   <h1>{% trans "Polityka prywatności" %}</h1>
-  <p>{% trans "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych." %}</p>
+
+  <p>{% trans "Niniejsza Polityka Prywatności określa zasady, na jakich serwis zbiera, przetwarza i chroni dane osobowe oraz techniczne użytkowników. Celem niniejszego dokumentu jest zapewnienie pełnej przejrzystości w zakresie działań podejmowanych przez administratora serwisu oraz poinformowanie użytkowników o ich prawach i obowiązkach związanych z korzystaniem z serwisu." %}</p>
+
+  <h2>{% trans "1. Definicje" %}</h2>
+  <ul>
+    <li>{% trans "Serwis – strona internetowa, do której użytkownik uzyskuje dostęp." %}</li>
+    <li>{% trans "Administrator – podmiot odpowiedzialny za przetwarzanie danych, w tym zapewnienie bezpieczeństwa i poufności danych użytkowników." %}</li>
+    <li>{% trans "Dane osobowe – wszelkie informacje pozwalające na identyfikację użytkownika." %}</li>
+    <li>{% trans "Dane techniczne – informacje zbierane automatycznie w celu poprawy funkcjonowania serwisu, w tym adres IP, informacje o przeglądarce i urządzeniu oraz czas wizyty." %}</li>
+  </ul>
+
+  <h2>{% trans "2. Zakres zbieranych danych" %}</h2>
+  <p>{% trans "Serwis może zbierać i przetwarzać następujące dane użytkowników:" %}</p>
+  <ul>
+    <li>{% trans "Adres IP użytkownika" %}</li>
+    <li>{% trans "Data i godzina wizyty" %}</li>
+    <li>{% trans "Informacje o urządzeniu, w tym typ przeglądarki, system operacyjny i ustawienia językowe" %}</li>
+    <li>{% trans "Dane podawane dobrowolnie przez użytkownika poprzez formularze kontaktowe lub inne mechanizmy interakcji z serwisem" %}</li>
+  </ul>
+
+  <h2>{% trans "3. Cele przetwarzania danych" %}</h2>
+  <ul>
+    <li>{% trans "Analiza statystyczna ruchu w serwisie w celu optymalizacji jego funkcjonalności" %}</li>
+    <li>{% trans "Zapewnienie bezpieczeństwa serwisu, w tym wykrywanie i zapobieganie próbom nadużyć" %}</li>
+    <li>{% trans "Umożliwienie kontaktu z użytkownikiem w przypadku pytań lub zgłoszeń przesłanych za pomocą formularza kontaktowego" %}</li>
+    <li>{% trans "Realizacja obowiązków prawnych administratora wynikających z przepisów obowiązującego prawa" %}</li>
+  </ul>
+
+  <h2>{% trans "4. Udostępnianie danych osobom trzecim" %}</h2>
+  <p>{% trans "Dane użytkowników nie są przekazywane osobom trzecim, z wyjątkiem sytuacji przewidzianych przepisami prawa lub w celu realizacji usług niezbędnych do funkcjonowania serwisu. W takich przypadkach administrator zapewnia, że odbiorcy danych stosują odpowiednie środki bezpieczeństwa i przetwarzają dane zgodnie z obowiązującymi przepisami." %}</p>
+
+  <h2>{% trans "5. Bezpieczeństwo danych" %}</h2>
+  <p>{% trans "Administrator stosuje wszelkie dostępne środki techniczne i organizacyjne w celu ochrony danych użytkowników przed nieuprawnionym dostępem, utratą lub ujawnieniem. Dane są przechowywane w sposób zabezpieczony, a dostęp do nich mają wyłącznie upoważnione osoby." %}</p>
+
+  <h2>{% trans "6. Prawa użytkowników" %}</h2>
+  <p>{% trans "Użytkownicy mają prawo do:" %}</p>
+  <ul>
+    <li>{% trans "Żądania dostępu do swoich danych osobowych" %}</li>
+    <li>{% trans "Żądania poprawienia lub uzupełnienia swoich danych" %}</li>
+    <li>{% trans "Żądania usunięcia danych lub ograniczenia ich przetwarzania" %}</li>
+    <li>{% trans "Wycofania zgody na przetwarzanie danych w dowolnym momencie" %}</li>
+  </ul>
+
+  <h2>{% trans "7. Zgoda na przetwarzanie danych" %}</h2>
+  <p>{% trans "Korzystanie z serwisu jest jednoznaczne z wyrażeniem zgody na przetwarzanie danych zgodnie z niniejszą polityką prywatności. Użytkownik ma prawo w każdej chwili cofnąć zgodę, co jednak nie wpływa na zgodność z prawem przetwarzania dokonanego na podstawie zgody przed jej cofnięciem." %}</p>
+
+  <h2>{% trans "8. Kontakt w sprawie polityki prywatności" %}</h2>
+  <p>{% trans "W przypadku pytań lub wątpliwości dotyczących niniejszej polityki prywatności prosimy o kontakt za pośrednictwem formularza kontaktowego dostępnego na stronie serwisu." %}</p>
 </div>
 {% endblock %}

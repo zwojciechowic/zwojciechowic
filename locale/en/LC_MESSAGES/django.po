@@ -751,6 +751,99 @@ msgstr "Enter your proposed price in PLN"
 msgid "Polityka prywatności"
 msgstr "Privacy Policy"
 
-msgid "W ramach funkcjonowania serwisu zbierane są dane techniczne, takie jak adres IP użytkownika oraz data i godzina wizyty. Dane te wykorzystywane są wyłącznie w celach statystycznych i bezpieczeństwa serwisu. Nie są udostępniane osobom trzecim. Korzystając z serwisu użytkownik wyraża zgodę na zbieranie powyższych danych."
 
-msgstr "As part of the operation of the website, technical data such as the user's IP address and the date and time of the visit are collected. These data are used solely for statistical purposes and website security. They are not shared with third parties. By using the website, the user agrees to the collection of these data."
+
+
+
+msgid "Niniejsza Polityka Prywatności określa zasady, na jakich serwis zbiera, przetwarza i chroni dane osobowe oraz techniczne użytkowników. Celem niniejszego dokumentu jest zapewnienie pełnej przejrzystości w zakresie działań podejmowanych przez administratora serwisu oraz poinformowanie użytkowników o ich prawach i obowiązkach związanych z korzystaniem z serwisu."
+msgstr "This Privacy Policy defines the principles on which the website collects, processes, and protects personal and technical data of users. The purpose of this document is to ensure full transparency regarding the actions taken by the website administrator and to inform users about their rights and responsibilities related to the use of the website."
+
+msgid "1. Definicje"
+msgstr "1. Definitions"
+
+msgid "Serwis – strona internetowa, do której użytkownik uzyskuje dostęp."
+msgstr "Website – the web page accessed by the user."
+
+msgid "Administrator – podmiot odpowiedzialny za przetwarzanie danych, w tym zapewnienie bezpieczeństwa i poufności danych użytkowników."
+msgstr "Administrator – the entity responsible for data processing, including ensuring the security and confidentiality of user data."
+
+msgid "Dane osobowe – wszelkie informacje pozwalające na identyfikację użytkownika."
+msgstr "Personal data – any information allowing the identification of a user."
+
+msgid "Dane techniczne – informacje zbierane automatycznie w celu poprawy funkcjonowania serwisu, w tym adres IP, informacje o przeglądarce i urządzeniu oraz czas wizyty."
+msgstr "Technical data – information collected automatically to improve the website's functionality, including IP address, browser and device information, and visit time."
+
+msgid "2. Zakres zbieranych danych"
+msgstr "2. Scope of collected data"
+
+msgid "Serwis może zbierać i przetwarzać następujące dane użytkowników:"
+msgstr "The website may collect and process the following user data:"
+
+msgid "Adres IP użytkownika"
+msgstr "User's IP address"
+
+msgid "Data i godzina wizyty"
+msgstr "Date and time of visit"
+
+msgid "Informacje o urządzeniu, w tym typ przeglądarki, system operacyjny i ustawienia językowe"
+msgstr "Device information, including browser type, operating system, and language settings"
+
+msgid "Dane podawane dobrowolnie przez użytkownika poprzez formularze kontaktowe lub inne mechanizmy interakcji z serwisem"
+msgstr "Data voluntarily provided by the user through contact forms or other interaction mechanisms on the website"
+
+msgid "3. Cele przetwarzania danych"
+msgstr "3. Purposes of data processing"
+
+msgid "Analiza statystyczna ruchu w serwisie w celu optymalizacji jego funkcjonalności"
+msgstr "Statistical analysis of website traffic to optimize its functionality"
+
+msgid "Zapewnienie bezpieczeństwa serwisu, w tym wykrywanie i zapobieganie próbom nadużyć"
+msgstr "Ensuring website security, including detecting and preventing abuse attempts"
+
+msgid "Umożliwienie kontaktu z użytkownikiem w przypadku pytań lub zgłoszeń przesłanych za pomocą formularza kontaktowego"
+msgstr "Enabling contact with the user in case of questions or requests submitted via the contact form"
+
+msgid "Realizacja obowiązków prawnych administratora wynikających z przepisów obowiązującego prawa"
+msgstr "Fulfillment of the administrator's legal obligations under applicable law"
+
+msgid "4. Udostępnianie danych osobom trzecim"
+msgstr "4. Sharing data with third parties"
+
+msgid "Dane użytkowników nie są przekazywane osobom trzecim, z wyjątkiem sytuacji przewidzianych przepisami prawa lub w celu realizacji usług niezbędnych do funkcjonowania serwisu. W takich przypadkach administrator zapewnia, że odbiorcy danych stosują odpowiednie środki bezpieczeństwa i przetwarzają dane zgodnie z obowiązującymi przepisami."
+msgstr "User data is not shared with third parties, except as required by law or to provide services necessary for the functioning of the website. In such cases, the administrator ensures that data recipients apply appropriate security measures and process data in accordance with applicable law."
+
+msgid "5. Bezpieczeństwo danych"
+msgstr "5. Data security"
+
+msgid "Administrator stosuje wszelkie dostępne środki techniczne i organizacyjne w celu ochrony danych użytkowników przed nieuprawnionym dostępem, utratą lub ujawnieniem. Dane są przechowywane w sposób zabezpieczony, a dostęp do nich mają wyłącznie upoważnione osoby."
+msgstr "The administrator applies all available technical and organizational measures to protect user data from unauthorized access, loss, or disclosure. Data is stored securely, and only authorized persons have access."
+
+msgid "6. Prawa użytkowników"
+msgstr "6. Users' rights"
+
+msgid "Użytkownicy mają prawo do:"
+msgstr "Users have the right to:"
+
+msgid "Żądania dostępu do swoich danych osobowych"
+msgstr "Request access to their personal data"
+
+msgid "Żądania poprawienia lub uzupełnienia swoich danych"
+msgstr "Request correction or completion of their data"
+
+msgid "Żądania usunięcia danych lub ograniczenia ich przetwarzania"
+msgstr "Request deletion or restriction of data processing"
+
+msgid "Wycofania zgody na przetwarzanie danych w dowolnym momencie"
+msgstr "Withdraw consent to data processing at any time"
+
+msgid "7. Zgoda na przetwarzanie danych"
+msgstr "7. Consent to data processing"
+
+msgid "Korzystanie z serwisu jest jednoznaczne z wyrażeniem zgody na przetwarzanie danych zgodnie z niniejszą polityką prywatności. Użytkownik ma prawo w każdej chwili cofnąć zgodę, co jednak nie wpływa na zgodność z prawem przetwarzania dokonanego na podstawie zgody przed jej cofnięciem."
+msgstr "Using the website constitutes consent to data processing in accordance with this privacy policy. Users may withdraw consent at any time, which does not affect the legality of processing conducted based on consent prior to its withdrawal."
+
+msgid "8. Kontakt w sprawie polityki prywatności"
+msgstr "8. Contact regarding privacy policy"
+
+msgid "W przypadku pytań lub wątpliwości dotyczących niniejszej polityki prywatności prosimy o kontakt za pośrednictwem formularza kontaktowego dostępnego na stronie serwisu."
+msgstr "For questions or concerns regarding this privacy policy, please contact us via the contact form available on the website."
