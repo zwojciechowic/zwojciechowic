@@ -151,15 +151,16 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             cursor: pointer;
+            position: relative;
         }
         
         .puppy-circle:hover {
-            transform: translateY(-3px);
+            transform: translateY(-8px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
         
         .puppy-circle.reserved {
-            opacity: 0.25;
+            opacity: 0.4;
             filter: blur(1px);
             transform: translateY(3px);
         }
@@ -167,6 +168,40 @@
         .puppy-circle.reserved:hover {
             transform: translateY(-2px);
             opacity: 0.5;
+        }
+        
+        .puppy-tooltip {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        .puppy-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .puppy-circle:hover .puppy-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 1.2s;
         }
 
         /* Style dla kolorowych pasków w kartach szczeniąt */
@@ -258,13 +293,16 @@
            <div class="puppy-circles">
             {% for puppy in litter_data.puppies %}
                 <div class="puppy-circle {% if not puppy.is_available %}reserved{% endif %}" 
+                     onclick="window.location.href='{% url 'puppy_detail' puppy.pk %}'"
                      {% if puppy.color1 and puppy.color2 %}
                      style="background: linear-gradient(45deg, {{ puppy.color1 }} 50%, {{ puppy.color2 }} 50%);"
                      {% elif puppy.color1 %}
                      style="background: {{ puppy.color1 }};"
                      {% else %}
                      style="background: #667eea;"
-                     {% endif %}></div>
+                     {% endif %}>
+                    <div class="puppy-tooltip">{{ puppy.name }}</div>
+                </div>
             {% endfor %}
         </div>
        </div>
