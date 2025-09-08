@@ -101,6 +101,18 @@
         }
 
         /* Style dla nagłówków miotów */
+        
+        /* Domyślny gradient dla nagłówków miotów */
+        .litter-header.default-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .litter-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
         .litter-header {
             background: #f8f9fa !important;
             color: #333;
@@ -110,25 +122,14 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             position: relative;
         }
-
-        /* Domyślny gradient dla nagłówków miotów */
-        .litter-header.default-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .litter-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
+        
         .litter-header h6 {
             margin: 0;
             font-size: 1.5rem;
             font-weight: 600;
             color: #333;
         }
-
+        
         .litter-info {
             font-size: 0.9rem;
             color: #666;
@@ -148,6 +149,24 @@
             border-radius: 50%;
             border: 2px solid #fff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+        
+        .puppy-circle:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .puppy-circle.reserved {
+            opacity: 0.4;
+            filter: blur(1px);
+            transform: translateY(3px);
+        }
+        
+        .puppy-circle.reserved:hover {
+            transform: translateY(-2px);
+            opacity: 0.5;
         }
 
         /* Style dla kolorowych pasków w kartach szczeniąt */
