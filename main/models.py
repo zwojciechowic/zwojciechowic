@@ -526,6 +526,16 @@ class Reservation(TranslatableModel):
         ordering = ['-created_at']
         verbose_name = _('Rezerwacja')
         verbose_name_plural = _('Rezerwacje')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.status == 'confirmed':
+            self.puppy.is_available = False
+            self.puppy.save()
+        elif self.status == 'cancelled':
+            self.puppy.is_available = True
+            self.puppy.save()
     
     def __str__(self):
         """Zwraca: Imię_psa - Imię_klienta (lub numer rezerwacji)"""
