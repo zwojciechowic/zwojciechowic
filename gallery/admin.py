@@ -15,8 +15,9 @@ class PhotoInline(admin.TabularInline):
                     <div style="width: 200px; height: 150px; border: 2px solid #ddd; position: relative; overflow: hidden; background: #f5f5f5;">
                         <img id="preview-img-{}" src="{}" 
                              style="width: 200px; height: 267px; object-fit: cover; object-position: center {}%; position: absolute; cursor: grab;">
-                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: red; border-top: 2px dashed red; z-index: 10;"></div>
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: red; border-bottom: 2px dashed red; z-index: 10;"></div>
+                        <div id="visible-area-{}" style="position: absolute; top: 0; left: 0; right: 0; height: 150px; border-top: 2px dashed red; border-bottom: 2px dashed red; z-index: 10; pointer-events: none;"></div>
+                        <div id="top-overlay-{}" style="position: absolute; top: -117px; left: 0; right: 0; height: 117px; background: rgba(0,0,0,0.5); z-index: 5; pointer-events: none;"></div>
+                        <div id="bottom-overlay-{}" style="position: absolute; bottom: -117px; left: 0; right: 0; height: 117px; background: rgba(0,0,0,0.5); z-index: 5; pointer-events: none;"></div>
                     </div>
                     <input type="hidden" id="position-input-{}" value="{}">
                     <div style="text-align: center; margin-top: 5px; font-size: 12px;">
@@ -47,9 +48,9 @@ class PhotoInline(admin.TabularInline):
                         
                         const deltaY = e.clientY - startY;
                         const sensitivity = 0.5;
-                        let newPosition = startPosition - (deltaY * sensitivity);
+                        let newPosition = startPosition + (deltaY * sensitivity);
                         
-                        newPosition = Math.max(0, Math.min(100, newPosition));
+                        newPosition = Math.max(1, Math.min(100, newPosition));
                         
                         input.value = Math.round(newPosition);
                         valueSpan.textContent = Math.round(newPosition);
