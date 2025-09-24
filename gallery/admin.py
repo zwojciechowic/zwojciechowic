@@ -4,8 +4,8 @@ from .models import Gallery, Photo
 
 class PhotoInline(admin.TabularInline):
     model = Photo
-    fields = ['image', 'media_type', 'order', 'vertical_position', 'image_preview', 'position_controls']
-    readonly_fields = ['media_type', 'image_preview', 'position_controls']
+    fields = ['image', 'media_type', 'order', 'vertical_position']
+    readonly_fields = ['media_type']
     extra = 0
 
     def image_preview(self, obj):
