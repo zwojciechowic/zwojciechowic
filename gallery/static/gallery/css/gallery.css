@@ -23,9 +23,8 @@
 }
 
 .slide img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
+    object-position: center var(--vertical-pos, 50%);
 }
 
 /* Przyciski są POZA pojemnikiem .gallery-main, więc nie zostaną ucięte. */

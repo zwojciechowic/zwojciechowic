@@ -5,13 +5,13 @@
     <div class="gallery-main">
         {% for photo in photos %}
         <div class="slide">
-            <img src="{{ photo.image.url }}" alt="Zdjęcie {{ forloop.counter }} w galerii">
+            <img src="{{ photo.image.url }}" alt="Zdjęcie {{ forloop.counter }} w galerii" 
+                 style="--vertical-pos: {{ photo.vertical_position|default:50 }}%;">
         </div>
         {% endfor %}
     </div>
     
     {% if photos|length > 1 %}
-        <!-- Przyciski i kropki są teraz czystsze, bez atrybutów onclick -->
         <button class="gallery-btn prev" aria-label="Poprzednie zdjęcie">‹</button>
         <button class="gallery-btn next" aria-label="Następne zdjęcie">›</button>
         
