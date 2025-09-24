@@ -14,7 +14,7 @@ class PhotoInline(admin.TabularInline):
                 <div id="visual-editor-{}" style="width: 200px; position: relative; margin: 10px 0;">
                     <div style="width: 200px; height: 150px; border: 2px solid #ddd; position: relative; overflow: hidden; background: #f5f5f5;">
                         <img id="preview-img-{}" src="{}" 
-                            style="width: 200px; height: 267px; object-fit: cover; object-position: center {}%; position: absolute; cursor: grab;">
+                             style="width: 200px; height: 267px; object-fit: cover; object-position: center {}%; position: absolute; cursor: grab;">
                         <div id="visible-area-{}" style="position: absolute; top: 0; left: 0; right: 0; height: 150px; border-top: 2px dashed red; border-bottom: 2px dashed red; z-index: 10; pointer-events: none;"></div>
                         <div id="top-overlay-{}" style="position: absolute; top: -117px; left: 0; right: 0; height: 117px; background: rgba(0,0,0,0.5); z-index: 5; pointer-events: none;"></div>
                         <div id="bottom-overlay-{}" style="position: absolute; bottom: -117px; left: 0; right: 0; height: 117px; background: rgba(0,0,0,0.5); z-index: 5; pointer-events: none;"></div>
@@ -29,32 +29,70 @@ class PhotoInline(admin.TabularInline):
                     const img = document.getElementById('preview-img-{}');
                     const input = document.getElementById('position-input-{}');
                     const valueSpan = document.getElementById('position-value-{}');
+                    const topOverlay = document.getElementById('top-overlay-{}');
+                    const bottomOverlay = document.getElementById('bottom-overlay-{}');
                     const fieldInput = document.querySelector('input[name*="vertical_position"][value="{}"]');
                     
                     let isDragging = false;
                     let startY = 0;
                     let startPosition = {};
                     
-                    // reszta JS...
+                    function updateOverlays(position) {{
+                        const imgHeight = 267;
+                        const visibleHeight = 150;
+                        const topCrop = (position / 100) * (imgHeight - visibleHeight);
+                        const bottomCrop = imgHeight - visibleHeight - topCrop;
+                        
+                        topOverlay.style.top = (-topCrop) + 'px';
+                        topOverlay.style.height = topCrop + 'px';
+                        
+                        bottomOverlay.style.bottom = (-bottomCrop) + 'px';
+                        bottomOverlay.style.height = bottomCrop + 'px';
+                    }}
+                    
+                    updateOverlays(parseInt(input.value));
+                    
+                    img.addEventListener('mousedown', function(e) {{
+                        isDragging = true;
+                        startY = e.clientY;
+                        startPosition = parseInt(input.value);
+                        img.style.cursor = 'grabbing';
+                        e.preventDefault();
+                    }});
+                    
+                    document.addEventListener('mousemove', function(e) {{
+                        if (!isDragging) return;
+                        
+                        const deltaY = e.clientY - startY;
+                        const sensitivity = 0.5;
+                        let newPosition = startPosition - (deltaY * sensitivity);
+                        
+                        newPosition = Math.max(0, Math.min(100, newPosition));
+                        
+                        input.value = Math.round(newPosition);
+                        valueSpan.textContent = Math.round(newPosition);
+                        img.style.objectPosition = `center ${{newPosition}}%`;
+                        
+                        updateOverlays(newPosition);
+                        
+                        if (fieldInput) {{
+                            fieldInput.value = Math.round(newPosition);
+                        }}
+                    }});
+                    
+                    document.addEventListener('mouseup', function() {{
+                        if (isDragging) {{
+                            isDragging = false;
+                            img.style.cursor = 'grab';
+                        }}
+                    }});
                 }})();
                 </script>
             ''', 
-            obj.id,                    # 1 - visual-editor-{}
-            obj.id,                    # 2 - preview-img-{}  
-            obj.image.url,             # 3 - src="{}"
-            obj.vertical_position or 50, # 4 - object-position center {}%
-            obj.id,                    # 5 - visible-area-{}
-            obj.id,                    # 6 - top-overlay-{}
-            obj.id,                    # 7 - bottom-overlay-{}
-            obj.id,                    # 8 - position-input-{}
-            obj.vertical_position or 50, # 9 - value="{}"
-            obj.id,                    # 10 - position-value-{}
-            obj.vertical_position or 50, # 11 - span content {}%
-            obj.id,                    # 12 - preview-img-{} w JS
-            obj.id,                    # 13 - position-input-{} w JS
-            obj.id,                    # 14 - position-value-{} w JS
-            obj.vertical_position or 50, # 15 - value="{}" w JS
-            obj.vertical_position or 50) # 16 - startPosition = {}
+            obj.id, obj.id, obj.image.url, obj.vertical_position or 50, obj.id, 
+            obj.id, obj.id, obj.id, obj.vertical_position or 50, obj.id, 
+            obj.vertical_position or 50, obj.id, obj.id, obj.id, obj.id, 
+            obj.id, obj.vertical_position or 50, obj.vertical_position or 50)
         return ""
     visual_editor.short_description = 'Edytor wizualny'
 
