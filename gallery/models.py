@@ -31,6 +31,7 @@ class Photo(models.Model):
     image = models.ImageField(upload_to='gallery/')
     media_type = models.CharField(max_length=5, choices=MEDIA_TYPES, default='image')
     order = models.PositiveIntegerField(default=1)
+    vertical_position = models.IntegerField(default=50, help_text="Pozycja pionowa 0-100")
     
     def save(self, *args, **kwargs):
         # Automatyczne określanie typu na podstawie rozszerzenia
