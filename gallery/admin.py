@@ -72,7 +72,8 @@ class PhotoInline(admin.TabularInline):
             ''', 
             obj.id, obj.id, obj.image.url, obj.vertical_position or 50, obj.id, 
             obj.vertical_position or 50, obj.id, obj.vertical_position or 50,
-            obj.id, obj.id, obj.id, obj.vertical_position or 50, obj.vertical_position or 50)
+            obj.id, obj.id, obj.id, obj.vertical_position or 50, obj.vertical_position or 50, obj.vertical_position or 50, 
+obj.vertical_position or 50)
         return ""
     visual_editor.short_description = 'Edytor wizualny'
 
