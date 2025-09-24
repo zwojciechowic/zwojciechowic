@@ -18,7 +18,7 @@ class PhotoInline(admin.TabularInline):
     image_preview.short_description = 'Podgląd'
     
     def position_controls(self, obj):
-        if obj.id:
+        if obj and obj.id:
             return format_html(
                 '<div style="text-align:center;">'
                 '<button type="button" onclick="adjustPosition({}, \'up\')" style="display:block; margin:2px auto; padding:5px 10px;">↑</button>'
@@ -34,7 +34,7 @@ class PhotoInline(admin.TabularInline):
                 '</script>',
                 obj.id, obj.id
             )
-        return ""
+        return "Zapisz najpierw"
     position_controls.short_description = 'Pozycja'
 
 @admin.register(Gallery)
