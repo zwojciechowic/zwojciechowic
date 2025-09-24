@@ -9,7 +9,7 @@ class PhotoInline(admin.TabularInline):
     extra = 0
 
     def image_preview(self, obj):
-        if obj.image:
+        if obj and obj.image:
             return format_html(
                 '<img src="{}" style="width:120px; height:80px; object-fit:cover; object-position: center {}%; border: 1px solid #ddd;">',
                 obj.image.url, obj.vertical_position or 50
